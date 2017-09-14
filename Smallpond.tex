@@ -1,0 +1,2181 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{tabu}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Smallpond Architecture Reference Manual}
+\author{Zachary Salim, Dominique Hickson,\\ Andrew Balys, Justin Charlong}
+\date{September 2017}
+
+%MADE PARAGRAPH ANOTHER SECTION LEVEL
+%MADE SUBPARAGRAPH ANOTHER SECTION LEVEL
+%\makeatletter
+%\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+%            {-2.5ex\@plus -1ex \@minus -.25ex}%
+%            {1.25ex \@plus .25ex}%
+%            {\normalfont\normalsize\bfseries}}
+            
+%\renewcommand\subparagraph{\@startsection{subparagraph}{4}{\z@}%
+%            {-2.5ex\@plus -1ex \@minus -.25ex}%
+%            {1.25ex \@plus .25ex}%
+%            {\normalfont\normalsize\bfseries}}
+%\makeatother
+
+%SETS THE SECTION NUMBER DEPTH
+%SETS TABLE OF CONTENTS DEPTH
+%\setcounter{secnumdepth}{5} % how many sectioning levels to assign numbers to
+%\setcounter{tocdepth}{5}    % how many sectioning levels to show in ToC
+
+
+
+%SETSUP THE HYPERLINK COLORS
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+
+\newpage
+\section{Introduction}
+
+\newpage
+
+\section{Smallpond Programming Model}
+    \subsection{Data Types}
+    \textbf{Byte} \hspace{2cm}8 bits\\
+    \textbf{Halfword} \hspace{1.05cm}16 Bits\\
+    \textbf{Word} \hspace{1.8cm}32 Bits\\
+    %\vspace{1em}
+    
+   \noindent\rule{1.5cm}{0.3pt}Note\rule{1.5cm}{0.3pt}
+   
+   \begin{itemize}
+       \item Unless specified as \textit{unsigned} integer in the range 0 to 2\textsuperscript{N}-1, the N-bit value will be considered a signed integer in the range, -2\textsuperscript{N-1} to +2\textsuperscript{N-1}, using two's complement format.
+       
+       \item Load and store operations can transfer bytes, halfwords and words to and from memory,
+        automatically zero-extending or sign-extending bytes or halfwords as they are loaded.
+
+       \item Smallpond instructions are exactly one word (and are aligned on a four-byte boundary).
+       
+       \item All data operations , A type, are performed in word quantities
+   \end{itemize}
+   
+   \noindent\rule{4cm}{0.3pt}
+   \newpage
+   
+   \subsection{Registers and Register Conventions}
+   
+   There are a total of 32 registers in the Smallpond processor:
+   \begin{itemize}
+       \item 32 general purpose registers, with a program counter.
+       \item  All registers are 32 bits wide.
+   \end{itemize}
+   
+   \begin{center}
+   \begin{tabular}{|p{1.6cm}|p{2cm}||p{1.6cm}|p{2cm}|}
+        \hline
+        \textbf{Register} & \textbf{Use} & \textbf{Register} & \textbf{Use}\\
+        \hline
+        R0 & 0 & R16 & Saved\\
+        \hline
+        R1 & Arg\_0 & R17 &Saved\\
+        \hline
+        R2 & Arg\_1 & R18 &Saved\\
+        \hline
+        R3 & Arg\_2 & R19 &Saved\\
+        \hline
+        R4 & Arg\_3 & R20 &Saved\\
+        \hline
+        R5 & Temp & R21 &Saved\\
+        \hline
+        R6 & Temp. & R22 &Positive\\
+        \hline
+        R7 & Temp. & R23 &Negative\\
+        \hline
+        R8 & Temp. & R24 &+ Counter\\
+        \hline
+        R9 & Temp. & R25 &- Counter\\
+        \hline
+        R10 & Temp. & R26 &FP\\
+        \hline
+        R11 & Temp. & R27 &SP\\
+        \hline
+        R12 & Temp. & R28 &LR\_0\\
+        \hline
+        R13 & Temp. & R29 &LR\_1\\
+        \hline
+        R14 & Temp. & R30 & PC\\
+        \hline
+        R15 & Saved & R31 & CPSR\\
+        \hline
+   \end{tabular}
+   \end{center}
+    
+    \subsubsection{Register Zero}
+        Register zero (R0) is hardwired to zero (0x00000000). Writing to register zero will have no effect on its contents.
+        
+    \subsubsection{Argument Registers}
+        Registers 1-4 (R1, R2, R3, R4) should be used to pass arguments into and out of subroutines.
+        
+    \subsubsection{Temporary Registers}
+        Registers 5-14 (R5, R6, R7, R8, R9, R10, R11, R12, R13, R14) are temporary registers (scratch registers). They should be used for general calculations and for storing temporary results. Their contents need not be preserved across subroutine calls.
+        
+    \subsubsection{Save Registers}
+        Registers 15-21 (R15, R16, R17, R18, R19, R20, R21) are save registers which should be used to save results. These registers' values should be preserved across subroutine calls. If the values are modified in a subroutine their values should be returned before exiting the subroutine.
+        
+    \subsubsection{Positive/Negative Pair Registers}
+        Registers 22 and 23 (R22, R23) are a positive/negative pair. Any value stored into register 22 will update register 23 with the 2's complement of register 22. Storing to register 23 will update register 22 with the 2's complement of register 23. Conventionally register 22 should contain a positive value and register 23 should be a negative number.
+        
+    \subsubsection{Counter Registers}
+        
+
+\newpage
+\section{Smallpond Instruction Set}
+
+\subsection{Instruction Types}
+    The Smallpond architecture has 4 instruction types: A type, I type, J type, and B type. The A type instructions utilize up to 2 input registers and output the result into a third register. The I type instructions perform on 1 input register with immediate data and output the result into a second register. The J type instruction is used in conjunction with an immediate to change the program counter. The B type instructions also use immediate data to change the program counter however they can do so conditionally. This section outlines the Smallpond architecture's instructions by instruction type. The four types are outlined below:\\
+
+    % A Type
+    %Start of the instruction layout table
+    \begin{center}
+        A type:\\
+        \vspace{1em}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            31:26& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table for A type
+    
+    % Immediate Type
+    %Start of the instruction layout table
+    \begin{center}
+        Immediate type:\\
+        \vspace{1em}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            31:26& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table for I type
+    
+    %  Type
+    %Start of the instruction layout table
+    \begin{center}
+        Jump type:\\
+        \vspace{1em}
+        \begin{tabular}{ |p{1.8cm}|p{10.7cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{Immediate}\\
+            \hline
+            31:26& 25:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table for J type
+    
+    % Branch Type
+    %Start of the instruction layout table
+    \begin{center}
+        Branch type:\\
+        \vspace{1em}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{.3cm}|p{.3cm}|p{.3cm}|p{6.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{Cond} &  \textbf{C} & \textbf{L}&\textbf{R}&\textbf{Immediate}\\
+            \hline
+            31:26& 25:22 & 21 & 0 & 0 &18:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table for B type
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% A TYPE INSTRUCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{A Type}
+
+
+%BEGINNING OF ADD INSTRUCTION   
+
+    
+    %ADD
+    %Title of subsubsection
+    \subsubsection{Addition (ADD)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            000001& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The ADD instruction adds the value of RS to the value of RT and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    ADD\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The ADD instruction is used to add two values together and produce a third.\\
+    \vspace{1em}
+    To increment a value in register Rx by register Ry.\\
+    \vspace{1em}
+    ADD Rx, Rx, Ry
+    \end{flushleft}
+    
+
+%END OF ADD INSTRUCTION
+
+%BEGINNING OF AND INSTRUCTION  
+
+
+    \newpage
+    %Title of subsubsection
+    \subsubsection{And (AND)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            000010& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The AND instruction executes a bitwise AND of the value in RS and the value in RT and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    AND\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The AND instruction is used to execute a bitwise AND of two values.\\
+    \vspace{1em}
+    To AND a value in register Rx with a value in register Ry and store the result into Rx.\\
+    \vspace{1em}
+    AND Rx, Rx, Ry
+    \end{flushleft}
+   
+   
+%END OF AND INSTRUCTION
+
+
+%BEGINNING OF ASR INSTRUCTION  
+
+
+    \newpage
+    %ASR
+    %Title of subsubsection
+    \subsubsection{Arithmetic Shift Right (ASR)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            000011& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The ASR instruction arithmetically right shifts the value stored in RS by the value stored in RT and stores the result into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    ASR\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The ASR instruction is used to execute an arithmetic right shift on a value and store the result.\\
+    \vspace{1em}
+    To ASR a value in register Rx by a value in register Ry and store the result into register Rz.\\
+    \vspace{1em}
+    ASR Rz, Rx, Ry
+    \end{flushleft}
+   
+   
+%END OF ASR
+
+   
+%BEGINNING OF LSL INSTRUCTION  
+
+
+    \newpage
+    %AND
+    %Title of subsubsection
+    \subsubsection{Logical Shift Left (LSL)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            000100& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LSL instruction logically left shifts the value stored in RS by the value stored in RT and stores the result into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LSL\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LSL instruction is used to execute a logical left shift on a value and store the result.\\
+    \vspace{1em}
+    To LSL a value in register Rx by a value in register Ry and store the result into register Rz.\\
+    \vspace{1em}
+    LSL Rz, Rx, Ry
+    \end{flushleft}
+   
+   
+%END OF LSL INSTRUCTION
+
+
+%BEGINNING OF LSR INSTRUCTION  
+
+
+    \newpage
+    %AND
+    %Title of subsubsection
+    \subsubsection{Logical Shift Right (LSR)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            000101& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LSR instruction logically right shifts the value stored in RS by the value stored in RT and stores the result into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LSR\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LSR instruction is used to execute a logical right shift on a value and store the result.\\
+    \vspace{1em}
+    To LSR a value in register Rx by a value in register Ry and store the result into register Rz.\\
+    \vspace{1em}
+    LSR Rz, Rx, Ry
+    \end{flushleft}
+   
+   
+%END OF LSR INSTRUCTION 
+
+
+%BEGINNING OF NAND INSTRUCTION
+
+
+    \newpage
+    %AND
+    %Title of subsubsection
+    \subsubsection{Not And (NAND)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            000110& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The NAND instruction executes a bitwise NAND of the value in RS and the value in RT and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    NAND\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The NAND instruction is used to execute a bitwise NAND of two values.\\
+    \vspace{1em}
+    To NAND a value in register Rx with a value in register Ry and store the result into Rx.\\
+    \vspace{1em}
+    NAND Rx, Rx, Ry
+    \end{flushleft}
+   
+   
+%END OF NAND INSTRUCTION
+
+
+%BEGINNING OF NOR INSTRUCTION
+
+
+    \newpage
+    %AND
+    %Title of subsubsection
+    \subsubsection{Not Or (NOR)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            000111& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The NOR instruction executes a bitwise NOR of the value in RS and the value in RT and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    NOR\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The NOR instruction is used to execute a bitwise NOR of two values.\\
+    \vspace{1em}
+    To NOR a value in register Rx with a value in register Ry and store the result into Rx.\\
+    \vspace{1em}
+    NOR Rx, Rx, Ry
+    \end{flushleft}
+   
+   
+
+%END OF NOR INSTRUCTION
+
+
+%BEGINNING OF NOT INSTRUCTION
+
+
+    \newpage
+    %NOT
+    %Title of subsubsection
+    \subsubsection{Not (NOT)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            001000& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The NOT instruction executes a bitwise NOT of the value in RS and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    NOT\{cond\}\{S\}\{C\} RD, RS\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The NOT instruction is used to execute a bitwise NOT of a value.\\
+    \vspace{1em}
+    To NOT a value in register Rx and store the result into Rx.\\
+    \vspace{1em}
+    NOT Rx, Rx
+    \end{flushleft}
+   
+   
+%END OF NOT INSTRUCTION
+
+
+%BEGINNING OF OR INSTRUCTION
+
+
+    \newpage
+    %OR
+    %Title of subsubsection
+    \subsubsection{Or (OR)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            001001& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The OR instruction executes a bitwise OR of the value in RS and the value in RT and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    OR\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The OR instruction is used to execute a bitwise OR of two values.\\
+    \vspace{1em}
+    To OR a value in register Rx with a value in register Ry and store the result into Rx.\\
+    \vspace{1em}
+    OR Rx, Rx, Ry
+    \end{flushleft}
+   
+   
+%END OF OR INSTRUCTION   
+
+
+%BEGINNING OF SUB INSTRUCTION
+
+
+    \newpage
+    %SUB
+    %Title of subsubsection
+    \subsubsection{Subtraction (SUB)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            001010& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The SUB instruction subtracts the value of RT from the value of RT and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    SUB\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The SUB instruction is used to subtract two registers and store the result.\\
+    \vspace{1em}
+    To SUB a value in register Rx from register Ry and store the result into Rz.\\
+    \vspace{1em}
+    SUB Rz, Ry, Rx
+    \end{flushleft}
+   
+   
+%END OF SUB INSTRUCTION
+
+
+%BEGINNING OF XNOR INSTRUCTION
+
+
+    \newpage
+    %AND
+    %Title of subsubsection
+    \subsubsection{Exclusive Not Or (XNOR)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            001011& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The XNOR instruction executes a bitwise XNOR of the value in RS and the value in RT and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    XNOR\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The XNOR instruction is used to execute a bitwise XNOR of two values.\\
+    \vspace{1em}
+    To XNOR a value in register Rx with a value in register Ry and store the result into Rx.\\
+    \vspace{1em}
+    XNOR Rx, Rx, Ry
+    \end{flushleft}
+   
+   
+%END OF XNOR INSTRUCTION
+
+
+%BEGINNING OF XOR INSTRUCTION
+
+
+    \newpage
+    %AND
+    %Title of subsubsection
+    \subsubsection{Exclusive Or (XOR)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \hline
+            001100& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The XOR instruction executes a bitwise XOR of the value in RS and the value in RT and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    XOR\{cond\}\{S\}\{C\} RD, RS, RT\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}    
+    S       \hspace{4.5em} Causes the S bit (bit[25]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will update the CPSR. If S is omitted then the S bit (bit[25]) is set to 0 and\\
+            \hspace{5.4em} the CPSR is not updated.\\
+    \vspace{1em}    
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RT  \hspace{3.7em} Target register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The XOR instruction is used to execute a bitwise XOR of two values.\\
+    \vspace{1em}
+    To XOR a value in register Rx with a value in register Ry and store the result into Rx.\\
+    \vspace{1em}
+    XOR Rx, Rx, Ry
+    \end{flushleft}
+   
+   
+%END OF XOR INSTRUCTION
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%END OF A TYPE INSTRUCTIONS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% I TYPE INSTRUCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{I Type}
+ %Title of subsubsection
+    \subsubsection{Immediate Addition (ADDI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            011000& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The ADDI instruction adds the value of RS to the value of a 16 bit immediate and stores the result in register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    ADDI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The ADDI instruction is used to add the value of a register to an immediate and store the result.\\
+    \vspace{1em}
+    To increment a value in register Rx by an immediate of 1.\\
+    \vspace{1em}
+    ADDI Rx, Rx, \#1
+    \end{flushleft}
+    
+
+%END OF ADDI INSTRUCTION
+
+    \newpage
+    \subsubsection{Immediate AND (ANDI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            011001& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The ANDI instruction is used to execute a bitwise AND with the immediate value and the lower 16 bits of register RS and stores the result into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    ANDI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The ANDI instruction is used to execute a bitwise AND with the immediate value and the lower 16 bits of a register and store the result.\\    
+    \vspace{1em}
+    To AND the value in register Rx with 0xF0 and store the result into Ry.\\
+    \vspace{1em}
+    ANDI Ry, Rx, \#0xF0
+    \end{flushleft}
+    
+
+%END OF ANDI INSTRUCTION
+
+
+%BEGINNING OF ASRI INSTRUCTION
+
+    \newpage
+    \subsubsection{Arithmetic Shift Right Immediate (ASRI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            011010& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The ASRI instruction is used to arithmetically right shift a register by an immediate value. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    ASRI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The ASRI instruction is used to arithmetically right shift the value of a register by an immediate and store the result.\\ 
+    \vspace{1em}
+    To ASR the value in register Rx by 2 and store the result into Ry.\\
+    \vspace{1em}
+    ASRI Ry, Rx, \#2
+    \end{flushleft}
+    
+
+%END OF ASRI INSTRUCTION
+
+    \newpage
+    \subsubsection{Load Word (LDR)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            011011& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LDR instruction is used to load a word from memory into a register RS. The address of the word that is fetched is calculated by adding the immediate value to the value of register RS. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LDR RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LDR instruction is used to load a word from memory at the location of RS offset by the immediate and stores the value into RD.\\    
+    \vspace{1em}
+    To LDR the word at the memory location of the value in register Rx with an offset of 4 and store the result into Ry.\\
+    \vspace{1em}
+    LDR Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF LDR INSTRUCTION
+
+    \newpage
+    \subsubsection{Load Byte (LDRB)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            011100& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LDRB instruction is used to load a sign extended byte from memory into a register RS. The address of the byte that is fetched is calculated by adding the immediate value to the value of register RS. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LDRB RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LDRB instruction is used to load a sign extended byte from memory at the location of RS offset by the immediate and stores the value into RD.\\    
+    \vspace{1em}
+    To LDRB the signed byte at the memory location of the value in register Rx with an offset of 4 and store the result into Ry.\\
+    \vspace{1em}
+    LDRB Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF LDRB INSTRUCTION
+
+    \newpage
+    \subsubsection{Load Byte Unsigned (LDRBU)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            011101& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LDRBU instruction is used to load an unsigned byte from memory into a register RS. The address of the byte that is fetched is calculated by adding the immediate value to the value of register RS. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LDRBU RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LDRBU instruction is used to load an unsigned byte from memory at the location of RS offset by the immediate and stores the value into RD.\\    
+    \vspace{1em}
+    To LDRBU the unsigned byte at the memory location of the value in register Rx with an offset of 4 and store the result into Ry.\\
+    \vspace{1em}
+    LDRBU Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF LDRBU INSTRUCTION
+
+    \newpage
+    \subsubsection{Load Halfword (LDRH)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            011110& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LDRH instruction is used to load a sign extended halfword from memory into a register RS. The address of the halfword that is fetched is calculated by adding the immediate value to the value of register RS. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LDRH RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LDRH instruction is used to load a sign extended halfword from memory at the location of RS offset by the immediate and stores the value into RD.\\    
+    \vspace{1em}
+    To LDRH the signed halfword at the memory location of the value in register Rx with an offset of 4 and store the result into Ry.\\
+    \vspace{1em}
+    LDRH Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF LDRH INSTRUCTION
+
+    \newpage
+    \subsubsection{Load Halfword Unsigned (LDRHU)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            011111& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LDRHU instruction is used to load an unsigned halfword from memory into a register RS. The address of the halfword that is fetched is calculated by adding the immediate value to the value of register RS. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LDRHU RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LDRHU instruction is used to load an unsigned halfword from memory at the location of RS offset by the immediate and stores the value into RD.\\    
+    \vspace{1em}
+    To LDRHU the unsigned halfword at the memory location of the value in register Rx with an offset of 4 and store the result into Ry.\\
+    \vspace{1em}
+    LDRHU Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF LDRHU INSTRUCTION
+
+
+%BEGINNING OF LSLI INSTRUCTION
+
+    \newpage
+    \subsubsection{Logical Shift Left Immediate (LSLI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            100000& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LSLI instruction is used to logically left shift a register by an immediate value. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LSLI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LSLI instruction is used to logically left shift the value of a register by an immediate and store the result.\\ 
+    \vspace{1em}
+    To LSL the value in register Rx by 2 and store the result into Ry.\\
+    \vspace{1em}
+    LSLI Ry, Rx, \#2
+    \end{flushleft}
+    
+
+%END OF LSLI INSTRUCTION
+
+
+%BEGINNING OF LSLI INSTRUCTION
+
+    \newpage
+    \subsubsection{Logical Shift Right Immediate (LSRI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            100001& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LSRI instruction is used to logically right shift a register by an immediate value. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LSRI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LSRI instruction is used to logically right shift the value of a register by an immediate and store the result.\\ 
+    \vspace{1em}
+    To LSR the value in register Rx by 2 and store the result into Ry.\\
+    \vspace{1em}
+    LSRI Ry, Rx, \#2
+    \end{flushleft}
+    
+
+%END OF LSRI INSTRUCTION
+
+    \newpage
+    \subsubsection{Load Upper Immediate (LUI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            100010& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The LUI instruction is used to load a 16 bit immediate into the upper portion (16 bits) of the register RD. The lower portion of the register remains unchanged. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    LUI RD, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction is unused in this instruction. Will be\\
+        \hspace{5.4em} filled in as zeros.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The LUI instruction is used to load an unsigned halfword from memory at the location of RS offset by the immediate and stores the value into RD.\\    
+    \vspace{1em}
+    To LUI the unsigned halfword at the memory location of the value in register Rx with an offset of 4 and store the result into Ry.\\
+    \vspace{1em}
+    LUI Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF LUI INSTRUCTION
+
+    \newpage
+    \subsubsection{Not AND Immediate (NANDI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            100011& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The NANDI instruction is used to execute a bitwise NAND with the immediate value and the lower 16 bits of register RS and stores the result into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    NANDI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The NANDI instruction is used to execute a bitwise NAND with the immediate value and the lower 16 bits of a register and store the result.\\    
+    \vspace{1em}
+    To NAND the value in register Rx with 0xF0 and store the result into Ry.\\
+    \vspace{1em}
+    NANDI Ry, Rx, \#0xF0
+    \end{flushleft}
+    
+
+%END OF NANDI INSTRUCTION
+
+    \newpage
+    \subsubsection{Not OR Immediate (NORI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            100100& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The NORI instruction is used to execute a bitwise NOR with the immediate value and the lower 16 bits of register RS and stores the result into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    NORI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The NORI instruction is used to execute a bitwise NOR with the immediate value and the lower 16 bits of a register and store the result.\\    
+    \vspace{1em}
+    To NOR the value in register Rx with 0xF0 and store the result into Ry.\\
+    \vspace{1em}
+    NORI Ry, Rx, \#0xF0
+    \end{flushleft}
+    
+
+%END OF NORI INSTRUCTION
+
+    \newpage
+    \subsubsection{OR Immediate (ORI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            100101& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The ORI instruction is used to execute a bitwise OR with the immediate value and the lower 16 bits of register RS and stores the result into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    ORI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The ORI instruction is used to execute a bitwise OR with the immediate value and the lower 16 bits of a register and store the result.\\    
+    \vspace{1em}
+    To OR the value in register Rx with 0xF0 and store the result into Ry.\\
+    \vspace{1em}
+    ORI Ry, Rx, \#0xF0
+    \end{flushleft}
+    
+
+%END OF ORI INSTRUCTION
+
+    \newpage
+    \subsubsection{Store Word (STR)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            100110& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The STR instruction is used to store a word from a register RD into an address in memory. The address of the word in memory is calculated by adding the immediate value to the value of register RS. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    STR RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The STR instruction is used to store a word from register RD at the location of register RS offset by the immediate value.\\    
+    \vspace{1em}
+    To STR the word in register Ry at the location of the value in register Rx with an offset of 4.\\
+    \vspace{1em}
+    STR Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF STR INSTRUCTION
+
+    \newpage
+    \subsubsection{Store Byte (STRB)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            100111& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The STRB instruction is used to store the lowest byte from register RD into an address in memory. The address of the byte in memory is calculated by adding the immediate value to the value of register RS. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    STRB RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The STRB instruction is used to store the lowest byte from register RD at the location of register RS offset by the immediate value.\\    
+    \vspace{1em}
+    To STRB the least significant byte in register Ry at the location of the value in register Rx with an offset of 4.\\
+    \vspace{1em}
+    STRB Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF STRB INSTRUCTION
+
+    \newpage
+    \subsubsection{Store Halfword (STRH)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            101000& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The STRH instruction is used to store the lowest halfword from register RD into an address in memory. The address of the halfword in memory is calculated by adding the immediate value to the value of register RS. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    STRH RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The STRH instruction is used to store the lowest halfword from register RD at the location of register RS offset by the immediate value.\\    
+    \vspace{1em}
+    To STRH the least significant halfword in register Ry at the location of the value in register Rx with an offset of 4.\\
+    \vspace{1em}
+    STRH Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF STRH INSTRUCTION
+
+    \newpage
+    \subsubsection{Subtract Immediate (SUBI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            101001& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The SUBI instruction is used to perform subtraction with an immediate. The immediate value is subtracted from register RS and stored into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    SUBI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The SUBI instruction is used to subtract an immediate from register RS and store the result into register RD.\\    
+    \vspace{1em}
+    To subtract register Rx by 4 and store the result back into Rx (decrement Rx by 4).\\
+    \vspace{1em}
+    SUBI Ry, Rx, \#4
+    \end{flushleft}
+    
+
+%END OF SUBI INSTRUCTION
+
+    \newpage
+    \subsubsection{Exclusive Not OR Immediate (XNORI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            101010& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The XNORI instruction is used to execute a bitwise XNOR with the immediate value and the lower 16 bits of register RS and stores the result into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    XNORI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The XNORI instruction is used to execute a bitwise XNOR with the immediate value and the lower 16 bits of a register and store the result.\\    
+    \vspace{1em}
+    To XNOR the value in register Rx with 0xF0 and store the result into Ry.\\
+    \vspace{1em}
+    XNORI Ry, Rx, \#0xF0
+    \end{flushleft}
+    
+
+%END OF XNORI INSTRUCTION
+
+    \newpage
+    \subsubsection{Exclusive OR Immediate (XORI)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}21 \hspace{.05cm}20 \hspace{.8cm}16 \hspace{.05cm}15 \hspace{6.4cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \hline
+            101011& 25:21 & 20:16 &15:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The XORI instruction is used to execute a bitwise XOR with the immediate value and the lower 16 bits of register RS and stores the result into register RD. 
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    XORI RD, RS, \#imm.\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    RD  \hspace{3.6em} Destination register of the instruction.\\
+    \vspace{1em}
+    RS  \hspace{3.85em} Source register of the instruction.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The XORI instruction is used to execute a bitwise XOR with the immediate value and the lower 16 bits of a register and store the result.\\    
+    \vspace{1em}
+    To XOR the value in register Rx with 0xF0 and store the result into Ry.\\
+    \vspace{1em}
+    XNORI Ry, Rx, \#0xF0
+    \end{flushleft}
+    
+
+%END OF XORI INSTRUCTION   
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% J TYPE INSTRUCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{J Type}
+
+\subsubsection{Jump (J)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{2cm}31 \hspace{1.24cm}26 \hspace{.05cm}25 \hspace{9.3cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{9.8cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{Immediate}\\
+            \hline
+            111111& 25:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The J instruction allows the program to relocate the program counter to a location above or below the instruction. It does so by adding the immediate value supplied to the program counter + 4. The immediate value is sign extended.
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    J target\_address\\ 
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\             \hspace{5.4em} in 26 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    The J instruction is used to change the PC \\
+    \vspace{1em}
+    J \textit{label} 
+    \end{flushleft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% B TYPE INSTRUCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{B Type}
+
+\subsubsection{Branch (B)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}22 \hspace{.1cm}21 \hspace{.2cm}20 \hspace{.2cm}19 \hspace{.1cm}18 \hspace{6.1cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{.3cm}|p{.3cm}|p{.3cm}|p{6.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{Cond} &  \textbf{C} & \textbf{L}&\textbf{R}&\textbf{Immediate}\\
+            \hline
+            111100& 25:22 & 21 & 0 & 0 &18:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The branch instruction allows to conditionally relocate the program counter to a location above or below the instruction.
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    B\{cond\}\{C\} target\_address\\
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    L       \hspace{4.5em} Bit is set to 0. Link registers are not updated.\\
+    \vspace{1em}
+    R       \hspace{4.5em} Bit is set to 0. Link registers are not updated.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\              \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    To conditionally change the PC \\
+    \vspace{1em}
+    B \textit{label}
+    \end{flushleft}
+
+%END OF B INSTRUCTION
+
+\newpage
+\subsubsection{Branch and Link (BL)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}22 \hspace{.1cm}21 \hspace{.2cm}20 \hspace{.2cm}19 \hspace{.1cm}18 \hspace{6.1cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{.3cm}|p{.3cm}|p{.3cm}|p{6.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{Cond} &  \textbf{C} & \textbf{L}&\textbf{R}&\textbf{Immediate}\\
+            \hline
+            111101& 25:22 & 21 & 1 & 0 &18:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The branch and link instruction causes a branch to a target address while updating the appropriate link register with the returning address + 4.
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    BL\{cond\}\{C\} target\_address\\%Instead of label shouldn't this be an immediate? Assembler would technically determine address of a label I think. Not 100% sure -Justin
+    % i put target address in there like how Arm has it except i cant figure out how to print a < and a > char #newbie
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    L       \hspace{4.5em} Bit is set to 1. Link registers are updated.\\
+    \vspace{1em}
+    R       \hspace{4.5em} Bit is set to 0.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\              \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    To conditionally change the PC \\
+    \vspace{1em}
+    B \textit{label} 
+    \end{flushleft}
+
+%END OF BL INSTRUCTION
+
+\newpage
+\subsubsection{Branch and Return (BR)}
+    
+    %Numbers above the instruction layout. DO NOT CHANGE
+    \hspace{1.6cm}31 \hspace{1.15cm}26 \hspace{.05cm}25 \hspace{.8cm}22 \hspace{.1cm}21 \hspace{.2cm}20 \hspace{.2cm}19 \hspace{.1cm}18 \hspace{6.1cm}0
+    \vspace{-.25cm}
+    %Start of the instruction layout table
+    \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{.3cm}|p{.3cm}|p{.3cm}|p{6.5cm}| }
+            \hline
+            \textbf{Inst.} & \textbf{Cond} &  \textbf{C} & \textbf{L}&\textbf{R}&\textbf{Immediate}\\
+            \hline
+            111110& 25:22 & 21 & 0 & 1 &18:0\\
+            \hline
+        \end{tabular}
+    \end{center}
+    %End of instruction layout table
+    
+    \noindent
+    The branch and return instruction
+    
+    \paragraph{Syntax}
+    \begin{flushleft}
+    BR\{cond\}\{C\} target\_address\\%Instead of label shouldn't this be an immediate? Assembler would technically determine address of a label I think. Not 100% sure -Justin
+    % i put target address in there like how Arm has it except i cant figure out how to print a < and a > char #newbie
+    \vspace{1em}        %Gives new line
+    where:\\
+    \vspace{1em}
+    \{cond\}    \hspace{2em} Is the condition under which the instruction is executed. To see a list of\\
+                \hspace{5.4em} conditions see page . If \{cond\} is omitted the AL (always) condition is used.\\
+    \vspace{1em}
+    C       \hspace{4.5em} Causes the C bit (bit[24]) to be set to a 1. This specified that the instruction\\
+            \hspace{5.4em} will increment the counter. If C is omitted then the C bit (bit[24]) is set to 0\\
+            \hspace{5.4em} and the counter will not be incremented.\\
+    \vspace{1em}
+    L       \hspace{4.5em} Bit is set to 0.\\
+    \vspace{1em}
+    R       \hspace{4.5em} Bit is set to 1. Link registers are updated.\\
+    \vspace{1em}
+    \#imm.  \hspace{1.8em} The immediate value of the instruction, must be capable of being represented\\              \hspace{5.4em} in 16 bits. The syntax to represent a decimal number is as follows:\\
+            \hspace{5.4em} \#decimal\_number, i.e. \#1 to represent a one. The syntax to represent a\\
+            \hspace{5.4em} hexadecimal number is as follows: \#0xhexadecimal\_number, i.e. \#0x3F2A \\
+            \hspace{5.4em} to represent a hexadecimal 0x3F2A or \#0xA to represent 0x000A.\\
+    \end{flushleft}
+    
+    \paragraph{Usage}
+    \begin{flushleft}
+    To conditionally change the PC \\
+    \vspace{1em}
+    BR \textit{label} 
+    \end{flushleft}
+
+%END OF BR INSTRUCTION
+    
+\end{document}
