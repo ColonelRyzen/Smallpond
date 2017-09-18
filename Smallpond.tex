@@ -138,7 +138,33 @@
         Registers 22 and 23 (R22, R23) are a positive/negative pair. Any value stored into register 22 will update register 23 with the 2's complement of register 22. Storing to register 23 will update register 22 with the 2's complement of register 23. Conventionally register 22 should contain a positive value and register 23 should be a negative number.
         
     \subsubsection{Counter Registers}
+        Registers 24 and 25 (R24, R25) are counter registers. Writing a value to either register will write to both registers. Activating the counter through the 'C' flag in a command will increment register 24 by 1, and decrement register 25 by 1.
         
+    \subsubsection{Frame Pointer Register}
+        Register 26 (R26) is the frame pointer register. It should be maintained as a constant reference to the stack.
+        
+    \subsubsection{Stack Pointer Register}
+        Register 27 (R27) is the stack pointer register. It should be maintained as a reference to the stack.
+        
+    \subsubsection{Link Registers}
+        Registers 28 and 29 (R28, R29) are the link registers. The link registers are used with the branch and link (BL) command as well as the branch and return command (BR). The link registers contain information as to how many subroutines the program has entered. When first branching and linking link register 0, register 28 (R28), will be updated to contain the current program counter (PC) + 4, the location of the next instruction were the branch not to have occurred. When determining how many subroutines have been entered, i.e. which link register to write to, register 28 will be checked to see if it contains a 0xFFFFFFFF, which is the invalid code. On startup, both link registers will be invalid, i.e. contain the invalid code. When branching and linking, if register 28 does not contain the invalid code, i.e. a branch has already occurred, then register 29 is updated with the PC+4. This allows for 2 BL commands to be executed without needing to store any of the link registers to the stack. When traversing more than 2 subroutines deep, register 29 should be stored to the stack first. When branching and returning, register 29 will always be checked first, if it is valid (does not contain the invalid code), the PC will be updated with its value and register 29 will be invalidated. If register 29 is already invalid, the PC will be updated with register 28 and register 28 will be invalidated. It is up to the user to make sure that BR is not used when both link registers are invalid, and up to the user to ensure that when branching and linking more than 2 times that the link registers are maintained properly.
+        
+    \subsubsection{Program Counter Register}
+        Register 30 (R30) is the program counter. It contains a reference to the next instruction's address in memory.
+        
+    \subsubsection{Current Program Status Register}
+        %\begin{center}
+        %\begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+        %    \hline
+        %    \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & %\textbf{RS}\\
+        %    \hline
+        %    31:26& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+        %    \hline
+        %\end{tabular}
+        %\end{center}
+        %\vspace{.5em}
+        Register 31 (R31) is the current program status register (CPSR). The CPSR contains information as to the status of the processor. It can be used to make decisions and is referred to by programs which make use of conditions. The 'S' flag in an instruction is used to set the CPSR and update its values based on the instruction's results..
+    
 
 \newpage
 \section{Smallpond Instruction Set}
