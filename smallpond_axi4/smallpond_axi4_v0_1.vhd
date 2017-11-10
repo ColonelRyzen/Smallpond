@@ -257,16 +257,17 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 					end if;
 		elsif sp_write='1' then --WRITE
 			m00_axi_awaddr <= taddress;
-			m00_axi_wdata <= sp_data; --change this!!! currently this is bad and writing/reading is out of order (almost switched endianness but with halfwords...)
+			thalfword_0 <= sp_data(15 downto 0);
+			thalfword_1 <= sp_data(31 downto 16);
+--			m00_axi_wdata <= sp_data; --bad code
 			if sp_op_len = "00" then --writing byte
 				m00_axi_wstrb <= "0001"; --x"1"
-
 			elsif sp_op_len = "01" then --writing halfword (2 bytes)
 				m00_axi_wstrb <= "0011"; --x"3"
-
 			elsif sp_op_len = "10" then --writing word (4 bytes)
 				m00_axi_wstrb <= "0011"; --only write lower half bytes in first cycle
 				--send first word here
+				m00_axi_wdata <= x"0000" & thalfword_1;
 				m00_axi_awvalid <= '1';
 				m00_axi_wvalid <= '1';
 				wait until rising_edge(m00_axi_aclk) and m00_axi_awready='1';
@@ -284,11 +285,11 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 									sp_error <= '1';
 								end if;
 				taddress <= taddress+2;
-				sp_data <= x"0000" & sp_data(15 downto 0)--just stored first 2 bytes, move upper 2 bytes to lower for next transaction
 			else
 				sp_error <= '1'; --is there a way to process sp_error=1 in a single place?
 			end if;
 			--send over data
+			m00_axi_wdata <= x"0000" & thalfword_0;
 			m00_axi_awvalid <= '1';
 			m00_axi_wvalid <= '1';
 			wait until rising_edge(m00_axi_aclk) and m00_axi_awready='1';
