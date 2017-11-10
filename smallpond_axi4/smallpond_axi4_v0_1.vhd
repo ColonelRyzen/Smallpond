@@ -196,11 +196,13 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 	m00_axi_arprot <= "010" -- data, non-secure, unprivileged
 	m00_axi_awprot <= "010" -- data, non-secure, unprivileged
 
+--this code is awful and incorrect
+--need to break the single process statement into many process statements
 	process(m00_axi_aresetn, sp_read, sp_write) --read start with read address channel, then read data channel
 		--to be used as transfer/temp data, before assigning to real entity output
-		thalfword_0 : std_logic_vector(15 downto 0); --temp halfword 0
-		thalfword_1 : std_logic_vector(15 downto 0); --temp halfword 1
-		taddress : std_logic_vector(31 downto 0); --temp address
+		variable thalfword_0 : std_logic_vector(15 downto 0); --temp halfword 0
+		variable thalfword_1 : std_logic_vector(15 downto 0); --temp halfword 1
+		variable taddress : std_logic_vector(31 downto 0); --temp address
 
 	begin
 		--initialize master signals to 0??
