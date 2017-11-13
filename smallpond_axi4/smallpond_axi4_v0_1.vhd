@@ -338,8 +338,7 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 --slowly transfer incorrect giant process w/ wait statements into multiple process statements
 --figure out how to write multiple process statements
 --are they allowed to all monitor m00_axi_aclk?
---etc.
-
+--if it isn't allowed, need to declare a single process on clock, with many flags that can be set to hook other processes
 	-- User logic ends
 
 end arch_imp;
