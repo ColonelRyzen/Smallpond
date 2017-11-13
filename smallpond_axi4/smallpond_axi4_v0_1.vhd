@@ -322,6 +322,24 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 		end if;
 	end process;
 
+	--accept/finalize handshake
+	process (m00_axi_aclk, m00_axi_arready, m00_axi_arvalid) begin
+		if(rising_edge(m00_axi_aclk) and m00_axi_arready='1' and m00_axi_arvalid='1') then
+			m00_axi_arvalid <= '0';
+		end if;
+	end process;
+
+	--accept data transfer
+	process (m00_axi_aclk, m00_axi_rvalid) begin
+		if(rising_edge(m00_axi_aclk) and m00_axi_rvalid='1') then
+			m00_axi_rready <= '1';
+		end if;
+	end process;
+--slowly transfer incorrect giant process w/ wait statements into multiple process statements
+--figure out how to write multiple process statements
+--are they allowed to all monitor m00_axi_aclk?
+--etc.
+
 	-- User logic ends
 
 end arch_imp;
