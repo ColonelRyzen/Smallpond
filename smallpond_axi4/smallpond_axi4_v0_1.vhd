@@ -203,6 +203,8 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 		variable thalfword_0 : std_logic_vector(15 downto 0); --temp halfword 0
 		variable thalfword_1 : std_logic_vector(15 downto 0); --temp halfword 1
 		variable taddress : std_logic_vector(31 downto 0); --temp address
+		variable step : std_logic_vector(1 downto 0); --current step
+			--00 for ready, 01 for step 1, 10 for step 2, 11 for done
 
 	begin
 		--initialize master signals to 0??
@@ -216,8 +218,10 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 			m00_axi_wvalid <= '0';
 			m00_axi_wstrb <= x"0";
 			m00_axi_bready <= '0';
+			step <= "00";
 			sp_over <= '0';
-		elsif sp_read='1' then --READ
+		elsif sp_read='1' and step="00" then --READ
+			step <= "01";
 			m00_axi_araddr <= taddress;
 			m00_axi_arvalid <= '1'; --assert read_address_valid
 			--wait for next rising clock edge and read_address_ready
@@ -257,7 +261,7 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 					else
 						sp_error <= '1';
 					end if;
-		elsif sp_write='1' then --WRITE
+		elsif sp_write='1' and step="00" then --WRITE
 			m00_axi_awaddr <= taddress;
 			thalfword_0 <= sp_data(15 downto 0);
 			thalfword_1 <= sp_data(31 downto 16);
@@ -322,23 +326,68 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 		end if;
 	end process;
 
+--READING PROCESSES--!~
 	--accept/finalize handshake
-	process (m00_axi_aclk, m00_axi_arready, m00_axi_arvalid) begin
-		if(rising_edge(m00_axi_aclk) and m00_axi_arready='1' and m00_axi_arvalid='1') then
-			m00_axi_arvalid <= '0';
-		end if;
+	process begin
+		wait until sp_read='1' and step="01" and rising_edge(m00_axi_aclk) and m00_axi_arready='1' and m00_axi_arvalid='1';
+			m00_axi_arvalid <= '0'; --okay to de-assert read_address-ready
 	end process;
 
-	--accept data transfer
-	process (m00_axi_aclk, m00_axi_rvalid) begin
-		if(rising_edge(m00_axi_aclk) and m00_axi_rvalid='1') then
-			m00_axi_rready <= '1';
-		end if;
+	process begin
+		wait until sp_read='1' and step="01" and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1'; --wait until data is valid
+			m00_axi_rready <= '1'; --assert ready to read
 	end process;
---slowly transfer incorrect giant process w/ wait statements into multiple process statements
---figure out how to write multiple process statements
---are they allowed to all monitor m00_axi_aclk?
---if it isn't allowed, need to declare a single process on clock, with many flags that can be set to hook other processes
+
+	process begin
+		wait until sp_read='1' and step="01"  and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1' and m00_axi_rready <= '1';
+			if rresp = "00" then
+				thalfword_0 <= m00_axi_rdata(15 downto 0); --correct??!~
+				m00_axi_rready <= '0'; --de-assert ready to read (already read)
+				if sp_op_len = "00" then --already read 2 bytes (discard 2nd). No byte selection in AXI4-lite
+					step <= "11";
+					sp_data <= x"000000" & thalfword_0(7 downto 0);
+					sp_over <= '1';
+				elsif sp_op_len = "01" then --already read 2 bytes
+					step <= "11";
+					sp_data <= x"0000" & thalfword_0;
+					sp_over <= '1';
+				elsif sp_op_len = "10" then --already read 2 bytes, read 2 more
+					step <= "10";
+					--read 2 more bytes
+					taddress <= taddress+2; --next address to read
+					m00_axi_arvalid <= '1'; --assert read_address_valid
+					--wait for next rising clock edge and read_address_ready
+				else
+					sp_error <= '1';
+				end if;
+			else
+				sp_error <= '1';
+			end if;
+	end process;
+
+	process begin
+		wait until sp_read='1' and step="10" and rising_edge(m00_axi_aclk) and m00_axi_arready='1' and m00_axi_arvalid='1';
+			m00_axi_arvalid <= '0'; --okay to de-assert read_address-ready
+	end process;
+
+	process begin
+		wait until sp_read='1' and step="10" and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1'; --wait until data is valid
+			m00_axi_rready <= '1'; --assert ready to read
+	end process;
+
+	process begin
+		wait until sp_read='1' and step="10" and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1' and m00_axi_rready <= '1';
+			if rresp = "00" then
+				thalfword_1 <= m00_axi_rdata(15 downto 0); --correct??!~
+				m00_axi_rready <= '0'; --de-assert ready to read (already read)
+				sp_data <= thalfword_1 & thalfword_0;
+				step <= "11";
+				sp_over <= '1';
+			else
+				sp_error <= '1';
+			end if;
+	end process;
+
 	-- User logic ends
 
 end arch_imp;
