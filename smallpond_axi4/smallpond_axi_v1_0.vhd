@@ -96,7 +96,7 @@ architecture arch_imp of smallpond_axi_v1_0 is
 		M_AXI_RREADY	: out std_logic
 		);
 	end component smallpond_axi_v1_0_M00_AXI;
-                
+
     -- signal declarations
     --to be used as transfer/temp data, before assigning to real entity output
     signal thalfword_0 : std_logic_vector(15 downto 0) := x"00000000"; --temp halfword 0
@@ -150,6 +150,10 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 	m00_axi_awprot <= "010"; -- data, non-secure, unprivileged
 
 --this code is awful and probably incorrect
+--things to fix:
+---need solution to trying to read from outputs (checking steps)
+---need solution to adding 2 to address
+
 	process(m00_axi_aresetn, sp_read, sp_write)
 	begin
 		taddress <= sp_addr;
@@ -189,7 +193,7 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 				sp_error <= '1'; --is there a way to process sp_error=1 in a single place?
 			end if;
 		elsif sp_data='0' and sp_write='0' and m00_axi_aresetn='1' then
-			step = '00'; --ready to process a request for Smallpond
+			step <= "00"; --ready to process a request for Smallpond
 			--other things here?
 		else --do nothing
 			--de-initialize things here as well???
@@ -221,7 +225,7 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 	--if ready to read data read data!
 	process begin
 		wait until sp_read='1' and step="01"  and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1' and m00_axi_rready <= '1';
-			if rresp = "00" then
+			if m00_axi_rresp = "00" then
 				thalfword_0 <= m00_axi_rdata(15 downto 0); --correct??!~
 				m00_axi_rready <= '0'; --de-assert ready to read (already read)
 				if sp_op_len = "00" then --already read 2 bytes (discard 2nd). No byte selection in AXI4-lite
@@ -261,7 +265,7 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 	--read second halfword
 	process begin
 		wait until sp_read='1' and step="10" and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1' and m00_axi_rready <= '1';
-			if rresp = "00" then
+			if m00_axi_rresp = "00" then
 				thalfword_1 <= m00_axi_rdata(15 downto 0); --correct??!~
 				m00_axi_rready <= '0'; --de-assert ready to read (already read)
 				sp_data <= thalfword_1 & thalfword_0;
@@ -290,17 +294,26 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 			m00_axi_bready <= '1';
 	end process;
 
-	process begin
-		wait on sp_write='1' and step="01" and m00_axi_bresp and m00_axi_aclk='1'; --???? no idea if this is correct
-			if m00_axi_bresp="00" then
-				taddress <= taddress + 2; --ready address to be correct
-				step <= "10"; --next step
-				m00_axi_wdata <= x"0000" & thalfword_0; --set data
-				m00_axi_awvalid <= '1'; --signal address is valid
-				m00_axi_wvalid <= '1'; --signal data is valid
-			else -- "10" transaction failure, "11" incorrect slave address
-				sp_error <= '1';
-			end if;
+	process(m00_axi_bresp) --process responses (for both thalfword_1 and thalfword_0)
+	begin
+	   if sp_write='1' and step="01" and rising_edge(m00_axi_aclk) then
+        if m00_axi_bresp="00" then
+            taddress <= taddress + 2; --ready address to be correct
+            step <= "10"; --next step
+            m00_axi_wdata <= x"0000" & thalfword_0; --set data
+            m00_axi_awvalid <= '1'; --signal address is valid
+            m00_axi_wvalid <= '1'; --signal data is valid
+        else -- "10" transaction failure, "11" incorrect slave address
+            sp_error <= '1';
+        end if;
+	   elsif sp_write='1' and step="10" and rising_edge(m00_axi_aclk) then
+        if m00_axi_bresp="00" then
+            step <= "11"; --done
+            sp_over <= '1';
+        else -- "10" transaction failure, "11" incorrect slave address
+            sp_error <= '1';
+        end if;
+	   end if;
 	end process;
 
 	--write thalfword_0
@@ -319,15 +332,7 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 			m00_axi_bready <= '1';
 	end process;
 
-	process begin
-		wait on sp_write='1' and step="10" and m00_axi_bresp and m00_axi_aclk='1'; --???? no idea if this is correct
-			if m00_axi_bresp="00" then
-				step <= "11"; --done
-				sp_over='1';
-			else -- "10" transaction failure, "11" incorrect slave address
-				sp_error <= '1';
-			end if;
-	end process;
+	--process response is above
 
 	-- User logic ends
 
