@@ -199,6 +199,13 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 	m00_axi_arprot <= "010" -- data, non-secure, unprivileged
 	m00_axi_awprot <= "010" -- data, non-secure, unprivileged
 
+	process(sp_error) begin
+		if sp_error='1' then
+			--SCREAM HELP
+		end if;
+	end process;
+
+
 --this code is awful and probably incorrect
 	process(m00_axi_aresetn, sp_read, sp_write)
 	begin
@@ -239,7 +246,7 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 				sp_error <= '1'; --is there a way to process sp_error=1 in a single place?
 			end if;
 		elsif sp_data='0' and sp_write='0' and m00_axi_aresetn='1' then
-			step = '00'; --ready to read data again
+			step = '00'; --ready to process a request for Smallpond
 			--other things here?
 		else --do nothing
 			--de-initialize things here as well???
