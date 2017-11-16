@@ -196,8 +196,8 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 	-- Add user logic here
 
 	--set protections
-	m00_axi_arprot <= "010" -- data, non-secure, unprivileged
-	m00_axi_awprot <= "010" -- data, non-secure, unprivileged
+	m00_axi_arprot <= "010"; -- data, non-secure, unprivileged
+	m00_axi_awprot <= "010"; -- data, non-secure, unprivileged
 
 	process(sp_error) begin
 		if sp_error='1' then
@@ -350,7 +350,7 @@ smallpond_axi4_v0_1_M00_AXI_inst : smallpond_axi4_v0_1_M00_AXI
 	process begin
 		wait on sp_write='1' and step="01" and m00_axi_bresp and m00_axi_aclk='1'; --???? no idea if this is correct
 			if m00_axi_bresp="00" then
-				taddress <= taddress+2; --ready address to be correct
+				taddress <= taddress + 2; --ready address to be correct
 				step <= "10"; --next step
 				m00_axi_wdata <= x"0000" & thalfword_0; --set data
 				m00_axi_awvalid <= '1'; --signal address is valid
