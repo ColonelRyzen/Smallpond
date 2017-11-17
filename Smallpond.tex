@@ -9,6 +9,7 @@
 \author{Zachary Salim, Dominique Hickson,\\ Andrew Balys, Justin Charlong}
 \date{September 2017}
 
+
 %MADE PARAGRAPH ANOTHER SECTION LEVEL
 %MADE SUBPARAGRAPH ANOTHER SECTION LEVEL
 %\makeatletter
@@ -43,12 +44,39 @@
 
 \maketitle
 
+%\begin{center}
+%    \includegraphics[width=15cm, height=11.6cm]{Volty.png}
+%\end{center}
+
 \newpage
 \tableofcontents
 
 \newpage
 \section{Introduction}
+Smallpind is a fully custom 32 bit RISC CPU designed by Zachary Salim, Dominique Hickson, Andrew Balys and Justin Charlong under the guidance of Dr. Kris Schindler as a part of CSE 490 Computer Architecture in the Fall of 2017. This architecture contains our favorite features from the MIPS 2000/3000 and ARM 7 TDMI processors as well as some new features including, but not limited to, multiple instruction types, 32 general purpose registers, condition codes for most instructions, a CPSR and many more.
+    \subsection{Purpose}
+    Smallpond was developed as a way to provide the Computer Architecture (CSE 490) and the Compilers (CSE 443) students a way to work together. This architecture will be the target for the compiler's students work. The hope is for this architecture to be used in many more courses. Eventually seeing a custom operating system (developed by the OS students), Computer Organization (CSE 341) students studying and writing assembly for Smallpond, Intro to Microprocessors (CSE 379) students writing large assembly programs and studying/discussing the features and possible improvements of Smallpond, and finally Computer Architecture (CSE 490) students implementing improvements via new revisions of the architecture. 
+    
+    \subsection{Naming}
+    You are probably wondering "Why Smallpond? That doesn't make any sense at all for an architecture name." There is a meaning behind the name and it will all make sense in a moment. To start, credit for the name goes to Jeremy Pettrot and Andrew Balys. They each came up with half of the name itself. The idea came from Intel's naming scheme for their Skylake, Kabylake and Coffelake CPU lines. All they did was change the first half of the word for each new generation. We wanted a name that could do the same thing. This is when Jeremy suggested "pond" because this is a RISC architecture (smaller than CISC) and a pond is smaller than a lake. When Andrew hear about Jeremy's suggestion he suggested "small" because it was our first revision and it could be expanded upon later i.e "Mediumpond" etc.
+\newpage
 
+\section{Continuation}
+Since I (Zack) own the repository on GitHub I will not be able to just pass it on to the next round of students. I would like to keep the working first revision of Smallpond protected in it's final state in that repository. My idea for future expansion and addition to the repository is to fork of the existing one as a new revision e.g "Smallpond Rev B". Small feature additions would only merit a revision increase (A to B, B to C), whereas a large (pipe-lining the architecture) could be a new generation ("Mediumpond").
+
+    \subsection{Potential Future Features}
+    Here are some of the potential features (in no particular order) we thought might be good additions to Smallpond in the future.\\
+    \begin{itemize}
+        \item Pipe-lining
+        \item UART communication
+        \item Interrupts
+        \item Exceptions
+        \item Timers
+        \item Basic Cache using fast-block RAM on FPGA
+        \item GPU co-processor (another board or on-chip)
+        \item Multi-Core CPU
+    \end{itemize}
+    
 \newpage
 
 \section{Smallpond Programming Model}
@@ -72,6 +100,44 @@
    \end{itemize}
    
    \noindent\rule{4cm}{0.3pt}
+   
+   \subsection{Condition Codes}   \begin{center}
+   \begin{tabular}{|p{1.2cm}|p{2cm}|p{5.0cm}|}
+        \hline
+        \textbf{Cond.} & \textbf{Code} & \textbf{Meaning}\\
+        \hline
+        AL & 0000 & Always\\
+        \hline
+        EQ & 0001 & Equal\\
+        \hline
+        NE & 0010 & Not equal\\
+        \hline
+        CA & 0011 & Carry set\\
+        \hline
+        CC & 0100 & Carry clear\\
+        \hline
+        NG & 0101 & Negative\\
+        \hline
+        PZ & 0110 & Positive or zero\\
+        \hline
+        VS & 0111 & Overflow set\\
+        \hline
+        VC & 1000 & Overflow clear\\
+        \hline
+        HI & 1001 & Unsigned higher\\
+        \hline
+        LS & 1010 & Unsigned lower or same\\
+        \hline
+        GE & 1011 & Signed greater than or equal\\
+        \hline
+        LT & 1100 & Signed less than\\
+        \hline
+        GT & 1101 & Signed greater than\\
+        \hline
+        LE & 1110 & Signed less than or equal\\
+        \hline
+   \end{tabular}
+   \end{center}
    \newpage
    
    \subsection{Registers and Register Conventions}
@@ -93,29 +159,29 @@
         \hline
         R2 & Arg\_1 & R18 &Saved\\
         \hline
-        R3 & Arg\_2 & R19 &Saved\\
+        R3 & Arg\_2 & R19 &Pos/Neg\\
         \hline
-        R4 & Arg\_3 & R20 &Saved\\
+        R4 & Arg\_3 & R20 &Neg/Pos\\
         \hline
-        R5 & Temp & R21 &Saved\\
+        R5 & Temp & R21 &+ Counter\\
         \hline
-        R6 & Temp. & R22 &Positive\\
+        R6 & Temp. & R22 &- Counter\\
         \hline
-        R7 & Temp. & R23 &Negative\\
+        R7 & Temp. & R23 &HP\\
         \hline
-        R8 & Temp. & R24 &+ Counter\\
+        R8 & Temp. & R24 &FP\\
         \hline
-        R9 & Temp. & R25 &- Counter\\
+        R9 & Temp. & R25 &SP\\
         \hline
-        R10 & Temp. & R26 &FP\\
+        R10 & Temp. & R26 &LR\_0\\
         \hline
-        R11 & Temp. & R27 &SP\\
+        R11 & Temp. & R27 &LR\_1\\
         \hline
-        R12 & Temp. & R28 &LR\_0\\
+        R12 & Temp. & R28 &LR\_2\\
         \hline
-        R13 & Temp. & R29 &LR\_1\\
+        R13 & Saved & R29 &LR\_3\\
         \hline
-        R14 & Temp. & R30 & PC\\
+        R14 & Saved & R30 & PC\\
         \hline
         R15 & Saved & R31 & CPSR\\
         \hline
@@ -129,25 +195,28 @@
         Registers 1-4 (R1, R2, R3, R4) should be used to pass arguments into and out of subroutines.
         
     \subsubsection{Temporary Registers}
-        Registers 5-14 (R5, R6, R7, R8, R9, R10, R11, R12, R13, R14) are temporary registers (scratch registers). They should be used for general calculations and for storing temporary results. Their contents need not be preserved across subroutine calls.
+        Registers 5-12 (R5, R6, R7, R8, R9, R10, R11, R12) are temporary registers (scratch registers). They should be used for general calculations and for storing temporary results. Their contents need not be preserved across subroutine calls.
         
     \subsubsection{Save Registers}
-        Registers 15-21 (R15, R16, R17, R18, R19, R20, R21) are save registers which should be used to save results. These registers' values should be preserved across subroutine calls. If the values are modified in a subroutine their values should be returned before exiting the subroutine.
+        Registers 13-18 (R13, R14, R15, R16, R17, R18) are save registers which should be used to save results. These registers' values should be preserved across subroutine calls. If the values are modified in a subroutine their values should be returned before exiting the subroutine.
         
-    \subsubsection{Positive/Negative Pair Registers}
-        Registers 22 and 23 (R22, R23) are a positive/negative pair. Any value stored into register 22 will update register 23 with the 2's complement of register 22. Storing to register 23 will update register 22 with the 2's complement of register 23. Conventionally register 22 should contain a positive value and register 23 should be a negative number.
+    \subsubsection{2's Complement Pair Registers}
+        Registers 19 and 20 (R19, R20) are a positive/negative pair. Any value stored into register 19 will update register 20 with the 2's complement of register 22. Storing to register 20 will update register 22 with the 2's complement of register 20.
         
     \subsubsection{Counter Registers}
-        Registers 24 and 25 (R24, R25) are counter registers. Writing a value to either register will write to both registers. Activating the counter through the 'C' flag in a command will increment register 24 by 1, and decrement register 25 by 1.
+        Registers 21 and 22 (R21, R22) are counter registers. Writing a value to either register will write to both registers. Activating the counter through the 'C' flag in a command will increment register 21 by 1, and decrement register 22 by 1.
+        
+    \subsubsection{Heap Pointer Register}
+        Register 23 (R23) is the heap pointer register. It should be maintained as a constant reference to the heap.
         
     \subsubsection{Frame Pointer Register}
-        Register 26 (R26) is the frame pointer register. It should be maintained as a constant reference to the stack.
+        Register 24 (R24) is the frame pointer register. It should be maintained as a constant reference to the stack.
         
     \subsubsection{Stack Pointer Register}
-        Register 27 (R27) is the stack pointer register. It should be maintained as a reference to the stack.
+        Register 25 (R25) is the stack pointer register. It should be maintained as a reference to the stack.
         
     \subsubsection{Link Registers}
-        Registers 28 and 29 (R28, R29) are the link registers. The link registers are used with the branch and link (BL) command as well as the branch and return command (BR). The link registers contain information as to how many subroutines the program has entered. When first branching and linking link register 0, register 28 (R28), will be updated to contain the current program counter (PC) + 4, the location of the next instruction were the branch not to have occurred. When determining how many subroutines have been entered, i.e. which link register to write to, register 28 will be checked to see if it contains a 0xFFFFFFFF, which is the invalid code. On startup, both link registers will be invalid, i.e. contain the invalid code. When branching and linking, if register 28 does not contain the invalid code, i.e. a branch has already occurred, then register 29 is updated with the PC+4. This allows for 2 BL commands to be executed without needing to store any of the link registers to the stack. When traversing more than 2 subroutines deep, register 29 should be stored to the stack first. When branching and returning, register 29 will always be checked first, if it is valid (does not contain the invalid code), the PC will be updated with its value and register 29 will be invalidated. If register 29 is already invalid, the PC will be updated with register 28 and register 28 will be invalidated. It is up to the user to make sure that BR is not used when both link registers are invalid, and up to the user to ensure that when branching and linking more than 2 times that the link registers are maintained properly.
+        Link registers are meant to be used in the order 0 to 3 when storing and from 3 to 0 when restoring. This is only a software convention
         
     \subsubsection{Program Counter Register}
         Register 30 (R30) is the program counter. It contains a reference to the next instruction's address in memory.
@@ -172,16 +241,16 @@
 \subsection{Instruction Types}
     The Smallpond architecture has 4 instruction types: A type, I type, J type, and B type. The A type instructions utilize up to 2 input registers and output the result into a third register. The I type instructions perform on 1 input register with immediate data and output the result into a second register. The J type instruction is used in conjunction with an immediate to change the program counter. The B type instructions also use immediate data to change the program counter however they can do so conditionally. This section outlines the Smallpond architecture's instructions by instruction type. The four types are outlined below:\\
 
-    % A Type
+    % R Type
     %Start of the instruction layout table
     \begin{center}
-        A type:\\
+        R type:\\
         \vspace{1em}
-        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{0.3cm}|p{0.3cm}|p{1.5cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \textbf{Inst.} & \textbf{RD}& \textbf{RS1} & \textbf{RS2} & \textbf{S} & \textbf{C} & ??? & \textbf{Cond.}\\
             \hline
-            31:26& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            31:26& 25:21 & 20:16 & 15:11 & 10 & 9 & 8:4 &3:0\\
             \hline
         \end{tabular}
     \end{center}
@@ -194,7 +263,7 @@
         \vspace{1em}
         \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{6.8cm}| }
             \hline
-            \textbf{Inst.} & \textbf{RD} &  \textbf{RS} & \textbf{Immediate}\\
+            \textbf{Inst.} & \textbf{RD} &  \textbf{RS1} & \textbf{Immediate}\\
             \hline
             31:26& 25:21 & 20:16 &15:0\\
             \hline
@@ -222,11 +291,11 @@
     \begin{center}
         Branch type:\\
         \vspace{1em}
-        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{.3cm}|p{.3cm}|p{.3cm}|p{6.5cm}| }
+        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{.3cm}|p{6.5cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{Cond} &  \textbf{C} & \textbf{L}&\textbf{R}&\textbf{Immediate}\\
+            \textbf{Inst.} & \textbf{C} &  \textbf{L} & \textbf{R}&\textbf{Immediate}&\textbf{Cond.}\\
             \hline
-            31:26& 25:22 & 21 & 0 & 0 &18:0\\
+            31:26& 25 & 24 & 23 & 22:4 &3:0\\
             \hline
         \end{tabular}
     \end{center}
@@ -250,12 +319,12 @@
     \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
     \vspace{-.25cm}
     %Start of the instruction layout table
-    \begin{center}
-        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+       \begin{center}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{0.3cm}|p{0.3cm}|p{1.5cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \textbf{Inst.} & \textbf{RS}& \textbf{RT} & \textbf{RD} & \textbf{S} & \textbf{C} & \textbf{Cond.} & ???\\
             \hline
-            000001& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            000001& 25:21 & 20:16 & 15:11 & 10 & 9 & 8:5 &4:0\\
             \hline
         \end{tabular}
     \end{center}
@@ -311,12 +380,13 @@
     \hspace{1.6cm}31 \hspace{1.2cm}26 \hspace{.075cm}25 \hspace{.15cm}24 \hspace{.075cm}23 \hspace{.875cm}20 \hspace{.04cm}19 \hspace{.8cm}15 \hspace{.04cm}14 \hspace{.8cm}10 \hspace{.04cm}9 \hspace{1.15cm}5 \hspace{.04cm}4 \hspace{1.25cm}0
     \vspace{-.25cm}
     %Start of the instruction layout table
-    \begin{center}
-        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+        \begin{center}
+        \vspace{1em}
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{0.3cm}|p{0.3cm}|p{1.5cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \textbf{Inst.} & \textbf{RS}& \textbf{RT} & \textbf{RD} & \textbf{S} & \textbf{C} & \textbf{Cond.} & ???\\
             \hline
-            000010& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            000010& 25:21 & 20:16 & 15:11 & 10 & 9 & 8:5 &4:0\\
             \hline
         \end{tabular}
     \end{center}
@@ -375,11 +445,11 @@
     \vspace{-.25cm}
     %Start of the instruction layout table
     \begin{center}
-        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{0.3cm}|p{0.3cm}|p{1.5cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \textbf{Inst.} & \textbf{RS}& \textbf{RT} & \textbf{RD} & \textbf{S} & \textbf{C} & \textbf{Cond.} & ???\\
             \hline
-            000011& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            000011& 25:21 & 20:16 & 15:11 & 10 & 9 & 8:5 &4:0\\
             \hline
         \end{tabular}
     \end{center}
@@ -438,11 +508,11 @@
     \vspace{-.25cm}
     %Start of the instruction layout table
     \begin{center}
-        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{0.3cm}|p{0.3cm}|p{1.5cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \textbf{Inst.} & \textbf{RS}& \textbf{RT} & \textbf{RD} & \textbf{S} & \textbf{C} & \textbf{Cond.} & ???\\
             \hline
-            000100& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            000100& 25:21 & 20:16 & 15:11 & 10 & 9 & 8:5 &4:0\\
             \hline
         \end{tabular}
     \end{center}
@@ -501,11 +571,11 @@
     \vspace{-.25cm}
     %Start of the instruction layout table
     \begin{center}
-        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{0.3cm}|p{0.3cm}|p{1.5cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \textbf{Inst.} & \textbf{RS}& \textbf{RT} & \textbf{RD} & \textbf{S} & \textbf{C} & \textbf{Cond.} & ???\\
             \hline
-            000101& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            000101& 25:21 & 20:16 & 15:11 & 10 & 9 & 8:5 &4:0\\
             \hline
         \end{tabular}
     \end{center}
@@ -564,11 +634,11 @@
     \vspace{-.25cm}
     %Start of the instruction layout table
     \begin{center}
-        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+        \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{0.3cm}|p{0.3cm}|p{1.5cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & \textbf{RS}\\
+            \textbf{Inst.} & \textbf{RS}& \textbf{RT} & \textbf{RD} & \textbf{S} & \textbf{C} & \textbf{Cond.} & ???\\
             \hline
-            000110& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
+            000110& 25:21 & 20:16 & 15:11 & 10 & 9 & 8:5 &4:0\\
             \hline
         \end{tabular}
     \end{center}
@@ -2173,8 +2243,7 @@
     
     \paragraph{Syntax}
     \begin{flushleft}
-    BR\{cond\}\{C\} target\_address\\%Instead of label shouldn't this be an immediate? Assembler would technically determine address of a label I think. Not 100% sure -Justin
-    % i put target address in there like how Arm has it except i cant figure out how to print a < and a > char #newbie
+    BR\{cond\}\{C\} \\
     \vspace{1em}        %Gives new line
     where:\\
     \vspace{1em}
@@ -2199,7 +2268,7 @@
     \begin{flushleft}
     To conditionally change the PC \\
     \vspace{1em}
-    BR \textit{label} 
+    BR
     \end{flushleft}
 
 %END OF BR INSTRUCTION
