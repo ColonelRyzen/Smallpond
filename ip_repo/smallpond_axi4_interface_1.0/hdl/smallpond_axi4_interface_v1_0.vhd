@@ -152,7 +152,6 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 --this code is awful and probably incorrect
 --things to fix:
 ---need solution to trying to read from outputs (checking steps)
----need solution to adding 2 to address
 
 	process(m00_axi_aresetn, sp_read, sp_write)
 	begin
