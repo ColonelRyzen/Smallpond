@@ -2,8 +2,6 @@
 ##	This is an example .gitignore file for Vivado, please treat it as an example as 
 ##	it might not be complete. In addition, XAPP 1165 should be followed.
 #########################################################################################################
-#Atom Excludes
-*.cache
 #########
 #Exclude all
 #########
@@ -13,6 +11,10 @@
 ###########################################################################
 ##	VIVADO
 ###########################################################################
+#########
+#Cache Directory
+#########
+/**/*.cache
 #########
 #Source files:
 #########
