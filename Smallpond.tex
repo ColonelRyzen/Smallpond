@@ -102,39 +102,43 @@ Since I (Zack) own the repository on GitHub I will not be able to just pass it o
    \noindent\rule{4cm}{0.3pt}
    
    \subsection{Condition Codes}   \begin{center}
-   \begin{tabular}{|p{1.2cm}|p{2cm}|p{5.0cm}|}
+   \begin{tabular}{|p{1.2cm}|p{1.2cm}|p{5.0cm}|p{7.0cm}|}
         \hline
-        \textbf{Cond.} & \textbf{Code} & \textbf{Meaning}\\
+        \textbf{Cond.} & \textbf{Code} & \textbf{Meaning} & \textbf{cond. Flag State}\\
         \hline
-        AL & 0000 & Always\\
+        AL & 0000 & Always & Unconditional\\
         \hline
-        EQ & 0001 & Equal\\
+        EQ & 0001 & Equal & Z set\\
         \hline
-        NE & 0010 & Not equal\\
+        NE & 0010 & Not equal & Z clear\\
         \hline
-        CA & 0011 & Carry set\\
+        CA & 0011 & Carry set & C set\\
         \hline
-        CC & 0100 & Carry clear\\
+        CC & 0100 & Carry clear & C clear\\
         \hline
-        NG & 0101 & Negative\\
+        NG & 0101 & Negative & N set\\
         \hline
-        PZ & 0110 & Positive or zero\\
+        PZ & 0110 & Positive or zero & N clear\\
         \hline
-        VS & 0111 & Overflow set\\
+        VS & 0111 & Overflow set & V set\\
         \hline
-        VC & 1000 & Overflow clear\\
+        VC & 1000 & Overflow clear & V clear\\
         \hline
-        HI & 1001 & Unsigned higher\\
+        HI & 1001 & Unsigned higher & C set and Z clear\\
         \hline
-        LS & 1010 & Unsigned lower or same\\
+        LS & 1010 & Unsigned lower or same & C clear and Z set\\
         \hline
-        GE & 1011 & Signed greater than or equal\\
+        GE & 1011 & Signed greater than or equal & N set and V set,\newline
+        or N clear and V clear (N==V)\\
         \hline
-        LT & 1100 & Signed less than\\
+        LT & 1100 & Signed less than & N set and V clear,\newline
+        or N clear and V set (N!=V)\\
         \hline
-        GT & 1101 & Signed greater than\\
+        GT & 1101 & Signed greater than & Z clear, and either N set and V set, or\newline
+        N clear and V clear (Z==0,N==V)\\
         \hline
-        LE & 1110 & Signed less than or equal\\
+        LE & 1110 & Signed less than or equal & Z set, or either N set and V clear, or\newline
+        N clear and V set (Z==1 or N!=V)\\
         \hline
    \end{tabular}
    \end{center}
@@ -222,16 +226,17 @@ Since I (Zack) own the repository on GitHub I will not be able to just pass it o
         Register 30 (R30) is the program counter. It contains a reference to the next instruction's address in memory.
         
     \subsubsection{Current Program Status Register}
-        %\begin{center}
-        %\begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}| }
-        %    \hline
-        %    \textbf{Inst.} & \textbf{S}& \textbf{C} & \textbf{Cond.} & ??? & \textbf{RD} & \textbf{RT} & %\textbf{RS}\\
-        %    \hline
-        %    31:26& 25 & 24 & 24:20 & 19:15 & 14:10 & 9:5 & 4:0\\
-        %    \hline
-        %\end{tabular}
-        %\end{center}
-        %\vspace{.5em}
+        \begin{center}
+        \begin{tabular}{
+        |p{10.6cm}|p{0.3cm}|p{0.3cm}|p{0.3cm}|p{0.3cm}|}
+            \hline
+            \textbf{Unused} & \textbf{N} & \textbf{Z} & \textbf{C} & \textbf{V}\\
+            \hline
+            31:4 & 3 & 2 & 1 & 0\\
+            \hline
+        \end{tabular}
+        \end{center}
+        \vspace{.5em}
         Register 31 (R31) is the current program status register (CPSR). The CPSR contains information as to the status of the processor. It can be used to make decisions and is referred to by programs which make use of conditions. The 'S' flag in an instruction is used to set the CPSR and update its values based on the instruction's results..
     
 
@@ -248,7 +253,7 @@ Since I (Zack) own the repository on GitHub I will not be able to just pass it o
         \vspace{1em}
         \begin{tabular}{ |p{1.8cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{0.3cm}|p{0.3cm}|p{1.5cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{RD}& \textbf{RS1} & \textbf{RS2} & \textbf{S} & \textbf{C} & ??? & \textbf{Cond.}\\
+            \textbf{Inst.} & \textbf{RD}& \textbf{RS1} & \textbf{RS2} & \textbf{S} & \textbf{C} & Unused & \textbf{Cond.}\\
             \hline
             31:26& 25:21 & 20:16 & 15:11 & 10 & 9 & 8:4 &3:0\\
             \hline
@@ -291,11 +296,11 @@ Since I (Zack) own the repository on GitHub I will not be able to just pass it o
     \begin{center}
         Branch type:\\
         \vspace{1em}
-        \begin{tabular}{ |p{1.8cm}|p{.3cm}|p{.3cm}|p{.3cm}|p{6.5cm}|p{1.5cm}| }
+        \begin{tabular}{|p{1.8cm}|p{.3cm}|p{8.1cm}|p{1.5cm}| }
             \hline
-            \textbf{Inst.} & \textbf{C} &  \textbf{L} & \textbf{R}&\textbf{Immediate}&\textbf{Cond.}\\
+            \textbf{Inst.} & \textbf{C} &\textbf{Immediate}&\textbf{Cond.}\\
             \hline
-            31:26& 25 & 24 & 23 & 22:4 &3:0\\
+            31:26& 25  & 22:4 &3:0\\
             \hline
         \end{tabular}
     \end{center}
