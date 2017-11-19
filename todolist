@@ -1,8 +1,0 @@
-Only "important" file is:
-ip_repo/smallpond_axi4_interface_1.0/hdl/smallpond_axi4_interface_v1_0.vhd
-
-Things to do:
--Fix the VHDL code in the file
--fix adding 2 to address (change std_logic_vector to integer, add, change back)
--solution to keep track of state (cannot read from outputs)
-

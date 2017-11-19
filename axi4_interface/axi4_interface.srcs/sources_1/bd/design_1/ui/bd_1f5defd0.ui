@@ -28,7 +28,7 @@ preplace netloc axi_interconnect_0_M00_AXI 1 2 1 640
 preplace netloc axi_interconnect_0_M01_AXI 1 2 1 660
 preplace netloc axi_gpio_1_GPIO 1 3 1 N
 preplace netloc axi_interconnect_0_M03_AXI 1 2 1 650
-levelinfo -pg 1 -30 160 490 790 940 -top -640 -bot 280
+levelinfo -pg 1 -30 160 490 790 950 -top -640 -bot 280
 ",
 }
-
+0

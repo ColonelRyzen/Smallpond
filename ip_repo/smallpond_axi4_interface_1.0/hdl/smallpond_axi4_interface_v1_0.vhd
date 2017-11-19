@@ -239,7 +239,7 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 				elsif sp_op_len = "10" then --already read 2 bytes, read 2 more
 					step <= "10";
 					--read 2 more bytes
-					taddress <= taddress+2; --next address to read
+					taddress <= std_logic_vector(unsigned(taddress)+2); --next address to read
 					m00_axi_arvalid <= '1'; --assert read_address_valid
 					--wait for next rising clock edge and read_address_ready
 				else
@@ -298,7 +298,7 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 	begin
 	   if sp_write='1' and step="01" and rising_edge(m00_axi_aclk) then
         if m00_axi_bresp="00" then
-            taddress <= taddress + 2; --ready address to be correct
+            taddress <= std_logic_vector(unsigned(taddress)+2); --ready address to be correct
             step <= "10"; --next step
             m00_axi_wdata <= x"0000" & thalfword_0; --set data
             m00_axi_awvalid <= '1'; --signal address is valid
