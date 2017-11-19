@@ -2369,7 +2369,7 @@ begin
                         counter_bit_out <= counter_bit_in;
                         cpsr_set_bit_out <= cpsr_set_bit_in;
                         alu_src_out <= '0';
-                        alu_op_out 00110011";
+                        alu_op_out "0011";
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
