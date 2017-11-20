@@ -2613,8 +2613,9 @@ begin
                 mem_write_out <= '0';
                 mem_to_reg_out <= '1';
 
+
                 -- EQ (Equal) - Z set
-                elsif condition_code_in = "0001" then
+                if condition_code_in = "0001" then
                     if cpsr_bits_in(2) = '0' then
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
