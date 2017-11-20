@@ -150,9 +150,6 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 	m00_axi_awprot <= "010"; -- data, non-secure, unprivileged
 
 --this code is awful and probably incorrect
---things to fix:
----need solution to trying to read from outputs (checking steps)
-
 	process(m00_axi_aresetn, sp_read, sp_write)
 	begin
 		taddress <= sp_addr;
