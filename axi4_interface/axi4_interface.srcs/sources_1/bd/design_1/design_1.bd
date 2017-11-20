@@ -51,25 +51,6 @@
         <spirit:abstractionType spirit:library="interface" spirit:name="gpio_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
       </spirit:busInterface>
       <spirit:busInterface>
-        <spirit:name>CLK.CLK_REF_I</spirit:name>
-        <spirit:displayName>Clk</spirit:displayName>
-        <spirit:description>Clock</spirit:description>
-        <spirit:busType spirit:library="signal" spirit:name="clock" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:abstractionType spirit:library="signal" spirit:name="clock_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:slave/>
-        <spirit:portMaps>
-          <spirit:portMap>
-            <spirit:logicalPort>
-              <spirit:name>CLK</spirit:name>
-            </spirit:logicalPort>
-            <spirit:physicalPort>
-              <spirit:name>clk_ref_i</spirit:name>
-            </spirit:physicalPort>
-          </spirit:portMap>
-        </spirit:portMaps>
-        <spirit:parameters/>
-      </spirit:busInterface>
-      <spirit:busInterface>
         <spirit:name>CLK.SYS_CLOCK</spirit:name>
         <spirit:displayName>Clk</spirit:displayName>
         <spirit:description>Clock</spirit:description>
@@ -131,12 +112,6 @@
         </spirit:view>
       </spirit:views>
       <spirit:ports>
-        <spirit:port>
-          <spirit:name>clk_ref_i</spirit:name>
-          <spirit:wire>
-            <spirit:direction>in</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
         <spirit:port>
           <spirit:name>sys_clock</spirit:name>
           <spirit:wire>
@@ -230,7 +205,7 @@
         <spirit:instanceName>rst_clk_wiz_0_100M</spirit:instanceName>
         <spirit:componentRef spirit:library="ip" spirit:name="proc_sys_reset" spirit:vendor="xilinx.com" spirit:version="5.0"/>
         <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_rst_clk_wiz_0_100M_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_rst_clk_wiz_0_100M_1</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="USE_BOARD_FLOW">true</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="RESET_BOARD_INTERFACE">reset</spirit:configurableElementValue>
         </spirit:configurableElementValues>
@@ -265,40 +240,26 @@
     </spirit:interconnections>
     <spirit:adHocConnections>
       <spirit:adHocConnection>
-        <spirit:name>clk_ref_i_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="clk_ref_i"/>
-        <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="clk_ref_i"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>sys_clock_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="sys_clock"/>
         <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="clk_in1"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>reset_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="reset"/>
-        <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="reset"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="S00_ARESETN"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="ARESETN"/>
-        <spirit:internalPortReference spirit:componentRef="smallpond_axi4_interface_0" spirit:portRef="m00_axi_aresetn"/>
-        <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="sys_rst"/>
-        <spirit:internalPortReference spirit:componentRef="rst_clk_wiz_0_100M" spirit:portRef="ext_reset_in"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>clk_wiz_0_clk_out1</spirit:name>
         <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="clk_out1"/>
-        <spirit:internalPortReference spirit:componentRef="smallpond_axi4_interface_0" spirit:portRef="m00_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="S00_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M00_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="sys_clk_i"/>
         <spirit:internalPortReference spirit:componentRef="rst_clk_wiz_0_100M" spirit:portRef="slowest_sync_clk"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="S00_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="smallpond_axi4_interface_0" spirit:portRef="m00_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M01_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="axi_uartlite_0" spirit:portRef="s_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M02_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="axi_gpio_0" spirit:portRef="s_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M03_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="axi_gpio_1" spirit:portRef="s_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="clk_ref_i"/>
+        <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="sys_clk_i"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>clk_wiz_0_locked</spirit:name>
@@ -306,16 +267,30 @@
         <spirit:internalPortReference spirit:componentRef="rst_clk_wiz_0_100M" spirit:portRef="dcm_locked"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
+        <spirit:name>rst_clk_wiz_0_100M_interconnect_aresetn</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="rst_clk_wiz_0_100M" spirit:portRef="interconnect_aresetn"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="ARESETN"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
         <spirit:name>rst_clk_wiz_0_100M_peripheral_aresetn</spirit:name>
         <spirit:internalPortReference spirit:componentRef="rst_clk_wiz_0_100M" spirit:portRef="peripheral_aresetn"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="S00_ARESETN"/>
+        <spirit:internalPortReference spirit:componentRef="smallpond_axi4_interface_0" spirit:portRef="m00_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M00_ARESETN"/>
-        <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="aresetn"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M01_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_uartlite_0" spirit:portRef="s_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M02_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_gpio_0" spirit:portRef="s_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M03_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_gpio_1" spirit:portRef="s_axi_aresetn"/>
+        <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="aresetn"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>reset_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="reset"/>
+        <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="sys_rst"/>
+        <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="reset"/>
+        <spirit:internalPortReference spirit:componentRef="rst_clk_wiz_0_100M" spirit:portRef="ext_reset_in"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>
