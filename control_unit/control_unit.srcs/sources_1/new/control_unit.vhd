@@ -3114,101 +3114,302 @@ begin
             -- Addition Immediate - 'ADDI'
     -------------------------------------------------------------
             when "011000" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Logical And Immediate - 'ANDI'
     -------------------------------------------------------------
             when "011001" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0000";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Arithmatic Shift Right Immediate - 'ASRI'
     -------------------------------------------------------------
             when "011010" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "1010";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Load - 'LDR'
     -------------------------------------------------------------
             when "011011" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '1';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '0';
     -------------------------------------------------------------
             -- Load Byte - 'LDRB'
     -------------------------------------------------------------
             when "011100" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '1';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '0';
     -------------------------------------------------------------
             -- Load Byte Unsigned - 'LDRBU'
     -------------------------------------------------------------
             when "011101" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '1';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '0';
     -------------------------------------------------------------
             -- Load Halfword - 'LDRH'
     -------------------------------------------------------------
             when "011110" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '1';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '0';
     -------------------------------------------------------------
             -- Load Halfword Unsigned - 'LDRHU'
     -------------------------------------------------------------
             when "011111" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '1';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '0';
     -------------------------------------------------------------
             -- Logical Shift Left Immediate - 'LSLI'
     -------------------------------------------------------------
             when "100000" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "1000";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Logical Shift Right Immediate - 'LSRI'
     -------------------------------------------------------------
             when "100001" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "1001";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Load Upper Immediate - 'LUI'
     -------------------------------------------------------------
             when "100010" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0001";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Logical Nand Immediate - 'NANDI'
     -------------------------------------------------------------
             when "100011" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0011";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Logical Nor Immediate - 'NORI'
     -------------------------------------------------------------
             when "100100" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0100";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Logical Or Immediate - 'ORI'
     -------------------------------------------------------------
             when "100101" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0010";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Store - 'STR'
     -------------------------------------------------------------
             when "100110" =>
-
+                reg_write_out <= '0';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '1';
+                mem_to_reg_out <= '0';
     -------------------------------------------------------------
             --Store Byte - 'STRB'
     -------------------------------------------------------------
             when "100111" =>
-
+                reg_write_out <= '0';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '1';
+                mem_to_reg_out <= '0';
     -------------------------------------------------------------
             -- Store Halfword - 'STRH'
     -------------------------------------------------------------
             when "101000" =>
-
+                reg_write_out <= '0';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '1';
+                mem_to_reg_out <= '0';
     -------------------------------------------------------------
             -- Subtract Immediate - 'SUBI'
     -------------------------------------------------------------
             when "101001" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0111";
+                sub_out <= '1';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Logical Exclusive Nor Immediate - 'XNORI'
     -------------------------------------------------------------
             when "101010" =>
-
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0110";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
     -------------------------------------------------------------
             -- Logical Exclusive Or Immediate - 'XORI'
     -------------------------------------------------------------
             when "101011" =>
+                reg_write_out <= '1';
+                counter_bit_out <= '0';
+                cpsr_set_bit_out <= '0';
+                alu_src_out <= '1';
+                alu_op_out <= "0101";
+                sub_out <= '0';
+                pc_src_out <= '0';
+                jump_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+                mem_to_reg_out <= '1';
 
 --########################################################################################################--
         -- End 'I' type
