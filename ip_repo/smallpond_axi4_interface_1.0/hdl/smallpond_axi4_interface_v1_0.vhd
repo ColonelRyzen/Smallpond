@@ -102,8 +102,7 @@ architecture arch_imp of smallpond_axi_v1_0 is
     signal thalfword_0 : std_logic_vector(15 downto 0) := x"00000000"; --temp halfword 0
     signal thalfword_1 : std_logic_vector(15 downto 0) := x"00000000"; --temp halfword 1
     signal taddress : std_logic_vector(31 downto 0) := x"00000000"; --temp address
-    signal step : std_logic_vector(3 downto 0) := "0000";--current step
-        --0000 for ready, 1111 for done
+    signal step : std_logic_vector(3 downto 0) := "0000";--current step: 0000 for ready, 1111 for done
 
 begin
 
@@ -152,9 +151,7 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 --this code is awful and probably incorrect
 	process(m00_axi_aresetn, sp_read, sp_write)
 	begin
-		taddress <= sp_addr;
 		if m00_axi_aresetn = '0' then --RESET
-			--reset?
 			m00_axi_arvalid <= '0';
 			m00_axi_rready <= '0';
 			m00_axi_wstrb <= x"0";
@@ -165,26 +162,32 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 			step <= "0000";
 			sp_over <= '0';
 		elsif sp_read='1' and step="0000" then --READ
-			step <= "0001";
+			taddress <= sp_addr;
 			m00_axi_araddr <= taddress;
 			m00_axi_arvalid <= '1'; --assert read_address_valid
-		elsif sp_write='1' and step="0000" then --WRITE
 			step <= "0001";
+		elsif sp_write='1' and step="0000" then --WRITE
+			taddress <= sp_addr;
 			m00_axi_awaddr <= taddress;
 			thalfword_0 <= sp_data(15 downto 0);
 			thalfword_1 <= sp_data(31 downto 16);
 			if sp_op_len = "00" then --writing byte
 				m00_axi_wstrb <= "0001"; --x"1"
+				m00_axi_awvalid <= '1';
+				m00_axi_wvalid <= '1';
 				step <= "0101"; --write second halfword
 			elsif sp_op_len = "01" then --writing halfword (2 bytes)
-				step <= "0101"; --write second halfword
 				m00_axi_wstrb <= "0011"; --x"3"
+				m00_axi_awvalid <= '1';
+				m00_axi_wvalid <= '1';
+				step <= "0101"; --write second halfword
 			elsif sp_op_len = "10" then --writing word (4 bytes)
 				m00_axi_wstrb <= "0011"; --only write lower half bytes in first cycle
 				--send first word here
 				m00_axi_wdata <= x"0000" & thalfword_1;
 				m00_axi_awvalid <= '1';
 				m00_axi_wvalid <= '1';
+				step <= "0001";
 			else
 				sp_error <= '1'; --is there a way to process sp_error=1 in a single place?
 			end if;
@@ -201,6 +204,7 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 			m00_axi_wstrb <= x"0";
 			m00_axi_bready <= '0';
 			step <= "0000";
+			sp_over <= '0';
 			--master signals to zero???
 		end if;
 	end process;
@@ -223,24 +227,23 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 
 	--if ready to read data read data!
 	process begin
-		wait until sp_read='1' and step="0011"  and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1';
+		wait until sp_read='1' and step="0011" and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1';
 			if m00_axi_rresp = "00" then
-				thalfword_0 <= m00_axi_rdata(15 downto 0); --correct??!~
+				thalfword_0 <= m00_axi_rdata(15 downto 0); --correct??!~ (which bits to grab?)
 				m00_axi_rready <= '0'; --de-assert ready to read (already read)
 				if sp_op_len = "00" then --already read 2 bytes (discard 2nd). No byte selection in AXI4-lite
-					step <= "1111";
-					sp_data <= x"000000" & thalfword_0(7 downto 0);
+					sp_data <= x"000000" & thalfword_0(15 downto 8);
 					sp_over <= '1';
-				elsif sp_op_len = "01" then --already read 2 bytes
 					step <= "1111";
+				elsif sp_op_len = "01" then --already read 2 bytes
 					sp_data <= x"0000" & thalfword_0;
 					sp_over <= '1';
+					step <= "1111";
 				elsif sp_op_len = "10" then --already read 2 bytes, read 2 more
-					step <= "0100";
 					--read 2 more bytes
 					taddress <= std_logic_vector(unsigned(taddress)+2); --next address to read
 					m00_axi_arvalid <= '1'; --assert read_address_valid
-					--wait for next rising clock edge and read_address_ready
+					step <= "0100";
 				else
 					sp_error <= '1';
 				end if;
@@ -253,25 +256,25 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 	process begin
 		wait until sp_read='1' and step="0100" and rising_edge(m00_axi_aclk) and m00_axi_arready='1';
 			m00_axi_arvalid <= '0'; --okay to de-assert read_address-ready
-            step <= "0101";
+      step <= "0101";
 	end process;
 
 	--get ready to read second halfword
 	process begin
 		wait until sp_read='1' and step="0101" and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1'; --wait until data is valid
 			m00_axi_rready <= '1'; --assert ready to read
-            step <= "0110";
+      step <= "0110";
 	end process;
 
 	--read second halfword
 	process begin
-		wait until sp_read='1' and step="0111" and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1';
+		wait until sp_read='1' and step="0110" and rising_edge(m00_axi_aclk) and m00_axi_rvalid='1';
 			if m00_axi_rresp = "00" then
 				thalfword_1 <= m00_axi_rdata(15 downto 0); --correct??!~
 				m00_axi_rready <= '0'; --de-assert ready to read (already read)
-				sp_data <= thalfword_1 & thalfword_0;
-				step <= "1111";
+				sp_data <= thalfword_0 & thalfword_1; --is ordering correct here?
 				sp_over <= '1';
+				step <= "1111";
 			else
 				sp_error <= '1';
 			end if;
@@ -283,30 +286,31 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 	process begin --slave is ready to accept write address
 		wait until sp_write='1' and step="0001" and rising_edge(m00_axi_aclk) and m00_axi_awready='1';
 			m00_axi_awvalid <= '0';
-            step <= "0010";
+      step <= "0010";
 	end process;
 
 	process begin --slave is ready to accept data
 		wait until sp_write='1' and step="0010" and rising_edge(m00_axi_aclk) and m00_axi_wready='1';
 			m00_axi_wvalid <= '0';
-            step <= "0011";
+      step <= "0011";
 	end process;
 
 	process begin --response is valid, signal ready to receive response
 		wait until sp_write='1' and step="0011" and rising_edge(m00_axi_aclk) and m00_axi_bvalid='1';
 			m00_axi_bready <= '1';
-            step <= "0100";
+      step <= "0100";
 	end process;
 
+	--is checking m00_axi_bresp messy?
 	process(m00_axi_bresp) --process responses (for both thalfword_1 and thalfword_0)
 	begin
 	   if sp_write='1' and step="0100" and rising_edge(m00_axi_aclk) then
         if m00_axi_bresp="00" then
             taddress <= std_logic_vector(unsigned(taddress)+2); --ready address to be correct
-            step <= "0101"; --next step
             m00_axi_wdata <= x"0000" & thalfword_0; --set data
             m00_axi_awvalid <= '1'; --signal address is valid
             m00_axi_wvalid <= '1'; --signal data is valid
+						step <= "0101"; --next step
         else -- "10" transaction failure, "11" incorrect slave address
             sp_error <= '1';
         end if;
