@@ -21,6 +21,8 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -57,16 +59,19 @@ end control_unit;
 
 architecture Behavioral of control_unit is
 
-signal clk_counter: integer range 0 to 4;
+signal clk_counter: STD_LOGIC_VECTOR(2 downto 0);
 
 begin
 
-    clock_counter: process(clk_in)
+    clock_counter: process(clk_in,reset_in)
     begin
-        if rising_edge(clk_in) then
-            clk_counter <= clk_counter + 1;
-            if clk_counter > 4 then
-                clk_counter <= 0;
+        if reset_in = '1' then
+            clk_counter <= "000";
+        elsif rising_edge(clk_in) then
+            if clk_counter = "101" then
+                clk_counter <= "000";
+            else
+                clk_counter <= clk_counter + 1;
             end if;
         end if;
     end process;
@@ -74,7 +79,7 @@ begin
 -- Appropriate signals will be generated depending on the instruction flowing in.
 -- Signals were determined on the google spread sheet
 -- Case statement handles the decoding and signal assignment
-    instruction_decode: process(clk_in)
+    instruction_decode: process(clk_in,reset_in)
     begin
     -- Process runs on 100MHz clock
     -- Case statement needs to be evaluates on the second minor cycle ofeach instruction
@@ -4242,7 +4247,6 @@ begin
             mem_read_out <= '0';
             mem_write_out <= '0';
             mem_to_reg_out <= '0';
-            clk_counter <= 0;
         end if;
 
     end process;
