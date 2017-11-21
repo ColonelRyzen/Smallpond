@@ -4216,6 +4216,19 @@ begin
     --########################################################################################################--
             -- End 'J' type
     --########################################################################################################--
+    
+                when others =>
+                    reg_write_out <= '0';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '0';
+                    alu_op_out <= "0000";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '0';
             end case;
         elsif reset_in = '1' then
             reg_write_out <= '0';
