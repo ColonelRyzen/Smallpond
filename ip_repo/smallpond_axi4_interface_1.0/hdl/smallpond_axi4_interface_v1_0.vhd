@@ -19,14 +19,14 @@ entity smallpond_axi_v1_0 is
 	);
 	port (
 		-- Users to add ports here
-        sp_read : in std_logic; --(1 for read, 0 otherwise)
-        sp_write : in std_logic; --(1 for write, 0 otherwise)
-        sp_op_len : in std_logic_vector(1 downto 0); --(00:byte,01:halfword,10:word,11:invalid)
-        sp_addr : in std_logic_vector(31 downto 0);
-        sp_data : inout std_logic_vector(31 downto 0);
-        sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
-        sp_error :out std_logic; --(1 for error)
-        -- User ports ends
+    sp_read : in std_logic; --(1 for read, 0 otherwise)
+    sp_write : in std_logic; --(1 for write, 0 otherwise)
+    sp_op_len : in std_logic_vector(1 downto 0); --(00:byte,01:halfword,10:word,11:invalid)
+    sp_addr : in std_logic_vector(31 downto 0);
+    sp_data : inout std_logic_vector(31 downto 0);
+    sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
+    sp_error :out std_logic; --(1 for error)
+    -- User ports ends
 		-- Do not modify the ports beyond this line
 
 
