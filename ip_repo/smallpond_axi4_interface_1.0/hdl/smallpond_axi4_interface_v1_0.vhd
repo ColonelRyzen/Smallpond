@@ -189,7 +189,7 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 				m00_axi_wvalid <= '1';
 				step <= "0001";
 			else
-				sp_error <= '1'; --is there a way to process sp_error=1 in a single place?
+				sp_error <= '1';
 			end if;
 		elsif sp_read='0' and sp_write='0' and m00_axi_aresetn='1' then
 			step <= "0000"; --ready to process a request for Smallpond
