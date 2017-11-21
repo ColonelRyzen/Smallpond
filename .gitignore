@@ -16,6 +16,11 @@
 #########
 /**/*.cache
 #########
+#########
+#Runs Directory
+#########
+/**/*.runs
+#########
 #Source files:
 #########
 #Do NOT ignore VHDL, Verilog, block diagrams or EDIF files.
