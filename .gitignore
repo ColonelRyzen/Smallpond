@@ -12,14 +12,12 @@
 ##	VIVADO
 ###########################################################################
 #########
-#Cache Directory
+#Vivado Ignore Directory
 #########
 /**/*.cache
-#########
-#########
-#Runs Directory
-#########
 /**/*.runs
+/**/*.sim
+/**/*.ip_user_files
 #########
 #Source files:
 #########

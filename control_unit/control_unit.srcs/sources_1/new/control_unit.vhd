@@ -59,17 +59,17 @@ end control_unit;
 
 architecture Behavioral of control_unit is
 
-signal clk_counter: STD_LOGIC_VECTOR(2 downto 0);
+signal clk_counter: integer := 0;
 
 begin
 
     clock_counter: process(clk_in,reset_in)
     begin
         if reset_in = '1' then
-            clk_counter <= "000";
+            clk_counter <= 0;
         elsif rising_edge(clk_in) then
-            if clk_counter = "101" then
-                clk_counter <= "000";
+            if clk_counter > 4 then
+                clk_counter <= 0;
             else
                 clk_counter <= clk_counter + 1;
             end if;
