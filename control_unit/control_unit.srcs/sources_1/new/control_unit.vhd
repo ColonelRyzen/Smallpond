@@ -33,6 +33,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity control_unit is
     Port ( clk_in : in STD_LOGIC;
+           reset_in : in STD_LOGIC := '0';
            op_code_in : in STD_LOGIC_VECTOR (5 downto 0);
            -- Datapath Signals
            reg_write_out : out STD_LOGIC;
@@ -56,7 +57,19 @@ end control_unit;
 
 architecture Behavioral of control_unit is
 
+signal clk_counter: integer range 0 to 4;
+
 begin
+
+    clock_counter: process(clk_in)
+    begin
+        if rising_edge(clk_in) then
+            clk_counter <= clk_counter + 1;
+            if clk_counter > 4 then
+                clk_counter <= 0;
+            end if;
+        end if;
+    end process;
 -- Process to decode the instruction we are dealing with
 -- Appropriate signals will be generated depending on the instruction flowing in.
 -- Signals were determined on the google spread sheet
@@ -72,253 +85,18 @@ begin
     -- 111100 -> 111110 are the 'B' type
     -- 111111 is the 'J' type
     -- Case comment format is "-- Instruction name - 'instruction alias'"
-
-        case op_code_in is
---########################################################################################################--
-        -- Begin 'A' type
---########################################################################################################--
-    -------------------------------------------------------------
-            -- Addition - 'ADD'
-    -------------------------------------------------------------
-            when "000001" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
-                        reg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        if clk_counter = 2 and reset_in = '0' then
+            case op_code_in is
+    --########################################################################################################--
+            -- Begin 'A' type
+    --########################################################################################################--
+        -------------------------------------------------------------
+                -- Addition - 'ADD'
+        -------------------------------------------------------------
+                when "000001" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "0111";
                     sub_out <= '0';
@@ -327,32 +105,235 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
 
-    -------------------------------------------------------------
-            -- Logical And - 'AND'
-    -------------------------------------------------------------
-            when "000010" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "0000";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "0000";
+                        alu_op_out <= "0111";
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
@@ -361,216 +342,13 @@ begin
                         mem_to_reg_out <= '1';
                     end if;
 
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Logical And - 'AND'
+        -------------------------------------------------------------
+                when "000010" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "0000";
                     sub_out <= '0';
@@ -579,31 +357,235 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
-    -------------------------------------------------------------
-            -- Arithmatic Shift Right - 'ASR'
-    -------------------------------------------------------------
-            when "000011" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "1010";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "1010";
+                        alu_op_out <= "0000";
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
@@ -611,217 +593,13 @@ begin
                         mem_write_out <= '0';
                         mem_to_reg_out <= '1';
                     end if;
-
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Arithmatic Shift Right - 'ASR'
+        -------------------------------------------------------------
+                when "000011" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "1010";
                     sub_out <= '0';
@@ -830,32 +608,235 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
 
-    -------------------------------------------------------------
-            -- Logical Shift Left - 'LSL'
-    -------------------------------------------------------------
-            when "000100" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "1000";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "1000";
+                        alu_op_out <= "1010";
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
@@ -864,216 +845,13 @@ begin
                         mem_to_reg_out <= '1';
                     end if;
 
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1000";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Logical Shift Left - 'LSL'
+        -------------------------------------------------------------
+                when "000100" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "1000";
                     sub_out <= '0';
@@ -1082,32 +860,235 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
 
-    -------------------------------------------------------------
-            -- Logical Shift Right - 'LSR'
-    -------------------------------------------------------------
-            when "000101" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "1001";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1000";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "1001";
+                        alu_op_out <= "1000";
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
@@ -1116,216 +1097,13 @@ begin
                         mem_to_reg_out <= '1';
                     end if;
 
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "1001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Logical Shift Right - 'LSR'
+        -------------------------------------------------------------
+                when "000101" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "1001";
                     sub_out <= '0';
@@ -1334,32 +1112,235 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
 
-    -------------------------------------------------------------
-            -- Logical Nand - 'NAND'
-    -------------------------------------------------------------
-            when "000110" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "0011";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "1001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "0011";
+                        alu_op_out <= "1001";
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
@@ -1368,216 +1349,13 @@ begin
                         mem_to_reg_out <= '1';
                     end if;
 
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0011";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Logical Nand - 'NAND'
+        -------------------------------------------------------------
+                when "000110" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "0011";
                     sub_out <= '0';
@@ -1586,33 +1364,235 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
 
-    -------------------------------------------------------------
-            -- Logical Nor - 'NOR'
-    -------------------------------------------------------------
-            when "000111" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "0100";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
 
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0011";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "0100";
+                        alu_op_out <= "0011";
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
@@ -1621,216 +1601,13 @@ begin
                         mem_to_reg_out <= '1';
                     end if;
 
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0100";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Logical Nor - 'NOR'
+        -------------------------------------------------------------
+                when "000111" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "0100";
                     sub_out <= '0';
@@ -1839,33 +1616,236 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
-
-    -------------------------------------------------------------
-            -- Logical Not - 'NOT'
-    -------------------------------------------------------------
-            when "001000" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "0010";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
 
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0100";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "0010";
+                        alu_op_out <= "0100";
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
@@ -1874,216 +1854,13 @@ begin
                         mem_to_reg_out <= '1';
                     end if;
 
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0010";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Logical Not - 'NOT'
+        -------------------------------------------------------------
+                when "001000" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "0010";
                     sub_out <= '0';
@@ -2092,32 +1869,236 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
-    -------------------------------------------------------------
-            -- Logical Or - 'OR'
-    -------------------------------------------------------------
-            when "001001" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "0001";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
 
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0010";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "0001";
+                        alu_op_out <= "0010";
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
@@ -2125,217 +2106,13 @@ begin
                         mem_write_out <= '0';
                         mem_to_reg_out <= '1';
                     end if;
-
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0001";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Logical Or - 'OR'
+        -------------------------------------------------------------
+                when "001001" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "0001";
                     sub_out <= '0';
@@ -2344,250 +2121,250 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
-    -------------------------------------------------------------
-            -- Subtract - 'SUB'
-    -------------------------------------------------------------
-            when "001010" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "0111";
-                sub_out <= '1';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
 
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0001";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
+                        alu_op_out <= "0001";
+                        sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
                         mem_read_out <= '0';
                         mem_write_out <= '0';
                         mem_to_reg_out <= '1';
                     end if;
-
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0111";
-                        sub_out <= '1';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Subtract - 'SUB'
+        -------------------------------------------------------------
+                when "001010" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "0111";
                     sub_out <= '1';
@@ -2596,250 +2373,250 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
-    -------------------------------------------------------------
-            -- Logical Exclusive Nor - 'XNOR'
-    -------------------------------------------------------------
-            when "001011" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "0110";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
 
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0111";
+                            sub_out <= '1';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
+                        alu_op_out <= "0111";
+                        sub_out <= '1';
                         pc_src_out <= '0';
                         jump_out <= '0';
                         mem_read_out <= '0';
                         mem_write_out <= '0';
                         mem_to_reg_out <= '1';
                     end if;
-
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0110";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
-                    reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+        -------------------------------------------------------------
+                -- Logical Exclusive Nor - 'XNOR'
+        -------------------------------------------------------------
+                when "001011" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
                     alu_src_out <= '0';
                     alu_op_out <= "0110";
                     sub_out <= '0';
@@ -2848,27 +2625,483 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
-    -------------------------------------------------------------
-            -- Logical Exclusive Or - 'XOR'
-    -------------------------------------------------------------
-            when "001100" =>
-                reg_write_out <= '1';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= cpsr_set_bit_in;
-                alu_src_out <= '0';
-                alu_op_out <= "0101";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
 
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0110";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
+                        reg_write_out <= '0';
+                        counter_bit_out <= '0';
+                        cpsr_set_bit_out <= '0';
+                        alu_src_out <= '0';
+                        alu_op_out <= "0110";
+                        sub_out <= '0';
+                        pc_src_out <= '0';
+                        jump_out <= '0';
+                        mem_read_out <= '0';
+                        mem_write_out <= '0';
+                        mem_to_reg_out <= '1';
+                    end if;
+        -------------------------------------------------------------
+                -- Logical Exclusive Or - 'XOR'
+        -------------------------------------------------------------
+                when "001100" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= cpsr_set_bit_in;
+                    alu_src_out <= '0';
+                    alu_op_out <= "0101";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+
+
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
@@ -2881,218 +3114,308 @@ begin
                         mem_write_out <= '0';
                         mem_to_reg_out <= '1';
                     end if;
+    --########################################################################################################--
+            -- End 'A' tpye
+    --########################################################################################################--
 
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
 
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
+    --########################################################################################################--
+            -- Begin 'I' type
+    --########################################################################################################--
 
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
+        -------------------------------------------------------------
+                -- Addition Immediate - 'ADDI'
+        -------------------------------------------------------------
+                when "011000" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Logical And Immediate - 'ANDI'
+        -------------------------------------------------------------
+                when "011001" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0000";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Arithmatic Shift Right Immediate - 'ASRI'
+        -------------------------------------------------------------
+                when "011010" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "1010";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Load - 'LDR'
+        -------------------------------------------------------------
+                when "011011" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '1';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '0';
+        -------------------------------------------------------------
+                -- Load Byte - 'LDRB'
+        -------------------------------------------------------------
+                when "011100" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '1';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '0';
+        -------------------------------------------------------------
+                -- Load Byte Unsigned - 'LDRBU'
+        -------------------------------------------------------------
+                when "011101" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '1';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '0';
+        -------------------------------------------------------------
+                -- Load Halfword - 'LDRH'
+        -------------------------------------------------------------
+                when "011110" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '1';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '0';
+        -------------------------------------------------------------
+                -- Load Halfword Unsigned - 'LDRHU'
+        -------------------------------------------------------------
+                when "011111" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '1';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '0';
+        -------------------------------------------------------------
+                -- Logical Shift Left Immediate - 'LSLI'
+        -------------------------------------------------------------
+                when "100000" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "1000";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Logical Shift Right Immediate - 'LSRI'
+        -------------------------------------------------------------
+                when "100001" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "1001";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Load Upper Immediate - 'LUI'
+        -------------------------------------------------------------
+                when "100010" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0001";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Logical Nand Immediate - 'NANDI'
+        -------------------------------------------------------------
+                when "100011" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0011";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Logical Nor Immediate - 'NORI'
+        -------------------------------------------------------------
+                when "100100" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0100";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Logical Or Immediate - 'ORI'
+        -------------------------------------------------------------
+                when "100101" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0010";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Store - 'STR'
+        -------------------------------------------------------------
+                when "100110" =>
                     reg_write_out <= '0';
                     counter_bit_out <= '0';
                     cpsr_set_bit_out <= '0';
-                    alu_src_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '1';
+                    mem_to_reg_out <= '0';
+        -------------------------------------------------------------
+                --Store Byte - 'STRB'
+        -------------------------------------------------------------
+                when "100111" =>
+                    reg_write_out <= '0';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '1';
+                    mem_to_reg_out <= '0';
+        -------------------------------------------------------------
+                -- Store Halfword - 'STRH'
+        -------------------------------------------------------------
+                when "101000" =>
+                    reg_write_out <= '0';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '1';
+                    mem_to_reg_out <= '0';
+        -------------------------------------------------------------
+                -- Subtract Immediate - 'SUBI'
+        -------------------------------------------------------------
+                when "101001" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0111";
+                    sub_out <= '1';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Logical Exclusive Nor Immediate - 'XNORI'
+        -------------------------------------------------------------
+                when "101010" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
+                    alu_op_out <= "0110";
+                    sub_out <= '0';
+                    pc_src_out <= '0';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '1';
+        -------------------------------------------------------------
+                -- Logical Exclusive Or Immediate - 'XORI'
+        -------------------------------------------------------------
+                when "101011" =>
+                    reg_write_out <= '1';
+                    counter_bit_out <= '0';
+                    cpsr_set_bit_out <= '0';
+                    alu_src_out <= '1';
                     alu_op_out <= "0101";
                     sub_out <= '0';
                     pc_src_out <= '0';
@@ -3100,346 +3423,256 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-                end if;
---########################################################################################################--
-        -- End 'A' tpye
---########################################################################################################--
+
+    --########################################################################################################--
+            -- End 'I' type
+    --########################################################################################################--
 
 
---########################################################################################################--
-        -- Begin 'I' type
---########################################################################################################--
+    --########################################################################################################--
+            -- Begin 'B' type
+    --########################################################################################################--
 
-    -------------------------------------------------------------
-            -- Addition Immediate - 'ADDI'
-    -------------------------------------------------------------
-            when "011000" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Logical And Immediate - 'ANDI'
-    -------------------------------------------------------------
-            when "011001" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0000";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Arithmatic Shift Right Immediate - 'ASRI'
-    -------------------------------------------------------------
-            when "011010" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "1010";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Load - 'LDR'
-    -------------------------------------------------------------
-            when "011011" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '1';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '0';
-    -------------------------------------------------------------
-            -- Load Byte - 'LDRB'
-    -------------------------------------------------------------
-            when "011100" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '1';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '0';
-    -------------------------------------------------------------
-            -- Load Byte Unsigned - 'LDRBU'
-    -------------------------------------------------------------
-            when "011101" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '1';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '0';
-    -------------------------------------------------------------
-            -- Load Halfword - 'LDRH'
-    -------------------------------------------------------------
-            when "011110" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '1';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '0';
-    -------------------------------------------------------------
-            -- Load Halfword Unsigned - 'LDRHU'
-    -------------------------------------------------------------
-            when "011111" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '1';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '0';
-    -------------------------------------------------------------
-            -- Logical Shift Left Immediate - 'LSLI'
-    -------------------------------------------------------------
-            when "100000" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "1000";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Logical Shift Right Immediate - 'LSRI'
-    -------------------------------------------------------------
-            when "100001" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "1001";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Load Upper Immediate - 'LUI'
-    -------------------------------------------------------------
-            when "100010" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0001";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Logical Nand Immediate - 'NANDI'
-    -------------------------------------------------------------
-            when "100011" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0011";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Logical Nor Immediate - 'NORI'
-    -------------------------------------------------------------
-            when "100100" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0100";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Logical Or Immediate - 'ORI'
-    -------------------------------------------------------------
-            when "100101" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0010";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Store - 'STR'
-    -------------------------------------------------------------
-            when "100110" =>
-                reg_write_out <= '0';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '1';
-                mem_to_reg_out <= '0';
-    -------------------------------------------------------------
-            --Store Byte - 'STRB'
-    -------------------------------------------------------------
-            when "100111" =>
-                reg_write_out <= '0';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '1';
-                mem_to_reg_out <= '0';
-    -------------------------------------------------------------
-            -- Store Halfword - 'STRH'
-    -------------------------------------------------------------
-            when "101000" =>
-                reg_write_out <= '0';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '1';
-                mem_to_reg_out <= '0';
-    -------------------------------------------------------------
-            -- Subtract Immediate - 'SUBI'
-    -------------------------------------------------------------
-            when "101001" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0111";
-                sub_out <= '1';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Logical Exclusive Nor Immediate - 'XNORI'
-    -------------------------------------------------------------
-            when "101010" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0110";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-    -------------------------------------------------------------
-            -- Logical Exclusive Or Immediate - 'XORI'
-    -------------------------------------------------------------
-            when "101011" =>
-                reg_write_out <= '1';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '1';
-                alu_op_out <= "0101";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '1';
-
---########################################################################################################--
-        -- End 'I' type
---########################################################################################################--
+        -------------------------------------------------------------
+                -- Branch - 'B'
+        -------------------------------------------------------------
+                when "111100" =>
+                    reg_write_out <= '0';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= 0;
+                    alu_src_out <= '0';
+                    alu_op_out <= "0000";
+                    sub_out <= '0';
+                    pc_src_out <= '1';
+                    jump_out <= '0';
+                    mem_read_out <= '0';
+                    mem_write_out <= '0';
+                    mem_to_reg_out <= '0';
 
 
---########################################################################################################--
-        -- Begin 'B' type
---########################################################################################################--
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
 
-    -------------------------------------------------------------
-            -- Branch - 'B'
-    -------------------------------------------------------------
-            when "111100" =>
-                reg_write_out <= '0';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= 0;
-                alu_src_out <= '0';
-                alu_op_out <= "0000";
-                sub_out <= '0';
-                pc_src_out <= '1';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '0';
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
 
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
@@ -3452,246 +3685,246 @@ begin
                         mem_write_out <= '0';
                         mem_to_reg_out <= '1';
                     end if;
-
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
+        -------------------------------------------------------------
+                -- Branch and Link - 'BL'
+        -------------------------------------------------------------
+                when "111101" =>
                     reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= 0;
                     alu_src_out <= '0';
-                    alu_op_out <= "0101";
+                    alu_op_out <= "0000";
                     sub_out <= '0';
-                    pc_src_out <= '0';
+                    pc_src_out <= '1';
                     jump_out <= '0';
                     mem_read_out <= '0';
                     mem_write_out <= '0';
-                    mem_to_reg_out <= '1';
-                end if;
-    -------------------------------------------------------------
-            -- Branch and Link - 'BL'
-    -------------------------------------------------------------
-            when "111101" =>
-                reg_write_out <= '0';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= 0;
-                alu_src_out <= '0';
-                alu_op_out <= "0000";
-                sub_out <= '0';
-                pc_src_out <= '1';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '0';
+                    mem_to_reg_out <= '0';
 
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
@@ -3704,246 +3937,246 @@ begin
                         mem_write_out <= '0';
                         mem_to_reg_out <= '1';
                     end if;
-
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
+        -------------------------------------------------------------
+                -- Branch and Return - 'BR'
+        -------------------------------------------------------------
+                when "111110" =>
                     reg_write_out <= '0';
-                    counter_bit_out <= '0';
-                    cpsr_set_bit_out <= '0';
+                    counter_bit_out <= counter_bit_in;
+                    cpsr_set_bit_out <= 0;
                     alu_src_out <= '0';
-                    alu_op_out <= "0101";
+                    alu_op_out <= "0000";
                     sub_out <= '0';
-                    pc_src_out <= '0';
+                    pc_src_out <= '1';
                     jump_out <= '0';
                     mem_read_out <= '0';
                     mem_write_out <= '0';
-                    mem_to_reg_out <= '1';
-                end if;
-    -------------------------------------------------------------
-            -- Branch and Return - 'BR'
-    -------------------------------------------------------------
-            when "111110" =>
-                reg_write_out <= '0';
-                counter_bit_out <= counter_bit_in;
-                cpsr_set_bit_out <= 0;
-                alu_src_out <= '0';
-                alu_op_out <= "0000";
-                sub_out <= '0';
-                pc_src_out <= '1';
-                jump_out <= '0';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '0';
+                    mem_to_reg_out <= '0';
 
 
-                -- EQ (Equal) - Z set
-                if condition_code_in = "0001" then
-                    if cpsr_bits_in(2) = '0' then
+                    -- EQ (Equal) - Z set
+                    if condition_code_in = "0001" then
+                        if cpsr_bits_in(2) = '0' then
+                            reg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NE (Not Equal) - Z clear
+                    elsif condition_code_in = "0010" then
+                        if cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CA (Carry Set) - C set
+                    elsif condition_code_in = "0011" then
+                        if cpsr_bits_in(1) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- CC (Carry Clear) - C clear
+                    elsif condition_code_in = "0100" then
+                        if cpsr_bits_in(1) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- NG (Negative) - N set
+                    elsif condition_code_in = "0101" then
+                        if cpsr_bits_in(3) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- PZ (Positive) - N clear
+                    elsif condition_code_in = "0110" then
+                        if cpsr_bits_in(3) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VS (Overflow Set) - V set
+                    elsif condition_code_in = "0111" then
+                        if cpsr_bits_in(0) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- VC (Overflow Clear) - V clear
+                    elsif condition_code_in = "1000" then
+                        if cpsr_bits_in(0) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    -- HI (Unsigned Higher) - C set and Z clear
+                    elsif condition_code_in = "1001" then
+                        if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LS (Unsigned Lower or Same) - C clear and Z set
+                    elsif condition_code_in = "1010" then
+                        if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
+                    elsif condition_code_in = "1011" then
+                        if cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
+                    elsif condition_code_in = "1100" then
+                        if cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
+                    elsif condition_code_in = "1101" then
+                        if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+
+                    -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
+                    elsif condition_code_in = "1110" then
+                        if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
+                            eg_write_out <= '0';
+                            counter_bit_out <= '0';
+                            cpsr_set_bit_out <= '0';
+                            alu_src_out <= '0';
+                            alu_op_out <= "0101";
+                            sub_out <= '0';
+                            pc_src_out <= '0';
+                            jump_out <= '0';
+                            mem_read_out <= '0';
+                            mem_write_out <= '0';
+                            mem_to_reg_out <= '1';
+                        end if;
+                    else
                         reg_write_out <= '0';
                         counter_bit_out <= '0';
                         cpsr_set_bit_out <= '0';
@@ -3956,254 +4189,48 @@ begin
                         mem_write_out <= '0';
                         mem_to_reg_out <= '1';
                     end if;
+    --########################################################################################################--
+            -- End 'B' type
+    --########################################################################################################--
 
-                -- NE (Not Equal) - Z clear
-                elsif condition_code_in = "0010" then
-                    if cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
 
-                -- CA (Carry Set) - C set
-                elsif condition_code_in = "0011" then
-                    if cpsr_bits_in(1) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
+    --########################################################################################################--
+            -- Begin 'J' type
+    --########################################################################################################--
 
-                -- CC (Carry Clear) - C clear
-                elsif condition_code_in = "0100" then
-                    if cpsr_bits_in(1) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- NG (Negative) - N set
-                elsif condition_code_in = "0101" then
-                    if cpsr_bits_in(3) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- PZ (Positive) - N clear
-                elsif condition_code_in = "0110" then
-                    if cpsr_bits_in(3) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VS (Overflow Set) - V set
-                elsif condition_code_in = "0111" then
-                    if cpsr_bits_in(0) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- VC (Overflow Clear) - V clear
-                elsif condition_code_in = "1000" then
-                    if cpsr_bits_in(0) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                -- HI (Unsigned Higher) - C set and Z clear
-                elsif condition_code_in = "1001" then
-                    if cpsr_bits_in(1) = '0' and cpsr_bits_in(2) = '1' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LS (Unsigned Lower or Same) - C clear and Z set
-                elsif condition_code_in = "1010" then
-                    if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GE (Signed Greater Than or Equal) - N set and V set OR N clear and V clear (N==V)
-                elsif condition_code_in = "1011" then
-                    if cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LT (Signed Less Than) - N set and V clear OR N clear and V set (N!=V)
-                elsif condition_code_in = "1100" then
-                    if cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- GT (Signed Greater Than) - Z clear and, N and V set OR N and V clear (Z==0, N==V)
-                elsif condition_code_in = "1101" then
-                    if cpsr_bits_in(2) = '1' and cpsr_bits_in(3) /= cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-
-                -- LE (Less Than or Equal) - Z set or, N set and V clear OR N clear and V set (Z==1 or N!=V)
-                elsif condition_code_in = "1110" then
-                    if cpsr_bits_in(2) = '1' or cpsr_bits_in(3) = cpsr_bits_in(0) then
-                        eg_write_out <= '0';
-                        counter_bit_out <= '0';
-                        cpsr_set_bit_out <= '0';
-                        alu_src_out <= '0';
-                        alu_op_out <= "0101";
-                        sub_out <= '0';
-                        pc_src_out <= '0';
-                        jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
-                        mem_to_reg_out <= '1';
-                    end if;
-                else
+        -------------------------------------------------------------
+                -- Jump - 'J'
+        -------------------------------------------------------------
+                when "111111" =>
                     reg_write_out <= '0';
                     counter_bit_out <= '0';
                     cpsr_set_bit_out <= '0';
                     alu_src_out <= '0';
-                    alu_op_out <= "0101";
+                    alu_op_out <= "0000";
                     sub_out <= '0';
                     pc_src_out <= '0';
-                    jump_out <= '0';
+                    jump_out <= '1';
                     mem_read_out <= '0';
                     mem_write_out <= '0';
-                    mem_to_reg_out <= '1';
-                end if;
---########################################################################################################--
-        -- End 'B' type
---########################################################################################################--
-
-
---########################################################################################################--
-        -- Begin 'J' type
---########################################################################################################--
-
-    -------------------------------------------------------------
-            -- Jump - 'J'
-    -------------------------------------------------------------
-            when "111111" =>
-                reg_write_out <= '0';
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
-                alu_src_out <= '0';
-                alu_op_out <= "0000";
-                sub_out <= '0';
-                pc_src_out <= '0';
-                jump_out <= '1';
-                mem_read_out <= '0';
-                mem_write_out <= '0';
-                mem_to_reg_out <= '0';
---########################################################################################################--
-        -- End 'J' type
---########################################################################################################--
-        end case;
+                    mem_to_reg_out <= '0';
+    --########################################################################################################--
+            -- End 'J' type
+    --########################################################################################################--
+            end case;
+        elsif reset_in = '1' then
+            reg_write_out <= '0';
+            counter_bit_out <= '0';
+            cpsr_set_bit_out <= '0';
+            alu_src_out <= '0';
+            alu_op_out <= "0000";
+            sub_out <= '0';
+            pc_src_out <= '0';
+            jump_out <= '0';
+            mem_read_out <= '0';
+            mem_write_out <= '0';
+            mem_to_reg_out <= '0';
+            clk_counter <= 0;
+        end if;
 
     end process;
 
