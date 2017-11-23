@@ -67,9 +67,9 @@
 /******************************************************************************
 **$Id: ddr_phy_wrcal.v,v 1.1 2011/06/02 08:35:09 mishra Exp $
 **$Date: 2011/06/02 08:35:09 $
-**$Author: 
+**$Author:
 **$Revision:
-**$Source: 
+**$Source:
 ******************************************************************************/
 
 `timescale 1ps/1ps
@@ -122,7 +122,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
 
    // Debug Port
    output [6*DQS_WIDTH-1:0]     dbg_final_po_fine_tap_cnt,
-   output [3*DQS_WIDTH-1:0]     dbg_final_po_coarse_tap_cnt, 
+   output [3*DQS_WIDTH-1:0]     dbg_final_po_coarse_tap_cnt,
    output [99:0]                dbg_phy_wrcal
    );
 
@@ -134,14 +134,14 @@ module mig_7series_v4_0_ddr_phy_wrcal #
 
   // # of reads for reliable read capture
   localparam NUM_READS = 2;
-  
+
   // # of cycles to wait after changing RDEN count value
   localparam RDEN_WAIT_CNT = 12;
-  
+
   localparam  COARSE_CNT = (CLK_PERIOD/nCK_PER_CLK <= 2500) ? 3 : 6;
   localparam  FINE_CNT   = (CLK_PERIOD/nCK_PER_CLK <= 2500) ? 22 : 44;
- 
-  
+
+
   localparam CAL2_IDLE            = 4'h0;
   localparam CAL2_READ_WAIT       = 4'h1;
   localparam CAL2_NEXT_DQS        = 4'h2;
@@ -153,7 +153,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
   localparam CAL2_ERR             = 4'h8;
 
   integer                 i,j,k,l,m,p,q,d;
-  
+
   reg [2:0]               po_coarse_tap_cnt [0:DQS_WIDTH-1];
   reg [3*DQS_WIDTH-1:0]   po_coarse_tap_cnt_w;
   reg [5:0]               po_fine_tap_cnt [0:DQS_WIDTH-1];
@@ -268,7 +268,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
   reg [DRAM_WIDTH-1:0]    early2_match_rise2_r;
   reg                     early2_match_rise2_and_r;
   reg [DRAM_WIDTH-1:0]    early2_match_rise3_r;
-  reg                     early2_match_rise3_and_r;    
+  reg                     early2_match_rise3_and_r;
   wire [RD_SHIFT_LEN-1:0] pat_rise0 [3:0];
   wire [RD_SHIFT_LEN-1:0] pat_rise1 [3:0];
   wire [RD_SHIFT_LEN-1:0] pat_rise2 [3:0];
@@ -285,7 +285,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
   wire [RD_SHIFT_LEN-1:0] early1_rise1 [3:0];
   wire [RD_SHIFT_LEN-1:0] early2_rise0 [3:0];
   wire [RD_SHIFT_LEN-1:0] early2_rise1 [3:0];
-  wire [DQ_WIDTH-1:0]     rd_data_rise0;  
+  wire [DQ_WIDTH-1:0]     rd_data_rise0;
   wire [DQ_WIDTH-1:0]     rd_data_fall0;
   wire [DQ_WIDTH-1:0]     rd_data_rise1;
   wire [DQ_WIDTH-1:0]     rd_data_fall1;
@@ -330,44 +330,59 @@ module mig_7series_v4_0_ddr_phy_wrcal #
 
   assign dbg_final_po_fine_tap_cnt   = po_fine_tap_cnt_w;
   assign dbg_final_po_coarse_tap_cnt = po_coarse_tap_cnt_w;
-  
-  assign dbg_phy_wrcal[0]    = pat_data_match_r;
+
+  generate
+    if (nCK_PER_CLK == 4) begin: match_data_4
+      assign dbg_phy_wrcal[0]    = pat_data_match_r;
+    end else begin:match_data_2
+      assign dbg_phy_wrcal[0]    = 1'b0;
+    end
+  endgenerate
   assign dbg_phy_wrcal[4:1]  = cal2_state_r1[3:0];
   assign dbg_phy_wrcal[5]    = wrcal_sanity_chk_err;
   assign dbg_phy_wrcal[6]    = wrcal_start;
   assign dbg_phy_wrcal[7]    = wrcal_done;
   assign dbg_phy_wrcal[8]    = pat_data_match_valid_r;
   assign dbg_phy_wrcal[13+:DQS_CNT_WIDTH]= wrcal_dqs_cnt_r;
-  assign dbg_phy_wrcal[17+:5]  = not_empty_wait_cnt; 
-  assign dbg_phy_wrcal[22]     = early1_data; 
-  assign dbg_phy_wrcal[23]     = early2_data; 
-  assign dbg_phy_wrcal[24+:8]     = mux_rd_rise0_r; 
-  assign dbg_phy_wrcal[32+:8]     = mux_rd_fall0_r; 
-  assign dbg_phy_wrcal[40+:8]     = mux_rd_rise1_r; 
-  assign dbg_phy_wrcal[48+:8]     = mux_rd_fall1_r; 
-  assign dbg_phy_wrcal[56+:8]     = mux_rd_rise2_r; 
-  assign dbg_phy_wrcal[64+:8]     = mux_rd_fall2_r; 
-  assign dbg_phy_wrcal[72+:8]     = mux_rd_rise3_r; 
-  assign dbg_phy_wrcal[80+:8]     = mux_rd_fall3_r; 
-  assign dbg_phy_wrcal[88]     = early1_data_match_r; 
-  assign dbg_phy_wrcal[89]     = early2_data_match_r; 
-  assign dbg_phy_wrcal[90]     = wrcal_sanity_chk_r & pat_data_match_valid_r; 
-  assign dbg_phy_wrcal[91]     = wrcal_sanity_chk_r; 
-  assign dbg_phy_wrcal[92]     = wrcal_sanity_chk_done; 
-  
+  assign dbg_phy_wrcal[17+:5]  = not_empty_wait_cnt;
+  assign dbg_phy_wrcal[22]     = early1_data;
+  assign dbg_phy_wrcal[23]     = early2_data;
+  assign dbg_phy_wrcal[24+:8]     = mux_rd_rise0_r;
+  assign dbg_phy_wrcal[32+:8]     = mux_rd_fall0_r;
+  assign dbg_phy_wrcal[40+:8]     = mux_rd_rise1_r;
+  assign dbg_phy_wrcal[48+:8]     = mux_rd_fall1_r;
+  generate
+    if (nCK_PER_CLK == 4) begin: mux_data_4
+      assign dbg_phy_wrcal[56+:8]     = mux_rd_rise2_r;
+      assign dbg_phy_wrcal[64+:8]     = mux_rd_fall2_r;
+      assign dbg_phy_wrcal[72+:8]     = mux_rd_rise3_r;
+      assign dbg_phy_wrcal[80+:8]     = mux_rd_fall3_r;
+    end else begin: mux_data_2
+      assign dbg_phy_wrcal[56+:8] = {8{1'b0}};
+      assign dbg_phy_wrcal[64+:8] = {8{1'b0}};
+      assign dbg_phy_wrcal[72+:8] = {8{1'b0}};
+      assign dbg_phy_wrcal[80+:8] = {8{1'b0}};
+    end
+  endgenerate
+  assign dbg_phy_wrcal[88]     = early1_data_match_r;
+  assign dbg_phy_wrcal[89]     = early2_data_match_r;
+  assign dbg_phy_wrcal[90]     = wrcal_sanity_chk_r & pat_data_match_valid_r;
+  assign dbg_phy_wrcal[91]     = wrcal_sanity_chk_r;
+  assign dbg_phy_wrcal[92]     = wrcal_sanity_chk_done;
+
   assign dqsfound_retry        = 1'b0;
   assign wrcal_read_req        = 1'b0;
   assign phy_if_reset          = cal2_if_reset;
-  
+
    //**************************************************************************
    // DQS count to hard PHY during write calibration using Phaser_OUT Stage2
-   // coarse delay 
+   // coarse delay
    //**************************************************************************
- 
+
    always @(posedge clk) begin
      po_stg2_wrcal_cnt  <= #TCQ wrcal_dqs_cnt_r;
      wrlvl_byte_done_r  <= #TCQ wrlvl_byte_done;
-	 wrcal_sanity_chk_r <= #TCQ wrcal_sanity_chk;
+     wrcal_sanity_chk_r <= #TCQ wrcal_sanity_chk;
    end
 
   //***************************************************************************
@@ -414,7 +429,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
     end else if (cal2_done_r && ~cal2_done_r1) begin
       for (q = 0; q < DQS_WIDTH; q = q + 1) begin
         po_coarse_tap_cnt[q] <= #TCQ wl_po_coarse_cnt_w[i];
-        po_fine_tap_cnt[q]   <= #TCQ wl_po_fine_cnt_w[i]; 
+        po_fine_tap_cnt[q]   <= #TCQ wl_po_fine_cnt_w[i];
       end
     end
   end
@@ -441,7 +456,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
           mux_rd_fall3_r[mux_i] <= #TCQ rd_data_fall3[DRAM_WIDTH*rd_mux_sel_r + mux_i];
         end
       end
-    end else if (nCK_PER_CLK == 2) begin: gen_mux_rd_div2 
+    end else if (nCK_PER_CLK == 2) begin: gen_mux_rd_div2
       for (mux_i = 0; mux_i < DRAM_WIDTH; mux_i = mux_i + 1) begin: gen_mux_rd
         always @(posedge clk) begin
           mux_rd_rise0_r[mux_i] <= #TCQ rd_data_rise0[DRAM_WIDTH*rd_mux_sel_r + mux_i];
@@ -489,11 +504,11 @@ module mig_7series_v4_0_ddr_phy_wrcal #
           sr_rise3_r[rd_i] <= #TCQ mux_rd_rise3_r[rd_i];
           sr_fall3_r[rd_i] <= #TCQ mux_rd_fall3_r[rd_i];
         end
-      end    
+      end
     end else if (nCK_PER_CLK == 2) begin: gen_sr_div2
       for (rd_i = 0; rd_i < DRAM_WIDTH; rd_i = rd_i + 1) begin: gen_sr
         always @(posedge clk) begin
-          sr_rise0_r[rd_i] <= #TCQ mux_rd_rise0_r[rd_i]; 
+          sr_rise0_r[rd_i] <= #TCQ mux_rd_rise0_r[rd_i];
           sr_fall0_r[rd_i] <= #TCQ mux_rd_fall0_r[rd_i];
           sr_rise1_r[rd_i] <= #TCQ mux_rd_rise1_r[rd_i];
           sr_fall1_r[rd_i] <= #TCQ mux_rd_fall1_r[rd_i];
@@ -504,9 +519,9 @@ module mig_7series_v4_0_ddr_phy_wrcal #
 
  //***************************************************************************
   // Write calibration:
-  // During write leveling DQS is aligned to the nearest CK edge that may not 
-  // be the correct CK edge. Write calibration is required to align the DQS to 
-  // the correct CK edge that clocks the write command.  
+  // During write leveling DQS is aligned to the nearest CK edge that may not
+  // be the correct CK edge. Write calibration is required to align the DQS to
+  // the correct CK edge that clocks the write command.
   // The Phaser_Out coarse delay line is adjusted if required to add a memory
   // clock cycle of delay in order to read back the expected pattern.
   //***************************************************************************
@@ -517,7 +532,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
     rd_active_r2        <= #TCQ rd_active_r1;
     rd_active_r3        <= #TCQ rd_active_r2;
     rd_active_r4        <= #TCQ rd_active_r3;
-    rd_active_r5        <= #TCQ rd_active_r4;      
+    rd_active_r5        <= #TCQ rd_active_r4;
   end
 
   //*****************************************************************
@@ -533,7 +548,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
   // Change the hard-coded pattern below accordingly as RD_SHIFT_LEN
   // and the actual training pattern contents change
   //*****************************************************************
-    
+
   generate
     if (nCK_PER_CLK == 4) begin: gen_pat_div4
     // FF00AA5555AA9966
@@ -545,7 +560,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
       assign pat_fall2[3] = 1'b1;
       assign pat_rise3[3] = 1'b1;
       assign pat_fall3[3] = 1'b0;
-      
+
       assign pat_rise0[2] = 1'b1;
       assign pat_fall0[2] = 1'b0;
       assign pat_rise1[2] = 1'b0;
@@ -554,7 +569,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
       assign pat_fall2[2] = 1'b0;
       assign pat_rise3[2] = 1'b0;
       assign pat_fall3[2] = 1'b1;
-    
+
       assign pat_rise0[1] = 1'b1;
       assign pat_fall0[1] = 1'b0;
       assign pat_rise1[1] = 1'b1;
@@ -563,7 +578,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
       assign pat_fall2[1] = 1'b1;
       assign pat_rise3[1] = 1'b0;
       assign pat_fall3[1] = 1'b1;
-      
+
       assign pat_rise0[0] = 1'b1;
       assign pat_fall0[0] = 1'b0;
       assign pat_rise1[0] = 1'b0;
@@ -572,7 +587,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
       assign pat_fall2[0] = 1'b0;
       assign pat_rise3[0] = 1'b1;
       assign pat_fall3[0] = 1'b0;
-      
+
       // Pattern to distinguish between early write and incorrect read
       // BB11EE4444EEDD88
       assign early_rise0[3] = 1'b1;
@@ -583,7 +598,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
       assign early_fall2[3] = 1'b1;
       assign early_rise3[3] = 1'b1;
       assign early_fall3[3] = 1'b1;
-      
+
       assign early_rise0[2] = 1'b0;
       assign early_fall0[2] = 1'b0;
       assign early_rise1[2] = 1'b1;
@@ -592,7 +607,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
       assign early_fall2[2] = 1'b1;
       assign early_rise3[2] = 1'b1;
       assign early_fall3[2] = 1'b0;
-    
+
       assign early_rise0[1] = 1'b1;
       assign early_fall0[1] = 1'b0;
       assign early_rise1[1] = 1'b1;
@@ -601,7 +616,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
       assign early_fall2[1] = 1'b1;
       assign early_rise3[1] = 1'b0;
       assign early_fall3[1] = 1'b0;
-      
+
       assign early_rise0[0] = 1'b1;
       assign early_fall0[0] = 1'b1;
       assign early_rise1[0] = 1'b0;
@@ -610,88 +625,88 @@ module mig_7series_v4_0_ddr_phy_wrcal #
       assign early_fall2[0] = 1'b0;
       assign early_rise3[0] = 1'b1;
       assign early_fall3[0] = 1'b0;
-      
+
     end else if (nCK_PER_CLK == 2) begin: gen_pat_div2
       // First cycle pattern FF00AA55
       assign pat1_rise0[3] = 1'b1;
       assign pat1_fall0[3] = 1'b0;
       assign pat1_rise1[3] = 1'b1;
       assign pat1_fall1[3] = 1'b0;
-      
+
       assign pat1_rise0[2] = 1'b1;
       assign pat1_fall0[2] = 1'b0;
       assign pat1_rise1[2] = 1'b0;
       assign pat1_fall1[2] = 1'b1;
-      
+
       assign pat1_rise0[1] = 1'b1;
       assign pat1_fall0[1] = 1'b0;
       assign pat1_rise1[1] = 1'b1;
       assign pat1_fall1[1] = 1'b0;
-      
+
       assign pat1_rise0[0] = 1'b1;
       assign pat1_fall0[0] = 1'b0;
       assign pat1_rise1[0] = 1'b0;
       assign pat1_fall1[0] = 1'b1;
-      
+
       // Second cycle pattern 55AA9966
       assign pat2_rise0[3] = 1'b0;
       assign pat2_fall0[3] = 1'b1;
       assign pat2_rise1[3] = 1'b1;
       assign pat2_fall1[3] = 1'b0;
-      
+
       assign pat2_rise0[2] = 1'b1;
       assign pat2_fall0[2] = 1'b0;
       assign pat2_rise1[2] = 1'b0;
       assign pat2_fall1[2] = 1'b1;
-      
+
       assign pat2_rise0[1] = 1'b0;
       assign pat2_fall0[1] = 1'b1;
       assign pat2_rise1[1] = 1'b0;
       assign pat2_fall1[1] = 1'b1;
-      
+
       assign pat2_rise0[0] = 1'b1;
       assign pat2_fall0[0] = 1'b0;
       assign pat2_rise1[0] = 1'b1;
       assign pat2_fall1[0] = 1'b0;
-      
+
       //Pattern to distinguish between early write and incorrect read
       // First cycle pattern AA5555AA
       assign early1_rise0[3] = 2'b1;
       assign early1_fall0[3] = 2'b0;
       assign early1_rise1[3] = 2'b0;
       assign early1_fall1[3] = 2'b1;
-      
+
       assign early1_rise0[2] = 2'b0;
       assign early1_fall0[2] = 2'b1;
       assign early1_rise1[2] = 2'b1;
       assign early1_fall1[2] = 2'b0;
-    
+
       assign early1_rise0[1] = 2'b1;
       assign early1_fall0[1] = 2'b0;
       assign early1_rise1[1] = 2'b0;
       assign early1_fall1[1] = 2'b1;
-      
+
       assign early1_rise0[0] = 2'b0;
       assign early1_fall0[0] = 2'b1;
       assign early1_rise1[0] = 2'b1;
       assign early1_fall1[0] = 2'b0;
-      
+
       // Second cycle pattern 9966BB11
       assign early2_rise0[3] = 2'b1;
       assign early2_fall0[3] = 2'b0;
       assign early2_rise1[3] = 2'b1;
       assign early2_fall1[3] = 2'b0;
-      
+
       assign early2_rise0[2] = 2'b0;
       assign early2_fall0[2] = 2'b1;
       assign early2_rise1[2] = 2'b0;
       assign early2_fall1[2] = 2'b0;
-    
+
       assign early2_rise0[1] = 2'b0;
       assign early2_fall0[1] = 2'b1;
       assign early2_rise1[1] = 2'b1;
       assign early2_fall1[1] = 2'b0;
-      
+
       assign early2_rise0[0] = 2'b1;
       assign early2_fall0[0] = 2'b0;
       assign early2_rise1[0] = 2'b1;
@@ -714,32 +729,32 @@ module mig_7series_v4_0_ddr_phy_wrcal #
             pat_match_rise0_r[pt_i] <= #TCQ 1'b1;
           else
             pat_match_rise0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall0_r[pt_i] == pat_fall0[pt_i%4])
             pat_match_fall0_r[pt_i] <= #TCQ 1'b1;
           else
             pat_match_fall0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise1_r[pt_i] == pat_rise1[pt_i%4])
             pat_match_rise1_r[pt_i] <= #TCQ 1'b1;
           else
             pat_match_rise1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall1_r[pt_i] == pat_fall1[pt_i%4])
             pat_match_fall1_r[pt_i] <= #TCQ 1'b1;
           else
             pat_match_fall1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise2_r[pt_i] == pat_rise2[pt_i%4])
             pat_match_rise2_r[pt_i] <= #TCQ 1'b1;
           else
             pat_match_rise2_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall2_r[pt_i] == pat_fall2[pt_i%4])
             pat_match_fall2_r[pt_i] <= #TCQ 1'b1;
           else
             pat_match_fall2_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise3_r[pt_i] == pat_rise3[pt_i%4])
             pat_match_rise3_r[pt_i] <= #TCQ 1'b1;
           else
@@ -750,38 +765,38 @@ module mig_7series_v4_0_ddr_phy_wrcal #
           else
             pat_match_fall3_r[pt_i] <= #TCQ 1'b0;
         end
-        
+
         always @(posedge clk) begin
           if (sr_rise0_r[pt_i] == pat_rise1[pt_i%4])
             early1_match_rise0_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_rise0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall0_r[pt_i] == pat_fall1[pt_i%4])
             early1_match_fall0_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_fall0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise1_r[pt_i] == pat_rise2[pt_i%4])
             early1_match_rise1_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_rise1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall1_r[pt_i] == pat_fall2[pt_i%4])
             early1_match_fall1_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_fall1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise2_r[pt_i] == pat_rise3[pt_i%4])
             early1_match_rise2_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_rise2_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall2_r[pt_i] == pat_fall3[pt_i%4])
             early1_match_fall2_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_fall2_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise3_r[pt_i] == early_rise0[pt_i%4])
             early1_match_rise3_r[pt_i] <= #TCQ 1'b1;
           else
@@ -798,32 +813,32 @@ module mig_7series_v4_0_ddr_phy_wrcal #
             early2_match_rise0_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_rise0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall0_r[pt_i] == pat_fall2[pt_i%4])
             early2_match_fall0_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_fall0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise1_r[pt_i] == pat_rise3[pt_i%4])
             early2_match_rise1_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_rise1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall1_r[pt_i] == pat_fall3[pt_i%4])
             early2_match_fall1_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_fall1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise2_r[pt_i] == early_rise0[pt_i%4])
             early2_match_rise2_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_rise2_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall2_r[pt_i] == early_fall0[pt_i%4])
             early2_match_fall2_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_fall2_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise3_r[pt_i] == early_rise1[pt_i%4])
             early2_match_rise3_r[pt_i] <= #TCQ 1'b1;
           else
@@ -833,9 +848,9 @@ module mig_7series_v4_0_ddr_phy_wrcal #
             early2_match_fall3_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_fall3_r[pt_i] <= #TCQ 1'b0;
-        end        
+        end
       end
-  
+
 
        always @(posedge clk) begin
          pat_match_rise0_and_r <= #TCQ &pat_match_rise0_r;
@@ -856,7 +871,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
                                    pat_match_fall3_and_r);
          pat_data_match_valid_r <= #TCQ rd_active_r3;
        end
-       
+
        always @(posedge clk) begin
          early1_match_rise0_and_r <= #TCQ &early1_match_rise0_r;
          early1_match_fall0_and_r <= #TCQ &early1_match_fall0_r;
@@ -875,7 +890,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
                                    early1_match_rise3_and_r &&
                                    early1_match_fall3_and_r);
        end
-       
+
        always @(posedge clk) begin
          early2_match_rise0_and_r <= #TCQ &early2_match_rise0_r;
          early2_match_fall0_and_r <= #TCQ &early2_match_fall0_r;
@@ -893,102 +908,102 @@ module mig_7series_v4_0_ddr_phy_wrcal #
                                    early2_match_fall2_and_r &&
                                    early2_match_rise3_and_r &&
                                    early2_match_fall3_and_r);
-       end       
+       end
 
     end else if (nCK_PER_CLK == 2) begin: gen_pat_match_div2
-      
+
       for (pt_i = 0; pt_i < DRAM_WIDTH; pt_i = pt_i + 1) begin: gen_pat_match
         always @(posedge clk) begin
           if (sr_rise0_r[pt_i] == pat1_rise0[pt_i%4])
             pat1_match_rise0_r[pt_i] <= #TCQ 1'b1;
           else
             pat1_match_rise0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall0_r[pt_i] == pat1_fall0[pt_i%4])
             pat1_match_fall0_r[pt_i] <= #TCQ 1'b1;
           else
             pat1_match_fall0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise1_r[pt_i] == pat1_rise1[pt_i%4])
             pat1_match_rise1_r[pt_i] <= #TCQ 1'b1;
           else
             pat1_match_rise1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall1_r[pt_i] == pat1_fall1[pt_i%4])
             pat1_match_fall1_r[pt_i] <= #TCQ 1'b1;
           else
             pat1_match_fall1_r[pt_i] <= #TCQ 1'b0;
         end
-        
+
         always @(posedge clk) begin
           if (sr_rise0_r[pt_i] == pat2_rise0[pt_i%4])
             pat2_match_rise0_r[pt_i] <= #TCQ 1'b1;
           else
             pat2_match_rise0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall0_r[pt_i] == pat2_fall0[pt_i%4])
             pat2_match_fall0_r[pt_i] <= #TCQ 1'b1;
           else
             pat2_match_fall0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise1_r[pt_i] == pat2_rise1[pt_i%4])
             pat2_match_rise1_r[pt_i] <= #TCQ 1'b1;
           else
             pat2_match_rise1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall1_r[pt_i] == pat2_fall1[pt_i%4])
             pat2_match_fall1_r[pt_i] <= #TCQ 1'b1;
           else
             pat2_match_fall1_r[pt_i] <= #TCQ 1'b0;
         end
-        
+
         always @(posedge clk) begin
           if (sr_rise0_r[pt_i] == early1_rise0[pt_i%4])
             early1_match_rise0_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_rise0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall0_r[pt_i] == early1_fall0[pt_i%4])
             early1_match_fall0_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_fall0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise1_r[pt_i] == early1_rise1[pt_i%4])
             early1_match_rise1_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_rise1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall1_r[pt_i] == early1_fall1[pt_i%4])
             early1_match_fall1_r[pt_i] <= #TCQ 1'b1;
           else
             early1_match_fall1_r[pt_i] <= #TCQ 1'b0;
         end
-        
-        // early2 in this case does not mean 2 cycles early but 
+
+        // early2 in this case does not mean 2 cycles early but
         // the second cycle of read data in 2:1 mode
         always @(posedge clk) begin
           if (sr_rise0_r[pt_i] == early2_rise0[pt_i%4])
             early2_match_rise0_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_rise0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall0_r[pt_i] == early2_fall0[pt_i%4])
             early2_match_fall0_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_fall0_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_rise1_r[pt_i] == early2_rise1[pt_i%4])
             early2_match_rise1_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_rise1_r[pt_i] <= #TCQ 1'b0;
-          
+
           if (sr_fall1_r[pt_i] == early2_fall1[pt_i%4])
             early2_match_fall1_r[pt_i] <= #TCQ 1'b1;
           else
             early2_match_fall1_r[pt_i] <= #TCQ 1'b0;
         end
-      end     
-  
+      end
+
         always @(posedge clk) begin
           pat1_match_rise0_and_r <= #TCQ &pat1_match_rise0_r;
           pat1_match_fall0_and_r <= #TCQ &pat1_match_fall0_r;
@@ -999,7 +1014,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
                                     pat1_match_rise1_and_r &&
                                     pat1_match_fall1_and_r);
           pat1_data_match_r1     <= #TCQ pat1_data_match_r;
-          
+
           pat2_match_rise0_and_r <= #TCQ &pat2_match_rise0_r && rd_active_r3;
           pat2_match_fall0_and_r <= #TCQ &pat2_match_fall0_r && rd_active_r3;
           pat2_match_rise1_and_r <= #TCQ &pat2_match_rise1_r && rd_active_r3;
@@ -1015,7 +1030,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
           // is complete
           pat_data_match_valid_r <= #TCQ rd_active_r4 & ~rd_active_r5;
         end
-        
+
         always @(posedge clk) begin
          early1_match_rise0_and_r <= #TCQ &early1_match_rise0_r;
          early1_match_fall0_and_r <= #TCQ &early1_match_fall0_r;
@@ -1026,7 +1041,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
                                       early1_match_rise1_and_r &&
                                       early1_match_fall1_and_r);
          early1_data_match_r1 <= #TCQ early1_data_match_r;
-         
+
          early2_match_rise0_and_r <= #TCQ &early2_match_rise0_r && rd_active_r3;
          early2_match_fall0_and_r <= #TCQ &early2_match_fall0_r && rd_active_r3;
          early2_match_rise1_and_r <= #TCQ &early2_match_rise1_r && rd_active_r3;
@@ -1036,7 +1051,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
                                       early2_match_rise1_and_r &&
                                       early2_match_fall1_and_r);
        end
-  
+
     end
   endgenerate
 
@@ -1047,18 +1062,18 @@ module mig_7series_v4_0_ddr_phy_wrcal #
     wrcal_pat_resume_r2 <= #TCQ wrcal_pat_resume_r1;
     wrcal_pat_resume    <= #TCQ wrcal_pat_resume_r2;
   end
-  
+
   always @(posedge clk) begin
     if (rst)
       tap_inc_wait_cnt <= #TCQ 'd0;
     else if ((cal2_state_r == CAL2_DQ_IDEL_DEC) ||
              (cal2_state_r == CAL2_IFIFO_RESET) ||
-			 (cal2_state_r == CAL2_SANITY_WAIT))
+             (cal2_state_r == CAL2_SANITY_WAIT))
       tap_inc_wait_cnt <= #TCQ tap_inc_wait_cnt + 1;
     else
       tap_inc_wait_cnt <= #TCQ 'd0;
   end
-   
+
   always @(posedge clk) begin
     if (rst)
       not_empty_wait_cnt <= #TCQ 'd0;
@@ -1070,7 +1085,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
 
   always @(posedge clk)
     cal2_state_r1 <= #TCQ cal2_state_r;
-   
+
   //*****************************************************************
   // Write Calibration state machine
   //*****************************************************************
@@ -1080,7 +1095,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
   // NOTES:
   //  1. An error condition can occur due to two reasons:
   //    a. If the matching logic does not receive the expected data
-  //       pattern. However, the error may be "recoverable" because 
+  //       pattern. However, the error may be "recoverable" because
   //       the write calibration is still in progress. If an error is
   //       found the write calibration logic delays DQS by an additional
   //       clock cycle and restarts the pattern detection process.
@@ -1108,7 +1123,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
       idelay_ld_done        <= #TCQ 1'b0;
       pat1_detect           <= #TCQ 1'b0;
       early1_detect         <= #TCQ 1'b0;
-	  wrcal_sanity_chk_done <= #TCQ 1'b0;
+      wrcal_sanity_chk_done <= #TCQ 1'b0;
       wrcal_sanity_chk_err  <= #TCQ 1'b0;
     end else begin
       cal2_prech_req_r <= #TCQ 1'b0;
@@ -1139,8 +1154,8 @@ module mig_7series_v4_0_ddr_phy_wrcal #
               // If found data match, then move on to next DQS group
               cal2_state_r <= #TCQ CAL2_NEXT_DQS;
             else begin
-			  if (wrcal_sanity_chk_r)
-			    cal2_state_r <= #TCQ CAL2_ERR;
+              if (wrcal_sanity_chk_r)
+                cal2_state_r <= #TCQ CAL2_ERR;
               // If writes are one or two cycles early then redo
               // write leveling for the byte
               else if (early1_data_match_r) begin
@@ -1159,10 +1174,10 @@ module mig_7series_v4_0_ddr_phy_wrcal #
                 cal2_state_r <= #TCQ CAL2_DQ_IDEL_DEC;
                 idelay_ld    <= #TCQ 1'b1;
               end else
-                cal2_state_r <= #TCQ CAL2_ERR;                
+                cal2_state_r <= #TCQ CAL2_ERR;
             end
           end else if (pat_data_match_valid_r && (nCK_PER_CLK == 2)) begin
-            if ((pat1_data_match_r1 && pat2_data_match_r) || 
+            if ((pat1_data_match_r1 && pat2_data_match_r) ||
                 (pat1_detect && pat2_data_match_r))
               // If found data match, then move on to next DQS group
               cal2_state_r <= #TCQ CAL2_NEXT_DQS;
@@ -1173,7 +1188,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
               // If writes are one or two cycles early then redo
               // write leveling for the byte
               if (wrcal_sanity_chk_r)
-			    cal2_state_r <= #TCQ CAL2_ERR;
+                cal2_state_r <= #TCQ CAL2_ERR;
               else if ((early1_data_match_r1 && early2_data_match_r) ||
                   (early1_detect && early2_data_match_r)) begin
                 early1_data <= #TCQ 1'b1;
@@ -1189,12 +1204,12 @@ module mig_7series_v4_0_ddr_phy_wrcal #
                 cal2_state_r <= #TCQ CAL2_DQ_IDEL_DEC;
                 idelay_ld    <= #TCQ 1'b1;
               end else
-                cal2_state_r <= #TCQ CAL2_ERR;                
+                cal2_state_r <= #TCQ CAL2_ERR;
             end
           end else if (not_empty_wait_cnt == 'd31)
             cal2_state_r <= #TCQ CAL2_ERR;
         end
-        
+
         CAL2_WRLVL_WAIT: begin
           early1_detect <= #TCQ 1'b0;
           if (wrlvl_byte_done && ~wrlvl_byte_done_r)
@@ -1208,7 +1223,7 @@ module mig_7series_v4_0_ddr_phy_wrcal #
           end
         end
         end
-        
+
         CAL2_DQ_IDEL_DEC: begin
           if (tap_inc_wait_cnt == 'd4) begin
             idelay_ld      <= #TCQ 1'b0;
@@ -1217,12 +1232,12 @@ module mig_7series_v4_0_ddr_phy_wrcal #
             idelay_ld_done <= #TCQ 1'b1;
           end
         end
-        
+
         CAL2_IFIFO_RESET: begin
           if (tap_inc_wait_cnt == 'd15) begin
             cal2_if_reset      <= #TCQ 1'b0;
-			if (wrcal_sanity_chk_r)
-			  cal2_state_r       <= #TCQ CAL2_DONE;
+            if (wrcal_sanity_chk_r)
+              cal2_state_r       <= #TCQ CAL2_DONE;
             else if (idelay_ld_done) begin
               wrcal_pat_resume_r <= #TCQ 1'b1;
               cal2_state_r       <= #TCQ CAL2_READ_WAIT;
@@ -1230,33 +1245,33 @@ module mig_7series_v4_0_ddr_phy_wrcal #
               cal2_state_r       <= #TCQ CAL2_IDLE;
           end
         end
-        
+
         // Final processing for current DQS group. Move on to next group
         CAL2_NEXT_DQS: begin
           // At this point, we've just found the correct pattern for the
           // current DQS group.
-           
+
           // Request bank/row precharge, and wait for its completion. Always
           // precharge after each DQS group to avoid tRAS(max) violation
-					//verilint STARC-2.2.3.3 off
+                    //verilint STARC-2.2.3.3 off
           if (wrcal_sanity_chk_r && (wrcal_dqs_cnt_r != DQS_WIDTH-1)) begin
-		    cal2_prech_req_r   <= #TCQ 1'b0;
-			wrcal_dqs_cnt_r    <= #TCQ wrcal_dqs_cnt_r + 1;
+            cal2_prech_req_r   <= #TCQ 1'b0;
+            wrcal_dqs_cnt_r    <= #TCQ wrcal_dqs_cnt_r + 1;
             cal2_state_r       <= #TCQ CAL2_SANITY_WAIT;
-		  end else
-		    cal2_prech_req_r  <= #TCQ 1'b1;
+          end else
+            cal2_prech_req_r  <= #TCQ 1'b1;
           idelay_ld_done    <= #TCQ 1'b0;
           pat1_detect       <= #TCQ 1'b0;
           if (prech_done)
             if (((DQS_WIDTH == 1) || (SIM_CAL_OPTION == "FAST_CAL")) ||
                 (wrcal_dqs_cnt_r == DQS_WIDTH-1)) begin
-              // If either FAST_CAL is enabled and first DQS group is 
+              // If either FAST_CAL is enabled and first DQS group is
               // finished, or if the last DQS group was just finished,
               // then end of write calibration
               if (wrcal_sanity_chk_r) begin
-			    cal2_if_reset    <= #TCQ 1'b1;
-				cal2_state_r     <= #TCQ CAL2_IFIFO_RESET;
-			  end else
+                cal2_if_reset    <= #TCQ 1'b1;
+                cal2_state_r     <= #TCQ CAL2_IFIFO_RESET;
+              end else
                 cal2_state_r     <= #TCQ CAL2_DONE;
             end else begin
               // Continue to next DQS group
@@ -1264,26 +1279,26 @@ module mig_7series_v4_0_ddr_phy_wrcal #
               cal2_state_r       <= #TCQ CAL2_READ_WAIT;
             end
         end
-	//verilint STARC-2.2.3.3 on	
-		CAL2_SANITY_WAIT: begin
-		  if (tap_inc_wait_cnt == 'd15) begin
-		    cal2_state_r       <= #TCQ CAL2_READ_WAIT;
-			wrcal_pat_resume_r <= #TCQ 1'b1;
-	      end
-		end
+    //verilint STARC-2.2.3.3 on
+        CAL2_SANITY_WAIT: begin
+          if (tap_inc_wait_cnt == 'd15) begin
+            cal2_state_r       <= #TCQ CAL2_READ_WAIT;
+            wrcal_pat_resume_r <= #TCQ 1'b1;
+          end
+        end
 
         // Finished with read enable calibration
         CAL2_DONE: begin
-		  if (wrcal_sanity_chk && ~wrcal_sanity_chk_r) begin
-		    cal2_done_r     <= #TCQ 1'b0;
-			wrcal_dqs_cnt_r <= #TCQ 'd0;
-			cal2_state_r    <= #TCQ CAL2_IDLE;
-		  end else
+          if (wrcal_sanity_chk && ~wrcal_sanity_chk_r) begin
+            cal2_done_r     <= #TCQ 1'b0;
+            wrcal_dqs_cnt_r <= #TCQ 'd0;
+            cal2_state_r    <= #TCQ CAL2_IDLE;
+          end else
             cal2_done_r      <= #TCQ 1'b1;
             cal2_prech_req_r <= #TCQ 1'b0;
             cal2_if_reset    <= #TCQ 1'b0;
-			if (wrcal_sanity_chk_r)
-			  wrcal_sanity_chk_done <= #TCQ 1'b1;
+            if (wrcal_sanity_chk_r)
+              wrcal_sanity_chk_done <= #TCQ 1'b1;
         end
 
         // Assert error signal indicating that writes timing is incorrect
@@ -1302,15 +1317,15 @@ module mig_7series_v4_0_ddr_phy_wrcal #
   // Delay assertion of wrcal_done for write calibration by a few cycles after
   // we've reached CAL2_DONE
   always @(posedge clk)
-    if (rst) 
+    if (rst)
       cal2_done_r1  <= #TCQ 1'b0;
     else
       cal2_done_r1  <= #TCQ cal2_done_r;
-  
+
   always @(posedge clk)
     if (rst || (wrcal_sanity_chk && ~wrcal_sanity_chk_r))
       wrcal_done <= #TCQ 1'b0;
     else if (cal2_done_r)
       wrcal_done <= #TCQ 1'b1;
-  
+
 endmodule

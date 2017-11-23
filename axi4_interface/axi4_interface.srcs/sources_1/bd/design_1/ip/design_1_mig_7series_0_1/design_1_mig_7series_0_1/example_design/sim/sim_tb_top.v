@@ -379,12 +379,11 @@ module sim_tb_top;
         .phy_init_done (init_calib_complete)
        );
     end
-    // For ECC ON case error is inserted on LSB bit from DRAM to FPGA
           WireDelay #
        (
         .Delay_g    (TPROP_PCB_DATA),
         .Delay_rd   (TPROP_PCB_DATA_RD),
-        .ERR_INSERT (ERR_INSERT)
+        .ERR_INSERT ("OFF")
        )
       u_delay_dq_0
        (
