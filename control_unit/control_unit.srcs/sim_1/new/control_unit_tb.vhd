@@ -122,11 +122,23 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0000";
+        counter_bit_tb_in <= '0';
+        cpsr_set_bit_tb_in <= '0';
         wait for 55 ns;
-        reset_tb_in <= '0';
+        --reset_tb_in <= '0';
         op_code_tb_in <= "000010";
-        condition_code_tb_in <= "0000";
-        wait for 55 ns;
+        condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
+        counter_bit_tb_in <= '0';
+        cpsr_set_bit_tb_in <= '0';
+        wait for 50 ns;
+        --reset_tb_in <= '0';
+        op_code_tb_in <= "011011";
+        wait for 50 ns;
+        --reset_tb_in <= '0';
+        op_code_tb_in <= "111111";
+        --condition_code_tb_in <= "0000";
+        wait for 50 ns;
     end process;
 
 end Behavioral;

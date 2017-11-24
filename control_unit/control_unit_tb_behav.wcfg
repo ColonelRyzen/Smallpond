@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="control_unit_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="control_unit_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="202000001fs"></ZoomEndTime>
+      <Cursor1Time time="225000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="146"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="21" />
+   <wvobject type="logic" fp_name="/control_unit_tb/clk_tb_in">
+      <obj_property name="ElementShortName">clk_tb_in</obj_property>
+      <obj_property name="ObjectShortName">clk_tb_in</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/reset_tb_in">
+      <obj_property name="ElementShortName">reset_tb_in</obj_property>
+      <obj_property name="ObjectShortName">reset_tb_in</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/control_unit_tb/op_code_tb_in">
+      <obj_property name="ElementShortName">op_code_tb_in[5:0]</obj_property>
+      <obj_property name="ObjectShortName">op_code_tb_in[5:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/reg_write_tb_out">
+      <obj_property name="ElementShortName">reg_write_tb_out</obj_property>
+      <obj_property name="ObjectShortName">reg_write_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/counter_bit_tb_out">
+      <obj_property name="ElementShortName">counter_bit_tb_out</obj_property>
+      <obj_property name="ObjectShortName">counter_bit_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/cpsr_set_bit_tb_out">
+      <obj_property name="ElementShortName">cpsr_set_bit_tb_out</obj_property>
+      <obj_property name="ObjectShortName">cpsr_set_bit_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/alu_src_tb_out">
+      <obj_property name="ElementShortName">alu_src_tb_out</obj_property>
+      <obj_property name="ObjectShortName">alu_src_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/control_unit_tb/alu_op_tb_out">
+      <obj_property name="ElementShortName">alu_op_tb_out[3:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_op_tb_out[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/sub_tb_out">
+      <obj_property name="ElementShortName">sub_tb_out</obj_property>
+      <obj_property name="ObjectShortName">sub_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/pc_src_tb_out">
+      <obj_property name="ElementShortName">pc_src_tb_out</obj_property>
+      <obj_property name="ObjectShortName">pc_src_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/jump_tb_out">
+      <obj_property name="ElementShortName">jump_tb_out</obj_property>
+      <obj_property name="ObjectShortName">jump_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/mem_read_tb_out">
+      <obj_property name="ElementShortName">mem_read_tb_out</obj_property>
+      <obj_property name="ObjectShortName">mem_read_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/mem_write_tb_out">
+      <obj_property name="ElementShortName">mem_write_tb_out</obj_property>
+      <obj_property name="ObjectShortName">mem_write_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/mem_to_reg_tb_out">
+      <obj_property name="ElementShortName">mem_to_reg_tb_out</obj_property>
+      <obj_property name="ObjectShortName">mem_to_reg_tb_out</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/control_unit_tb/cpsr_bits_tb_in">
+      <obj_property name="ElementShortName">cpsr_bits_tb_in[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cpsr_bits_tb_in[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/counter_bit_tb_in">
+      <obj_property name="ElementShortName">counter_bit_tb_in</obj_property>
+      <obj_property name="ObjectShortName">counter_bit_tb_in</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/cpsr_set_bit_tb_in">
+      <obj_property name="ElementShortName">cpsr_set_bit_tb_in</obj_property>
+      <obj_property name="ObjectShortName">cpsr_set_bit_tb_in</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/control_unit_tb/condition_code_tb_in">
+      <obj_property name="ElementShortName">condition_code_tb_in[3:0]</obj_property>
+      <obj_property name="ObjectShortName">condition_code_tb_in[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/control_unit_tb/branch_counter_tb_in">
+      <obj_property name="ElementShortName">branch_counter_tb_in</obj_property>
+      <obj_property name="ObjectShortName">branch_counter_tb_in</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/control_unit_tb/counter_tb">
+      <obj_property name="ElementShortName">counter_tb</obj_property>
+      <obj_property name="ObjectShortName">counter_tb</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/control_unit_tb/clk_period">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+</wave_config>

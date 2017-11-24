@@ -71,6 +71,7 @@ begin
             clk_counter <= 0;
         elsif rising_edge(clk_in) then
             if clk_counter = 4 then
+                counter <= clk_counter;
                 clk_counter <= 0;
             else
                 clk_counter <= clk_counter + 1;
