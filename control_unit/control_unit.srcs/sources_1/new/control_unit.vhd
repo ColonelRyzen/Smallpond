@@ -110,9 +110,12 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-
+                    
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -362,9 +365,12 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-
+                    
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -613,9 +619,12 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-
+                    
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -865,9 +874,12 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-
+                    
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -1117,9 +1129,12 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-
+                    
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -1369,9 +1384,12 @@ begin
                     mem_read_out <= '0';
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
-
+                    
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -1622,9 +1640,11 @@ begin
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
 
-
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -1875,9 +1895,11 @@ begin
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
 
-
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -2127,9 +2149,11 @@ begin
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
 
-
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -2379,9 +2403,11 @@ begin
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
 
-
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -2631,9 +2657,11 @@ begin
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
 
-
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -2883,9 +2911,11 @@ begin
                     mem_write_out <= '0';
                     mem_to_reg_out <= '1';
 
-
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -3454,9 +3484,11 @@ begin
                     mem_write_out <= '0';
                     mem_to_reg_out <= '0';
 
-
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -3706,9 +3738,11 @@ begin
                     mem_write_out <= '0';
                     mem_to_reg_out <= '0';
 
-
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';
@@ -3958,9 +3992,11 @@ begin
                     mem_write_out <= '0';
                     mem_to_reg_out <= '0';
 
-
+                    -- AL (Always) - Unconditional
+                    if condition_code_in = "0000" then
+                        null;
                     -- EQ (Equal) - Z set
-                    if condition_code_in = "0001" then
+                    elsif condition_code_in = "0001" then
                         if cpsr_bits_in(2) = '0' then
                             reg_write_out <= '0';
                             counter_bit_out <= '0';

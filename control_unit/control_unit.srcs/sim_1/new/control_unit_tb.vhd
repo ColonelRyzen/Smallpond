@@ -119,10 +119,11 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0000";
-        wait for 20 ns;
+        wait for 60 ns;
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0000";
+        wait for 60 ns;
     end process;
 
 end Behavioral;
