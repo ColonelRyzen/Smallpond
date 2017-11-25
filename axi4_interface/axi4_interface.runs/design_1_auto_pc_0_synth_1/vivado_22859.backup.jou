@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.3.1 (64-bit)
+# SW Build 2035080 on Fri Oct 20 14:20:00 MDT 2017
+# IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
+# Start of session at: Fri Nov 24 21:03:40 2017
+# Process ID: 22859
+# Current directory: /home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_auto_pc_0_synth_1
+# Command line: vivado -log design_1_auto_pc_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_auto_pc_0.tcl
+# Log file: /home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_auto_pc_0_synth_1/design_1_auto_pc_0.vds
+# Journal file: /home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_auto_pc_0_synth_1/vivado.jou
+#-----------------------------------------------------------
+source design_1_auto_pc_0.tcl -notrace
