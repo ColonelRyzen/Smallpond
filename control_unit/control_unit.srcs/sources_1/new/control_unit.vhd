@@ -95,7 +95,7 @@ begin
     -- 111111 is the 'J' type
     -- Case comment format is "-- Instruction name - 'instruction alias'"
         if rising_edge(clk_in) then
-            if clk_counter = 2 and reset_in = '0' then
+            if clk_counter = 1 and reset_in = '0' then
                 case op_code_in is
         --########################################################################################################--
                 -- Begin 'A' type
