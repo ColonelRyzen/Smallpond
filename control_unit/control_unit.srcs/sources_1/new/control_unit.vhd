@@ -56,7 +56,7 @@ entity control_unit is
            condition_code_in : in STD_LOGIC_VECTOR (3 downto 0);
            branch_counter_in : in STD_LOGIC;
            counter : out integer);
-           
+
 end control_unit;
 
 architecture Behavioral of control_unit is
@@ -262,9 +262,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -517,9 +517,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -771,9 +771,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -1026,9 +1026,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -1281,9 +1281,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -1536,9 +1536,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -1791,9 +1791,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -2046,9 +2046,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -2300,9 +2300,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -2554,9 +2554,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -2808,9 +2808,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -3062,9 +3062,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -3635,9 +3635,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -3889,9 +3889,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';
@@ -4143,9 +4143,9 @@ begin
                                 mem_to_reg_out <= '1';
                             end if;
 
-                        -- LS (Unsigned Lower or Same) - C clear and Z set
+                        -- LS (Unsigned Lower or Same) - C clear or Z set
                         elsif condition_code_in = "1010" then
-                            if cpsr_bits_in(1) = '1' and cpsr_bits_in(2) = '0' then
+                            if cpsr_bits_in(1) = '1' or cpsr_bits_in(2) = '0' then
                                 reg_write_out <= '0';
                                 counter_bit_out <= '0';
                                 cpsr_set_bit_out <= '0';

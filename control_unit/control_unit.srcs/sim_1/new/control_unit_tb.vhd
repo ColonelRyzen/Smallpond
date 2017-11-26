@@ -1,21 +1,21 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
+-- Company:
+-- Engineer:
+--
 -- Create Date: 11/21/2017 04:38:00 PM
--- Design Name: 
+-- Design Name:
 -- Module Name: control_unit_tb - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
+-- Project Name:
+-- Target Devices:
+-- Tool Versions:
+-- Description:
+--
+-- Dependencies:
+--
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+--
 ----------------------------------------------------------------------------------
 
 
@@ -105,7 +105,7 @@ begin
                                 branch_counter_in => branch_counter_tb_in,
                                 counter => counter_tb
                                 );
-                                
+
     clk_proc: process
     begin
         clk_tb_in <= '0';
@@ -113,18 +113,18 @@ begin
         clk_tb_in <= '1';
         wait for clk_period/2;
     end process;
-    
+
     stimulus: process
     begin
         --ADD instruction
         reset_tb_in <= '1';
-        wait for 20 ns;
+        wait for 25 ns;
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
-        wait for 55 ns;
+        wait for 50 ns;
         --reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0001";
