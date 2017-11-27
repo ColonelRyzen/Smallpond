@@ -5758,3 +5758,111 @@ counter_bit_tb_in <= '1';
 cpsr_set_bit_tb_in <= '1';
 wait for 50 ns;
 
+-----------------------------------------------
+--------------I Type Instructions--------------
+-----------------------------------------------
+
+--ADDI
+reset_tb_in <= '0';
+op_code_tb_in <= "011000";
+wait for 50 ns;
+
+--ANDI
+reset_tb_in <= '0';
+op_code_tb_in <= "011001";
+wait for 50 ns;
+
+--ASRI
+reset_tb_in <= '0';
+op_code_tb_in <= "011010";
+wait for 50 ns;
+
+--LDR
+reset_tb_in <= '0';
+op_code_tb_in <= "011011";
+wait for 50 ns;
+
+--LDRB
+reset_tb_in <= '0';
+op_code_tb_in <= "011100";
+wait for 50 ns;
+
+--LDRBU
+reset_tb_in <= '0';
+op_code_tb_in <= "011101";
+wait for 50 ns;
+
+--LDRH
+reset_tb_in <= '0';
+op_code_tb_in <= "011110";
+wait for 50 ns;
+
+--LDRHU
+reset_tb_in <= '0';
+op_code_tb_in <= "011111";
+wait for 50 ns;
+
+--LSLI
+reset_tb_in <= '0';
+op_code_tb_in <= "100000";
+wait for 50 ns;
+
+--LSRI
+reset_tb_in <= '0';
+op_code_tb_in <= "100001";
+wait for 50 ns;
+
+--LUI
+reset_tb_in <= '0';
+op_code_tb_in <= "100010";
+wait for 50 ns;
+
+--NANDI
+reset_tb_in <= '0';
+op_code_tb_in <= "100011";
+wait for 50 ns;
+
+--NORI
+reset_tb_in <= '0';
+op_code_tb_in <= "100100";
+wait for 50 ns;
+
+--ORI
+reset_tb_in <= '0';
+op_code_tb_in <= "100101";
+wait for 50 ns;
+
+--STR
+reset_tb_in <= '0';
+op_code_tb_in <= "100110";
+wait for 50 ns;
+
+--STRB
+reset_tb_in <= '0';
+op_code_tb_in <= "100111";
+wait for 50 ns;
+
+--STRH
+reset_tb_in <= '0';
+op_code_tb_in <= "101000";
+wait for 50 ns;
+
+--SUBI
+reset_tb_in <= '0';
+op_code_tb_in <= "101001";
+wait for 50 ns;
+
+--XNORI
+reset_tb_in <= '0';
+op_code_tb_in <= "101010";
+wait for 50 ns;
+
+--XORI
+reset_tb_in <= '0';
+op_code_tb_in <= "101011";
+wait for 50 ns;
+
+-----------------------------------------------
+--------------J Type Instructions--------------
+-----------------------------------------------
+

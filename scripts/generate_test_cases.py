@@ -14,6 +14,11 @@ wait = "wait for 50 ns;\n\n"
 reset = "reset_tb_in <= '0';\n"
 condition_t_or_f = True
 total_sim_time = 20
+number_A_test_cases = 0
+number_I_test_cases = 0
+number_J_test_cases = 0
+number_B_test_cases = 0
+number_test_cases = 0
 
 instr_a_type = ["000001","000010","000011","000100","000101","000110","000111","001000","001001","001010","001011","001100"]
 instr_a_name = ["ADD","AND","ASR","LSL","LSR","NAND","NOR","NOT","OR","SUB","XNOR","XOR"]
@@ -52,6 +57,7 @@ for a_instr in range (0,len(instr_a_type)):
     for cond in range (0,len(condition_codes)):
         for counter in range(0,2):
             for cpsr in range (0,2):
+                number_A_test_cases += 1
                 if condition_t_or_f == True:
                     # Condition is true
                     # Writing comment line
@@ -162,4 +168,26 @@ for a_instr in range (0,len(instr_a_type)):
                     tb_text.write(wait)
                     condition_t_or_f = True
                     total_sim_time += 50
+
+print "Number of A cases: ", number_A_test_cases
+#print "Total Sim Time: ", total_sim_time, " ns"
+
+tb_text.write("-----------------------------------------------\n--------------I Type Instructions--------------\n-----------------------------------------------\n\n")
+# Loop through all I type instructions
+for i_instr in range (0,len(instr_i_type)):
+    # Writing comment line
+    tb_text.write("--" + instr_i_name[i_instr] + "\n")
+    # Writing the reset line
+    tb_text.write(reset)
+    # Writing opcode
+    tb_text.write("op_code_tb_in <= \"" + instr_i_type[i_instr] + "\";\n")
+    tb_text.write(wait)
+    number_I_test_cases += 1
+    total_sim_time += 50
+
+print "Number of I cases: ", number_I_test_cases
+print "Total Sim Time: ", total_sim_time, " ns"
+
+tb_text.write("-----------------------------------------------\n--------------J Type Instructions--------------\n-----------------------------------------------\n\n")
+
 tb_text.close()
