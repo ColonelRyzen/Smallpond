@@ -5871,3 +5871,637 @@ reset_tb_in <= '0';
 op_code_tb_in <= "111111";
 wait for 50 ns;
 
+-----------------------------------------------
+--------------B Type Instructions--------------
+-----------------------------------------------
+
+--B, Cond: AL, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0000";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: AL, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0000";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: EQ, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0001";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: EQ, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0001";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: NE, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0010";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: NE, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0010";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: CA, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0011";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: CA, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0011";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: CC, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0100";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: CC, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0100";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: NG, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0101";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: NG, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0101";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: PZ, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0110";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: PZ, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0110";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: VS, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0111";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: VS, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "0111";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: VC, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1000";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: VC, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1000";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: HI, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1001";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: HI, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1001";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: LS, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1010";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: LS, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1010";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: GE, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1011";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: GE, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1011";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: LT, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1100";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: LT, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1100";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: GT, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1101";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: GT, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1101";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--B, Cond: LE, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1110";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--B, Cond: LE, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111100";
+condition_code_tb_in <= "1110";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: AL, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0000";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: AL, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0000";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: EQ, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0001";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: EQ, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0001";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: NE, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0010";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: NE, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0010";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: CA, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0011";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: CA, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0011";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: CC, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0100";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: CC, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0100";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: NG, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0101";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: NG, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0101";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: PZ, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0110";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: PZ, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0110";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: VS, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0111";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: VS, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "0111";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: VC, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1000";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: VC, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1000";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: HI, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1001";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: HI, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1001";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: LS, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1010";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: LS, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1010";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: GE, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1011";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: GE, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1011";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: LT, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1100";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: LT, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1100";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: GT, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1101";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: GT, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1101";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BL, Cond: LE, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1110";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BL, Cond: LE, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111101";
+condition_code_tb_in <= "1110";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: AL, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0000";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: AL, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0000";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: EQ, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0001";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: EQ, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0001";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: NE, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0010";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: NE, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0010";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: CA, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0011";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: CA, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0011";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: CC, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0100";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: CC, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0100";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: NG, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0101";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: NG, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0101";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: PZ, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0110";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: PZ, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0110";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: VS, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0111";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: VS, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "0111";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: VC, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1000";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: VC, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1000";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: HI, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1001";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: HI, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1001";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: LS, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1010";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: LS, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1010";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: GE, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1011";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: GE, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1011";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: LT, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1100";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: LT, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1100";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: GT, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1101";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: GT, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1101";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
+--BR, Cond: LE, TRUE, Count: 0
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1110";
+counter_bit_tb_in <= '0';
+wait for 50 ns;
+
+--BR, Cond: LE, FALSE, Count: 1, CPSR_set: 1
+reset_tb_in <= '0';
+op_code_tb_in <= "111110";
+condition_code_tb_in <= "1110";
+counter_bit_tb_in <= '1';
+wait for 50 ns;
+
