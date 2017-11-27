@@ -186,8 +186,18 @@ for i_instr in range (0,len(instr_i_type)):
     total_sim_time += 50
 
 print "Number of I cases: ", number_I_test_cases
-print "Total Sim Time: ", total_sim_time, " ns"
+#print "Total Sim Time: ", total_sim_time, " ns"
 
 tb_text.write("-----------------------------------------------\n--------------J Type Instructions--------------\n-----------------------------------------------\n\n")
+# Writing Jump instruction
+tb_text.write("--J\n")
+tb_text.write(reset)
+tb_text.write("op_code_tb_in <= \"" + instr_j_type[0] + "\";\n")
+tb_text.write(wait)
+number_J_test_cases += 1
+total_sim_time += 50
+
+print "Number of J cases: ", number_J_test_cases
+print "Total Sim Time: ", total_sim_time, " ns"
 
 tb_text.close()
