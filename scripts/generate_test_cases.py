@@ -69,39 +69,39 @@ for a_instr in range (0,len(instr_a_type)):
                     # Writing the condition code line
                     tb_text.write("condition_code_tb_in <= \"" + condition_codes[cond] + "\";\n")
                     # Writing the cpsr bits line depending on the condition code
-                    if cond == "0000":                  # ALWAYS
+                    if condition_codes[cond] == "0000":                  # ALWAYS
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[randint(0,5)] + "\";\n")
-                    elif cond == "0001":             # EQUAL
+                    elif condition_codes[cond] == "0001":             # EQUAL
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[0] + "\";\n")
-                    elif cond == "0010":             # NOT EQUAL
+                    elif condition_codes[cond] == "0010":             # NOT EQUAL
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                    elif cond == "0011":             # CARRY SET
+                    elif condition_codes[cond] == "0011":             # CARRY SET
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[1] + "\";\n")
-                    elif cond == "0100":             # CARRY CLEAR
+                    elif condition_codes[cond] == "0100":             # CARRY CLEAR
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                    elif cond == "0101":             # NEGATIVE
+                    elif condition_codes[cond] == "0101":             # NEGATIVE
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[2] + "\";\n")
-                    elif cond == "0110":             # POSITIVE OR ZERO
+                    elif condition_codes[cond] == "0110":             # POSITIVE OR ZERO
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                    elif cond == "0111":             # OVERFLOW SET
+                    elif condition_codes[cond] == "0111":             # OVERFLOW SET
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[3] + "\";\n")
-                    elif cond == "1000":             # OVERFLOW CLEAR
+                    elif condition_codes[cond] == "1000":             # OVERFLOW CLEAR
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                    elif cond == "1001":             # UNSIGNED HIGHER
+                    elif condition_codes[cond] == "1001":             # UNSIGNED HIGHER
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[1] + "\";\n")
-                    elif cond == "1010":             # UNSIGNED LOWER OR SAME
+                    elif condition_codes[cond] == "1010":             # UNSIGNED LOWER OR SAME
                         ls_true_list = [0,2,3,4,5]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[ls_true_list[randint(0,4)]] + "\";\n")
-                    elif cond == "1011":             # SIGNED GREATER THAN OR EQUAL
+                    elif condition_codes[cond] == "1011":             # SIGNED GREATER THAN OR EQUAL
                         ge_true_list = [0,1,2,3]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[ge_true_list[randint(0,3)]] + "\";\n")
-                    elif cond == "1100":             # SIGNED LESS THAN
+                    elif condition_codes[cond] == "1100":             # SIGNED LESS THAN
                         lt_true_list = [0,1,4,5]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[lt_true_list[randint(0,3)]] + "\";\n")
-                    elif cond == "1101":             # SIGNED GREATER THAN
+                    elif condition_codes[cond] == "1101":             # SIGNED GREATER THAN
                         gt_true_list = [0,1,2,3]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[gt_true_list[randint(0,3)]] + "\";\n")
-                    elif cond == "1110":             # SIGNED LESS THAN OR EQUAL
+                    elif condition_codes[cond] == "1110":             # SIGNED LESS THAN OR EQUAL
                         le_true_list = [1,4,5]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[le_true_list[randint(0,2)]] + "\";\n")
 
@@ -124,39 +124,39 @@ for a_instr in range (0,len(instr_a_type)):
                     # Writing the condition code line
                     tb_text.write("condition_code_tb_in <= \"" + condition_codes[cond] + "\";\n")
                     # Writing the cpsr bits line depending on the condition code
-                    if cond == "0000":                  # ALWAYS (Can't be false, nothing changes)
+                    if condition_codes[cond] == "0000":                  # ALWAYS (Can't be false, nothing changes)
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[randint(0,5)] + "\";\n")
-                    elif cond == "0001":             # EQUAL
+                    elif condition_codes[cond] == "0001":             # EQUAL
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                    elif cond == "0010":             # NOT EQUAL
+                    elif condition_codes[cond] == "0010":             # NOT EQUAL
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[0] + "\";\n")
-                    elif cond == "0011":             # CARRY SET
+                    elif condition_codes[cond] == "0011":             # CARRY SET
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                    elif cond == "0100":             # CARRY CLEAR
+                    elif condition_codes[cond] == "0100":             # CARRY CLEAR
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[1] + "\";\n")
-                    elif cond == "0101":             # NEGATIVE
+                    elif condition_codes[cond] == "0101":             # NEGATIVE
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                    elif cond == "0110":             # POSITIVE OR ZERO
+                    elif condition_codes[cond] == "0110":             # POSITIVE OR ZERO
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[2] + "\";\n")
-                    elif cond == "0111":             # OVERFLOW SET
+                    elif condition_codes[cond] == "0111":             # OVERFLOW SET
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                    elif cond == "1000":             # OVERFLOW CLEAR
+                    elif condition_codes[cond] == "1000":             # OVERFLOW CLEAR
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[3] + "\";\n")
-                    elif cond == "1001":             # UNSIGNED HIGHER
+                    elif condition_codes[cond] == "1001":             # UNSIGNED HIGHER
                         hi_false_list = [1,2,3,4,5]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[hi_false_list[randint(0,4)]] + "\";\n")
-                    elif cond == "1010":             # UNSIGNED LOWER OR SAME
+                    elif condition_codes[cond] == "1010":             # UNSIGNED LOWER OR SAME
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[1] + "\";\n")
-                    elif cond == "1011":             # SIGNED GREATER THAN OR EQUAL
+                    elif condition_codes[cond] == "1011":             # SIGNED GREATER THAN OR EQUAL
                         ge_false_list = [4,5]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[ge_false_list[randint(0,1)]] + "\";\n")
-                    elif cond == "1100":             # SIGNED LESS THAN
+                    elif condition_codes[cond] == "1100":             # SIGNED LESS THAN
                         lt_false_list = [2,3]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[lt_false_list[randint(0,1)]] + "\";\n")
-                    elif cond == "1101":             # SIGNED GREATER THAN
+                    elif condition_codes[cond] == "1101":             # SIGNED GREATER THAN
                         gt_false_list = [4,5]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[gt_false_list[randint(0,1)]] + "\";\n")
-                    elif cond == "1110":             # SIGNED LESS THAN OR EQUAL
+                    elif condition_codes[cond] == "1110":             # SIGNED LESS THAN OR EQUAL
                         le_false_list = [0,2,3]
                         tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[le_false_list[randint(0,2)]] + "\";\n")
 
@@ -218,39 +218,39 @@ for b_instr in range (0,len(instr_b_type)):
                 # Writing the condition code line
                 tb_text.write("condition_code_tb_in <= \"" + condition_codes[cond] + "\";\n")
                 # Writing the cpsr bits line depending on the condition code
-                if cond == "0000":                  # ALWAYS
+                if condition_codes[cond] == "0000":                  # ALWAYS
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[randint(0,5)] + "\";\n")
-                elif cond == "0001":             # EQUAL
+                elif condition_codes[cond] == "0001":             # EQUAL
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[0] + "\";\n")
-                elif cond == "0010":             # NOT EQUAL
+                elif condition_codes[cond] == "0010":             # NOT EQUAL
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                elif cond == "0011":             # CARRY SET
+                elif condition_codes[cond] == "0011":             # CARRY SET
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[1] + "\";\n")
-                elif cond == "0100":             # CARRY CLEAR
+                elif condition_codes[cond] == "0100":             # CARRY CLEAR
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                elif cond == "0101":             # NEGATIVE
+                elif condition_codes[cond] == "0101":             # NEGATIVE
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[2] + "\";\n")
-                elif cond == "0110":             # POSITIVE OR ZERO
+                elif condition_codes[cond] == "0110":             # POSITIVE OR ZERO
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                elif cond == "0111":             # OVERFLOW SET
+                elif condition_codes[cond] == "0111":             # OVERFLOW SET
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[3] + "\";\n")
-                elif cond == "1000":             # OVERFLOW CLEAR
+                elif condition_codes[cond] == "1000":             # OVERFLOW CLEAR
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[4] + "\";\n")
-                elif cond == "1001":             # UNSIGNED HIGHER
+                elif condition_codes[cond] == "1001":             # UNSIGNED HIGHER
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[1] + "\";\n")
-                elif cond == "1010":             # UNSIGNED LOWER OR SAME
+                elif condition_codes[cond] == "1010":             # UNSIGNED LOWER OR SAME
                     ls_true_list = [0,2,3,4,5]
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[ls_true_list[randint(0,4)]] + "\";\n")
-                elif cond == "1011":             # SIGNED GREATER THAN OR EQUAL
+                elif condition_codes[cond] == "1011":             # SIGNED GREATER THAN OR EQUAL
                     ge_true_list = [0,1,2,3]
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[ge_true_list[randint(0,3)]] + "\";\n")
-                elif cond == "1100":             # SIGNED LESS THAN
+                elif condition_codes[cond] == "1100":             # SIGNED LESS THAN
                     lt_true_list = [0,1,4,5]
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[lt_true_list[randint(0,3)]] + "\";\n")
-                elif cond == "1101":             # SIGNED GREATER THAN
+                elif condition_codes[cond] == "1101":             # SIGNED GREATER THAN
                     gt_true_list = [0,1,2,3]
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[gt_true_list[randint(0,3)]] + "\";\n")
-                elif cond == "1110":             # SIGNED LESS THAN OR EQUAL
+                elif condition_codes[cond] == "1110":             # SIGNED LESS THAN OR EQUAL
                     le_true_list = [1,4,5]
                     tb_text.write("cpsr_bits_tb_in <= \"" + cpsr_bits[le_true_list[randint(0,2)]] + "\";\n")
 
