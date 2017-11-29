@@ -25,7 +25,8 @@ entity smallpond_axi_v1_0 is
     sp_addr : in std_logic_vector(31 downto 0);
     sp_data : inout std_logic_vector(31 downto 0);
     sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
-    sp_error :out std_logic; --(1 for error)
+    sp_error : out std_logic; --(1 for error)
+		sp_sign_extend : in std_logic;
     -- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -232,11 +233,19 @@ smallpond_axi_v1_0_M00_AXI_inst : smallpond_axi_v1_0_M00_AXI
 				thalfword_0 <= m00_axi_rdata(15 downto 0); --correct??!~ (which bits to grab?)
 				m00_axi_rready <= '0'; --de-assert ready to read (already read)
 				if sp_op_len = "00" then --already read 2 bytes (discard 2nd). No byte selection in AXI4-lite
-					sp_data <= x"000000" & thalfword_0(15 downto 8);
+					if sp_sign_extend = '1' then
+						sp_data <= x"111111" & thalfword_0(15 downto 8);
+					else
+						sp_data <= x"000000" & thalfword_0(15 downto 8);
+					end if;
 					sp_over <= '1';
 					step <= "1111";
 				elsif sp_op_len = "01" then --already read 2 bytes
-					sp_data <= x"0000" & thalfword_0;
+					if sp_sign_extend = '1' then
+						sp_data <= x"1111" & thalfword_0;
+					else
+						sp_data <= x"0000" & thalfword_0;
+					end if;
 					sp_over <= '1';
 					step <= "1111";
 				elsif sp_op_len = "10" then --already read 2 bytes, read 2 more
