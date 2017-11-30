@@ -2,8 +2,8 @@
 # Vivado v2017.3.1 (64-bit)
 # SW Build 2035080 on Fri Oct 20 14:20:00 MDT 2017
 # IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
-# Start of session at: Fri Nov 24 21:01:03 2017
-# Process ID: 21611
+# Start of session at: Thu Nov 30 10:28:19 2017
+# Process ID: 9592
 # Current directory: /home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_smallpond_axi4_interface_0_0_synth_1
 # Command line: vivado -log design_1_smallpond_axi4_interface_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_smallpond_axi4_interface_0_0.tcl
 # Log file: /home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_smallpond_axi4_interface_0_0_synth_1/design_1_smallpond_axi4_interface_0_0.vds
@@ -15,20 +15,58 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 21661 
+INFO: Helper process launched with PID 9677 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1264.172 ; gain = 79.996 ; free physical = 991 ; free virtual = 4914
+Starting RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1264.172 ; gain = 79.996 ; free physical = 3383 ; free virtual = 5174
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'design_1_smallpond_axi4_interface_0_0' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_smallpond_axi4_interface_0_0/synth/design_1_smallpond_axi4_interface_0_0.vhd:85]
+INFO: [Synth 8-638] synthesizing module 'design_1_smallpond_axi4_interface_0_0' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_smallpond_axi4_interface_0_0/synth/design_1_smallpond_axi4_interface_0_0.vhd:93]
 	Parameter C_M00_AXI_START_DATA_VALUE bound to: 32'b10101010000000000000000000000000 
 	Parameter C_M00_AXI_TARGET_SLAVE_BASE_ADDR bound to: 32'b01000000000000000000000000000000 
 	Parameter C_M00_AXI_ADDR_WIDTH bound to: 32 - type: integer 
 	Parameter C_M00_AXI_DATA_WIDTH bound to: 32 - type: integer 
 	Parameter C_M00_AXI_TRANSACTIONS_NUM bound to: 4 - type: integer 
-INFO: [Synth 8-637] synthesizing blackbox instance 'U0' of component 'smallpond_axi4_interface_v1_0' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_smallpond_axi4_interface_0_0/synth/design_1_smallpond_axi4_interface_0_0.vhd:158]
-INFO: [Synth 8-256] done synthesizing module 'design_1_smallpond_axi4_interface_0_0' (1#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_smallpond_axi4_interface_0_0/synth/design_1_smallpond_axi4_interface_0_0.vhd:85]
+INFO: [Synth 8-3491] module 'smallpond_axi_v1_0' declared at '/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5' bound to instance 'U0' of component 'smallpond_axi_v1_0' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_smallpond_axi4_interface_0_0/synth/design_1_smallpond_axi4_interface_0_0.vhd:174]
+INFO: [Synth 8-638] synthesizing module 'smallpond_axi_v1_0' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:62]
+	Parameter C_M00_AXI_START_DATA_VALUE bound to: -1442840576 - type: integer 
+	Parameter C_M00_AXI_TARGET_SLAVE_BASE_ADDR bound to: 1073741824 - type: integer 
+	Parameter C_M00_AXI_ADDR_WIDTH bound to: 32 - type: integer 
+	Parameter C_M00_AXI_DATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_M00_AXI_TRANSACTIONS_NUM bound to: 4 - type: integer 
+	Parameter C_M_START_DATA_VALUE bound to: -1442840576 - type: integer 
+	Parameter C_M_TARGET_SLAVE_BASE_ADDR bound to: 1073741824 - type: integer 
+	Parameter C_M_AXI_ADDR_WIDTH bound to: 32 - type: integer 
+	Parameter C_M_AXI_DATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_M_TRANSACTIONS_NUM bound to: 4 - type: integer 
+INFO: [Synth 8-637] synthesizing blackbox instance 'smallpond_axi_v1_0_M00_AXI_inst' of component 'smallpond_axi_v1_0_M00_AXI' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:111]
+WARNING: [Synth 8-614] signal 'step' is read in the process but is not in the sensitivity list [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:153]
+WARNING: [Synth 8-614] signal 'sp_addr' is read in the process but is not in the sensitivity list [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:153]
+WARNING: [Synth 8-614] signal 'taddress' is read in the process but is not in the sensitivity list [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:153]
+WARNING: [Synth 8-614] signal 'sp_data' is read in the process but is not in the sensitivity list [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:153]
+WARNING: [Synth 8-614] signal 'sp_op_len' is read in the process but is not in the sensitivity list [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:153]
+WARNING: [Synth 8-614] signal 'thalfword_0' is read in the process but is not in the sensitivity list [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:153]
+WARNING: [Synth 8-614] signal 'thalfword_1' is read in the process but is not in the sensitivity list [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:153]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awprot[0] with 1st driver pin 'smallpond_axi_v1_0:/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWPROT[0]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awprot[0] with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net m00_axi_awprot[0] is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awprot[1] with 1st driver pin 'smallpond_axi_v1_0:/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWPROT[1]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awprot[1] with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net m00_axi_awprot[1] is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awprot[2] with 1st driver pin 'smallpond_axi_v1_0:/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWPROT[2]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awprot[2] with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net m00_axi_awprot[2] is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_arprot[0] with 1st driver pin 'smallpond_axi_v1_0:/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_ARPROT[0]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_arprot[0] with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net m00_axi_arprot[0] is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_arprot[1] with 1st driver pin 'smallpond_axi_v1_0:/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_ARPROT[1]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_arprot[1] with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net m00_axi_arprot[1] is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_arprot[2] with 1st driver pin 'smallpond_axi_v1_0:/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_ARPROT[2]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_arprot[2] with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net m00_axi_arprot[2] is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:5]
+INFO: [Synth 8-256] done synthesizing module 'smallpond_axi_v1_0' (1#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:62]
+INFO: [Synth 8-256] done synthesizing module 'design_1_smallpond_axi4_interface_0_0' (2#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_smallpond_axi4_interface_0_0/synth/design_1_smallpond_axi4_interface_0_0.vhd:93]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1305.703 ; gain = 121.527 ; free physical = 998 ; free virtual = 4929
+Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1306.703 ; gain = 122.527 ; free physical = 3392 ; free virtual = 5184
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -38,7 +76,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1305.703 ; gain = 121.527 ; free physical = 1109 ; free virtual = 5037
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1306.703 ; gain = 122.527 ; free physical = 3381 ; free virtual = 5172
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -50,25 +88,48 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1529.078 ; gain = 0.000 ; free physical = 1193 ; free virtual = 5121
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1618.078 ; gain = 0.000 ; free physical = 3037 ; free virtual = 4862
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1529.078 ; gain = 344.902 ; free physical = 1123 ; free virtual = 5051
+Finished Constraint Validation : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3194 ; free virtual = 5020
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35ticsg324-1L
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1529.078 ; gain = 344.902 ; free physical = 1123 ; free virtual = 5051
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3194 ; free virtual = 5020
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1529.078 ; gain = 344.902 ; free physical = 1124 ; free virtual = 5053
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3197 ; free virtual = 5022
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-5544] ROM "m00_axi_wstrb" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "m00_axi_wstrb" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "thalfword_0" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "sp_data" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "step" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "sp_error" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "taddress" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_17_in" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+WARNING: [Synth 8-327] inferring latch for variable 'sp_over_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:164]
+WARNING: [Synth 8-327] inferring latch for variable 'sp_error_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:195]
+WARNING: [Synth 8-327] inferring latch for variable 'm00_axi_awaddr_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:125]
+WARNING: [Synth 8-327] inferring latch for variable 'm00_axi_awvalid_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:127]
+WARNING: [Synth 8-327] inferring latch for variable 'm00_axi_wdata_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:129]
+WARNING: [Synth 8-327] inferring latch for variable 'm00_axi_wstrb_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:130]
+WARNING: [Synth 8-327] inferring latch for variable 'm00_axi_wvalid_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:131]
+WARNING: [Synth 8-327] inferring latch for variable 'm00_axi_bready_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:135]
+WARNING: [Synth 8-327] inferring latch for variable 'm00_axi_araddr_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:136]
+WARNING: [Synth 8-327] inferring latch for variable 'm00_axi_arvalid_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:138]
+WARNING: [Synth 8-327] inferring latch for variable 'm00_axi_rready_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:143]
+WARNING: [Synth 8-327] inferring latch for variable 'thalfword_1_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:174]
+WARNING: [Synth 8-327] inferring latch for variable 'thalfword_0_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:173]
+WARNING: [Synth 8-327] inferring latch for variable 'step_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:163]
+WARNING: [Synth 8-327] inferring latch for variable 'taddress_reg' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:166]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1529.078 ; gain = 344.902 ; free physical = 1124 ; free virtual = 5053
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3189 ; free virtual = 5014
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -80,6 +141,19 @@ Report RTL Partitions:
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 3     
+	   7 Input     32 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 2     
+	   6 Input      4 Bit        Muxes := 2     
+	   4 Input      4 Bit        Muxes := 1     
+	   5 Input      4 Bit        Muxes := 2     
+	   2 Input      4 Bit        Muxes := 1     
+	   3 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 24    
+	   4 Input      1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -87,6 +161,21 @@ Finished RTL Component Statistics
 Start RTL Hierarchical Component Statistics 
 ---------------------------------------------------------------------------------
 Hierarchical RTL Component report 
+Module smallpond_axi_v1_0 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 3     
+	   7 Input     32 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 2     
+	   6 Input      4 Bit        Muxes := 2     
+	   4 Input      4 Bit        Muxes := 1     
+	   5 Input      4 Bit        Muxes := 2     
+	   2 Input      4 Bit        Muxes := 1     
+	   3 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 24    
+	   4 Input      1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Hierarchical Component Statistics
 ---------------------------------------------------------------------------------
@@ -102,8 +191,233 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_awprot[2] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_awprot[1] driven by constant 1
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_awprot[0] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[31] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[30] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[29] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[28] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[27] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[26] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[25] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[24] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[23] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[22] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[21] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[20] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[19] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[18] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[17] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_wdata[16] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_arprot[2] driven by constant 0
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_arprot[1] driven by constant 1
+INFO: [Synth 8-3917] design design_1_smallpond_axi4_interface_0_0 has port m00_axi_arprot[0] driven by constant 0
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_awvalid_reg) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/m00_axi_awvalid_reg/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:332]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:332]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:332]
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_awvalid_reg__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_awvalid_reg__1) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_awvalid_reg__2) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_wvalid_reg) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/m00_axi_wvalid_reg/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:338]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:338]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:338]
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_wvalid_reg__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_wvalid_reg__1) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_wvalid_reg__2) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_arvalid_reg) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/m00_axi_arvalid_reg/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:269]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:269]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:269]
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_arvalid_reg__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_arvalid_reg__1) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/m00_axi_arvalid_reg__2) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/step_reg[2]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:343]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:343]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:343]
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/step_reg[1]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:343]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:343]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:343]
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/step_reg[0]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:343]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:343]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:343]
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__1) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/step_reg[3]__1/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:337]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'GND' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:337]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:337]
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__1) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__1) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__1) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__2) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__2) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__2) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__2) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__3) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__3) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__3) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__3) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__4) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__4) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__4) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__4) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__5) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__5) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__5) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__5) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__6) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__6) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__6) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__6) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__7) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__7) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__7) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__7) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__8) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__8) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__8) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__8) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__9) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__9) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__9) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__9) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__10) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__10) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__10) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__10) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__11) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__11) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__11) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__11) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__12) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__12) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__12) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__12) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[3]__13) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[2]__13) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[1]__13) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/step_reg[0]__13) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[31]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[30]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[29]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[28]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[27]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[26]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[25]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[24]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[23]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[22]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[21]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[20]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[19]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[18]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[17]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[16]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[15]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[14]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[13]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[12]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[11]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[10]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[9]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[8]) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[31]__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[31]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[30]__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[30]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[29]__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[29]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-3332] Sequential element (U0/sp_data_reg[28]__0) is unused and will be removed from module design_1_smallpond_axi4_interface_0_0.
+INFO: [Common 17-14] Message 'Synth 8-3332' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[28]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[27]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[26]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[25]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[24]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[23]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[22]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[21]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[20]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[19]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[18]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[17]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[16]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[15]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[14]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[13]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[12]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[11]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[10]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[9]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_data_reg[8]__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_over_reg/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:353]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:353]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:353]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/m00_axi_bready_reg/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:344]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:344]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:344]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/m00_axi_rready_reg__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:276]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:276]
+CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:276]
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1529.078 ; gain = 344.902 ; free physical = 1123 ; free virtual = 5052
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:32 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3178 ; free virtual = 5005
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -115,13 +429,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:29 ; elapsed = 00:00:40 . Memory (MB): peak = 1574.078 ; gain = 389.902 ; free physical = 982 ; free virtual = 4911
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3034 ; free virtual = 4868
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:29 ; elapsed = 00:00:40 . Memory (MB): peak = 1574.078 ; gain = 389.902 ; free physical = 982 ; free virtual = 4911
+Finished Timing Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3032 ; free virtual = 4866
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -132,8 +446,16 @@ Report RTL Partitions:
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-4765] Removing register instance (\U0/sp_data_reg[7]__0 ) from module (design_1_smallpond_axi4_interface_0_0) as it is equivalent to (\U0/sp_data_reg[7] ) and driving same net [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-4765] Removing register instance (\U0/sp_data_reg[6]__0 ) from module (design_1_smallpond_axi4_interface_0_0) as it is equivalent to (\U0/sp_data_reg[6] ) and driving same net [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-4765] Removing register instance (\U0/sp_data_reg[5]__0 ) from module (design_1_smallpond_axi4_interface_0_0) as it is equivalent to (\U0/sp_data_reg[5] ) and driving same net [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-4765] Removing register instance (\U0/sp_data_reg[4]__0 ) from module (design_1_smallpond_axi4_interface_0_0) as it is equivalent to (\U0/sp_data_reg[4] ) and driving same net [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-4765] Removing register instance (\U0/sp_data_reg[3]__0 ) from module (design_1_smallpond_axi4_interface_0_0) as it is equivalent to (\U0/sp_data_reg[3] ) and driving same net [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-4765] Removing register instance (\U0/sp_data_reg[2]__0 ) from module (design_1_smallpond_axi4_interface_0_0) as it is equivalent to (\U0/sp_data_reg[2] ) and driving same net [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-4765] Removing register instance (\U0/sp_data_reg[1]__0 ) from module (design_1_smallpond_axi4_interface_0_0) as it is equivalent to (\U0/sp_data_reg[1] ) and driving same net [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
+INFO: [Synth 8-4765] Removing register instance (\U0/sp_data_reg[0]__0 ) from module (design_1_smallpond_axi4_interface_0_0) as it is equivalent to (\U0/sp_data_reg[0] ) and driving same net [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:239]
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:29 ; elapsed = 00:00:40 . Memory (MB): peak = 1583.094 ; gain = 398.918 ; free physical = 981 ; free virtual = 4910
+Finished Technology Mapping : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3033 ; free virtual = 4867
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -157,20 +479,41 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1583.094 ; gain = 398.918 ; free physical = 970 ; free virtual = 4898
+Finished IO Insertion : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3048 ; free virtual = 4881
 ---------------------------------------------------------------------------------
+CRITICAL WARNING: [Synth 8-3352] multi-driven net sp_error with 1st driver pin 'U0/sp_error_reg/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:355]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net sp_error with 2nd driver pin 'U0/sp_error_reg__0/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:325]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net sp_error with 3rd driver pin 'U0/sp_error_reg__1/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:290]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net sp_error with 4th driver pin 'U0/sp_error_reg__2/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:259]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net sp_error with 5th driver pin 'U0/sp_error_reg__3/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:195]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[31] with 1st driver pin 'U0/m00_axi_awaddr_reg[31]/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:125]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[31] with 2nd driver pin 'U0/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWADDR[31]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:111]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[30] with 1st driver pin 'U0/m00_axi_awaddr_reg[30]/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:125]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[30] with 2nd driver pin 'U0/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWADDR[30]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:111]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[29] with 1st driver pin 'U0/m00_axi_awaddr_reg[29]/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:125]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[29] with 2nd driver pin 'U0/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWADDR[29]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:111]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[28] with 1st driver pin 'U0/m00_axi_awaddr_reg[28]/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:125]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[28] with 2nd driver pin 'U0/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWADDR[28]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:111]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[27] with 1st driver pin 'U0/m00_axi_awaddr_reg[27]/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:125]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[27] with 2nd driver pin 'U0/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWADDR[27]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:111]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[26] with 1st driver pin 'U0/m00_axi_awaddr_reg[26]/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:125]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[26] with 2nd driver pin 'U0/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWADDR[26]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:111]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[25] with 1st driver pin 'U0/m00_axi_awaddr_reg[25]/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:125]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[25] with 2nd driver pin 'U0/smallpond_axi_v1_0_M00_AXI_inst/M_AXI_AWADDR[25]' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:111]
+CRITICAL WARNING: [Synth 8-3352] multi-driven net m00_axi_awaddr[24] with 1st driver pin 'U0/m00_axi_awaddr_reg[24]/Q' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/3db2/hdl/smallpond_axi4_interface_v1_0.vhd:125]
+INFO: [Common 17-14] Message 'Synth 8-3352' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 
 Report Check Netlist: 
 +------+------------------+-------+---------+-------+------------------+
 |      |Item              |Errors |Warnings |Status |Description       |
 +------+------------------+-------+---------+-------+------------------+
-|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
+|1     |multi_driven_nets |      0|      149|Failed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1583.094 ; gain = 398.918 ; free physical = 969 ; free virtual = 4898
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3048 ; free virtual = 4881
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -182,69 +525,84 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1583.094 ; gain = 398.918 ; free physical = 970 ; free virtual = 4898
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3048 ; free virtual = 4881
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1583.094 ; gain = 398.918 ; free physical = 970 ; free virtual = 4898
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3048 ; free virtual = 4881
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1583.094 ; gain = 398.918 ; free physical = 970 ; free virtual = 4898
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3048 ; free virtual = 4881
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1583.094 ; gain = 398.918 ; free physical = 970 ; free virtual = 4898
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3048 ; free virtual = 4881
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
 ---------------------------------------------------------------------------------
 
 Report BlackBoxes: 
-+------+------------------------------+----------+
-|      |BlackBox name                 |Instances |
-+------+------------------------------+----------+
-|1     |smallpond_axi4_interface_v1_0 |         1|
-+------+------------------------------+----------+
++------+---------------------------+----------+
+|      |BlackBox name              |Instances |
++------+---------------------------+----------+
+|1     |smallpond_axi_v1_0_M00_AXI |         1|
++------+---------------------------+----------+
 
 Report Cell Usage: 
-+------+-------------------------------------+------+
-|      |Cell                                 |Count |
-+------+-------------------------------------+------+
-|1     |smallpond_axi4_interface_v1_0_bbox_0 |     1|
-+------+-------------------------------------+------+
++------+----------------------------------+------+
+|      |Cell                              |Count |
++------+----------------------------------+------+
+|1     |smallpond_axi_v1_0_M00_AXI_bbox_0 |     1|
+|2     |CARRY4                            |     8|
+|3     |LUT1                              |     2|
+|4     |LUT2                              |     1|
+|5     |LUT3                              |    19|
+|6     |LUT4                              |     2|
+|7     |LUT5                              |     2|
+|8     |FDRE                              |   124|
+|9     |LD                                |   145|
+|10    |LDC                               |     4|
++------+----------------------------------+------+
 
 Report Instance Areas: 
-+------+---------+-------+------+
-|      |Instance |Module |Cells |
-+------+---------+-------+------+
-|1     |top      |       |   113|
-+------+---------+-------+------+
++------+---------+-------------------+------+
+|      |Instance |Module             |Cells |
++------+---------+-------------------+------+
+|1     |top      |                   |   420|
+|2     |  U0     |smallpond_axi_v1_0 |   420|
++------+---------+-------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1583.094 ; gain = 398.918 ; free physical = 970 ; free virtual = 4898
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1618.078 ; gain = 433.902 ; free physical = 3048 ; free virtual = 4881
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 1583.094 ; gain = 175.543 ; free physical = 1018 ; free virtual = 4947
-Synthesis Optimization Complete : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1583.102 ; gain = 398.918 ; free physical = 1018 ; free virtual = 4947
+Synthesis finished with 0 errors, 451 critical warnings and 15 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 1618.078 ; gain = 122.527 ; free physical = 3097 ; free virtual = 4931
+Synthesis Optimization Complete : Time (s): cpu = 00:00:30 ; elapsed = 00:00:41 . Memory (MB): peak = 1618.086 ; gain = 433.902 ; free physical = 3097 ; free virtual = 4931
 INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 157 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Project 1-111] Unisim Transformation Summary:
-No Unisim elements were transformed.
+  A total of 149 instances were transformed.
+  LD => LDCE: 145 instances
+  LDC => LDCE: 4 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-12 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+157 Infos, 22 Warnings, 140 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:41 . Memory (MB): peak = 1588.094 ; gain = 428.746 ; free physical = 987 ; free virtual = 4916
+synth_design: Time (s): cpu = 00:00:32 ; elapsed = 00:00:42 . Memory (MB): peak = 1618.086 ; gain = 458.738 ; free physical = 3095 ; free virtual = 4929
 INFO: [Common 17-1381] The checkpoint '/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_smallpond_axi4_interface_0_0_synth_1/design_1_smallpond_axi4_interface_0_0.dcp' has been generated.
 INFO: [Coretcl 2-1482] Added synthesis output to IP cache for IP /home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_smallpond_axi4_interface_0_0/design_1_smallpond_axi4_interface_0_0.xci
+INFO: [Coretcl 2-1174] Renamed 2 cell refs.
 INFO: [Common 17-1381] The checkpoint '/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_smallpond_axi4_interface_0_0_synth_1/design_1_smallpond_axi4_interface_0_0.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file design_1_smallpond_axi4_interface_0_0_utilization_synth.rpt -pb design_1_smallpond_axi4_interface_0_0_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1596.094 ; gain = 0.000 ; free physical = 990 ; free virtual = 4919
-INFO: [Common 17-206] Exiting Vivado at Fri Nov 24 21:01:54 2017...
+report_utilization: Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1642.090 ; gain = 0.000 ; free physical = 3094 ; free virtual = 4930
+INFO: [Common 17-206] Exiting Vivado at Thu Nov 30 10:29:11 2017...

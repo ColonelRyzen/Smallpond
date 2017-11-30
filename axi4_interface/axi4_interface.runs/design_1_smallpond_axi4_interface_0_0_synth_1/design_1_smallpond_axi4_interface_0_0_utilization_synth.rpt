@@ -1,12 +1,12 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
-| Date         : Fri Nov 24 21:01:54 2017
+| Date         : Thu Nov 30 10:29:11 2017
 | Host         : octopus-tetricus running 64-bit unknown
 | Command      : report_utilization -file design_1_smallpond_axi4_interface_0_0_utilization_synth.rpt -pb design_1_smallpond_axi4_interface_0_0_utilization_synth.pb
 | Design       : design_1_smallpond_axi4_interface_0_0
 | Device       : 7a35ticsg324-1L
-| Design State : Fully Placed
+| Design State : Synthesized
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Utilization Design Information
@@ -15,15 +15,14 @@ Table of Contents
 -----------------
 1. Slice Logic
 1.1 Summary of Registers by Type
-2. Slice Logic Distribution
-3. Memory
-4. DSP
-5. IO and GT Specific
-6. Clocking
-7. Specific Feature
-8. Primitives
-9. Black Boxes
-10. Instantiated Netlists
+2. Memory
+3. DSP
+4. IO and GT Specific
+5. Clocking
+6. Specific Feature
+7. Primitives
+8. Black Boxes
+9. Instantiated Netlists
 
 1. Slice Logic
 --------------
@@ -31,15 +30,16 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs              |    0 |     0 |     20800 |  0.00 |
-|   LUT as Logic          |    0 |     0 |     20800 |  0.00 |
+| Slice LUTs*             |   24 |     0 |     20800 |  0.12 |
+|   LUT as Logic          |   24 |     0 |     20800 |  0.12 |
 |   LUT as Memory         |    0 |     0 |      9600 |  0.00 |
-| Slice Registers         |    0 |     0 |     41600 |  0.00 |
-|   Register as Flip Flop |    0 |     0 |     41600 |  0.00 |
-|   Register as Latch     |    0 |     0 |     41600 |  0.00 |
+| Slice Registers         |  273 |     0 |     41600 |  0.66 |
+|   Register as Flip Flop |  124 |     0 |     41600 |  0.30 |
+|   Register as Latch     |  149 |     0 |     41600 |  0.36 |
 | F7 Muxes                |    0 |     0 |     16300 |  0.00 |
 | F8 Muxes                |    0 |     0 |      8150 |  0.00 |
 +-------------------------+------+-------+-----------+-------+
+* Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
 
 
 1.1 Summary of Registers by Type
@@ -55,32 +55,13 @@ Table of Contents
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
-| 0     |          Yes |           - |        Reset |
+| 149   |          Yes |           - |        Reset |
 | 0     |          Yes |         Set |            - |
-| 0     |          Yes |       Reset |            - |
+| 124   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
-2. Slice Logic Distribution
----------------------------
-
-+--------------------------+------+-------+-----------+-------+
-|         Site Type        | Used | Fixed | Available | Util% |
-+--------------------------+------+-------+-----------+-------+
-| Slice                    |    0 |     0 |      8150 |  0.00 |
-|   SLICEL                 |    0 |     0 |           |       |
-|   SLICEM                 |    0 |     0 |           |       |
-| LUT as Logic             |    0 |     0 |     20800 |  0.00 |
-| LUT as Memory            |    0 |     0 |      9600 |  0.00 |
-|   LUT as Distributed RAM |    0 |     0 |           |       |
-|   LUT as Shift Register  |    0 |     0 |           |       |
-| LUT Flip Flop Pairs      |    0 |     0 |     20800 |  0.00 |
-| Unique Control Sets      |    0 |       |           |       |
-+--------------------------+------+-------+-----------+-------+
-* Note: Review the Control Sets Report for more information regarding control sets.
-
-
-3. Memory
+2. Memory
 ---------
 
 +----------------+------+-------+-----------+-------+
@@ -93,7 +74,7 @@ Table of Contents
 * Note: Each Block RAM Tile only has one FIFO logic available and therefore can accommodate only one FIFO36E1 or one FIFO18E1. However, if a FIFO18E1 occupies a Block RAM Tile, that tile can still accommodate a RAMB18E1
 
 
-4. DSP
+3. DSP
 ------
 
 +-----------+------+-------+-----------+-------+
@@ -103,7 +84,7 @@ Table of Contents
 +-----------+------+-------+-----------+-------+
 
 
-5. IO and GT Specific
+4. IO and GT Specific
 ---------------------
 
 +-----------------------------+------+-------+-----------+-------+
@@ -125,7 +106,7 @@ Table of Contents
 +-----------------------------+------+-------+-----------+-------+
 
 
-6. Clocking
+5. Clocking
 -----------
 
 +------------+------+-------+-----------+-------+
@@ -141,7 +122,7 @@ Table of Contents
 +------------+------+-------+-----------+-------+
 
 
-7. Specific Feature
+6. Specific Feature
 -------------------
 
 +-------------+------+-------+-----------+-------+
@@ -159,26 +140,35 @@ Table of Contents
 +-------------+------+-------+-----------+-------+
 
 
-8. Primitives
+7. Primitives
 -------------
 
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
+| LDCE     |  149 |        Flop & Latch |
+| FDRE     |  124 |        Flop & Latch |
+| LUT3     |   19 |                 LUT |
+| CARRY4   |    8 |          CarryLogic |
+| LUT5     |    2 |                 LUT |
+| LUT4     |    2 |                 LUT |
+| LUT1     |    2 |                 LUT |
+| LUT2     |    1 |                 LUT |
++----------+------+---------------------+
 
 
-9. Black Boxes
+8. Black Boxes
 --------------
 
-+---------------------------------------------------------------------+------+
-|                               Ref Name                              | Used |
-+---------------------------------------------------------------------+------+
-| design_1_smallpond_axi4_interface_0_0_smallpond_axi4_interface_v1_0 |    1 |
-+---------------------------------------------------------------------+------+
++------------------------------------------------------------------+------+
+|                             Ref Name                             | Used |
++------------------------------------------------------------------+------+
+| design_1_smallpond_axi4_interface_0_0_smallpond_axi_v1_0_M00_AXI |    1 |
++------------------------------------------------------------------+------+
 
 
-10. Instantiated Netlists
--------------------------
+9. Instantiated Netlists
+------------------------
 
 +----------+------+
 | Ref Name | Used |

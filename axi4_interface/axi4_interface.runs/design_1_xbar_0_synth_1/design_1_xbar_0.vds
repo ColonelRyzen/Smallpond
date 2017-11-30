@@ -2,15 +2,15 @@
 # Vivado v2017.3.1 (64-bit)
 # SW Build 2035080 on Fri Oct 20 14:20:00 MDT 2017
 # IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
-# Start of session at: Fri Nov 24 21:02:15 2017
-# Process ID: 22185
+# Start of session at: Thu Nov 30 11:11:09 2017
+# Process ID: 25176
 # Current directory: /home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_xbar_0_synth_1
 # Command line: vivado -log design_1_xbar_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_xbar_0.tcl
 # Log file: /home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_xbar_0_synth_1/design_1_xbar_0.vds
 # Journal file: /home/jrcharlo/Smallpond/axi4_interface/axi4_interface.runs/design_1_xbar_0_synth_1/vivado.jou
 #-----------------------------------------------------------
 source design_1_xbar_0.tcl -notrace
-Starting RTL Elaboration : Time (s): cpu = 00:00:11 ; elapsed = 00:00:16 . Memory (MB): peak = 1279.707 ; gain = 91.996 ; free physical = 1105 ; free virtual = 5035
+Starting RTL Elaboration : Time (s): cpu = 00:00:11 ; elapsed = 00:00:17 . Memory (MB): peak = 1279.430 ; gain = 85.996 ; free physical = 1981 ; free virtual = 4023
 INFO: [Synth 8-638] synthesizing module 'design_1_xbar_0' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_xbar_0/synth/design_1_xbar_0.v:59]
 INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_axi_crossbar' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:4882]
 INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_crossbar_sasd' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:1240]
@@ -21,10 +21,6 @@ INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_carry_an
 INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_comparator_static' (2#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
 INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_comparator_static__parameterized0' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
 INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_comparator_static__parameterized0' (2#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
-INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_comparator_static__parameterized1' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
-INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_comparator_static__parameterized1' (2#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
-INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_comparator_static__parameterized2' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
-INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_comparator_static__parameterized2' (2#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
 INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_addr_decoder' (3#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:794]
 INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_decerr_slave' [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:3500]
 INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_decerr_slave' (4#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:3500]
@@ -47,36 +43,36 @@ INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_mux_enc_
 INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_crossbar_sasd' (9#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:1240]
 INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_axi_crossbar' (10#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:4882]
 INFO: [Synth 8-256] done synthesizing module 'design_1_xbar_0' (11#1) [/home/jrcharlo/Smallpond/axi4_interface/axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_xbar_0/synth/design_1_xbar_0.v:59]
-Finished RTL Elaboration : Time (s): cpu = 00:00:17 ; elapsed = 00:00:28 . Memory (MB): peak = 1401.238 ; gain = 213.527 ; free physical = 1479 ; free virtual = 5410
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:17 ; elapsed = 00:00:29 . Memory (MB): peak = 1401.238 ; gain = 213.527 ; free physical = 1542 ; free virtual = 5474
+Finished RTL Elaboration : Time (s): cpu = 00:00:17 ; elapsed = 00:00:29 . Memory (MB): peak = 1400.961 ; gain = 207.527 ; free physical = 1788 ; free virtual = 3830
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:17 ; elapsed = 00:00:29 . Memory (MB): peak = 1400.961 ; gain = 207.527 ; free physical = 1788 ; free virtual = 3830
 INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.04 ; elapsed = 00:00:00.03 . Memory (MB): peak = 1644.262 ; gain = 0.000 ; free physical = 1009 ; free virtual = 4941
-Finished Constraint Validation : Time (s): cpu = 00:00:33 ; elapsed = 00:00:52 . Memory (MB): peak = 1644.262 ; gain = 456.551 ; free physical = 1072 ; free virtual = 5003
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:33 ; elapsed = 00:00:52 . Memory (MB): peak = 1644.262 ; gain = 456.551 ; free physical = 1072 ; free virtual = 5003
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:52 . Memory (MB): peak = 1644.262 ; gain = 456.551 ; free physical = 1074 ; free virtual = 5006
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:33 ; elapsed = 00:00:52 . Memory (MB): peak = 1644.262 ; gain = 456.551 ; free physical = 1063 ; free virtual = 4995
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:34 ; elapsed = 00:00:53 . Memory (MB): peak = 1644.262 ; gain = 456.551 ; free physical = 1043 ; free virtual = 4975
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:40 ; elapsed = 00:01:01 . Memory (MB): peak = 1644.262 ; gain = 456.551 ; free physical = 863 ; free virtual = 4795
-Finished Timing Optimization : Time (s): cpu = 00:00:41 ; elapsed = 00:01:02 . Memory (MB): peak = 1644.262 ; gain = 456.551 ; free physical = 852 ; free virtual = 4784
-Finished Technology Mapping : Time (s): cpu = 00:00:41 ; elapsed = 00:01:02 . Memory (MB): peak = 1652.270 ; gain = 464.559 ; free physical = 852 ; free virtual = 4784
-Finished IO Insertion : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1652.270 ; gain = 464.559 ; free physical = 865 ; free virtual = 4798
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1652.270 ; gain = 464.559 ; free physical = 865 ; free virtual = 4797
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1652.270 ; gain = 464.559 ; free physical = 863 ; free virtual = 4795
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1652.270 ; gain = 464.559 ; free physical = 863 ; free virtual = 4795
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1652.270 ; gain = 464.559 ; free physical = 862 ; free virtual = 4794
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1652.270 ; gain = 464.559 ; free physical = 862 ; free virtual = 4794
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.04 ; elapsed = 00:00:00.04 . Memory (MB): peak = 1643.984 ; gain = 0.000 ; free physical = 1166 ; free virtual = 3232
+Finished Constraint Validation : Time (s): cpu = 00:00:33 ; elapsed = 00:00:52 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 2118 ; free virtual = 4181
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:33 ; elapsed = 00:00:52 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 2118 ; free virtual = 4181
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:52 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 2120 ; free virtual = 4183
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:33 ; elapsed = 00:00:53 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 2111 ; free virtual = 4174
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:34 ; elapsed = 00:00:54 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 2040 ; free virtual = 4102
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:40 ; elapsed = 00:01:02 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1885 ; free virtual = 3958
+Finished Timing Optimization : Time (s): cpu = 00:00:41 ; elapsed = 00:01:03 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1877 ; free virtual = 3950
+Finished Technology Mapping : Time (s): cpu = 00:00:41 ; elapsed = 00:01:03 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1887 ; free virtual = 3950
+Finished IO Insertion : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1887 ; free virtual = 3950
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1887 ; free virtual = 3950
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1888 ; free virtual = 3951
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1888 ; free virtual = 3951
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1888 ; free virtual = 3951
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1888 ; free virtual = 3951
 
 Report Cell Usage: 
 +------+-----+------+
 |      |Cell |Count |
 +------+-----+------+
 |1     |LUT1 |     2|
-|2     |LUT2 |    10|
-|3     |LUT3 |    76|
-|4     |LUT4 |    52|
-|5     |LUT5 |    95|
-|6     |LUT6 |    92|
-|7     |FDRE |   197|
+|2     |LUT2 |     8|
+|3     |LUT3 |     3|
+|4     |LUT4 |    53|
+|5     |LUT5 |    19|
+|6     |LUT6 |    82|
+|7     |FDRE |   194|
 +------+-----+------+
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1652.270 ; gain = 464.559 ; free physical = 862 ; free virtual = 4794
-synth_design: Time (s): cpu = 00:00:43 ; elapsed = 00:01:04 . Memory (MB): peak = 1652.277 ; gain = 483.668 ; free physical = 899 ; free virtual = 4831
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:42 ; elapsed = 00:01:03 . Memory (MB): peak = 1643.984 ; gain = 450.551 ; free physical = 1888 ; free virtual = 3951
+synth_design: Time (s): cpu = 00:00:43 ; elapsed = 00:01:05 . Memory (MB): peak = 1643.992 ; gain = 475.387 ; free physical = 1935 ; free virtual = 3998

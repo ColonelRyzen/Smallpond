@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: user.org:user:smallpond_axi4_interface:1.0
--- IP Revision: 8
+-- IP Revision: 12
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
@@ -55,6 +55,14 @@ USE ieee.numeric_std.ALL;
 
 ENTITY design_1_smallpond_axi4_interface_0_0 IS
   PORT (
+    sp_read : IN STD_LOGIC;
+    sp_sign_extend : IN STD_LOGIC;
+    sp_write : IN STD_LOGIC;
+    sp_op_len : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+    sp_addr : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    sp_data : INOUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+    sp_over : OUT STD_LOGIC;
+    sp_error : OUT STD_LOGIC;
     m00_axi_awaddr : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     m00_axi_awprot : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
     m00_axi_awvalid : OUT STD_LOGIC;
@@ -85,7 +93,7 @@ END design_1_smallpond_axi4_interface_0_0;
 ARCHITECTURE design_1_smallpond_axi4_interface_0_0_arch OF design_1_smallpond_axi4_interface_0_0 IS
   ATTRIBUTE DowngradeIPIdentifiedWarnings : STRING;
   ATTRIBUTE DowngradeIPIdentifiedWarnings OF design_1_smallpond_axi4_interface_0_0_arch: ARCHITECTURE IS "yes";
-  COMPONENT smallpond_axi4_interface_v1_0 IS
+  COMPONENT smallpond_axi_v1_0 IS
     GENERIC (
       C_M00_AXI_START_DATA_VALUE : STD_LOGIC_VECTOR; -- The master will start generating data from the C_M_START_DATA_VALUE value
       C_M00_AXI_TARGET_SLAVE_BASE_ADDR : STD_LOGIC_VECTOR; -- The master requires a target slave base address.
@@ -98,6 +106,14 @@ ARCHITECTURE design_1_smallpond_axi4_interface_0_0_arch OF design_1_smallpond_ax
     -- and read transactions the master will perform as a part of this example memory test.
     );
     PORT (
+      sp_read : IN STD_LOGIC;
+      sp_sign_extend : IN STD_LOGIC;
+      sp_write : IN STD_LOGIC;
+      sp_op_len : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+      sp_addr : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+      sp_data : INOUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+      sp_over : OUT STD_LOGIC;
+      sp_error : OUT STD_LOGIC;
       m00_axi_awaddr : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
       m00_axi_awprot : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
       m00_axi_awvalid : OUT STD_LOGIC;
@@ -123,11 +139,11 @@ ARCHITECTURE design_1_smallpond_axi4_interface_0_0_arch OF design_1_smallpond_ax
       m00_axi_error : OUT STD_LOGIC;
       m00_axi_txn_done : OUT STD_LOGIC
     );
-  END COMPONENT smallpond_axi4_interface_v1_0;
+  END COMPONENT smallpond_axi_v1_0;
   ATTRIBUTE X_CORE_INFO : STRING;
-  ATTRIBUTE X_CORE_INFO OF design_1_smallpond_axi4_interface_0_0_arch: ARCHITECTURE IS "smallpond_axi4_interface_v1_0,Vivado 2017.3.1";
+  ATTRIBUTE X_CORE_INFO OF design_1_smallpond_axi4_interface_0_0_arch: ARCHITECTURE IS "smallpond_axi_v1_0,Vivado 2017.3.1";
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
-  ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_smallpond_axi4_interface_0_0_arch : ARCHITECTURE IS "design_1_smallpond_axi4_interface_0_0,smallpond_axi4_interface_v1_0,{}";
+  ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_smallpond_axi4_interface_0_0_arch : ARCHITECTURE IS "design_1_smallpond_axi4_interface_0_0,smallpond_axi_v1_0,{}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER OF m00_axi_aresetn: SIGNAL IS "XIL_INTERFACENAME M00_AXI_RST, POLARITY ACTIVE_LOW";
@@ -155,7 +171,7 @@ ARCHITECTURE design_1_smallpond_axi4_interface_0_0_arch OF design_1_smallpond_ax
   ATTRIBUTE X_INTERFACE_PARAMETER OF m00_axi_awaddr: SIGNAL IS "XIL_INTERFACENAME M00_AXI, WIZ_DATA_WIDTH 32, SUPPORTS_NARROW_BURST 0, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0";
   ATTRIBUTE X_INTERFACE_INFO OF m00_axi_awaddr: SIGNAL IS "xilinx.com:interface:aximm:1.0 M00_AXI AWADDR";
 BEGIN
-  U0 : smallpond_axi4_interface_v1_0
+  U0 : smallpond_axi_v1_0
     GENERIC MAP (
       C_M00_AXI_START_DATA_VALUE => X"AA000000",
       C_M00_AXI_TARGET_SLAVE_BASE_ADDR => X"40000000",
@@ -164,6 +180,14 @@ BEGIN
       C_M00_AXI_TRANSACTIONS_NUM => 4
     )
     PORT MAP (
+      sp_read => sp_read,
+      sp_sign_extend => sp_sign_extend,
+      sp_write => sp_write,
+      sp_op_len => sp_op_len,
+      sp_addr => sp_addr,
+      sp_data => sp_data,
+      sp_over => sp_over,
+      sp_error => sp_error,
       m00_axi_awaddr => m00_axi_awaddr,
       m00_axi_awprot => m00_axi_awprot,
       m00_axi_awvalid => m00_axi_awvalid,
