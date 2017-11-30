@@ -1,0 +1,39 @@
+{
+   ExpandedHierarchyInLayout: "",
+   guistr: "# # String gsaved with Nlview 6.6.11  2017-06-12 bk=1.3860 VDI=40 GEI=35 GUI=JA:1.6
+#  -string -flagsOSRD
+preplace port ddr3_sdram -pg 1 -y 140 -defaultsOSRD
+preplace port sys_clock -pg 1 -y -50 -defaultsOSRD
+preplace port usb_uart -pg 1 -y 340 -defaultsOSRD
+preplace port reset -pg 1 -y -100 -defaultsOSRD
+preplace inst rst_mig_7series_0_83M -pg 1 -lvl 6 -y -20 -defaultsOSRD
+preplace inst smallpond_axi4_interface_0 -pg 1 -lvl 2 -y 190 -defaultsOSRD
+preplace inst rst_clk_wiz_0_100M -pg 1 -lvl 4 -y -20 -defaultsOSRD
+preplace inst mig_7series_0 -pg 1 -lvl 5 -y 180 -defaultsOSRD
+preplace inst util_vector_logic_0 -pg 1 -lvl 1 -y -110 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 4 -y 220 -defaultsOSRD
+preplace inst axi_uartlite_0 -pg 1 -lvl 5 -y 350 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 3 -y -60 -defaultsOSRD
+preplace netloc mig_7series_0_mmcm_locked 1 5 1 1470
+preplace netloc clk_wiz_0_locked 1 3 1 740
+preplace netloc mig_7series_0_DDR3 1 5 2 N 140 N
+preplace netloc smallpond_axi4_interface_0_M00_AXI 1 2 2 N 140 N
+preplace netloc util_vector_logic_0_Res 1 1 2 N -110 540
+preplace netloc rst_mig_7series_0_83M_peripheral_aresetn 1 3 4 760 70 1190 70 NJ 70 1830
+preplace netloc sys_clock_1 1 0 3 NJ -50 N -50 N
+preplace netloc mig_7series_0_ui_clk 1 3 3 780 80 1180 80 1450
+preplace netloc clk_wiz_0_clk_out1 1 1 4 200 310 N 310 750 360 1180
+preplace netloc axi_interconnect_0_M00_AXI 1 4 1 1160
+preplace netloc axi_uartlite_0_UART 1 5 2 NJ 340 N
+preplace netloc mig_7series_0_ui_clk_sync_rst 1 5 1 1460
+preplace netloc axi_interconnect_0_M01_AXI 1 4 1 1140
+preplace netloc rst_clk_wiz_0_100M_interconnect_aresetn 1 3 2 770 -110 1150
+preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 1 4 190 70 N 70 740 370 1150
+preplace netloc reset_1 1 0 5 -260 -170 N -170 N -170 760 -130 1170
+levelinfo -pg 1 -280 40 370 640 960 1320 1650 1850 -top -410 -bot 550
+",
+}
+{
+   da_board_cnt: "1",
+   da_clkrst_cnt: "8",
+}
