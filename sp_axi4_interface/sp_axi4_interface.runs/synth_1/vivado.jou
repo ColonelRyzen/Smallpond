@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.3.1 (64-bit)
+# SW Build 2035080 on Fri Oct 20 14:20:00 MDT 2017
+# IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
+# Start of session at: Sun Dec  3 20:47:37 2017
+# Process ID: 5967
+# Current directory: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/synth_1
+# Command line: vivado -log design_1_wrapper.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_wrapper.tcl
+# Log file: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/synth_1/design_1_wrapper.vds
+# Journal file: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source design_1_wrapper.tcl -notrace

@@ -1,0 +1,44 @@
+#-----------------------------------------------------------
+# Vivado v2017.3.1 (64-bit)
+# SW Build 2035080 on Fri Oct 20 14:20:00 MDT 2017
+# IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
+# Start of session at: Sat Dec  2 16:40:31 2017
+# Process ID: 8936
+# Current directory: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_util_vector_logic_0_0_synth_1
+# Command line: vivado -log design_1_util_vector_logic_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_util_vector_logic_0_0.tcl
+# Log file: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_util_vector_logic_0_0_synth_1/design_1_util_vector_logic_0_0.vds
+# Journal file: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_util_vector_logic_0_0_synth_1/vivado.jou
+#-----------------------------------------------------------
+source design_1_util_vector_logic_0_0.tcl -notrace
+Starting RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1263.172 ; gain = 78.996 ; free physical = 905 ; free virtual = 3745
+INFO: [Synth 8-638] synthesizing module 'design_1_util_vector_logic_0_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_util_vector_logic_0_0/synth/design_1_util_vector_logic_0_0.v:57]
+INFO: [Synth 8-638] synthesizing module 'util_vector_logic_v2_0_1_util_vector_logic' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/2137/hdl/util_vector_logic_v2_0_vl_rfs.v:45]
+INFO: [Synth 8-256] done synthesizing module 'util_vector_logic_v2_0_1_util_vector_logic' (1#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/2137/hdl/util_vector_logic_v2_0_vl_rfs.v:45]
+INFO: [Synth 8-256] done synthesizing module 'design_1_util_vector_logic_0_0' (2#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_util_vector_logic_0_0/synth/design_1_util_vector_logic_0_0.v:57]
+Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1305.703 ; gain = 121.527 ; free physical = 904 ; free virtual = 3745
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1305.703 ; gain = 121.527 ; free physical = 900 ; free virtual = 3741
+INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1529.078 ; gain = 0.000 ; free physical = 1839 ; free virtual = 4703
+Finished Constraint Validation : Time (s): cpu = 00:00:23 ; elapsed = 00:00:32 . Memory (MB): peak = 1529.078 ; gain = 344.902 ; free physical = 1432 ; free virtual = 4297
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:23 ; elapsed = 00:00:32 . Memory (MB): peak = 1529.078 ; gain = 344.902 ; free physical = 1432 ; free virtual = 4297
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:32 . Memory (MB): peak = 1529.078 ; gain = 344.902 ; free physical = 1434 ; free virtual = 4299
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:23 ; elapsed = 00:00:32 . Memory (MB): peak = 1529.078 ; gain = 344.902 ; free physical = 1425 ; free virtual = 4290
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:32 . Memory (MB): peak = 1537.086 ; gain = 352.910 ; free physical = 1417 ; free virtual = 4282
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1591.086 ; gain = 406.910 ; free physical = 1058 ; free virtual = 3924
+Finished Timing Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1591.086 ; gain = 406.910 ; free physical = 1058 ; free virtual = 3924
+Finished Technology Mapping : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1601.102 ; gain = 416.926 ; free physical = 1057 ; free virtual = 3923
+Finished IO Insertion : Time (s): cpu = 00:00:30 ; elapsed = 00:00:41 . Memory (MB): peak = 1601.102 ; gain = 416.926 ; free physical = 1040 ; free virtual = 3905
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:30 ; elapsed = 00:00:41 . Memory (MB): peak = 1601.102 ; gain = 416.926 ; free physical = 1040 ; free virtual = 3905
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:30 ; elapsed = 00:00:41 . Memory (MB): peak = 1601.102 ; gain = 416.926 ; free physical = 1040 ; free virtual = 3905
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:30 ; elapsed = 00:00:41 . Memory (MB): peak = 1601.102 ; gain = 416.926 ; free physical = 1040 ; free virtual = 3905
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:30 ; elapsed = 00:00:41 . Memory (MB): peak = 1601.102 ; gain = 416.926 ; free physical = 1040 ; free virtual = 3905
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:30 ; elapsed = 00:00:41 . Memory (MB): peak = 1601.102 ; gain = 416.926 ; free physical = 1040 ; free virtual = 3905
+
+Report Cell Usage: 
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |LUT1 |     1|
++------+-----+------+
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:30 ; elapsed = 00:00:41 . Memory (MB): peak = 1601.102 ; gain = 416.926 ; free physical = 1040 ; free virtual = 3905
+synth_design: Time (s): cpu = 00:00:32 ; elapsed = 00:00:42 . Memory (MB): peak = 1607.102 ; gain = 447.754 ; free physical = 1083 ; free virtual = 3949
