@@ -26,15 +26,15 @@ entity sp_axi4_master_v1_0_M00_AXI is
 	);
 	port (
 		-- Users to add ports here
-    sp_read : in std_logic; --(1 for read, 0 otherwise)
-    sp_sign_extend : in std_logic; --sign extended=1
-    sp_write : in std_logic; --(1 for write, 0 otherwise)
-    sp_op_len : in std_logic_vector(1 downto 0); --(00:byte,01:halfword,10:word,11:invalid)
-    sp_addr : in std_logic_vector(31 downto 0);
-    sp_data_in : in std_logic_vector(31 downto 0);
-    sp_data_out : out std_logic_vector(31 downto 0);
-    sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
-    sp_error : out std_logic; --(1 for error)
+		sp_read : in std_logic; --(1 for read, 0 otherwise)
+		sp_sign_extend : in std_logic; --sign extended=1
+		sp_write : in std_logic; --(1 for write, 0 otherwise)
+		sp_op_len : in std_logic_vector(1 downto 0); --(00:byte,01:halfword,10:word,11:invalid)
+		sp_addr : in std_logic_vector(31 downto 0);
+		sp_data_in : in std_logic_vector(31 downto 0);
+		sp_data_out : out std_logic_vector(31 downto 0);
+		sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
+		sp_error : out std_logic; --(1 for error)
 		-- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -725,181 +725,181 @@ begin
 
 	--reset (if necessary)
 	process(M_AXI_ACLK) begin
-	   if(rising_edge(M_AXI_ACLK)) then
-	       if(M_AXI_ARESETN = '0') then
-	           --reset signals here?
-	           txn_over <= '0';
-	       end if;
-	   end if;
+    if(rising_edge(M_AXI_ACLK)) then
+      if(M_AXI_ARESETN = '0') then
+        --reset signals here?
+        txn_over <= '0';
+      end if;
+    end if;
 	end process;
 
 	--let Smallpond know when there's an error
 	process(M_AXI_ACLK) begin
-			if(rising_edge(M_AXI_ACLK)) then
-					if(M_AXI_ARESETN = '0') then
-							sp_error <= '0';
-					else
-							if(write_resp_error = '1' or read_resp_error = '1') then
-									sp_axi_error <= '1';
-							end if;
-					end if;
-			end if;
+    if(rising_edge(M_AXI_ACLK)) then
+      if(M_AXI_ARESETN = '0') then
+        sp_error <= '0';
+      else
+        if(write_resp_error = '1' or read_resp_error = '1') then
+          sp_axi_error <= '1';
+        end if;
+      end if;
+    end if;
 	end process;
 
   --process write requests from Smallpond
   process(M_AXI_ACLK) begin
-      if(rising_edge(M_AXI_ACLK)) then
-          if(M_AXI_ARESETN = '0') then
-              axi_awaddr <= (others => '0');
-              axi_wdata <= (others => '0');
-              write_strobes <= "0000";
-              wstep <= '0';
-              start_single_write <= '0';
-              write_issued <= '0';
+    if(rising_edge(M_AXI_ACLK)) then
+      if(M_AXI_ARESETN = '0') then
+        axi_awaddr <= (others => '0');
+        axi_wdata <= (others => '0');
+        write_strobes <= "0000";
+        wstep <= '0';
+        start_single_write <= '0';
+        write_issued <= '0';
+      else
+        if(sp_write = '1') then
+          if(sp_op_len = "00") then --store byte
+            axi_awaddr <= sp_addr;
+            axi_wdata <= x"000000" & sp_data_in(7 downto 0);
+            write_strobes <= "0001";
+            start_single_write <= '1';
+            write_issued <= '1';
+            wstep <= '0';
+          elsif(sp_op_len = "01") then --store halfword (2 bytes)
+            axi_awaddr <= sp_addr;
+            axi_wdata <= x"0000" & sp_data_in(15 downto 0);
+            write_strobes <= "0011";
+            start_single_write <= '1';
+            write_issued <= '1';
+            wstep <= '0';
+          elsif(sp_op_len = "10") then --store word (4 bytes)
+            axi_awaddr <= sp_addr;
+            axi_wdata <= x"0000" & sp_data_in(31 downto 16);
+            write_strobes <= "0011";
+            start_single_write <= '1';
+            write_issued <= '1';
+            wstep <= '0';
           else
-              if(sp_write = '1') then
-                  if(sp_op_len = "00") then --store byte
-                      axi_awaddr <= sp_addr;
-                      axi_wdata <= x"0000000" & sp_data_in(7 downto 0);
-                      write_strobes <= "0001";
-                      start_single_write <= '1';
-                      write_issued <= '1';
-											wstep <= '0';
-                  elsif(sp_op_len = "01") then --store halfword (2 bytes)
-                      axi_awaddr <= sp_addr;
-                      axi_wdata <= x"0000" & sp_data_in(15 downto 0);
-                      write_strobes <= "0011";
-                      start_single_write <= '1';
-                      write_issued <= '1';
-											wstep <= '0';
-                  elsif(sp_op_len = "10") then --store word (4 bytes)
-                      axi_awaddr <= sp_addr;
-                      axi_wdata <= x"0000" & sp_data_in(31 downto 16);
-                      write_strobes <= "0011";
-                      start_single_write <= '1';
-                      write_issued <= '1';
-					  wstep <= '0';
-                  else
-                      sp_error <= '1';
-                  end if;
-              end if;
+            sp_error <= '1';
           end if;
+        end if;
       end if;
+    end if;
   end process;
 
   --generate pulse to initiate write
   process(M_AXI_ACLK) begin
-     if(rising_edge(M_AXI_ACLK)) then
-         if(M_AXI_ARESETN = '1') then
-          if(start_single_write = '1' and write_issued = '1') then
-              start_single_write <= '0';
-          end if;
-         end if;
-     end if;
+    if(rising_edge(M_AXI_ACLK)) then
+      if(M_AXI_ARESETN = '1') then
+        if(start_single_write = '1' and write_issued = '1') then
+          start_single_write <= '0';
+        end if;
+      end if;
+    end if;
   end process;
 
   --check if write has finished
   process(M_AXI_ACLK) begin
-      if(rising_edge(M_AXI_ACLK)) then
-          if(M_AXI_ARESETN = '1') then
-              if(start_single_write = '0' and write_issued = '1' and M_AXI_BVALID = '1' and axi_bready = '1') then
-                --check if sp op is finished
-                write_issued <= '0';
-                if(sp_op_len = "00") then --done
-                    write_issued <= '0';
-                    txn_over <= '1';
-                elsif(sp_op_len = "01") then --done
-                    write_issued <= '0';
-                    txn_over <= '1';
-                elsif(sp_op_len = "10") then --write next 2 bytes (not done)
-                    if(wstep = '0') then
-                        axi_awaddr <= std_logic_vector(unsigned(sp_addr) + 2);
-                        axi_wdata <= x"0000" & sp_data_in(15 downto 0);
-                        start_single_write <= '1';
-                        wstep <= '1';
-                    else
-                        write_issued <= '0';
-                        txn_over <= '1';
-                    end if;
-                else
-                    sp_axi_error <= '1';
-                end if;
-              end if;
+    if(rising_edge(M_AXI_ACLK)) then
+      if(M_AXI_ARESETN = '1') then
+        if(start_single_write = '0' and write_issued = '1' and M_AXI_BVALID = '1' and axi_bready = '1') then
+          --check if sp op is finished
+          write_issued <= '0';
+          if(sp_op_len = "00") then --done
+            write_issued <= '0';
+            txn_over <= '1';
+          elsif(sp_op_len = "01") then --done
+            write_issued <= '0';
+            txn_over <= '1';
+          elsif(sp_op_len = "10") then --write next 2 bytes (not done)
+            if(wstep = '0') then
+              axi_awaddr <= std_logic_vector(unsigned(sp_addr) + 2);
+              axi_wdata <= x"0000" & sp_data_in(15 downto 0);
+              start_single_write <= '1';
+              wstep <= '1';
+            else
+              write_issued <= '0';
+              txn_over <= '1';
+            end if;
+          else
+            sp_axi_error <= '1';
           end if;
+        end if;
       end if;
+    end if;
   end process;
 
   --process read requests from Smallpond
   process(M_AXI_ACLK) begin
-      if(rising_edge(M_AXI_ACLK)) then
-          if(M_AXI_ARESETN = '0') then
-							axi_araddr <= (others => '0');
-							rstep <= '0';
-              start_single_read <= '0';
-							read_issued <= '0';
-          else
-              if(sp_write = '1') then
-									axi_araddr <= sp_addr;
-                  start_single_read <= '1';
-									read_issued <= '1';
-									rstep <= '0';
-              end if;
-          end if;
+    if(rising_edge(M_AXI_ACLK)) then
+      if(M_AXI_ARESETN = '0') then
+	      axi_araddr <= (others => '0');
+	      rstep <= '0';
+        start_single_read <= '0';
+	      read_issued <= '0';
+      else
+        if(sp_write = '1') then
+	        axi_araddr <= sp_addr;
+          start_single_read <= '1';
+	        read_issued <= '1';
+	        rstep <= '0';
+        end if;
       end if;
+    end if;
   end process;
 
   --generate pulse to initiate read
   process(M_AXI_ACLK) begin
-     if(rising_edge(M_AXI_ACLK)) then
-         if(M_AXI_ARESETN = '1') then
-          if(start_single_read = '1' and read_issued = '1') then
-              start_single_read <= '0';
-          end if;
-         end if;
-     end if;
+    if(rising_edge(M_AXI_ACLK)) then
+      if(M_AXI_ARESETN = '1') then
+        if(start_single_read = '1' and read_issued = '1') then
+          start_single_read <= '0';
+        end if;
+      end if;
+    end if;
   end process;
 
   --check if read has finished
   process(M_AXI_ACLK) begin
-     if(rising_edge(M_AXI_ACLK)) then
-         if(M_AXI_ARESETN = '1') then
-          if(start_single_read = '0' and read_issued = '1' and M_AXI_RVALID = '1' and axi_rready = '1') then
-						if(sp_op_len = "00") then
-							if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
-								data_out <= x"FFFFFF" & M_AXI_RDATA(15 downto 8);
-							else
-								data_out <= x"0000000" & M_AXI_RDATA(15 downto 8);
-							end if;
-							read_issued <= '0';
-							txn_over <= '0';
-						elsif(sp_op_len = "01") then
-							if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
-								data_out <= x"FFFFFF" & M_AXI_RDATA(15 downto 0);
-							else
-								data_out <= x"000000" & M_AXI_RDATA(15 downto 0);
-							end if;
-							read_issued <= '0';
-							txn_over <= '0';
-						elsif(sp_op_len = "10" and rstep = '0') then
-							data_out(31 downto 16) <= M_AXI_RDATA(15 downto 0);
+    if(rising_edge(M_AXI_ACLK)) then
+      if(M_AXI_ARESETN = '1') then
+        if(start_single_read = '0' and read_issued = '1' and M_AXI_RVALID = '1' and axi_rready = '1') then
+          if(sp_op_len = "00") then
+            if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
+              data_out <= x"FFFFFF" & M_AXI_RDATA(15 downto 8);
+            else
+              data_out <= x"000000" & M_AXI_RDATA(15 downto 8);
+            end if;
+            read_issued <= '0';
+            txn_over <= '0';
+          elsif(sp_op_len = "01") then
+            if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
+              data_out <= x"FFFF" & M_AXI_RDATA(15 downto 0);
+            else
+              data_out <= x"0000" & M_AXI_RDATA(15 downto 0);
+            end if;
+            read_issued <= '0';
+            txn_over <= '0';
+          elsif(sp_op_len = "10" and rstep = '0') then
+            data_out(31 downto 16) <= M_AXI_RDATA(15 downto 0);
 
-							axi_araddr <= std_logic_vector(unsigned(sp_addr) + 2);
-							start_single_read <= '1';
-							rstep <= '1';
-							--go to next step etc...
-						elsif(sp_op_len = "10" and rstep = '1') then
-							data_out(15 downto 0) <= M_AXI_RDATA(15 downto 0);
+            axi_araddr <= std_logic_vector(unsigned(sp_addr) + 2);
+            start_single_read <= '1';
+            rstep <= '1';
+            --go to next step etc...
+          elsif(sp_op_len = "10" and rstep = '1') then
+            data_out(15 downto 0) <= M_AXI_RDATA(15 downto 0);
 
-							read_issued <= '0';
-							rstep <= '0';
-							read_issued <= '0';
-							txn_over <= '0';
-						else
-							sp_axi_error <= '1';
-						end if;
+            read_issued <= '0';
+            rstep <= '0';
+            read_issued <= '0';
+            txn_over <= '0';
+          else
+            sp_axi_error <= '1';
           end if;
-         end if;
-     end if;
+        end if;
+      end if;
+    end if;
   end process;
 
 

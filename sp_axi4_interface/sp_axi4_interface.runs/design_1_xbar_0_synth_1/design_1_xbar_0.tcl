@@ -30,10 +30,7 @@ set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
 set_property board_part digilentinc.com:arty:part0:1.1 [current_project]
-set_property ip_repo_paths {
-  /home/jrcharlo/Smallpond/ip_repo/smallpond_axi4_interface_1.0
-  /home/jrcharlo/Smallpond/sp_axi4_tb/sp_axi4_tb.srcs
-} [current_project]
+set_property ip_repo_paths /home/jrcharlo/Smallpond/ip_repo/Smallpond_axi4_master_interface_1.0 [current_project]
 set_property ip_output_repo /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_ip -quiet /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_xbar_0/design_1_xbar_0.xci

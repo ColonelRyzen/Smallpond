@@ -2,77 +2,12 @@
 # Vivado v2017.3.1 (64-bit)
 # SW Build 2035080 on Fri Oct 20 14:20:00 MDT 2017
 # IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
-# Start of session at: Sat Dec  2 16:38:44 2017
-# Process ID: 7961
+# Start of session at: Tue Dec  5 00:10:23 2017
+# Process ID: 18829
 # Current directory: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_xbar_0_synth_1
 # Command line: vivado -log design_1_xbar_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_xbar_0.tcl
 # Log file: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_xbar_0_synth_1/design_1_xbar_0.vds
 # Journal file: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_xbar_0_synth_1/vivado.jou
 #-----------------------------------------------------------
 source design_1_xbar_0.tcl -notrace
-Starting RTL Elaboration : Time (s): cpu = 00:00:11 ; elapsed = 00:00:17 . Memory (MB): peak = 1278.695 ; gain = 91.996 ; free physical = 1051 ; free virtual = 3888
-INFO: [Synth 8-638] synthesizing module 'design_1_xbar_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_xbar_0/synth/design_1_xbar_0.v:59]
-INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_axi_crossbar' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:4882]
-INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_crossbar_sasd' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:1240]
-INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_addr_decoder' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:794]
-INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_comparator_static' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
-INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_carry_and' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:62]
-INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_carry_and' (1#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:62]
-INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_comparator_static' (2#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
-INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_comparator_static__parameterized0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
-INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_comparator_static__parameterized0' (2#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2133]
-INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_addr_decoder' (3#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:794]
-INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_decerr_slave' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:3500]
-INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_decerr_slave' (4#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:3500]
-INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_addr_arbiter_sasd' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:65]
-INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_addr_arbiter_sasd' (5#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:65]
-INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_splitter' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:4459]
-INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_splitter' (6#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:4459]
-INFO: [Synth 8-638] synthesizing module 'axi_crossbar_v2_1_15_splitter__parameterized0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:4459]
-INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_splitter__parameterized0' (6#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:4459]
-INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_mux_enc' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2452]
-INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_mux_enc' (7#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2452]
-INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_mux_enc__parameterized0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2452]
-INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_mux_enc__parameterized0' (7#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2452]
-INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_mux_enc__parameterized1' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2452]
-INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_mux_enc__parameterized1' (7#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2452]
-INFO: [Synth 8-638] synthesizing module 'axi_register_slice_v2_1_14_axic_register_slice' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a259/hdl/axi_register_slice_v2_1_vl_rfs.v:189]
-INFO: [Synth 8-256] done synthesizing module 'axi_register_slice_v2_1_14_axic_register_slice' (8#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a259/hdl/axi_register_slice_v2_1_vl_rfs.v:189]
-INFO: [Synth 8-638] synthesizing module 'generic_baseblocks_v2_1_0_mux_enc__parameterized2' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2452]
-INFO: [Synth 8-256] done synthesizing module 'generic_baseblocks_v2_1_0_mux_enc__parameterized2' (8#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v:2452]
-INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_crossbar_sasd' (9#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:1240]
-INFO: [Synth 8-256] done synthesizing module 'axi_crossbar_v2_1_15_axi_crossbar' (10#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/a1b8/hdl/axi_crossbar_v2_1_vl_rfs.v:4882]
-INFO: [Synth 8-256] done synthesizing module 'design_1_xbar_0' (11#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_xbar_0/synth/design_1_xbar_0.v:59]
-Finished RTL Elaboration : Time (s): cpu = 00:00:17 ; elapsed = 00:00:29 . Memory (MB): peak = 1400.227 ; gain = 213.527 ; free physical = 955 ; free virtual = 3792
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:17 ; elapsed = 00:00:30 . Memory (MB): peak = 1400.227 ; gain = 213.527 ; free physical = 939 ; free virtual = 3777
-INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1641.250 ; gain = 0.000 ; free physical = 1074 ; free virtual = 3912
-Finished Constraint Validation : Time (s): cpu = 00:00:33 ; elapsed = 00:00:53 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 877 ; free virtual = 3716
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:33 ; elapsed = 00:00:53 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 877 ; free virtual = 3716
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:53 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 880 ; free virtual = 3718
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:33 ; elapsed = 00:00:53 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 872 ; free virtual = 3710
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:34 ; elapsed = 00:00:54 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 858 ; free virtual = 3696
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:40 ; elapsed = 00:01:03 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 453 ; free virtual = 3292
-Finished Timing Optimization : Time (s): cpu = 00:00:41 ; elapsed = 00:01:03 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 445 ; free virtual = 3283
-Finished Technology Mapping : Time (s): cpu = 00:00:41 ; elapsed = 00:01:03 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 444 ; free virtual = 3282
-Finished IO Insertion : Time (s): cpu = 00:00:42 ; elapsed = 00:01:04 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 436 ; free virtual = 3274
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:42 ; elapsed = 00:01:04 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 436 ; free virtual = 3274
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:42 ; elapsed = 00:01:04 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 436 ; free virtual = 3274
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:42 ; elapsed = 00:01:04 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 436 ; free virtual = 3274
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:42 ; elapsed = 00:01:04 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 436 ; free virtual = 3274
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:42 ; elapsed = 00:01:04 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 436 ; free virtual = 3274
-
-Report Cell Usage: 
-+------+-----+------+
-|      |Cell |Count |
-+------+-----+------+
-|1     |LUT1 |     2|
-|2     |LUT2 |     8|
-|3     |LUT3 |     3|
-|4     |LUT4 |    53|
-|5     |LUT5 |    19|
-|6     |LUT6 |    82|
-|7     |FDRE |   194|
-+------+-----+------+
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:42 ; elapsed = 00:01:04 . Memory (MB): peak = 1641.250 ; gain = 454.551 ; free physical = 436 ; free virtual = 3274
-synth_design: Time (s): cpu = 00:00:43 ; elapsed = 00:01:05 . Memory (MB): peak = 1641.258 ; gain = 473.660 ; free physical = 485 ; free virtual = 3324
+INFO: [IP_Flow 19-4838] Using cached IP synthesis design for IP design_1_xbar_0, cache-ID = 1b6031ccc762eb2f.

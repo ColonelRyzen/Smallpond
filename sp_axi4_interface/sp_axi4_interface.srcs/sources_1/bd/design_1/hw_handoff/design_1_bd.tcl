@@ -164,19 +164,26 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.POLARITY {ACTIVE_LOW} \
  ] $reset
-  set sp_addr [ create_bd_port -dir I -from 31 -to 0 sp_addr ]
-  set sp_data [ create_bd_port -dir IO -from 31 -to 0 sp_data ]
-  set sp_error [ create_bd_port -dir O sp_error ]
-  set sp_op_len [ create_bd_port -dir I -from 1 -to 0 sp_op_len ]
-  set sp_over [ create_bd_port -dir O sp_over ]
-  set sp_read [ create_bd_port -dir I sp_read ]
-  set sp_sign_extend [ create_bd_port -dir I sp_sign_extend ]
-  set sp_write [ create_bd_port -dir I sp_write ]
+  set sp_addr_0 [ create_bd_port -dir I -from 31 -to 0 sp_addr_0 ]
+  set sp_data_in_0 [ create_bd_port -dir I -from 31 -to 0 sp_data_in_0 ]
+  set sp_data_out_0 [ create_bd_port -dir O -from 31 -to 0 sp_data_out_0 ]
+  set sp_error_0 [ create_bd_port -dir O sp_error_0 ]
+  set sp_op_len_0 [ create_bd_port -dir I -from 1 -to 0 sp_op_len_0 ]
+  set sp_over_0 [ create_bd_port -dir O sp_over_0 ]
+  set sp_read_0 [ create_bd_port -dir I sp_read_0 ]
+  set sp_sign_extend_0 [ create_bd_port -dir I sp_sign_extend_0 ]
+  set sp_write_0 [ create_bd_port -dir I sp_write_0 ]
   set sys_clock [ create_bd_port -dir I -type clk sys_clock ]
   set_property -dict [ list \
    CONFIG.FREQ_HZ {100000000} \
    CONFIG.PHASE {0.000} \
  ] $sys_clock
+
+  # Create instance: Smallpond_axi4_master_interface_0, and set properties
+  set Smallpond_axi4_master_interface_0 [ create_bd_cell -type ip -vlnv user.org:user:Smallpond_axi4_master_interface:1.0 Smallpond_axi4_master_interface_0 ]
+  set_property -dict [ list \
+   CONFIG.C_M00_AXI_TRANSACTIONS_NUM {4} \
+ ] $Smallpond_axi4_master_interface_0
 
   # Create instance: axi_interconnect_0, and set properties
   set axi_interconnect_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_0 ]
@@ -209,9 +216,6 @@ proc create_root_design { parentCell } {
   # Create instance: rst_mig_7series_0_83M, and set properties
   set rst_mig_7series_0_83M [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 rst_mig_7series_0_83M ]
 
-  # Create instance: smallpond_axi4_interface_0, and set properties
-  set smallpond_axi4_interface_0 [ create_bd_cell -type ip -vlnv user.org:user:smallpond_axi4_interface:1.0 smallpond_axi4_interface_0 ]
-
   # Create instance: util_vector_logic_0, and set properties
   set util_vector_logic_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 util_vector_logic_0 ]
   set_property -dict [ list \
@@ -221,36 +225,37 @@ proc create_root_design { parentCell } {
  ] $util_vector_logic_0
 
   # Create interface connections
+  connect_bd_intf_net -intf_net Smallpond_axi4_master_interface_0_M00_AXI [get_bd_intf_pins Smallpond_axi4_master_interface_0/M00_AXI] [get_bd_intf_pins axi_interconnect_0/S00_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI [get_bd_intf_pins axi_interconnect_0/M00_AXI] [get_bd_intf_pins mig_7series_0/S_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins axi_interconnect_0/M01_AXI] [get_bd_intf_pins axi_uartlite_0/S_AXI]
   connect_bd_intf_net -intf_net axi_uartlite_0_UART [get_bd_intf_ports usb_uart] [get_bd_intf_pins axi_uartlite_0/UART]
   connect_bd_intf_net -intf_net mig_7series_0_DDR3 [get_bd_intf_ports ddr3_sdram] [get_bd_intf_pins mig_7series_0/DDR3]
-  connect_bd_intf_net -intf_net smallpond_axi4_interface_0_M00_AXI [get_bd_intf_pins axi_interconnect_0/S00_AXI] [get_bd_intf_pins smallpond_axi4_interface_0/M00_AXI]
 
   # Create port connections
-  connect_bd_net -net Net [get_bd_ports sp_data] [get_bd_pins smallpond_axi4_interface_0/sp_data]
-  connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins mig_7series_0/sys_clk_i] [get_bd_pins rst_clk_wiz_0_100M/slowest_sync_clk] [get_bd_pins smallpond_axi4_interface_0/m00_axi_aclk]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_sp_data_out [get_bd_ports sp_data_out_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_data_out]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_sp_error [get_bd_ports sp_error_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_error]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_sp_over [get_bd_ports sp_over_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_over]
+  connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins mig_7series_0/sys_clk_i] [get_bd_pins rst_clk_wiz_0_100M/slowest_sync_clk]
   connect_bd_net -net clk_wiz_0_locked [get_bd_pins clk_wiz_0/locked] [get_bd_pins rst_clk_wiz_0_100M/dcm_locked]
   connect_bd_net -net mig_7series_0_mmcm_locked [get_bd_pins mig_7series_0/mmcm_locked] [get_bd_pins rst_mig_7series_0_83M/dcm_locked]
   connect_bd_net -net mig_7series_0_ui_clk [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins mig_7series_0/clk_ref_i] [get_bd_pins mig_7series_0/ui_clk] [get_bd_pins rst_mig_7series_0_83M/slowest_sync_clk]
   connect_bd_net -net mig_7series_0_ui_clk_sync_rst [get_bd_pins mig_7series_0/ui_clk_sync_rst] [get_bd_pins rst_mig_7series_0_83M/ext_reset_in]
   connect_bd_net -net reset_1 [get_bd_ports reset] [get_bd_pins mig_7series_0/sys_rst] [get_bd_pins rst_clk_wiz_0_100M/ext_reset_in] [get_bd_pins util_vector_logic_0/Op1]
   connect_bd_net -net rst_clk_wiz_0_100M_interconnect_aresetn [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins rst_clk_wiz_0_100M/interconnect_aresetn]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins axi_interconnect_0/M01_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axi_uartlite_0/s_axi_aresetn] [get_bd_pins rst_clk_wiz_0_100M/peripheral_aresetn] [get_bd_pins smallpond_axi4_interface_0/m00_axi_aresetn]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_aresetn] [get_bd_pins axi_interconnect_0/M01_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axi_uartlite_0/s_axi_aresetn] [get_bd_pins rst_clk_wiz_0_100M/peripheral_aresetn]
   connect_bd_net -net rst_mig_7series_0_83M_peripheral_aresetn [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins mig_7series_0/aresetn] [get_bd_pins rst_mig_7series_0_83M/peripheral_aresetn]
-  connect_bd_net -net smallpond_axi4_interface_0_sp_error [get_bd_ports sp_error] [get_bd_pins smallpond_axi4_interface_0/sp_error]
-  connect_bd_net -net smallpond_axi4_interface_0_sp_over [get_bd_ports sp_over] [get_bd_pins smallpond_axi4_interface_0/sp_over]
-  connect_bd_net -net sp_addr_0_1 [get_bd_ports sp_addr] [get_bd_pins smallpond_axi4_interface_0/sp_addr]
-  connect_bd_net -net sp_op_len_0_1 [get_bd_ports sp_op_len] [get_bd_pins smallpond_axi4_interface_0/sp_op_len]
-  connect_bd_net -net sp_read_0_1 [get_bd_ports sp_read] [get_bd_pins smallpond_axi4_interface_0/sp_read]
-  connect_bd_net -net sp_sign_extend_0_1 [get_bd_ports sp_sign_extend] [get_bd_pins smallpond_axi4_interface_0/sp_sign_extend]
-  connect_bd_net -net sp_write_0_1 [get_bd_ports sp_write] [get_bd_pins smallpond_axi4_interface_0/sp_write]
+  connect_bd_net -net sp_addr_0_1 [get_bd_ports sp_addr_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_addr]
+  connect_bd_net -net sp_data_in_0_1 [get_bd_ports sp_data_in_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_data_in]
+  connect_bd_net -net sp_op_len_0_1 [get_bd_ports sp_op_len_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_op_len]
+  connect_bd_net -net sp_read_0_1 [get_bd_ports sp_read_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_read]
+  connect_bd_net -net sp_sign_extend_0_1 [get_bd_ports sp_sign_extend_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_sign_extend]
+  connect_bd_net -net sp_write_0_1 [get_bd_ports sp_write_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_write]
   connect_bd_net -net sys_clock_1 [get_bd_ports sys_clock] [get_bd_pins clk_wiz_0/clk_in1]
   connect_bd_net -net util_vector_logic_0_Res [get_bd_pins clk_wiz_0/reset] [get_bd_pins util_vector_logic_0/Res]
 
   # Create address segments
-  create_bd_addr_seg -range 0x00010000 -offset 0x40600000 [get_bd_addr_spaces smallpond_axi4_interface_0/M00_AXI] [get_bd_addr_segs axi_uartlite_0/S_AXI/Reg] SEG_axi_uartlite_0_Reg
-  create_bd_addr_seg -range 0x10000000 -offset 0x80000000 [get_bd_addr_spaces smallpond_axi4_interface_0/M00_AXI] [get_bd_addr_segs mig_7series_0/memmap/memaddr] SEG_mig_7series_0_memaddr
+  create_bd_addr_seg -range 0x00010000 -offset 0x40600000 [get_bd_addr_spaces Smallpond_axi4_master_interface_0/M00_AXI] [get_bd_addr_segs axi_uartlite_0/S_AXI/Reg] SEG_axi_uartlite_0_Reg
+  create_bd_addr_seg -range 0x10000000 -offset 0x80000000 [get_bd_addr_spaces Smallpond_axi4_master_interface_0/M00_AXI] [get_bd_addr_segs mig_7series_0/memmap/memaddr] SEG_mig_7series_0_memaddr
 
 
   # Restore current instance

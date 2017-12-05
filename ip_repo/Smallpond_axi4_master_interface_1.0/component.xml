@@ -247,7 +247,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>4412b678</spirit:value>
+            <spirit:value>fd3cafd7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -263,7 +263,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>4412b678</spirit:value>
+            <spirit:value>fd3cafd7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -277,7 +277,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>a554aed7</spirit:value>
+            <spirit:value>81903e37</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -780,20 +780,7 @@
       </spirit:port>
     </spirit:ports>
     <spirit:modelParameters>
-      <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="std_logic_vector">
-        <spirit:name>C_M00_AXI_START_DATA_VALUE</spirit:name>
-        <spirit:displayName>C M00 AXI START DATA VALUE</spirit:displayName>
-        <spirit:description>The master will start generating data from the C_M_START_DATA_VALUE value</spirit:description>
-        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_M00_AXI_START_DATA_VALUE" spirit:order="3" spirit:bitStringLength="32">0xAA000000</spirit:value>
-      </spirit:modelParameter>
-      <spirit:modelParameter spirit:dataType="std_logic_vector">
-        <spirit:name>C_M00_AXI_TARGET_SLAVE_BASE_ADDR</spirit:name>
-        <spirit:displayName>C M00 AXI TARGET SLAVE BASE ADDR</spirit:displayName>
-        <spirit:description>The master requires a target slave base address.
-    -- The master will initiate read and write transactions on the slave with base address specified here as a parameter.</spirit:description>
-        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_M00_AXI_TARGET_SLAVE_BASE_ADDR" spirit:order="4" spirit:bitStringLength="32">0x40000000</spirit:value>
-      </spirit:modelParameter>
-      <spirit:modelParameter spirit:dataType="integer">
+      <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
         <spirit:name>C_M00_AXI_ADDR_WIDTH</spirit:name>
         <spirit:displayName>C M00 AXI ADDR WIDTH</spirit:displayName>
         <spirit:description>Width of M_AXI address bus. 
@@ -812,7 +799,7 @@
         <spirit:displayName>C M00 AXI TRANSACTIONS NUM</spirit:displayName>
         <spirit:description>Transaction number is the number of write 
     -- and read transactions the master will perform as a part of this example memory test.</spirit:description>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_M00_AXI_TRANSACTIONS_NUM" spirit:order="7" spirit:minimum="1" spirit:rangeType="long">4</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_M00_AXI_TRANSACTIONS_NUM" spirit:order="7" spirit:minimum="1" spirit:rangeType="long">1</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -837,7 +824,7 @@
       <spirit:file>
         <spirit:name>hdl/Smallpond_axi4_master_interface_v1_0.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_ea316375</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_2982278b</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -856,7 +843,7 @@
       <spirit:file>
         <spirit:name>xgui/Smallpond_axi4_master_interface_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_a554aed7</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_81903e37</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -870,19 +857,6 @@
   </spirit:fileSets>
   <spirit:description>Smallpond&apos;s AXI4 Master Interface</spirit:description>
   <spirit:parameters>
-    <spirit:parameter>
-      <spirit:name>C_M00_AXI_START_DATA_VALUE</spirit:name>
-      <spirit:displayName>C M00 AXI START DATA VALUE</spirit:displayName>
-      <spirit:description>The master will start generating data from the C_M_START_DATA_VALUE value</spirit:description>
-      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_M00_AXI_START_DATA_VALUE" spirit:order="3" spirit:bitStringLength="32">0xAA000000</spirit:value>
-    </spirit:parameter>
-    <spirit:parameter>
-      <spirit:name>C_M00_AXI_TARGET_SLAVE_BASE_ADDR</spirit:name>
-      <spirit:displayName>C M00 AXI TARGET SLAVE BASE ADDR</spirit:displayName>
-      <spirit:description>The master requires a target slave base address.
-    -- The master will initiate read and write transactions on the slave with base address specified here as a parameter.</spirit:description>
-      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_M00_AXI_TARGET_SLAVE_BASE_ADDR" spirit:order="4" spirit:bitStringLength="32">0x40000000</spirit:value>
-    </spirit:parameter>
     <spirit:parameter>
       <spirit:name>C_M00_AXI_ADDR_WIDTH</spirit:name>
       <spirit:displayName>C M00 AXI ADDR WIDTH</spirit:displayName>
@@ -916,7 +890,7 @@
       <spirit:displayName>C M00 AXI TRANSACTIONS NUM</spirit:displayName>
       <spirit:description>Transaction number is the number of write 
     -- and read transactions the master will perform as a part of this example memory test.</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_M00_AXI_TRANSACTIONS_NUM" spirit:order="7" spirit:minimum="1" spirit:rangeType="long">4</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_M00_AXI_TRANSACTIONS_NUM" spirit:order="7" spirit:minimum="1" spirit:rangeType="long">1</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>Component_Name</spirit:name>
@@ -932,8 +906,8 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>Smallpond_axi4_master_interface_v1.0</xilinx:displayName>
-      <xilinx:coreRevision>2</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2017-12-05T04:49:58Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>5</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2017-12-05T05:46:10Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="user.org:user:Smallpond_axi4_master_interface:1.0_ARCHIVE_LOCATION">/home/jrcharlo/Smallpond/ip_repo/Smallpond_axi4_master_interface_1.0</xilinx:tag>
       </xilinx:tags>
@@ -942,10 +916,10 @@
       <xilinx:xilinxVersion>2017.3.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="7fad9b88"/>
       <xilinx:checksum xilinx:scope="addressSpaces" xilinx:value="55bfeea0"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="f067f79a"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="5824178a"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="042b06be"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="9a92a22e"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="fdb991ba"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="f2575924"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="c811eedf"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="45148b24"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

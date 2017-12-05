@@ -24,14 +24,14 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==design_1_rst_cl
 # IP: bd/design_1/ip/design_1_xbar_0/design_1_xbar_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==design_1_xbar_0 || ORIG_REF_NAME==design_1_xbar_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_smallpond_axi4_interface_0_0_1/design_1_smallpond_axi4_interface_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==design_1_smallpond_axi4_interface_0_0 || ORIG_REF_NAME==design_1_smallpond_axi4_interface_0_0} -quiet] -quiet
-
 # IP: bd/design_1/ip/design_1_rst_mig_7series_0_83M_0/design_1_rst_mig_7series_0_83M_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==design_1_rst_mig_7series_0_83M_0 || ORIG_REF_NAME==design_1_rst_mig_7series_0_83M_0} -quiet] -quiet
 
 # IP: bd/design_1/ip/design_1_util_vector_logic_0_0/design_1_util_vector_logic_0_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==design_1_util_vector_logic_0_0 || ORIG_REF_NAME==design_1_util_vector_logic_0_0} -quiet] -quiet
+
+# IP: bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/design_1_Smallpond_axi4_master_interface_0_0.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==design_1_Smallpond_axi4_master_interface_0_0 || ORIG_REF_NAME==design_1_Smallpond_axi4_master_interface_0_0} -quiet] -quiet
 
 # IP: bd/design_1/ip/design_1_auto_ds_0/design_1_auto_ds_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==design_1_auto_ds_0 || ORIG_REF_NAME==design_1_auto_ds_0} -quiet] -quiet
