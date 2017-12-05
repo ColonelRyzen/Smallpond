@@ -2,10 +2,10 @@
 <Root MajorVersion="0" MinorVersion="33">
   <CompositeFile CompositeFileTopName="design_1" CanBeSetAsTop="false" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="RESET" Timestamp="1512253119"/>
-    <Generation Name="IMPLEMENTATION" State="RESET" Timestamp="1512253119"/>
-    <Generation Name="SIMULATION" State="RESET" Timestamp="1512253119"/>
-    <Generation Name="HW_HANDOFF" State="RESET" Timestamp="1512253119"/>
+    <Generation Name="SYNTHESIS" State="STALE" Timestamp="1512448766"/>
+    <Generation Name="IMPLEMENTATION" State="STALE" Timestamp="1512448766"/>
+    <Generation Name="SIMULATION" State="STALE" Timestamp="1512448766"/>
+    <Generation Name="HW_HANDOFF" State="STALE" Timestamp="1512448766"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
       <File Name="ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0.xci" Type="IP">
         <Instance HierarchyPath="clk_wiz_0"/>
@@ -55,14 +55,6 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/design_1_smallpond_axi4_interface_0_0_1/design_1_smallpond_axi4_interface_0_0.xci" Type="IP">
-        <Instance HierarchyPath="smallpond_axi4_interface_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
       <File Name="ip/design_1_rst_mig_7series_0_83M_0/design_1_rst_mig_7series_0_83M_0.xci" Type="IP">
         <Instance HierarchyPath="rst_mig_7series_0_83M"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
@@ -87,14 +79,6 @@
       <File Name="sim/design_1.vhd" Type="VHDL">
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip/design_1_sp_axi4_tb_0_0/design_1_sp_axi4_tb_0_0.xci" Type="IP">
-        <Instance HierarchyPath="sp_axi4_tb_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
       <File Name="ip/design_1_auto_ds_0/design_1_auto_ds_0.xci" Type="IP">
