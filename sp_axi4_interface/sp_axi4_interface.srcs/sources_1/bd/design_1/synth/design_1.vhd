@@ -1,8 +1,8 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
---Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
---Date        : Tue Dec  5 21:12:15 2017
---Host        : octopus-tetricus running 64-bit unknown
+--Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
+--Date        : Wed Dec  6 16:02:55 2017
+--Host        : bonner running 64-bit Ubuntu 17.10
 --Command     : generate_target design_1.bd
 --Design      : design_1
 --Purpose     : IP block netlist
@@ -1883,17 +1883,25 @@ architecture STRUCTURE of design_1 is
     m00_axi_aresetn : in STD_LOGIC
   );
   end component design_1_Smallpond_axi4_master_interface_0_0;
-  signal S00_AXI_araddr_1 : STD_LOGIC_VECTOR ( 31 downto 0 );
-  signal S00_AXI_arvalid_1 : STD_LOGIC;
-  signal S00_AXI_wstrb_1 : STD_LOGIC_VECTOR ( 3 downto 0 );
-  signal Smallpond_axi4_master_interface_0_m00_axi_arprot : STD_LOGIC_VECTOR ( 2 downto 0 );
-  signal Smallpond_axi4_master_interface_0_m00_axi_awaddr : STD_LOGIC_VECTOR ( 31 downto 0 );
-  signal Smallpond_axi4_master_interface_0_m00_axi_awprot : STD_LOGIC_VECTOR ( 2 downto 0 );
-  signal Smallpond_axi4_master_interface_0_m00_axi_awvalid : STD_LOGIC;
-  signal Smallpond_axi4_master_interface_0_m00_axi_bready : STD_LOGIC;
-  signal Smallpond_axi4_master_interface_0_m00_axi_rready : STD_LOGIC;
-  signal Smallpond_axi4_master_interface_0_m00_axi_wdata : STD_LOGIC_VECTOR ( 31 downto 0 );
-  signal Smallpond_axi4_master_interface_0_m00_axi_wvalid : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_ARADDR : STD_LOGIC_VECTOR ( 31 downto 0 );
+  signal Smallpond_axi4_master_interface_0_M00_AXI_ARPROT : STD_LOGIC_VECTOR ( 2 downto 0 );
+  signal Smallpond_axi4_master_interface_0_M00_AXI_ARREADY : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_ARVALID : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_AWADDR : STD_LOGIC_VECTOR ( 31 downto 0 );
+  signal Smallpond_axi4_master_interface_0_M00_AXI_AWPROT : STD_LOGIC_VECTOR ( 2 downto 0 );
+  signal Smallpond_axi4_master_interface_0_M00_AXI_AWREADY : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_AWVALID : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_BREADY : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_BRESP : STD_LOGIC_VECTOR ( 1 downto 0 );
+  signal Smallpond_axi4_master_interface_0_M00_AXI_BVALID : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_RDATA : STD_LOGIC_VECTOR ( 31 downto 0 );
+  signal Smallpond_axi4_master_interface_0_M00_AXI_RREADY : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_RRESP : STD_LOGIC_VECTOR ( 1 downto 0 );
+  signal Smallpond_axi4_master_interface_0_M00_AXI_RVALID : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_WDATA : STD_LOGIC_VECTOR ( 31 downto 0 );
+  signal Smallpond_axi4_master_interface_0_M00_AXI_WREADY : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_M00_AXI_WSTRB : STD_LOGIC_VECTOR ( 3 downto 0 );
+  signal Smallpond_axi4_master_interface_0_M00_AXI_WVALID : STD_LOGIC;
   signal Smallpond_axi4_master_interface_0_sp_data_out : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal Smallpond_axi4_master_interface_0_sp_error : STD_LOGIC;
   signal Smallpond_axi4_master_interface_0_sp_over : STD_LOGIC;
@@ -1947,14 +1955,6 @@ architecture STRUCTURE of design_1 is
   signal axi_interconnect_0_M01_AXI_WREADY : STD_LOGIC;
   signal axi_interconnect_0_M01_AXI_WSTRB : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal axi_interconnect_0_M01_AXI_WVALID : STD_LOGIC;
-  signal axi_interconnect_0_S00_AXI_arready : STD_LOGIC;
-  signal axi_interconnect_0_S00_AXI_awready : STD_LOGIC;
-  signal axi_interconnect_0_S00_AXI_bresp : STD_LOGIC_VECTOR ( 1 downto 0 );
-  signal axi_interconnect_0_S00_AXI_bvalid : STD_LOGIC;
-  signal axi_interconnect_0_S00_AXI_rdata : STD_LOGIC_VECTOR ( 31 downto 0 );
-  signal axi_interconnect_0_S00_AXI_rresp : STD_LOGIC_VECTOR ( 1 downto 0 );
-  signal axi_interconnect_0_S00_AXI_rvalid : STD_LOGIC;
-  signal axi_interconnect_0_S00_AXI_wready : STD_LOGIC;
   signal axi_uartlite_0_UART_RxD : STD_LOGIC;
   signal axi_uartlite_0_UART_TxD : STD_LOGIC;
   signal clk_wiz_0_clk_out1 : STD_LOGIC;
@@ -2053,26 +2053,26 @@ begin
 Smallpond_axi4_master_interface_0: component design_1_Smallpond_axi4_master_interface_0_0
      port map (
       m00_axi_aclk => clk_wiz_0_clk_out1,
-      m00_axi_araddr(31 downto 0) => S00_AXI_araddr_1(31 downto 0),
+      m00_axi_araddr(31 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_ARADDR(31 downto 0),
       m00_axi_aresetn => rst_clk_wiz_0_100M_peripheral_aresetn(0),
-      m00_axi_arprot(2 downto 0) => Smallpond_axi4_master_interface_0_m00_axi_arprot(2 downto 0),
-      m00_axi_arready => axi_interconnect_0_S00_AXI_arready,
-      m00_axi_arvalid => S00_AXI_arvalid_1,
-      m00_axi_awaddr(31 downto 0) => Smallpond_axi4_master_interface_0_m00_axi_awaddr(31 downto 0),
-      m00_axi_awprot(2 downto 0) => Smallpond_axi4_master_interface_0_m00_axi_awprot(2 downto 0),
-      m00_axi_awready => axi_interconnect_0_S00_AXI_awready,
-      m00_axi_awvalid => Smallpond_axi4_master_interface_0_m00_axi_awvalid,
-      m00_axi_bready => Smallpond_axi4_master_interface_0_m00_axi_bready,
-      m00_axi_bresp(1 downto 0) => axi_interconnect_0_S00_AXI_bresp(1 downto 0),
-      m00_axi_bvalid => axi_interconnect_0_S00_AXI_bvalid,
-      m00_axi_rdata(31 downto 0) => axi_interconnect_0_S00_AXI_rdata(31 downto 0),
-      m00_axi_rready => Smallpond_axi4_master_interface_0_m00_axi_rready,
-      m00_axi_rresp(1 downto 0) => axi_interconnect_0_S00_AXI_rresp(1 downto 0),
-      m00_axi_rvalid => axi_interconnect_0_S00_AXI_rvalid,
-      m00_axi_wdata(31 downto 0) => Smallpond_axi4_master_interface_0_m00_axi_wdata(31 downto 0),
-      m00_axi_wready => axi_interconnect_0_S00_AXI_wready,
-      m00_axi_wstrb(3 downto 0) => S00_AXI_wstrb_1(3 downto 0),
-      m00_axi_wvalid => Smallpond_axi4_master_interface_0_m00_axi_wvalid,
+      m00_axi_arprot(2 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_ARPROT(2 downto 0),
+      m00_axi_arready => Smallpond_axi4_master_interface_0_M00_AXI_ARREADY,
+      m00_axi_arvalid => Smallpond_axi4_master_interface_0_M00_AXI_ARVALID,
+      m00_axi_awaddr(31 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_AWADDR(31 downto 0),
+      m00_axi_awprot(2 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_AWPROT(2 downto 0),
+      m00_axi_awready => Smallpond_axi4_master_interface_0_M00_AXI_AWREADY,
+      m00_axi_awvalid => Smallpond_axi4_master_interface_0_M00_AXI_AWVALID,
+      m00_axi_bready => Smallpond_axi4_master_interface_0_M00_AXI_BREADY,
+      m00_axi_bresp(1 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_BRESP(1 downto 0),
+      m00_axi_bvalid => Smallpond_axi4_master_interface_0_M00_AXI_BVALID,
+      m00_axi_rdata(31 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_RDATA(31 downto 0),
+      m00_axi_rready => Smallpond_axi4_master_interface_0_M00_AXI_RREADY,
+      m00_axi_rresp(1 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_RRESP(1 downto 0),
+      m00_axi_rvalid => Smallpond_axi4_master_interface_0_M00_AXI_RVALID,
+      m00_axi_wdata(31 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_WDATA(31 downto 0),
+      m00_axi_wready => Smallpond_axi4_master_interface_0_M00_AXI_WREADY,
+      m00_axi_wstrb(3 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_WSTRB(3 downto 0),
+      m00_axi_wvalid => Smallpond_axi4_master_interface_0_M00_AXI_WVALID,
       sp_addr(31 downto 0) => sp_addr_0_1(31 downto 0),
       sp_data_in(31 downto 0) => sp_data_in_0_1(31 downto 0),
       sp_data_out(31 downto 0) => Smallpond_axi4_master_interface_0_sp_data_out(31 downto 0),
@@ -2143,25 +2143,25 @@ axi_interconnect_0: entity work.design_1_axi_interconnect_0_0
       M01_AXI_wvalid => axi_interconnect_0_M01_AXI_WVALID,
       S00_ACLK => clk_wiz_0_clk_out1,
       S00_ARESETN => rst_clk_wiz_0_100M_peripheral_aresetn(0),
-      S00_AXI_araddr(31 downto 0) => S00_AXI_araddr_1(31 downto 0),
-      S00_AXI_arprot(2 downto 0) => Smallpond_axi4_master_interface_0_m00_axi_arprot(2 downto 0),
-      S00_AXI_arready => axi_interconnect_0_S00_AXI_arready,
-      S00_AXI_arvalid => S00_AXI_arvalid_1,
-      S00_AXI_awaddr(31 downto 0) => Smallpond_axi4_master_interface_0_m00_axi_awaddr(31 downto 0),
-      S00_AXI_awprot(2 downto 0) => Smallpond_axi4_master_interface_0_m00_axi_awprot(2 downto 0),
-      S00_AXI_awready => axi_interconnect_0_S00_AXI_awready,
-      S00_AXI_awvalid => Smallpond_axi4_master_interface_0_m00_axi_awvalid,
-      S00_AXI_bready => Smallpond_axi4_master_interface_0_m00_axi_bready,
-      S00_AXI_bresp(1 downto 0) => axi_interconnect_0_S00_AXI_bresp(1 downto 0),
-      S00_AXI_bvalid => axi_interconnect_0_S00_AXI_bvalid,
-      S00_AXI_rdata(31 downto 0) => axi_interconnect_0_S00_AXI_rdata(31 downto 0),
-      S00_AXI_rready => Smallpond_axi4_master_interface_0_m00_axi_rready,
-      S00_AXI_rresp(1 downto 0) => axi_interconnect_0_S00_AXI_rresp(1 downto 0),
-      S00_AXI_rvalid => axi_interconnect_0_S00_AXI_rvalid,
-      S00_AXI_wdata(31 downto 0) => Smallpond_axi4_master_interface_0_m00_axi_wdata(31 downto 0),
-      S00_AXI_wready => axi_interconnect_0_S00_AXI_wready,
-      S00_AXI_wstrb(3 downto 0) => S00_AXI_wstrb_1(3 downto 0),
-      S00_AXI_wvalid => Smallpond_axi4_master_interface_0_m00_axi_wvalid
+      S00_AXI_araddr(31 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_ARADDR(31 downto 0),
+      S00_AXI_arprot(2 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_ARPROT(2 downto 0),
+      S00_AXI_arready => Smallpond_axi4_master_interface_0_M00_AXI_ARREADY,
+      S00_AXI_arvalid => Smallpond_axi4_master_interface_0_M00_AXI_ARVALID,
+      S00_AXI_awaddr(31 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_AWADDR(31 downto 0),
+      S00_AXI_awprot(2 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_AWPROT(2 downto 0),
+      S00_AXI_awready => Smallpond_axi4_master_interface_0_M00_AXI_AWREADY,
+      S00_AXI_awvalid => Smallpond_axi4_master_interface_0_M00_AXI_AWVALID,
+      S00_AXI_bready => Smallpond_axi4_master_interface_0_M00_AXI_BREADY,
+      S00_AXI_bresp(1 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_BRESP(1 downto 0),
+      S00_AXI_bvalid => Smallpond_axi4_master_interface_0_M00_AXI_BVALID,
+      S00_AXI_rdata(31 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_RDATA(31 downto 0),
+      S00_AXI_rready => Smallpond_axi4_master_interface_0_M00_AXI_RREADY,
+      S00_AXI_rresp(1 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_RRESP(1 downto 0),
+      S00_AXI_rvalid => Smallpond_axi4_master_interface_0_M00_AXI_RVALID,
+      S00_AXI_wdata(31 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_WDATA(31 downto 0),
+      S00_AXI_wready => Smallpond_axi4_master_interface_0_M00_AXI_WREADY,
+      S00_AXI_wstrb(3 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_WSTRB(3 downto 0),
+      S00_AXI_wvalid => Smallpond_axi4_master_interface_0_M00_AXI_WVALID
     );
 axi_uartlite_0: component design_1_axi_uartlite_0_0
      port map (

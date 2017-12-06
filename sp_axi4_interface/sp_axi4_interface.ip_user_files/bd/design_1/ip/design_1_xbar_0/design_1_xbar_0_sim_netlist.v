@@ -1,8 +1,8 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
-// Date        : Sat Dec  2 16:40:03 2017
-// Host        : octopus-tetricus running 64-bit unknown
+// Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
+// Date        : Wed Dec  6 12:20:00 2017
+// Host        : bonner running 64-bit Ubuntu 17.10
 // Command     : write_verilog -force -mode funcsim -rename_top design_1_xbar_0 -prefix
 //               design_1_xbar_0_ design_1_xbar_0_sim_netlist.v
 // Design      : design_1_xbar_0
@@ -3867,7 +3867,7 @@ module design_1_xbar_0_axi_register_slice_v2_1_14_axic_register_slice
         .R(1'b0));
 endmodule
 
-(* CHECK_LICENSE_TYPE = "design_1_xbar_0,axi_crossbar_v2_1_15_axi_crossbar,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "axi_crossbar_v2_1_15_axi_crossbar,Vivado 2017.3.1" *) 
+(* CHECK_LICENSE_TYPE = "design_1_xbar_0,axi_crossbar_v2_1_15_axi_crossbar,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "axi_crossbar_v2_1_15_axi_crossbar,Vivado 2017.3" *) 
 (* NotValidForBitStream *)
 module design_1_xbar_0
    (aclk,

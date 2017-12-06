@@ -1,46 +1,47 @@
 #-----------------------------------------------------------
-# Vivado v2017.3.1 (64-bit)
-# SW Build 2035080 on Fri Oct 20 14:20:00 MDT 2017
-# IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
-# Start of session at: Tue Dec  5 21:13:03 2017
-# Process ID: 20850
-# Current directory: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1
+# Vivado v2017.3 (64-bit)
+# SW Build 2018833 on Wed Oct  4 19:58:07 MDT 2017
+# IP Build 2016188 on Wed Oct  4 21:52:56 MDT 2017
+# Start of session at: Wed Dec  6 14:40:22 2017
+# Process ID: 28795
+# Current directory: /home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1
 # Command line: vivado -log design_1_Smallpond_axi4_master_interface_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_Smallpond_axi4_master_interface_0_0.tcl
-# Log file: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/design_1_Smallpond_axi4_master_interface_0_0.vds
-# Journal file: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/vivado.jou
+# Log file: /home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/design_1_Smallpond_axi4_master_interface_0_0.vds
+# Journal file: /home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/vivado.jou
 #-----------------------------------------------------------
+CRITICAL WARNING: [Common 17-741] No write access right to the local Tcl store at '/home/lab/.Xilinx/Vivado/2017.3/XilinxTclStore'. XilinxTclStore is reverted to the installation area. If you want to use local Tcl Store, please change the access right and relaunch Vivado.
 source design_1_Smallpond_axi4_master_interface_0_0.tcl -notrace
 Command: synth_design -top design_1_Smallpond_axi4_master_interface_0_0 -part xc7a35ticsg324-1L -mode out_of_context
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 20910 
+INFO: Helper process launched with PID 28816 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1264.172 ; gain = 79.996 ; free physical = 2974 ; free virtual = 4852
+Starting RTL Elaboration : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1262.375 ; gain = 80.996 ; free physical = 1464 ; free virtual = 5137
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'design_1_Smallpond_axi4_master_interface_0_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:91]
+INFO: [Synth 8-638] synthesizing module 'design_1_Smallpond_axi4_master_interface_0_0' [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:91]
 	Parameter C_M00_AXI_ADDR_WIDTH bound to: 32 - type: integer 
 	Parameter C_M00_AXI_DATA_WIDTH bound to: 32 - type: integer 
 	Parameter C_M00_AXI_TRANSACTIONS_NUM bound to: 1 - type: integer 
-INFO: [Synth 8-3491] module 'sp_axi4_master_v1_0' declared at '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0.vhd:5' bound to instance 'U0' of component 'sp_axi4_master_v1_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:167]
-INFO: [Synth 8-638] synthesizing module 'sp_axi4_master_v1_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0.vhd:61]
+INFO: [Synth 8-3491] module 'sp_axi4_master_v1_0' declared at '/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/768d/hdl/Smallpond_axi4_master_interface_v1_0.vhd:5' bound to instance 'U0' of component 'sp_axi4_master_v1_0' [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:167]
+INFO: [Synth 8-638] synthesizing module 'sp_axi4_master_v1_0' [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/768d/hdl/Smallpond_axi4_master_interface_v1_0.vhd:61]
 	Parameter C_M00_AXI_ADDR_WIDTH bound to: 32 - type: integer 
 	Parameter C_M00_AXI_DATA_WIDTH bound to: 32 - type: integer 
 	Parameter C_M00_AXI_TRANSACTIONS_NUM bound to: 1 - type: integer 
 	Parameter C_M_AXI_ADDR_WIDTH bound to: 32 - type: integer 
 	Parameter C_M_AXI_DATA_WIDTH bound to: 32 - type: integer 
 	Parameter C_M_TRANSACTIONS_NUM bound to: 1 - type: integer 
-INFO: [Synth 8-3491] module 'sp_axi4_master_v1_0_M00_AXI' declared at '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:5' bound to instance 'sp_axi4_master_v1_0_M00_AXI_inst' of component 'sp_axi4_master_v1_0_M00_AXI' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0.vhd:110]
-INFO: [Synth 8-638] synthesizing module 'sp_axi4_master_v1_0_M00_AXI' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:104]
+INFO: [Synth 8-3491] module 'sp_axi4_master_v1_0_M00_AXI' declared at '/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/768d/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:5' bound to instance 'sp_axi4_master_v1_0_M00_AXI_inst' of component 'sp_axi4_master_v1_0_M00_AXI' [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/768d/hdl/Smallpond_axi4_master_interface_v1_0.vhd:110]
+INFO: [Synth 8-638] synthesizing module 'sp_axi4_master_v1_0_M00_AXI' [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/768d/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:104]
 	Parameter C_M_AXI_ADDR_WIDTH bound to: 32 - type: integer 
 	Parameter C_M_AXI_DATA_WIDTH bound to: 32 - type: integer 
 	Parameter C_M_TRANSACTIONS_NUM bound to: 1 - type: integer 
-WARNING: [Synth 8-6014] Unused sequential element write_index_reg was removed.  [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:286]
-WARNING: [Synth 8-6014] Unused sequential element read_index_reg was removed.  [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:369]
-INFO: [Synth 8-256] done synthesizing module 'sp_axi4_master_v1_0_M00_AXI' (1#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:104]
-INFO: [Synth 8-256] done synthesizing module 'sp_axi4_master_v1_0' (2#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0.vhd:61]
-INFO: [Synth 8-256] done synthesizing module 'design_1_Smallpond_axi4_master_interface_0_0' (3#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:91]
+WARNING: [Synth 8-6014] Unused sequential element write_index_reg was removed.  [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/768d/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:286]
+WARNING: [Synth 8-6014] Unused sequential element read_index_reg was removed.  [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/768d/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:369]
+INFO: [Synth 8-256] done synthesizing module 'sp_axi4_master_v1_0_M00_AXI' (1#1) [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/768d/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:104]
+INFO: [Synth 8-256] done synthesizing module 'sp_axi4_master_v1_0' (2#1) [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/768d/hdl/Smallpond_axi4_master_interface_v1_0.vhd:61]
+INFO: [Synth 8-256] done synthesizing module 'design_1_Smallpond_axi4_master_interface_0_0' (3#1) [/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:91]
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_BRESP[0]
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_RDATA[31]
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_RDATA[30]
@@ -60,7 +61,7 @@ WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port 
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_RDATA[16]
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_RRESP[0]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1306.703 ; gain = 122.527 ; free physical = 3014 ; free virtual = 4863
+Finished RTL Elaboration : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 1304.906 ; gain = 123.527 ; free physical = 1473 ; free virtual = 5146
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -70,7 +71,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1306.703 ; gain = 122.527 ; free physical = 3011 ; free virtual = 4861
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1304.906 ; gain = 123.527 ; free physical = 1474 ; free virtual = 5147
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -82,27 +83,27 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1617.078 ; gain = 0.000 ; free physical = 2643 ; free virtual = 4516
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1599.266 ; gain = 0.000 ; free physical = 1241 ; free virtual = 4914
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:24 ; elapsed = 00:00:33 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2693 ; free virtual = 4580
+Finished Constraint Validation : Time (s): cpu = 00:00:39 ; elapsed = 00:00:56 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1306 ; free virtual = 4979
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35ticsg324-1L
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:24 ; elapsed = 00:00:33 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2693 ; free virtual = 4580
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:39 ; elapsed = 00:00:56 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1306 ; free virtual = 4979
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:24 ; elapsed = 00:00:33 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2695 ; free virtual = 4582
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:39 ; elapsed = 00:00:56 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1307 ; free virtual = 4981
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5544] ROM "axi_awaddr" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "p_8_in" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:33 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2686 ; free virtual = 4574
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:40 ; elapsed = 00:00:56 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1300 ; free virtual = 4973
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -215,7 +216,7 @@ INFO: [Synth 8-3332] Sequential element (U0/sp_axi4_master_v1_0_M00_AXI_inst/wri
 INFO: [Synth 8-3332] Sequential element (U0/sp_axi4_master_v1_0_M00_AXI_inst/read_error_reg) is unused and will be removed from module design_1_Smallpond_axi4_master_interface_0_0.
 INFO: [Synth 8-3332] Sequential element (U0/sp_axi4_master_v1_0_M00_AXI_inst/write_strobes_reg[3]) is unused and will be removed from module design_1_Smallpond_axi4_master_interface_0_0.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:25 ; elapsed = 00:00:34 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2701 ; free virtual = 4558
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:41 ; elapsed = 00:00:57 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1288 ; free virtual = 4961
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -227,13 +228,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:31 ; elapsed = 00:00:43 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2532 ; free virtual = 4411
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:50 ; elapsed = 00:01:11 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1164 ; free virtual = 4838
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:32 ; elapsed = 00:00:43 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2531 ; free virtual = 4411
+Finished Timing Optimization : Time (s): cpu = 00:00:51 ; elapsed = 00:01:11 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1164 ; free virtual = 4838
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -245,7 +246,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:32 ; elapsed = 00:00:43 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2530 ; free virtual = 4410
+Finished Technology Mapping : Time (s): cpu = 00:00:51 ; elapsed = 00:01:11 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1162 ; free virtual = 4836
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -269,7 +270,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
+Finished IO Insertion : Time (s): cpu = 00:00:51 ; elapsed = 00:01:12 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1162 ; free virtual = 4836
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -282,7 +283,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:51 ; elapsed = 00:01:12 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1162 ; free virtual = 4836
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -294,25 +295,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:51 ; elapsed = 00:01:12 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1162 ; free virtual = 4836
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:51 ; elapsed = 00:01:12 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1162 ; free virtual = 4836
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2524 ; free virtual = 4406
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:51 ; elapsed = 00:01:12 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1162 ; free virtual = 4836
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2524 ; free virtual = 4406
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:51 ; elapsed = 00:01:12 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1162 ; free virtual = 4836
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -347,11 +348,11 @@ Report Instance Areas:
 |3     |    sp_axi4_master_v1_0_M00_AXI_inst |sp_axi4_master_v1_0_M00_AXI |   277|
 +------+-------------------------------------+----------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:51 ; elapsed = 00:01:12 . Memory (MB): peak = 1599.266 ; gain = 417.887 ; free physical = 1162 ; free virtual = 4836
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 18 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1617.078 ; gain = 122.527 ; free physical = 2574 ; free virtual = 4457
-Synthesis Optimization Complete : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.086 ; gain = 432.902 ; free physical = 2574 ; free virtual = 4457
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:40 ; elapsed = 00:00:46 . Memory (MB): peak = 1599.266 ; gain = 123.527 ; free physical = 1212 ; free virtual = 4885
+Synthesis Optimization Complete : Time (s): cpu = 00:00:52 ; elapsed = 00:01:12 . Memory (MB): peak = 1599.273 ; gain = 417.887 ; free physical = 1220 ; free virtual = 4894
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 8 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -363,11 +364,11 @@ No Unisim elements were transformed.
 INFO: [Common 17-83] Releasing license: Synthesis
 51 Infos, 38 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:34 ; elapsed = 00:00:45 . Memory (MB): peak = 1617.086 ; gain = 457.738 ; free physical = 2568 ; free virtual = 4453
-INFO: [Common 17-1381] The checkpoint '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/design_1_Smallpond_axi4_master_interface_0_0.dcp' has been generated.
-INFO: [Coretcl 2-1482] Added synthesis output to IP cache for IP /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/design_1_Smallpond_axi4_master_interface_0_0.xci
+synth_design: Time (s): cpu = 00:00:54 ; elapsed = 00:01:13 . Memory (MB): peak = 1599.273 ; gain = 436.996 ; free physical = 1210 ; free virtual = 4883
+INFO: [Common 17-1381] The checkpoint '/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/design_1_Smallpond_axi4_master_interface_0_0.dcp' has been generated.
+INFO: [Coretcl 2-1482] Added synthesis output to IP cache for IP /home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/design_1_Smallpond_axi4_master_interface_0_0.xci
 INFO: [Coretcl 2-1174] Renamed 2 cell refs.
-INFO: [Common 17-1381] The checkpoint '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/design_1_Smallpond_axi4_master_interface_0_0.dcp' has been generated.
+INFO: [Common 17-1381] The checkpoint '/home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/design_1_Smallpond_axi4_master_interface_0_0.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file design_1_Smallpond_axi4_master_interface_0_0_utilization_synth.rpt -pb design_1_Smallpond_axi4_master_interface_0_0_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1641.090 ; gain = 0.000 ; free physical = 2565 ; free virtual = 4451
-INFO: [Common 17-206] Exiting Vivado at Tue Dec  5 21:13:59 2017...
+report_utilization: Time (s): cpu = 00:00:00.08 ; elapsed = 00:00:00.14 . Memory (MB): peak = 1623.277 ; gain = 0.000 ; free physical = 1212 ; free virtual = 4886
+INFO: [Common 17-206] Exiting Vivado at Wed Dec  6 14:41:54 2017...

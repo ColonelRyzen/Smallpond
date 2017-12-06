@@ -50,10 +50,10 @@
 // IP VLNV: xilinx.com:ip:axi_protocol_converter:2.1
 // IP Revision: 14
 
-(* X_CORE_INFO = "axi_protocol_converter_v2_1_14_axi_protocol_converter,Vivado 2017.3.1" *)
+(* X_CORE_INFO = "axi_protocol_converter_v2_1_14_axi_protocol_converter,Vivado 2017.3" *)
 (* CHECK_LICENSE_TYPE = "design_1_auto_pc_0,axi_protocol_converter_v2_1_14_axi_protocol_converter,{}" *)
-(* CORE_GENERATION_INFO = "design_1_auto_pc_0,axi_protocol_converter_v2_1_14_axi_protocol_converter,{x_ipProduct=Vivado 2017.3.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_protocol_converter,x_ipVersion=2.1,x_ipCoreRevision=14,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,C_FAMILY=artix7,C_M_AXI_PROTOCOL=0,C_S_AXI_PROTOCOL=2,C_IGNORE_ID=1,C_AXI_ID_WIDTH=1,C_AXI_ADDR_WIDTH=28,C_AXI_DATA_WIDTH=64,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_AXI_SUPPORTS_USER_SIGNALS=0,C_AXI_AWUSER_WIDTH=1,C_AXI_ARUSER_WIDTH=1,C_AXI_WUSER_\
-WIDTH=1,C_AXI_RUSER_WIDTH=1,C_AXI_BUSER_WIDTH=1,C_TRANSLATION_MODE=2}" *)
+(* CORE_GENERATION_INFO = "design_1_auto_pc_0,axi_protocol_converter_v2_1_14_axi_protocol_converter,{x_ipProduct=Vivado 2017.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_protocol_converter,x_ipVersion=2.1,x_ipCoreRevision=14,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,C_FAMILY=artix7,C_M_AXI_PROTOCOL=0,C_S_AXI_PROTOCOL=2,C_IGNORE_ID=1,C_AXI_ID_WIDTH=1,C_AXI_ADDR_WIDTH=28,C_AXI_DATA_WIDTH=64,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_AXI_SUPPORTS_USER_SIGNALS=0,C_AXI_AWUSER_WIDTH=1,C_AXI_ARUSER_WIDTH=1,C_AXI_WUSER_WI\
+DTH=1,C_AXI_RUSER_WIDTH=1,C_AXI_BUSER_WIDTH=1,C_TRANSLATION_MODE=2}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_auto_pc_0 (
   aclk,

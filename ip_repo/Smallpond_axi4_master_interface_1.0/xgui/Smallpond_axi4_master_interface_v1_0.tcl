@@ -7,8 +7,7 @@ proc init_gui { IPINST } {
   set_property tooltip {Width of M_AXI address bus. 
     -- The master generates the read and write addresses of width specified as C_M_AXI_ADDR_WIDTH.} ${C_M00_AXI_ADDR_WIDTH}
   set C_M00_AXI_DATA_WIDTH [ipgui::add_param $IPINST -name "C_M00_AXI_DATA_WIDTH" -parent ${Page_0} -widget comboBox]
-  set_property tooltip {Width of M_AXI data bus. 
-    -- The master issues write data and accept read data where the width of the data bus is C_M_AXI_DATA_WIDTH} ${C_M00_AXI_DATA_WIDTH}
+  set_property tooltip {Width of M_AXI data bus.      -- The master issues write data and accept read data where the width of the data bus is C_M_AXI_DATA_WIDTH} ${C_M00_AXI_DATA_WIDTH}
   set C_M00_AXI_TRANSACTIONS_NUM [ipgui::add_param $IPINST -name "C_M00_AXI_TRANSACTIONS_NUM" -parent ${Page_0}]
   set_property tooltip {Transaction number is the number of write 
     -- and read transactions the master will perform as a part of this example memory test.} ${C_M00_AXI_TRANSACTIONS_NUM}

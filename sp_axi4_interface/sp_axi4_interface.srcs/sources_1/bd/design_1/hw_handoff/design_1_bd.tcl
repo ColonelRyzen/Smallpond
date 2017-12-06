@@ -182,6 +182,7 @@ proc create_root_design { parentCell } {
   # Create instance: Smallpond_axi4_master_interface_0, and set properties
   set Smallpond_axi4_master_interface_0 [ create_bd_cell -type ip -vlnv user.org:user:Smallpond_axi4_master_interface:1.0 Smallpond_axi4_master_interface_0 ]
   set_property -dict [ list \
+   CONFIG.C_M00_AXI_DATA_WIDTH {32} \
    CONFIG.C_M00_AXI_TRANSACTIONS_NUM {1} \
  ] $Smallpond_axi4_master_interface_0
 
@@ -232,28 +233,9 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net mig_7series_0_DDR3 [get_bd_intf_ports ddr3_sdram] [get_bd_intf_pins mig_7series_0/DDR3]
 
   # Create port connections
-  connect_bd_net -net S00_AXI_araddr_1 [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_araddr] [get_bd_pins axi_interconnect_0/S00_AXI_araddr]
-  connect_bd_net -net S00_AXI_arvalid_1 [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_arvalid] [get_bd_pins axi_interconnect_0/S00_AXI_arvalid]
-  connect_bd_net -net S00_AXI_wstrb_1 [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_wstrb] [get_bd_pins axi_interconnect_0/S00_AXI_wstrb]
-  connect_bd_net -net Smallpond_axi4_master_interface_0_m00_axi_arprot [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_arprot] [get_bd_pins axi_interconnect_0/S00_AXI_arprot]
-  connect_bd_net -net Smallpond_axi4_master_interface_0_m00_axi_awaddr [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_awaddr] [get_bd_pins axi_interconnect_0/S00_AXI_awaddr]
-  connect_bd_net -net Smallpond_axi4_master_interface_0_m00_axi_awprot [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_awprot] [get_bd_pins axi_interconnect_0/S00_AXI_awprot]
-  connect_bd_net -net Smallpond_axi4_master_interface_0_m00_axi_awvalid [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_awvalid] [get_bd_pins axi_interconnect_0/S00_AXI_awvalid]
-  connect_bd_net -net Smallpond_axi4_master_interface_0_m00_axi_bready [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_bready] [get_bd_pins axi_interconnect_0/S00_AXI_bready]
-  connect_bd_net -net Smallpond_axi4_master_interface_0_m00_axi_rready [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_rready] [get_bd_pins axi_interconnect_0/S00_AXI_rready]
-  connect_bd_net -net Smallpond_axi4_master_interface_0_m00_axi_wdata [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_wdata] [get_bd_pins axi_interconnect_0/S00_AXI_wdata]
-  connect_bd_net -net Smallpond_axi4_master_interface_0_m00_axi_wvalid [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_wvalid] [get_bd_pins axi_interconnect_0/S00_AXI_wvalid]
   connect_bd_net -net Smallpond_axi4_master_interface_0_sp_data_out [get_bd_ports sp_data_out_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_data_out]
   connect_bd_net -net Smallpond_axi4_master_interface_0_sp_error [get_bd_ports sp_error_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_error]
   connect_bd_net -net Smallpond_axi4_master_interface_0_sp_over [get_bd_ports sp_over_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_over]
-  connect_bd_net -net axi_interconnect_0_S00_AXI_arready [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_arready] [get_bd_pins axi_interconnect_0/S00_AXI_arready]
-  connect_bd_net -net axi_interconnect_0_S00_AXI_awready [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_awready] [get_bd_pins axi_interconnect_0/S00_AXI_awready]
-  connect_bd_net -net axi_interconnect_0_S00_AXI_bresp [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_bresp] [get_bd_pins axi_interconnect_0/S00_AXI_bresp]
-  connect_bd_net -net axi_interconnect_0_S00_AXI_bvalid [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_bvalid] [get_bd_pins axi_interconnect_0/S00_AXI_bvalid]
-  connect_bd_net -net axi_interconnect_0_S00_AXI_rdata [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_rdata] [get_bd_pins axi_interconnect_0/S00_AXI_rdata]
-  connect_bd_net -net axi_interconnect_0_S00_AXI_rresp [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_rresp] [get_bd_pins axi_interconnect_0/S00_AXI_rresp]
-  connect_bd_net -net axi_interconnect_0_S00_AXI_rvalid [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_rvalid] [get_bd_pins axi_interconnect_0/S00_AXI_rvalid]
-  connect_bd_net -net axi_interconnect_0_S00_AXI_wready [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_wready] [get_bd_pins axi_interconnect_0/S00_AXI_wready]
   connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins mig_7series_0/sys_clk_i] [get_bd_pins rst_clk_wiz_0_100M/slowest_sync_clk]
   connect_bd_net -net clk_wiz_0_locked [get_bd_pins clk_wiz_0/locked] [get_bd_pins rst_clk_wiz_0_100M/dcm_locked]
   connect_bd_net -net mig_7series_0_mmcm_locked [get_bd_pins mig_7series_0/mmcm_locked] [get_bd_pins rst_mig_7series_0_83M/dcm_locked]
