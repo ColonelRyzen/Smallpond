@@ -469,11 +469,6 @@
         <spirit:internalPortReference spirit:componentRef="clk_wiz_0" spirit:portRef="reset"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>sp_read_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="sp_read_0"/>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_read"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>sp_sign_extend_0_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="sp_sign_extend_0"/>
         <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_sign_extend"/>
@@ -512,6 +507,11 @@
         <spirit:name>Smallpond_axi4_master_interface_0_sp_error</spirit:name>
         <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_error"/>
         <spirit:externalPortReference spirit:portRef="sp_error_0"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>sp_read_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="sp_read_0"/>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_read"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>

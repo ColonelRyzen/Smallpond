@@ -29,7 +29,7 @@ preplace netloc sp_sign_extend_0_1 1 0 2 NJ 150 100J
 preplace netloc clk_wiz_0_locked 1 3 1 700
 preplace netloc mig_7series_0_DDR3 1 5 2 N 290 N
 preplace netloc Smallpond_axi4_master_interface_0_M00_AXI 1 2 2 NJ 370 N
-preplace netloc sp_read_0_1 1 0 2 NJ 130 110J
+preplace netloc sp_read_0_1 1 0 2 NJ 130 110
 preplace netloc util_vector_logic_0_Res 1 1 2 N -100 450
 preplace netloc rst_mig_7series_0_83M_peripheral_aresetn 1 3 4 720 310 1330 220 NJ 220 2000
 preplace netloc sys_clock_1 1 0 3 -260J -40 110 -50 N

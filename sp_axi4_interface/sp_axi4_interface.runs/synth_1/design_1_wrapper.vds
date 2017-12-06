@@ -2,8 +2,8 @@
 # Vivado v2017.3 (64-bit)
 # SW Build 2018833 on Wed Oct  4 19:58:07 MDT 2017
 # IP Build 2016188 on Wed Oct  4 21:52:56 MDT 2017
-# Start of session at: Wed Dec  6 15:59:34 2017
-# Process ID: 32036
+# Start of session at: Wed Dec  6 16:30:18 2017
+# Process ID: 1689
 # Current directory: /home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/synth_1
 # Command line: vivado -log design_1_wrapper.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_wrapper.tcl
 # Log file: /home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/synth_1/design_1_wrapper.vds
@@ -32,4 +32,4 @@ INFO: [Common 17-83] Releasing license: Synthesis
 5 Infos, 11 Warnings, 0 Critical Warnings and 1 Errors encountered.
 synth_design failed
 ERROR: [Runs 36-335] '/home/lab/.Xil/Vivado-22617-bonner/coregen/design_1_mig_7series_0_0/design_1_mig_7series_0_0.dcp' is not a valid design checkpoint
-INFO: [Common 17-206] Exiting Vivado at Wed Dec  6 15:59:55 2017...
+INFO: [Common 17-206] Exiting Vivado at Wed Dec  6 16:30:38 2017...

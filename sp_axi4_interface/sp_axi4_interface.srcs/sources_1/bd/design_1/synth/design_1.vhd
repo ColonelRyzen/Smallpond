@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
---Date        : Wed Dec  6 16:02:55 2017
+--Date        : Wed Dec  6 16:28:19 2017
 --Host        : bonner running 64-bit Ubuntu 17.10
 --Command     : generate_target design_1.bd
 --Design      : design_1
