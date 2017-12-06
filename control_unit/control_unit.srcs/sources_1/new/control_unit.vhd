@@ -55,7 +55,7 @@ entity control_unit is
            counter_bit_in : in STD_LOGIC;
            cpsr_set_bit_in : in STD_LOGIC;
            condition_code_in : in STD_LOGIC_VECTOR (3 downto 0);
-           branch_counter_in : in STD_LOGIC;
+           --branch_counter_in : in STD_LOGIC;
            counter : out integer);
 
 end control_unit;
