@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------
--- Company: CSE490 University at Buffalo
+-- Company:
 -- Engineer: Zachary Salim
 --
 -- Create Date: 11/18/2017 06:37:42 PM
@@ -56,15 +56,15 @@ entity control_unit is
            cpsr_set_bit_in : in STD_LOGIC;
            condition_code_in : in STD_LOGIC_VECTOR (3 downto 0);
            --branch_counter_in : in STD_LOGIC;
-           counter : out integer);
+           counter : out integer range 0 to 4);
 
 end control_unit;
 
 architecture Behavioral of control_unit is
 
-signal clk_counter: integer := 0;
+signal clk_counter: integer range 0 to 4 := 0;
+signal instruction_runs: STD_LOGIC;
 signal reg_write_old: STD_LOGIC;
-signal instruction_runs : STD_LOGIC;
 
 begin
 
@@ -83,20 +83,7 @@ begin
         end if;
     end process;
 
-    -- This process sets signals for incrementing the PC
-    -- reg_write_out is set to 0 so nothing is written to
-    -- pc_write_out is set to 1 so the program counter can be overwritten
-    increment_pc: process(clk_in,reset_in)
-        if rising_edge(clk_in) then
-            if clk_counter = 0 and reset_in = '0' then
-                reg_write_out <= '0';
-                pc_write_out <= '1';
-            elsif reset_in = '1';
-                reg_write_out <= '0';
-                pc_write_out <= '0';
-            end if;
-        end if;
-    end process;
+
 
 -- Process to decode the instruction we are dealing with
 -- Appropriate signals will be generated depending on the instruction flowing in.
@@ -104,17 +91,29 @@ begin
 -- Case statement handles the decoding and signal assignment
     instruction_decode: process(clk_in,reset_in)
     begin
-    -- Process runs on 100MHz clock
-    -- Case statement needs to be evaluates on the second minor cycle ofeach instruction
-    -- Case for every instruction
-    -- Checks in order of instructions in the spreadsheet
-    -- 000001 -> 001100 are the 'A' type
-    -- 011000 -> 101100 are the 'I' type
-    -- 111100 -> 111110 are the 'B' type
-    -- 111111 is the 'J' type
-    -- Case comment format is "-- Instruction name - 'instruction alias'"
+
+
         if rising_edge(clk_in) then
+            -- Increment PC if statement. This will enable the pc_write_out signal in first stage
+            if clk_counter = 0 and reset_in = '0' then
+                reg_write_out <= '0';
+                    pc_write_out <= '1';
+                elsif reset_in = '1' then
+                    pc_write_out <= '0';
+            end if;
+
+
+            -- Case statement needs to be evaluates on the second minor cycle ofeach instruction
+            -- Case for every instruction
+            -- Checks in order of instructions in the spreadsheet
+            -- 000001 -> 001100 are the 'A' type
+            -- 011000 -> 101100 are the 'I' type
+            -- 111100 -> 111110 are the 'B' type
+            -- 111111 is the 'J' type
+            -- Case comment format is "-- Instruction name - 'instruction alias'"
             if clk_counter = 1 and reset_in = '0' then
+                instruction_runs <= '1';
+                pc_write_out <= '0';
                 case op_code_in is
         --########################################################################################################--
                 -- Begin 'A' type
@@ -122,8 +121,6 @@ begin
             -------------------------------------------------------------
                     -- Addition - 'ADD'
             -------------------------------------------------------------
-                    pc_write_out <= '0';
-                    instruction_runs <= '1';
                     when "000001" =>
                         reg_write_old <= '1';
                         alu_src_out <= '0';
@@ -393,6 +390,8 @@ begin
             -------------------------------------------------------------
                     when "000010" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "0000";
                         sub_out <= '0';
@@ -659,6 +658,8 @@ begin
             -------------------------------------------------------------
                     when "000011" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "1010";
                         sub_out <= '0';
@@ -919,7 +920,6 @@ begin
                             mem_read_out <= '0';
                             mem_write_out <= '0';
                             mem_to_reg_out <= '1';
-                            instruction_runs <= '0';
                         end if;
 
             -------------------------------------------------------------
@@ -927,6 +927,8 @@ begin
             -------------------------------------------------------------
                     when "000100" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "1000";
                         sub_out <= '0';
@@ -1187,7 +1189,6 @@ begin
                             mem_read_out <= '0';
                             mem_write_out <= '0';
                             mem_to_reg_out <= '1';
-                            instruction_runs <= '0';
                         end if;
 
             -------------------------------------------------------------
@@ -1195,6 +1196,8 @@ begin
             -------------------------------------------------------------
                     when "000101" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "1001";
                         sub_out <= '0';
@@ -1462,6 +1465,8 @@ begin
             -------------------------------------------------------------
                     when "000110" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "0011";
                         sub_out <= '0';
@@ -1729,6 +1734,8 @@ begin
             -------------------------------------------------------------
                     when "000111" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "0100";
                         sub_out <= '0';
@@ -1996,6 +2003,8 @@ begin
             -------------------------------------------------------------
                     when "001000" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "0010";
                         sub_out <= '0';
@@ -2262,6 +2271,8 @@ begin
             -------------------------------------------------------------
                     when "001001" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "0001";
                         sub_out <= '0';
@@ -2528,6 +2539,8 @@ begin
             -------------------------------------------------------------
                     when "001010" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "0111";
                         sub_out <= '1';
@@ -2794,6 +2807,8 @@ begin
             -------------------------------------------------------------
                     when "001011" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "0110";
                         sub_out <= '0';
@@ -3060,6 +3075,8 @@ begin
             -------------------------------------------------------------
                     when "001100" =>
                         reg_write_old <= '1';
+
+
                         alu_src_out <= '0';
                         alu_op_out <= "0101";
                         sub_out <= '0';
@@ -3645,6 +3662,7 @@ begin
             -------------------------------------------------------------
                     when "111100" =>
                         reg_write_old <= '0';
+
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
                         alu_op_out <= "0000";
@@ -3912,6 +3930,7 @@ begin
             -------------------------------------------------------------
                     when "111101" =>
                         reg_write_old <= '0';
+
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
                         alu_op_out <= "0000";
@@ -4179,6 +4198,7 @@ begin
             -------------------------------------------------------------
                     when "111110" =>
                         reg_write_old <= '0';
+
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
                         alu_op_out <= "0000";
@@ -4440,7 +4460,6 @@ begin
                             mem_read_out <= '0';
                             mem_write_out <= '0';
                             mem_to_reg_out <= '1';
-                            instruction_runs <= '0';
                         end if;
         --########################################################################################################--
                 -- End 'B' type
@@ -4482,10 +4501,9 @@ begin
                         mem_read_out <= '0';
                         mem_write_out <= '0';
                         mem_to_reg_out <= '0';
-                        instruction_runs <= '0';
                 end case;
-            elsif reset_in = '1' then
-                reg_write_old <= '0';
+            elsif clk_counter = 1 and reset_in = '1' then
+                reg_write_out <= '0';
                 counter_bit_out <= '0';
                 cpsr_set_bit_out <= '0';
                 alu_src_out <= '0';
@@ -4497,37 +4515,25 @@ begin
                 mem_write_out <= '0';
                 mem_to_reg_out <= '0';
             end if;
-        end if;
-    end process;
 
-    -- This process is used to update the cpsr and/or counter registers
-    -- Only runs in the 4th stage of the instruction
-    -- First disables reg_write, then enables cpsr_set_bit_out and enables counter_bit_out
-    -- Writes the values
-    cpsr_counter: process(clk_in, reset_in)
-        if rising_edge(clk_in) then
-            if clk_counter = 3 and reset_in = '0' then
+            -- This is for a potentail update of teh cpsr or counter registers
+            if clk_counter = 3 and reset_in = '0' and instruction_runs = '1' then
                 reg_write_out <= '0';
                 cpsr_set_bit_out <= cpsr_set_bit_in;
                 counter_bit_out <= counter_bit_in;
-            elsif reset_in = '1' or instruction_runs = '0' then
-                reg_write_out = '0';
+            elsif clk_counter = 3 and (instruction_runs = '0' or reset_in = '1') then
+                reg_write_out <= '0';
                 cpsr_set_bit_out <= '0';
                 counter_bit_out <= '0';
             end if;
-        end if;
-    end process;
 
-    -- re-enables reg_write and disables counter_bit_out and cpsr_set_bit_out
-    write_back: process(clk_in)
-        if rising_edge(clk_in) then
-            if clk_counter = 4 and reset_in = '0' then
-                counter_bit_out <= '0';
-                cpsr_set_bit_out <= '0';
+            if clk_counter = 4 and reset_in = '0' and instruction_runs = '1' then
                 reg_write_out <= reg_write_old;
-            elsif reset_in = '1' or instruction_runs = '0' then
-                counter_bit_out <= '0';
                 cpsr_set_bit_out <= '0';
+                counter_bit_out <= '0';
+            elsif clk_counter = 4 and (instruction_runs = '0' or reset_in = '1') then
+                cpsr_set_bit_out <= '0';
+                counter_bit_out <= '0';
                 reg_write_out <= '0';
             end if;
         end if;

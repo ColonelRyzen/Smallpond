@@ -46,6 +46,7 @@ component control_unit port(clk_in : in STD_LOGIC;
                            alu_src_out : out STD_LOGIC;
                            alu_op_out : out STD_LOGIC_VECTOR (3 downto 0);
                            sub_out : out STD_LOGIC;
+                           pc_write_out : out STD_LOGIC;
                            pc_src_out : out STD_LOGIC;
                            jump_out : out STD_LOGIC;
                            mem_read_out : out STD_LOGIC;
@@ -69,6 +70,7 @@ signal cpsr_set_bit_tb_out : STD_LOGIC;
 signal alu_src_tb_out : STD_LOGIC;
 signal alu_op_tb_out : STD_LOGIC_VECTOR (3 downto 0);
 signal sub_tb_out : STD_LOGIC;
+signal pc_write_tb_out : STD_LOGIC;
 signal pc_src_tb_out : STD_LOGIC;
 signal jump_tb_out : STD_LOGIC;
 signal mem_read_tb_out : STD_LOGIC;
@@ -93,6 +95,7 @@ begin
                                 alu_src_out => alu_src_tb_out,
                                 alu_op_out => alu_op_tb_out,
                                 sub_out => sub_tb_out,
+                                pc_write_out => pc_write_tb_out,
                                 pc_src_out => pc_src_tb_out,
                                 jump_out => jump_tb_out,
                                 mem_read_out => mem_read_tb_out,
@@ -123,6 +126,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -131,6 +135,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -139,6 +144,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -147,6 +153,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -155,6 +162,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -163,6 +171,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -171,6 +180,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -179,6 +189,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -187,6 +198,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -195,6 +207,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -203,6 +216,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -211,6 +225,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -219,6 +234,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -227,6 +243,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -235,6 +252,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -243,6 +261,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -251,6 +270,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -259,6 +279,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -267,6 +288,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -275,6 +297,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -283,6 +306,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -291,6 +315,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -299,6 +324,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -307,6 +333,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -315,6 +342,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -323,6 +351,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -331,6 +360,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -339,6 +369,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -347,6 +378,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -355,6 +387,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -363,6 +396,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -371,6 +405,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -379,6 +414,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -387,6 +423,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -395,6 +432,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -403,6 +441,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -411,6 +450,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -419,6 +459,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -427,6 +468,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -435,6 +477,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -443,6 +486,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -451,6 +495,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -459,6 +504,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -467,6 +513,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -475,6 +522,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -483,6 +531,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -491,6 +540,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -499,6 +549,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -507,6 +558,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -515,6 +567,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -523,6 +576,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -531,6 +585,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -539,6 +594,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -547,6 +603,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -555,6 +612,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -563,6 +621,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -571,6 +630,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -579,6 +639,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -587,6 +648,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -595,6 +657,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000001";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -603,6 +666,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -611,6 +675,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -619,6 +684,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -627,6 +693,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -635,6 +702,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -643,6 +711,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -651,6 +720,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -659,6 +729,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -667,6 +738,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -675,6 +747,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -683,6 +756,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -691,6 +765,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -699,6 +774,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -707,6 +783,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -715,6 +792,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -723,6 +801,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -731,6 +810,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -739,6 +819,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -747,6 +828,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -755,6 +837,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -763,6 +846,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -771,6 +855,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -779,6 +864,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -787,6 +873,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -795,6 +882,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -803,6 +891,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -811,6 +900,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -819,6 +909,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -827,6 +918,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -835,6 +927,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -843,6 +936,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -851,6 +945,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -859,6 +954,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -867,6 +963,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -875,6 +972,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -883,6 +981,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -891,6 +990,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -899,6 +999,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -907,6 +1008,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -915,6 +1017,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -923,6 +1026,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -931,6 +1035,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -939,6 +1044,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -947,6 +1053,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -955,6 +1062,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -963,6 +1071,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -971,6 +1080,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -979,6 +1089,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -987,6 +1098,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -995,6 +1107,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1003,6 +1116,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1011,6 +1125,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1019,6 +1134,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1027,6 +1143,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1035,6 +1152,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1043,6 +1161,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1051,6 +1170,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1059,6 +1179,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1067,6 +1188,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1075,6 +1197,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000010";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1083,6 +1206,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1091,6 +1215,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1099,6 +1224,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1107,6 +1233,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1115,6 +1242,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1123,6 +1251,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1131,6 +1260,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1139,6 +1269,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1147,6 +1278,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1155,6 +1287,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1163,6 +1296,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1171,6 +1305,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1179,6 +1314,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1187,6 +1323,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1195,6 +1332,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1203,6 +1341,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1211,6 +1350,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1219,6 +1359,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1227,6 +1368,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1235,6 +1377,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1243,6 +1386,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1251,6 +1395,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1259,6 +1404,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1267,6 +1413,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1275,6 +1422,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1283,6 +1431,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1291,6 +1440,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1299,6 +1449,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1307,6 +1458,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1315,6 +1467,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1323,6 +1476,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1331,6 +1485,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1339,6 +1494,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1347,6 +1503,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1355,6 +1512,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1363,6 +1521,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1371,6 +1530,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1379,6 +1539,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1387,6 +1548,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1395,6 +1557,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1403,6 +1566,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1411,6 +1575,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1419,6 +1584,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1427,6 +1593,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1435,6 +1602,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1443,6 +1611,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1451,6 +1620,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1459,6 +1629,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1467,6 +1638,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1475,6 +1647,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1483,6 +1656,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1491,6 +1665,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1499,6 +1674,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1507,6 +1683,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1515,6 +1692,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1523,6 +1701,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1531,6 +1710,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1539,6 +1719,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1547,6 +1728,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1555,6 +1737,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000011";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1563,6 +1746,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1571,6 +1755,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1579,6 +1764,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1587,6 +1773,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1595,6 +1782,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1603,6 +1791,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1611,6 +1800,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1619,6 +1809,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1627,6 +1818,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1635,6 +1827,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1643,6 +1836,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1651,6 +1845,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1659,6 +1854,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1667,6 +1863,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1675,6 +1872,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1683,6 +1881,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1691,6 +1890,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1699,6 +1899,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1707,6 +1908,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1715,6 +1917,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1723,6 +1926,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1731,6 +1935,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1739,6 +1944,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1747,6 +1953,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1755,6 +1962,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1763,6 +1971,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1771,6 +1980,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1779,6 +1989,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1787,6 +1998,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1795,6 +2007,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1803,6 +2016,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1811,6 +2025,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1819,6 +2034,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1827,6 +2043,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1835,6 +2052,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1843,6 +2061,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1851,6 +2070,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1859,6 +2079,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1867,6 +2088,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1875,6 +2097,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1883,6 +2106,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1891,6 +2115,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1899,6 +2124,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1907,6 +2133,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1915,6 +2142,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1923,6 +2151,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1931,6 +2160,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1939,6 +2169,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1947,6 +2178,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1955,6 +2187,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1963,6 +2196,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1971,6 +2205,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1979,6 +2214,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -1987,6 +2223,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -1995,6 +2232,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2003,6 +2241,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2011,6 +2250,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2019,6 +2259,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2027,6 +2268,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2035,6 +2277,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000100";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2043,6 +2286,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2051,6 +2295,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2059,6 +2304,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2067,6 +2313,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2075,6 +2322,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2083,6 +2331,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2091,6 +2340,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2099,6 +2349,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2107,6 +2358,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2115,6 +2367,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2123,6 +2376,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2131,6 +2385,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2139,6 +2394,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2147,6 +2403,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2155,6 +2412,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2163,6 +2421,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2171,6 +2430,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2179,6 +2439,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2187,6 +2448,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2195,6 +2457,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2203,6 +2466,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2211,6 +2475,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2219,6 +2484,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2227,6 +2493,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2235,6 +2502,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2243,6 +2511,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2251,6 +2520,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2259,6 +2529,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2267,6 +2538,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2275,6 +2547,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2283,6 +2556,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2291,6 +2565,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2299,6 +2574,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2307,6 +2583,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2315,6 +2592,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2323,6 +2601,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2331,6 +2610,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2339,6 +2619,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2347,6 +2628,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2355,6 +2637,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2363,6 +2646,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2371,6 +2655,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2379,6 +2664,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2387,6 +2673,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2395,6 +2682,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2403,6 +2691,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2411,6 +2700,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2419,6 +2709,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2427,6 +2718,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2435,6 +2727,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2443,6 +2736,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2451,6 +2745,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2459,6 +2754,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2467,6 +2763,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2475,6 +2772,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2483,6 +2781,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2491,6 +2790,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2499,6 +2799,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2507,6 +2808,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2515,6 +2817,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000101";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2523,6 +2826,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2531,6 +2835,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2539,6 +2844,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2547,6 +2853,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2555,6 +2862,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2563,6 +2871,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2571,6 +2880,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2579,6 +2889,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2587,6 +2898,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2595,6 +2907,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2603,6 +2916,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2611,6 +2925,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2619,6 +2934,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2627,6 +2943,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2635,6 +2952,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2643,6 +2961,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2651,6 +2970,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2659,6 +2979,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2667,6 +2988,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2675,6 +2997,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2683,6 +3006,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2691,6 +3015,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2699,6 +3024,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2707,6 +3033,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2715,6 +3042,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2723,6 +3051,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2731,6 +3060,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2739,6 +3069,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2747,6 +3078,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2755,6 +3087,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2763,6 +3096,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2771,6 +3105,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2779,6 +3114,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2787,6 +3123,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2795,6 +3132,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2803,6 +3141,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2811,6 +3150,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2819,6 +3159,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2827,6 +3168,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2835,6 +3177,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2843,6 +3186,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2851,6 +3195,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2859,6 +3204,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2867,6 +3213,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2875,6 +3222,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2883,6 +3231,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2891,6 +3240,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2899,6 +3249,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2907,6 +3258,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2915,6 +3267,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2923,6 +3276,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2931,6 +3285,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2939,6 +3294,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2947,6 +3303,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2955,6 +3312,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2963,6 +3321,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2971,6 +3330,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2979,6 +3339,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -2987,6 +3348,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -2995,6 +3357,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000110";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3003,6 +3366,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3011,6 +3375,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3019,6 +3384,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3027,6 +3393,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3035,6 +3402,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3043,6 +3411,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3051,6 +3420,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3059,6 +3429,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3067,6 +3438,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3075,6 +3447,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3083,6 +3456,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3091,6 +3465,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3099,6 +3474,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3107,6 +3483,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3115,6 +3492,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3123,6 +3501,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3131,6 +3510,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3139,6 +3519,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3147,6 +3528,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3155,6 +3537,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3163,6 +3546,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3171,6 +3555,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3179,6 +3564,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3187,6 +3573,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3195,6 +3582,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3203,6 +3591,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3211,6 +3600,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3219,6 +3609,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3227,6 +3618,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3235,6 +3627,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3243,6 +3636,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3251,6 +3645,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3259,6 +3654,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3267,6 +3663,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3275,6 +3672,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3283,6 +3681,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3291,6 +3690,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3299,6 +3699,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3307,6 +3708,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3315,6 +3717,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3323,6 +3726,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3331,6 +3735,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3339,6 +3744,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3347,6 +3753,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3355,6 +3762,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3363,6 +3771,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3371,6 +3780,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3379,6 +3789,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3387,6 +3798,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3395,6 +3807,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3403,6 +3816,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3411,6 +3825,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3419,6 +3834,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3427,6 +3843,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3435,6 +3852,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3443,6 +3861,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3451,6 +3870,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3459,6 +3879,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3467,6 +3888,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3475,6 +3897,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "000111";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3483,6 +3906,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3491,6 +3915,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3499,6 +3924,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3507,6 +3933,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3515,6 +3942,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3523,6 +3951,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3531,6 +3960,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3539,6 +3969,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3547,6 +3978,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3555,6 +3987,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3563,6 +3996,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3571,6 +4005,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3579,6 +4014,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3587,6 +4023,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3595,6 +4032,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3603,6 +4041,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3611,6 +4050,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3619,6 +4059,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3627,6 +4068,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3635,6 +4077,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3643,6 +4086,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3651,6 +4095,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3659,6 +4104,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3667,6 +4113,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3675,6 +4122,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3683,6 +4131,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3691,6 +4140,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3699,6 +4149,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3707,6 +4158,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3715,6 +4167,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3723,6 +4176,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3731,6 +4185,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3739,6 +4194,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3747,6 +4203,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3755,6 +4212,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3763,6 +4221,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3771,6 +4230,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3779,6 +4239,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3787,6 +4248,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3795,6 +4257,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3803,6 +4266,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3811,6 +4275,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3819,6 +4284,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3827,6 +4293,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3835,6 +4302,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3843,6 +4311,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3851,6 +4320,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3859,6 +4329,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3867,6 +4338,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3875,6 +4347,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3883,6 +4356,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3891,6 +4365,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3899,6 +4374,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3907,6 +4383,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3915,6 +4392,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3923,6 +4401,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3931,6 +4410,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3939,6 +4419,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3947,6 +4428,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3955,6 +4437,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001000";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3963,6 +4446,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3971,6 +4455,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3979,6 +4464,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -3987,6 +4473,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -3995,6 +4482,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4003,6 +4491,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4011,6 +4500,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4019,6 +4509,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4027,6 +4518,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4035,6 +4527,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4043,6 +4536,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4051,6 +4545,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4059,6 +4554,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4067,6 +4563,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4075,6 +4572,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4083,6 +4581,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4091,6 +4590,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4099,6 +4599,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4107,6 +4608,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4115,6 +4617,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4123,6 +4626,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4131,6 +4635,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4139,6 +4644,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4147,6 +4653,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4155,6 +4662,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4163,6 +4671,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4171,6 +4680,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4179,6 +4689,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4187,6 +4698,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4195,6 +4707,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4203,6 +4716,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4211,6 +4725,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4219,6 +4734,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4227,6 +4743,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4235,6 +4752,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4243,6 +4761,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4251,6 +4770,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4259,6 +4779,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4267,6 +4788,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4275,6 +4797,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4283,6 +4806,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4291,6 +4815,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4299,6 +4824,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4307,6 +4833,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4315,6 +4842,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4323,6 +4851,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4331,6 +4860,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4339,6 +4869,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4347,6 +4878,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4355,6 +4887,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4363,6 +4896,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4371,6 +4905,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4379,6 +4914,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4387,6 +4923,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4395,6 +4932,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4403,6 +4941,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4411,6 +4950,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4419,6 +4959,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4427,6 +4968,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4435,6 +4977,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001001";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4443,6 +4986,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4451,6 +4995,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4459,6 +5004,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4467,6 +5013,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4475,6 +5022,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4483,6 +5031,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4491,6 +5040,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4499,6 +5049,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4507,6 +5058,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4515,6 +5067,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4523,6 +5076,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4531,6 +5085,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4539,6 +5094,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4547,6 +5103,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4555,6 +5112,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4563,6 +5121,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4571,6 +5130,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4579,6 +5139,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4587,6 +5148,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4595,6 +5157,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4603,6 +5166,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4611,6 +5175,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4619,6 +5184,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4627,6 +5193,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4635,6 +5202,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4643,6 +5211,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4651,6 +5220,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4659,6 +5229,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4667,6 +5238,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4675,6 +5247,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4683,6 +5256,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4691,6 +5265,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4699,6 +5274,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4707,6 +5283,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4715,6 +5292,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4723,6 +5301,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4731,6 +5310,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4739,6 +5319,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4747,6 +5328,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4755,6 +5337,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4763,6 +5346,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4771,6 +5355,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4779,6 +5364,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4787,6 +5373,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4795,6 +5382,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4803,6 +5391,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4811,6 +5400,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4819,6 +5409,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4827,6 +5418,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4835,6 +5427,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4843,6 +5436,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4851,6 +5445,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4859,6 +5454,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4867,6 +5463,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4875,6 +5472,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4883,6 +5481,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4891,6 +5490,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4899,6 +5499,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4907,6 +5508,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4915,6 +5517,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001010";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4923,6 +5526,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4931,6 +5535,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4939,6 +5544,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4947,6 +5553,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4955,6 +5562,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4963,6 +5571,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4971,6 +5580,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4979,6 +5589,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -4987,6 +5598,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -4995,6 +5607,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5003,6 +5616,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5011,6 +5625,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5019,6 +5634,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5027,6 +5643,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5035,6 +5652,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5043,6 +5661,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5051,6 +5670,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5059,6 +5679,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5067,6 +5688,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5075,6 +5697,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5083,6 +5706,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5091,6 +5715,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5099,6 +5724,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5107,6 +5733,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5115,6 +5742,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5123,6 +5751,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5131,6 +5760,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5139,6 +5769,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5147,6 +5778,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5155,6 +5787,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5163,6 +5796,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5171,6 +5805,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5179,6 +5814,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5187,6 +5823,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5195,6 +5832,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5203,6 +5841,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5211,6 +5850,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5219,6 +5859,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5227,6 +5868,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5235,6 +5877,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5243,6 +5886,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5251,6 +5895,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5259,6 +5904,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5267,6 +5913,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5275,6 +5922,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5283,6 +5931,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5291,6 +5940,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5299,6 +5949,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5307,6 +5958,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5315,6 +5967,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5323,6 +5976,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5331,6 +5985,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5339,6 +5994,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5347,6 +6003,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5355,6 +6012,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5363,6 +6021,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5371,6 +6030,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5379,6 +6039,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5387,6 +6048,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5395,6 +6057,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001011";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5403,6 +6066,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5411,6 +6075,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5419,6 +6084,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5427,6 +6093,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5435,6 +6102,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5443,6 +6111,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5451,6 +6120,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5459,6 +6129,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5467,6 +6138,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5475,6 +6147,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5483,6 +6156,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5491,6 +6165,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5499,6 +6174,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5507,6 +6183,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5515,6 +6192,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5523,6 +6201,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5531,6 +6210,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5539,6 +6219,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5547,6 +6228,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5555,6 +6237,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5563,6 +6246,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5571,6 +6255,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5579,6 +6264,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5587,6 +6273,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5595,6 +6282,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5603,6 +6291,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5611,6 +6300,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5619,6 +6309,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5627,6 +6318,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5635,6 +6327,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5643,6 +6336,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5651,6 +6345,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5659,6 +6354,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5667,6 +6363,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5675,6 +6372,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5683,6 +6381,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5691,6 +6390,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5699,6 +6399,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5707,6 +6408,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5715,6 +6417,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5723,6 +6426,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5731,6 +6435,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5739,6 +6444,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5747,6 +6453,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5755,6 +6462,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5763,6 +6471,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5771,6 +6480,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5779,6 +6489,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5787,6 +6498,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5795,6 +6507,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5803,6 +6516,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5811,6 +6525,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5819,6 +6534,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5827,6 +6543,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5835,6 +6552,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5843,6 +6561,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5851,6 +6570,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5859,6 +6579,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -5867,6 +6588,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
@@ -5875,6 +6597,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "001100";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '1';
         cpsr_set_bit_tb_in <= '1';
         wait for 50 ns;
@@ -6000,6 +6723,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6014,6 +6738,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6028,6 +6753,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6042,6 +6768,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6056,6 +6783,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6070,6 +6798,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6084,6 +6813,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6098,6 +6828,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6112,6 +6843,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6126,6 +6858,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6140,6 +6873,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6154,6 +6888,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6168,6 +6903,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6182,6 +6918,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6196,6 +6933,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111100";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6210,6 +6948,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6224,6 +6963,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6238,6 +6978,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6252,6 +6993,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6266,6 +7008,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6280,6 +7023,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6294,6 +7038,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6308,6 +7053,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6322,6 +7068,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6336,6 +7083,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6350,6 +7098,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6364,6 +7113,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6378,6 +7128,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6392,6 +7143,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6406,6 +7158,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111101";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "1001";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6420,6 +7173,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "0000";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6434,6 +7188,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "0001";
+        cpsr_bits_tb_in <= "0100";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6448,6 +7203,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "0010";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6462,6 +7218,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "0011";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6476,6 +7233,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "0100";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6490,6 +7248,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "0101";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6504,6 +7263,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "0110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6518,6 +7278,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "0111";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6532,6 +7293,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "1000";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6546,6 +7308,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "1001";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6560,6 +7323,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "1010";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6574,6 +7338,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "1011";
+        cpsr_bits_tb_in <= "1000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6588,6 +7353,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "1100";
+        cpsr_bits_tb_in <= "0010";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6602,6 +7368,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "1101";
+        cpsr_bits_tb_in <= "0001";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6616,6 +7383,7 @@ begin
         reset_tb_in <= '0';
         op_code_tb_in <= "111110";
         condition_code_tb_in <= "1110";
+        cpsr_bits_tb_in <= "0000";
         counter_bit_tb_in <= '0';
         wait for 50 ns;
 
@@ -6625,7 +7393,6 @@ begin
         condition_code_tb_in <= "1110";
         counter_bit_tb_in <= '1';
         wait for 50 ns;
-
 
     end process;
 
