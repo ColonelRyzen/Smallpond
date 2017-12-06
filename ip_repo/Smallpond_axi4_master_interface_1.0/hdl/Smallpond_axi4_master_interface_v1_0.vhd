@@ -31,9 +31,9 @@ entity sp_axi4_master_v1_0 is
 
 
 		-- Ports of Axi Master Bus Interface M00_AXI
-		m00_axi_init_axi_txn	: in std_logic;
-		m00_axi_error	: out std_logic;
-		m00_axi_txn_done	: out std_logic;
+--		m00_axi_init_axi_txn	: in std_logic;
+--		m00_axi_error	: out std_logic;
+--		m00_axi_txn_done	: out std_logic;
 		m00_axi_aclk	: in std_logic;
 		m00_axi_aresetn	: in std_logic;
 		m00_axi_awaddr	: out std_logic_vector(C_M00_AXI_ADDR_WIDTH-1 downto 0);
@@ -77,9 +77,9 @@ architecture arch_imp of sp_axi4_master_v1_0 is
   	sp_data_out : out std_logic_vector(31 downto 0);
   	sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
   	sp_error : out std_logic; --(1 for error)
-		INIT_AXI_TXN	: in std_logic;
-		ERROR	: out std_logic;
-		TXN_DONE	: out std_logic;
+--		INIT_AXI_TXN	: in std_logic;
+--		ERROR	: out std_logic;
+--		TXN_DONE	: out std_logic;
 		M_AXI_ACLK	: in std_logic;
 		M_AXI_ARESETN	: in std_logic;
 		M_AXI_AWADDR	: out std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
@@ -123,9 +123,9 @@ sp_axi4_master_v1_0_M00_AXI_inst : sp_axi4_master_v1_0_M00_AXI
   	sp_data_out => sp_data_out,
   	sp_over => sp_over,
   	sp_error => sp_error,
-		INIT_AXI_TXN	=> m00_axi_init_axi_txn,
-		ERROR	=> m00_axi_error,
-		TXN_DONE	=> m00_axi_txn_done,
+--		INIT_AXI_TXN	=> m00_axi_init_axi_txn,
+--		ERROR	=> m00_axi_error,
+--		TXN_DONE	=> m00_axi_txn_done,
 		M_AXI_ACLK	=> m00_axi_aclk,
 		M_AXI_ARESETN	=> m00_axi_aresetn,
 		M_AXI_AWADDR	=> m00_axi_awaddr,

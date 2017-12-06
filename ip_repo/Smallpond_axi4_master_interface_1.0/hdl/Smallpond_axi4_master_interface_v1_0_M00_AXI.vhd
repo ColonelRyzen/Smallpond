@@ -39,11 +39,11 @@ entity sp_axi4_master_v1_0_M00_AXI is
 		-- Do not modify the ports beyond this line
 
 		-- Initiate AXI transactions
-		INIT_AXI_TXN	: in std_logic;
-		-- Asserts when ERROR is detected
-		ERROR	: out std_logic;
-		-- Asserts when AXI transactions is complete
-		TXN_DONE	: out std_logic;
+--		INIT_AXI_TXN	: in std_logic;
+--		-- Asserts when ERROR is detected
+--		ERROR	: out std_logic;
+--		-- Asserts when AXI transactions is complete
+--		TXN_DONE	: out std_logic;
 		-- AXI clock signal
 		M_AXI_ACLK	: in std_logic;
 		-- AXI active low reset signal
@@ -198,16 +198,13 @@ architecture implementation of sp_axi4_master_v1_0_M00_AXI is
 	signal last_write	: std_logic;
 	--Flag is asserted when the read index reaches the last read transction number
 	signal last_read	: std_logic;
-	signal init_txn_ff	: std_logic;
-	signal init_txn_ff2	: std_logic;
-	signal init_txn_edge	: std_logic;
-	signal init_txn_pulse	: std_logic;
 
 	signal data_out : std_logic_vector(31 downto 0);
 	signal write_over : std_logic;
 	signal read_over :std_logic;
 	signal write_error : std_logic;
 	signal read_error : std_logic;
+	signal txn_error : std_logic;
 	--halfword step: used to determine state when writing more than 1 halfword
 	--necessary due to DDR3 width compared to Smallpond's
 	signal wstep : std_logic;
@@ -220,40 +217,20 @@ begin
     M_AXI_AWADDR <= axi_awaddr;
 	--AXI 4 write data
 	M_AXI_WDATA	<= axi_wdata;
-	M_AXI_AWPROT	<= "000";
-	M_AXI_AWVALID	<= axi_awvalid;
+	M_AXI_AWPROT <= "000";
+	M_AXI_AWVALID <= axi_awvalid;
 	--Write Data(W)
-	M_AXI_WVALID	<= axi_wvalid;
+	M_AXI_WVALID <= axi_wvalid;
 	M_AXI_WSTRB	<= write_strobes;
 	--Write Response (B)
-	M_AXI_BREADY	<= axi_bready;
+	M_AXI_BREADY <= axi_bready;
 	--Read Address (AR)
 --	M_AXI_ARADDR	<= std_logic_vector(unsigned(C_M_TARGET_SLAVE_BASE_ADDR) + unsigned(axi_araddr));
     M_AXI_ARADDR <= axi_araddr;
-	M_AXI_ARVALID	<= axi_arvalid;
-	M_AXI_ARPROT	<= "001";
+	M_AXI_ARVALID <= axi_arvalid;
+	M_AXI_ARPROT <= "001";
 	--Read and Read Response (R)
-	M_AXI_RREADY	<= axi_rready;
-	--Example design I/O
-	TXN_DONE	<= compare_done;
-	init_txn_pulse	<= ( not init_txn_ff2)  and  init_txn_ff;
-
-
-	--Generate a pulse to initiate AXI transaction.
-	process(M_AXI_ACLK)
-	begin
-	  if (rising_edge (M_AXI_ACLK)) then
-	      -- Initiates AXI transaction delay
-	    if (M_AXI_ARESETN = '0' ) then
-	      init_txn_ff <= '0';
-	        init_txn_ff2 <= '0';
-	    else
-	      init_txn_ff <= INIT_AXI_TXN;
-	        init_txn_ff2 <= init_txn_ff;
-	    end if;
-	  end if;
-	end process;
-
+	M_AXI_RREADY <= axi_rready;
 
 	----------------------
 	--Write Address Channel
@@ -284,7 +261,7 @@ begin
 	    if (rising_edge (M_AXI_ACLK)) then
 	      --Only VALID signals must be deasserted during reset per AXI spec
 	      --Consider inverting then registering active-low reset for higher fmax
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
+	      if (M_AXI_ARESETN = '0') then
 	        axi_awvalid <= '0';
 	      else
 	        --Signal a new address/data command is available by user logic
@@ -305,7 +282,7 @@ begin
 	  process(M_AXI_ACLK)
 	  begin
 	    if (rising_edge (M_AXI_ACLK)) then
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
+	      if (M_AXI_ARESETN = '0') then
 	        write_index <= (others => '0');
 	      elsif (start_single_write = '1') then
 	        -- Signals a new write address/ write data is
@@ -327,7 +304,7 @@ begin
 	   process(M_AXI_ACLK)
 	   begin
 	     if (rising_edge (M_AXI_ACLK)) then
-	       if (M_AXI_ARESETN = '0' or init_txn_pulse = '1' ) then
+	       if (M_AXI_ARESETN = '0') then
 	         axi_wvalid <= '0';
 	       else
 	         if (start_single_write = '1') then
@@ -360,7 +337,7 @@ begin
 	  process(M_AXI_ACLK)
 	  begin
 	    if (rising_edge (M_AXI_ACLK)) then
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
+	      if (M_AXI_ARESETN = '0') then
 	        axi_bready <= '0';
 	      else
 	        if (M_AXI_BVALID = '1' and axi_bready = '0') then
@@ -388,7 +365,7 @@ begin
 	  process(M_AXI_ACLK)
 	  begin
 	    if (rising_edge (M_AXI_ACLK)) then
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
+	      if (M_AXI_ARESETN = '0') then
 	        read_index <= (others => '0');
 	      else
 	        if (start_single_read = '1') then
@@ -406,7 +383,7 @@ begin
 	  process(M_AXI_ACLK)
 	  begin
 	    if (rising_edge (M_AXI_ACLK)) then
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
+	      if (M_AXI_ARESETN = '0') then
 	        axi_arvalid <= '0';
 	      else
 	        if (start_single_read = '1') then
@@ -434,7 +411,7 @@ begin
 	  process(M_AXI_ACLK)
 	  begin
 	    if (rising_edge (M_AXI_ACLK)) then
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
+	      if (M_AXI_ARESETN = '0') then
 	        axi_rready <= '1';
 	      else
 	        if (M_AXI_RVALID = '1' and axi_rready = '0') then
@@ -722,30 +699,9 @@ begin
 	-- Add user logic here
 
 	sp_data_out <= data_out;
-	sp_error <= (write_resp_error or read_resp_error or write_error or read_error);
+	sp_error <= txn_error;
+	txn_error <= (write_resp_error or read_resp_error or write_error or read_error);
 	sp_over <= write_over or read_over;
-
---	--reset (if necessary)
---	process(M_AXI_ACLK) begin
---    if(rising_edge(M_AXI_ACLK)) then
---      if(M_AXI_ARESETN = '0') then
---        --reset signals here?
---      end if;
---    end if;
---	end process;
-
---	--let Smallpond know when there's an error
---	process(M_AXI_ACLK) begin
---    if(rising_edge(M_AXI_ACLK)) then
---      if(M_AXI_ARESETN = '0') then
---        sp_error <= '0';
---      else
---        if(write_resp_error = '1' or read_resp_error = '1') then
---          sp_axi_error <= '1';
---        end if;
---      end if;
---    end if;
---	end process;
 
   --process write requests from Smallpond
   process(M_AXI_ACLK) begin
@@ -782,7 +738,7 @@ begin
             write_issued <= '1';
             wstep <= '0';
           else
-            sp_error <= '1';
+            write_error <= '1';
           end if;
         elsif(start_single_write = '1' and write_issued = '1') then --generate pulse to initiate write
           start_single_write <= '0';

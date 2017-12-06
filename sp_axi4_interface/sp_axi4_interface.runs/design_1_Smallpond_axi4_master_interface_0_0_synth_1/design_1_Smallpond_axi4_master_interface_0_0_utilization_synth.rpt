@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
-| Date         : Tue Dec  5 20:46:29 2017
+| Date         : Tue Dec  5 21:13:59 2017
 | Host         : octopus-tetricus running 64-bit unknown
 | Command      : report_utilization -file design_1_Smallpond_axi4_master_interface_0_0_utilization_synth.rpt -pb design_1_Smallpond_axi4_master_interface_0_0_utilization_synth.pb
 | Design       : design_1_Smallpond_axi4_master_interface_0_0
@@ -30,11 +30,11 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             |  125 |     0 |     20800 |  0.60 |
-|   LUT as Logic          |  125 |     0 |     20800 |  0.60 |
+| Slice LUTs*             |  127 |     0 |     20800 |  0.61 |
+|   LUT as Logic          |  127 |     0 |     20800 |  0.61 |
 |   LUT as Memory         |    0 |     0 |      9600 |  0.00 |
-| Slice Registers         |  128 |     0 |     41600 |  0.31 |
-|   Register as Flip Flop |  128 |     0 |     41600 |  0.31 |
+| Slice Registers         |  126 |     0 |     41600 |  0.30 |
+|   Register as Flip Flop |  126 |     0 |     41600 |  0.30 |
 |   Register as Latch     |    0 |     0 |     41600 |  0.00 |
 | F7 Muxes                |    0 |     0 |     16300 |  0.00 |
 | F8 Muxes                |    0 |     0 |      8150 |  0.00 |
@@ -56,8 +56,8 @@ Table of Contents
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
-| 22    |          Yes |         Set |            - |
-| 106   |          Yes |       Reset |            - |
+| 0     |          Yes |         Set |            - |
+| 126   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -146,14 +146,13 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDRE     |  106 |        Flop & Latch |
-| LUT4     |   77 |                 LUT |
-| FDSE     |   22 |        Flop & Latch |
-| LUT2     |   18 |                 LUT |
-| LUT6     |   16 |                 LUT |
-| LUT5     |   16 |                 LUT |
-| LUT3     |   14 |                 LUT |
+| FDRE     |  126 |        Flop & Latch |
+| LUT4     |   91 |                 LUT |
+| LUT5     |   21 |                 LUT |
+| LUT6     |   20 |                 LUT |
 | CARRY4   |    8 |          CarryLogic |
+| LUT3     |    6 |                 LUT |
+| LUT2     |    3 |                 LUT |
 | LUT1     |    2 |                 LUT |
 +----------+------+---------------------+
 

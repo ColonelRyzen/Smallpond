@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: user.org:user:Smallpond_axi4_master_interface:1.0
--- IP Revision: 6
+-- IP Revision: 7
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
@@ -84,10 +84,7 @@ ENTITY design_1_Smallpond_axi4_master_interface_0_0 IS
     m00_axi_rvalid : IN STD_LOGIC;
     m00_axi_rready : OUT STD_LOGIC;
     m00_axi_aclk : IN STD_LOGIC;
-    m00_axi_aresetn : IN STD_LOGIC;
-    m00_axi_init_axi_txn : IN STD_LOGIC;
-    m00_axi_error : OUT STD_LOGIC;
-    m00_axi_txn_done : OUT STD_LOGIC
+    m00_axi_aresetn : IN STD_LOGIC
   );
 END design_1_Smallpond_axi4_master_interface_0_0;
 
@@ -133,10 +130,7 @@ ARCHITECTURE design_1_Smallpond_axi4_master_interface_0_0_arch OF design_1_Small
       m00_axi_rvalid : IN STD_LOGIC;
       m00_axi_rready : OUT STD_LOGIC;
       m00_axi_aclk : IN STD_LOGIC;
-      m00_axi_aresetn : IN STD_LOGIC;
-      m00_axi_init_axi_txn : IN STD_LOGIC;
-      m00_axi_error : OUT STD_LOGIC;
-      m00_axi_txn_done : OUT STD_LOGIC
+      m00_axi_aresetn : IN STD_LOGIC
     );
   END COMPONENT sp_axi4_master_v1_0;
   ATTRIBUTE X_INTERFACE_INFO : STRING;
@@ -170,7 +164,7 @@ BEGIN
     GENERIC MAP (
       C_M00_AXI_ADDR_WIDTH => 32,
       C_M00_AXI_DATA_WIDTH => 32,
-      C_M00_AXI_TRANSACTIONS_NUM => 4
+      C_M00_AXI_TRANSACTIONS_NUM => 1
     )
     PORT MAP (
       sp_read => sp_read,
@@ -202,9 +196,6 @@ BEGIN
       m00_axi_rvalid => m00_axi_rvalid,
       m00_axi_rready => m00_axi_rready,
       m00_axi_aclk => m00_axi_aclk,
-      m00_axi_aresetn => m00_axi_aresetn,
-      m00_axi_init_axi_txn => m00_axi_init_axi_txn,
-      m00_axi_error => m00_axi_error,
-      m00_axi_txn_done => m00_axi_txn_done
+      m00_axi_aresetn => m00_axi_aresetn
     );
 END design_1_Smallpond_axi4_master_interface_0_0_arch;

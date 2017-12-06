@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="design_1_Smallpond_axi4_master_interface_0_0_synth_1" LaunchPart="xc7a35ticsg324-1L" LaunchTime="1512524737">
+<GenRun Id="design_1_Smallpond_axi4_master_interface_0_0_synth_1" LaunchPart="xc7a35ticsg324-1L" LaunchTime="1512526382">
   <File Type="VDS-TIMING-PB" Name="design_1_Smallpond_axi4_master_interface_0_0_timing_summary_synth.pb"/>
   <File Type="VDS-TIMINGSUMMARY" Name="design_1_Smallpond_axi4_master_interface_0_0_timing_summary_synth.rpt"/>
   <File Type="RDS-DCP" Name="design_1_Smallpond_axi4_master_interface_0_0.dcp"/>

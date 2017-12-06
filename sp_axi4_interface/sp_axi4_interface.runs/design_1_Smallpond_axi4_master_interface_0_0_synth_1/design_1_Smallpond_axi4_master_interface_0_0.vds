@@ -2,8 +2,8 @@
 # Vivado v2017.3.1 (64-bit)
 # SW Build 2035080 on Fri Oct 20 14:20:00 MDT 2017
 # IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
-# Start of session at: Tue Dec  5 20:45:38 2017
-# Process ID: 12297
+# Start of session at: Tue Dec  5 21:13:03 2017
+# Process ID: 20850
 # Current directory: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1
 # Command line: vivado -log design_1_Smallpond_axi4_master_interface_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_Smallpond_axi4_master_interface_0_0.tcl
 # Log file: /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/design_1_Smallpond_axi4_master_interface_0_0.vds
@@ -15,36 +15,32 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 12356 
+INFO: Helper process launched with PID 20910 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1264.172 ; gain = 79.996 ; free physical = 3526 ; free virtual = 5197
+Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1264.172 ; gain = 79.996 ; free physical = 2974 ; free virtual = 4852
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'design_1_Smallpond_axi4_master_interface_0_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:94]
+INFO: [Synth 8-638] synthesizing module 'design_1_Smallpond_axi4_master_interface_0_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:91]
 	Parameter C_M00_AXI_ADDR_WIDTH bound to: 32 - type: integer 
 	Parameter C_M00_AXI_DATA_WIDTH bound to: 32 - type: integer 
-	Parameter C_M00_AXI_TRANSACTIONS_NUM bound to: 4 - type: integer 
-INFO: [Synth 8-3491] module 'sp_axi4_master_v1_0' declared at '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0.vhd:5' bound to instance 'U0' of component 'sp_axi4_master_v1_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:173]
-INFO: [Synth 8-638] synthesizing module 'sp_axi4_master_v1_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0.vhd:61]
+	Parameter C_M00_AXI_TRANSACTIONS_NUM bound to: 1 - type: integer 
+INFO: [Synth 8-3491] module 'sp_axi4_master_v1_0' declared at '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0.vhd:5' bound to instance 'U0' of component 'sp_axi4_master_v1_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:167]
+INFO: [Synth 8-638] synthesizing module 'sp_axi4_master_v1_0' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0.vhd:61]
 	Parameter C_M00_AXI_ADDR_WIDTH bound to: 32 - type: integer 
 	Parameter C_M00_AXI_DATA_WIDTH bound to: 32 - type: integer 
-	Parameter C_M00_AXI_TRANSACTIONS_NUM bound to: 4 - type: integer 
+	Parameter C_M00_AXI_TRANSACTIONS_NUM bound to: 1 - type: integer 
 	Parameter C_M_AXI_ADDR_WIDTH bound to: 32 - type: integer 
 	Parameter C_M_AXI_DATA_WIDTH bound to: 32 - type: integer 
-	Parameter C_M_TRANSACTIONS_NUM bound to: 4 - type: integer 
-INFO: [Synth 8-3491] module 'sp_axi4_master_v1_0_M00_AXI' declared at '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:5' bound to instance 'sp_axi4_master_v1_0_M00_AXI_inst' of component 'sp_axi4_master_v1_0_M00_AXI' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0.vhd:110]
-INFO: [Synth 8-638] synthesizing module 'sp_axi4_master_v1_0_M00_AXI' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:104]
+	Parameter C_M_TRANSACTIONS_NUM bound to: 1 - type: integer 
+INFO: [Synth 8-3491] module 'sp_axi4_master_v1_0_M00_AXI' declared at '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:5' bound to instance 'sp_axi4_master_v1_0_M00_AXI_inst' of component 'sp_axi4_master_v1_0_M00_AXI' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0.vhd:110]
+INFO: [Synth 8-638] synthesizing module 'sp_axi4_master_v1_0_M00_AXI' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:104]
 	Parameter C_M_AXI_ADDR_WIDTH bound to: 32 - type: integer 
 	Parameter C_M_AXI_DATA_WIDTH bound to: 32 - type: integer 
-	Parameter C_M_TRANSACTIONS_NUM bound to: 4 - type: integer 
-WARNING: [Synth 8-6014] Unused sequential element write_index_reg was removed.  [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:309]
-WARNING: [Synth 8-6014] Unused sequential element read_index_reg was removed.  [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:392]
-WARNING: [Synth 8-3848] Net ERROR in module/entity sp_axi4_master_v1_0_M00_AXI does not have driver. [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:44]
-WARNING: [Synth 8-3848] Net compare_done in module/entity sp_axi4_master_v1_0_M00_AXI does not have driver. [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:194]
-INFO: [Synth 8-256] done synthesizing module 'sp_axi4_master_v1_0_M00_AXI' (1#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:104]
-INFO: [Synth 8-256] done synthesizing module 'sp_axi4_master_v1_0' (2#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0.vhd:61]
-INFO: [Synth 8-256] done synthesizing module 'design_1_Smallpond_axi4_master_interface_0_0' (3#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:94]
-WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port ERROR
-WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port TXN_DONE
+	Parameter C_M_TRANSACTIONS_NUM bound to: 1 - type: integer 
+WARNING: [Synth 8-6014] Unused sequential element write_index_reg was removed.  [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:286]
+WARNING: [Synth 8-6014] Unused sequential element read_index_reg was removed.  [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:369]
+INFO: [Synth 8-256] done synthesizing module 'sp_axi4_master_v1_0_M00_AXI' (1#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:104]
+INFO: [Synth 8-256] done synthesizing module 'sp_axi4_master_v1_0' (2#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/10f0/hdl/Smallpond_axi4_master_interface_v1_0.vhd:61]
+INFO: [Synth 8-256] done synthesizing module 'design_1_Smallpond_axi4_master_interface_0_0' (3#1) [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/synth/design_1_Smallpond_axi4_master_interface_0_0.vhd:91]
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_BRESP[0]
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_RDATA[31]
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_RDATA[30]
@@ -64,7 +60,7 @@ WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port 
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_RDATA[16]
 WARNING: [Synth 8-3331] design sp_axi4_master_v1_0_M00_AXI has unconnected port M_AXI_RRESP[0]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1306.703 ; gain = 122.527 ; free physical = 3554 ; free virtual = 5226
+Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1306.703 ; gain = 122.527 ; free physical = 3014 ; free virtual = 4863
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -74,7 +70,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1306.703 ; gain = 122.527 ; free physical = 3555 ; free virtual = 5226
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1306.703 ; gain = 122.527 ; free physical = 3011 ; free virtual = 4861
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -86,27 +82,27 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1617.062 ; gain = 0.000 ; free physical = 3248 ; free virtual = 4921
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1617.078 ; gain = 0.000 ; free physical = 2643 ; free virtual = 4516
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:22 ; elapsed = 00:00:30 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3404 ; free virtual = 5077
+Finished Constraint Validation : Time (s): cpu = 00:00:24 ; elapsed = 00:00:33 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2693 ; free virtual = 4580
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35ticsg324-1L
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:22 ; elapsed = 00:00:30 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3404 ; free virtual = 5077
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:24 ; elapsed = 00:00:33 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2693 ; free virtual = 4580
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:22 ; elapsed = 00:00:30 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3406 ; free virtual = 5079
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:24 ; elapsed = 00:00:33 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2695 ; free virtual = 4582
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5544] ROM "axi_awaddr" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "p_0_in" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_8_in" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3380 ; free virtual = 5055
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:33 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2686 ; free virtual = 4574
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -124,13 +120,13 @@ Detailed RTL Component Info :
 	               32 Bit    Registers := 3     
 	               16 Bit    Registers := 1     
 	                4 Bit    Registers := 1     
-	                1 Bit    Registers := 18    
+	                1 Bit    Registers := 15    
 +---Muxes : 
 	   2 Input     32 Bit        Muxes := 14    
 	   2 Input     16 Bit        Muxes := 3     
 	   6 Input      4 Bit        Muxes := 1     
 	   5 Input      2 Bit        Muxes := 1     
-	   2 Input      1 Bit        Muxes := 34    
+	   2 Input      1 Bit        Muxes := 36    
 	   4 Input      1 Bit        Muxes := 4     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
@@ -147,13 +143,13 @@ Detailed RTL Component Info :
 	               32 Bit    Registers := 3     
 	               16 Bit    Registers := 1     
 	                4 Bit    Registers := 1     
-	                1 Bit    Registers := 18    
+	                1 Bit    Registers := 15    
 +---Muxes : 
 	   2 Input     32 Bit        Muxes := 14    
 	   2 Input     16 Bit        Muxes := 3     
 	   6 Input      4 Bit        Muxes := 1     
 	   5 Input      2 Bit        Muxes := 1     
-	   2 Input      1 Bit        Muxes := 34    
+	   2 Input      1 Bit        Muxes := 36    
 	   4 Input      1 Bit        Muxes := 4     
 ---------------------------------------------------------------------------------
 Finished RTL Hierarchical Component Statistics
@@ -192,8 +188,6 @@ INFO: [Synth 8-3917] design design_1_Smallpond_axi4_master_interface_0_0 has por
 INFO: [Synth 8-3917] design design_1_Smallpond_axi4_master_interface_0_0 has port m00_axi_arprot[2] driven by constant 0
 INFO: [Synth 8-3917] design design_1_Smallpond_axi4_master_interface_0_0 has port m00_axi_arprot[1] driven by constant 0
 INFO: [Synth 8-3917] design design_1_Smallpond_axi4_master_interface_0_0 has port m00_axi_arprot[0] driven by constant 1
-WARNING: [Synth 8-3331] design design_1_Smallpond_axi4_master_interface_0_0 has unconnected port m00_axi_error
-WARNING: [Synth 8-3331] design design_1_Smallpond_axi4_master_interface_0_0 has unconnected port m00_axi_txn_done
 WARNING: [Synth 8-3331] design design_1_Smallpond_axi4_master_interface_0_0 has unconnected port m00_axi_bresp[0]
 WARNING: [Synth 8-3331] design design_1_Smallpond_axi4_master_interface_0_0 has unconnected port m00_axi_rdata[31]
 WARNING: [Synth 8-3331] design design_1_Smallpond_axi4_master_interface_0_0 has unconnected port m00_axi_rdata[30]
@@ -214,7 +208,6 @@ WARNING: [Synth 8-3331] design design_1_Smallpond_axi4_master_interface_0_0 has 
 WARNING: [Synth 8-3331] design design_1_Smallpond_axi4_master_interface_0_0 has unconnected port m00_axi_rresp[0]
 INFO: [Synth 8-3886] merging instance 'U0/sp_axi4_master_v1_0_M00_AXI_inst/write_strobes_reg[2]' (FDRE) to 'U0/sp_axi4_master_v1_0_M00_AXI_inst/write_strobes_reg[3]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\U0/sp_axi4_master_v1_0_M00_AXI_inst/write_strobes_reg[3] )
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\U0/sp_axi4_master_v1_0_M00_AXI_inst/write_error_reg )
 INFO: [Synth 8-3333] propagating constant 1 across sequential element (\U0/sp_axi4_master_v1_0_M00_AXI_inst/read_error_reg )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\U0/sp_axi4_master_v1_0_M00_AXI_inst/read_over_reg )
 INFO: [Synth 8-3332] Sequential element (U0/sp_axi4_master_v1_0_M00_AXI_inst/read_over_reg) is unused and will be removed from module design_1_Smallpond_axi4_master_interface_0_0.
@@ -222,7 +215,7 @@ INFO: [Synth 8-3332] Sequential element (U0/sp_axi4_master_v1_0_M00_AXI_inst/wri
 INFO: [Synth 8-3332] Sequential element (U0/sp_axi4_master_v1_0_M00_AXI_inst/read_error_reg) is unused and will be removed from module design_1_Smallpond_axi4_master_interface_0_0.
 INFO: [Synth 8-3332] Sequential element (U0/sp_axi4_master_v1_0_M00_AXI_inst/write_strobes_reg[3]) is unused and will be removed from module design_1_Smallpond_axi4_master_interface_0_0.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3354 ; free virtual = 5029
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:25 ; elapsed = 00:00:34 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2701 ; free virtual = 4558
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -234,13 +227,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:29 ; elapsed = 00:00:39 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3200 ; free virtual = 4883
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:31 ; elapsed = 00:00:43 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2532 ; free virtual = 4411
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:39 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3200 ; free virtual = 4883
+Finished Timing Optimization : Time (s): cpu = 00:00:32 ; elapsed = 00:00:43 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2531 ; free virtual = 4411
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -251,12 +244,8 @@ Report RTL Partitions:
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-3332] Sequential element (U0/sp_axi4_master_v1_0_M00_AXI_inst/sp_error_reg) is unused and will be removed from module design_1_Smallpond_axi4_master_interface_0_0.
-CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 1st driver pin 'U0/sp_axi4_master_v1_0_M00_AXI_inst/sp_error_reg/Q' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:725]
-CRITICAL WARNING: [Synth 8-3352] multi-driven net Q with 2nd driver pin 'VCC' [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:725]
-CRITICAL WARNING: [Synth 8-5559] multi-driven net Q is connected to constant driver, other driver is ignored [/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ipshared/d286/hdl/Smallpond_axi4_master_interface_v1_0_M00_AXI.vhd:725]
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:30 ; elapsed = 00:00:39 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3198 ; free virtual = 4881
+Finished Technology Mapping : Time (s): cpu = 00:00:32 ; elapsed = 00:00:43 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2530 ; free virtual = 4410
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -280,7 +269,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3197 ; free virtual = 4881
+Finished IO Insertion : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -293,7 +282,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3197 ; free virtual = 4881
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -305,25 +294,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3197 ; free virtual = 4881
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3197 ; free virtual = 4881
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3197 ; free virtual = 4881
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2524 ; free virtual = 4406
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3197 ; free virtual = 4881
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2524 ; free virtual = 4406
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -341,29 +330,28 @@ Report Cell Usage:
 +------+-------+------+
 |1     |CARRY4 |     8|
 |2     |LUT1   |     2|
-|3     |LUT2   |    18|
-|4     |LUT3   |    14|
-|5     |LUT4   |    77|
-|6     |LUT5   |    16|
-|7     |LUT6   |    16|
-|8     |FDRE   |   106|
-|9     |FDSE   |    22|
+|3     |LUT2   |     3|
+|4     |LUT3   |     6|
+|5     |LUT4   |    91|
+|6     |LUT5   |    21|
+|7     |LUT6   |    20|
+|8     |FDRE   |   126|
 +------+-------+------+
 
 Report Instance Areas: 
 +------+-------------------------------------+----------------------------+------+
 |      |Instance                             |Module                      |Cells |
 +------+-------------------------------------+----------------------------+------+
-|1     |top                                  |                            |   279|
-|2     |  U0                                 |sp_axi4_master_v1_0         |   279|
-|3     |    sp_axi4_master_v1_0_M00_AXI_inst |sp_axi4_master_v1_0_M00_AXI |   279|
+|1     |top                                  |                            |   277|
+|2     |  U0                                 |sp_axi4_master_v1_0         |   277|
+|3     |    sp_axi4_master_v1_0_M00_AXI_inst |sp_axi4_master_v1_0_M00_AXI |   277|
 +------+-------------------------------------+----------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1617.062 ; gain = 432.887 ; free physical = 3197 ; free virtual = 4881
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.078 ; gain = 432.902 ; free physical = 2526 ; free virtual = 4408
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 3 critical warnings and 20 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 1617.062 ; gain = 122.527 ; free physical = 3247 ; free virtual = 4930
-Synthesis Optimization Complete : Time (s): cpu = 00:00:30 ; elapsed = 00:00:40 . Memory (MB): peak = 1617.070 ; gain = 432.887 ; free physical = 3247 ; free virtual = 4930
+Synthesis finished with 0 errors, 0 critical warnings and 18 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1617.078 ; gain = 122.527 ; free physical = 2574 ; free virtual = 4457
+Synthesis Optimization Complete : Time (s): cpu = 00:00:32 ; elapsed = 00:00:44 . Memory (MB): peak = 1617.086 ; gain = 432.902 ; free physical = 2574 ; free virtual = 4457
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 8 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -373,13 +361,13 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-53 Infos, 44 Warnings, 3 Critical Warnings and 0 Errors encountered.
+51 Infos, 38 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:32 ; elapsed = 00:00:41 . Memory (MB): peak = 1617.070 ; gain = 457.723 ; free physical = 3246 ; free virtual = 4929
+synth_design: Time (s): cpu = 00:00:34 ; elapsed = 00:00:45 . Memory (MB): peak = 1617.086 ; gain = 457.738 ; free physical = 2568 ; free virtual = 4453
 INFO: [Common 17-1381] The checkpoint '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/design_1_Smallpond_axi4_master_interface_0_0.dcp' has been generated.
 INFO: [Coretcl 2-1482] Added synthesis output to IP cache for IP /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/design_1_Smallpond_axi4_master_interface_0_0.xci
 INFO: [Coretcl 2-1174] Renamed 2 cell refs.
 INFO: [Common 17-1381] The checkpoint '/home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.runs/design_1_Smallpond_axi4_master_interface_0_0_synth_1/design_1_Smallpond_axi4_master_interface_0_0.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file design_1_Smallpond_axi4_master_interface_0_0_utilization_synth.rpt -pb design_1_Smallpond_axi4_master_interface_0_0_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1641.074 ; gain = 0.000 ; free physical = 3246 ; free virtual = 4930
-INFO: [Common 17-206] Exiting Vivado at Tue Dec  5 20:46:30 2017...
+report_utilization: Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1641.090 ; gain = 0.000 ; free physical = 2565 ; free virtual = 4451
+INFO: [Common 17-206] Exiting Vivado at Tue Dec  5 21:13:59 2017...

@@ -16,7 +16,7 @@
     <File Path="$PSRCDIR/sources_1/imports/hdl/design_1_wrapper.vhd">
       <FileInfo>
         <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/bd/design_1/hdl/design_1_wrapper.vhd"/>
-        <Attr Name="ImportTime" Val="1512450576"/>
+        <Attr Name="ImportTime" Val="1512526308"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
