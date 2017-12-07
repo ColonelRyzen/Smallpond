@@ -134,7 +134,7 @@ ARCHITECTURE design_1_Smallpond_axi4_master_interface_0_0_arch OF design_1_Small
     );
   END COMPONENT sp_axi4_master_v1_0;
   ATTRIBUTE X_CORE_INFO : STRING;
-  ATTRIBUTE X_CORE_INFO OF design_1_Smallpond_axi4_master_interface_0_0_arch: ARCHITECTURE IS "sp_axi4_master_v1_0,Vivado 2017.3";
+  ATTRIBUTE X_CORE_INFO OF design_1_Smallpond_axi4_master_interface_0_0_arch: ARCHITECTURE IS "sp_axi4_master_v1_0,Vivado 2017.3.1";
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_Smallpond_axi4_master_interface_0_0_arch : ARCHITECTURE IS "design_1_Smallpond_axi4_master_interface_0_0,sp_axi4_master_v1_0,{}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;

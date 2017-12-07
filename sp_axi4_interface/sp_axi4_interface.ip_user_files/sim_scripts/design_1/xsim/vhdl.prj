@@ -1,7 +1,7 @@
 vhdl xil_defaultlib  \
 "../../../bd/design_1/ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0_sim_netlist.vhdl" \
 "../../../bd/design_1/ip/design_1_axi_uartlite_0_0/sim/design_1_axi_uartlite_0_0.vhd" \
-"/home/lab/.Xil/Vivado-22617-bonner/coregen/design_1_mig_7series_0_0/design_1_mig_7series_0_0_sim_netlist.vhdl" \
+"/.Xil/Vivado-22617-bonner/coregen/design_1_mig_7series_0_0/design_1_mig_7series_0_0_sim_netlist.vhdl" \
 "../../../bd/design_1/ip/design_1_mig_7series_0_0_1/design_1_mig_7series_0_0_sim_netlist.vhdl" \
 "../../../bd/design_1/ip/design_1_rst_clk_wiz_0_100M_0/sim/design_1_rst_clk_wiz_0_100M_0.vhd" \
 "../../../bd/design_1/ip/design_1_xbar_0/design_1_xbar_0_sim_netlist.vhdl" \
