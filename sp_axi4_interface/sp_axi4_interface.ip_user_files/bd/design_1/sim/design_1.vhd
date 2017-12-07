@@ -1,8 +1,8 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
---Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
---Date        : Wed Dec  6 16:28:20 2017
---Host        : bonner running 64-bit Ubuntu 17.10
+--Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
+--Date        : Wed Dec  6 23:52:37 2017
+--Host        : octopus-tetricus running 64-bit unknown
 --Command     : generate_target design_1.bd
 --Design      : design_1
 --Purpose     : IP block netlist
@@ -1711,7 +1711,7 @@ entity design_1 is
     usb_uart_txd : out STD_LOGIC
   );
   attribute CORE_GENERATION_INFO : string;
-  attribute CORE_GENERATION_INFO of design_1 : entity is "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=17,numReposBlks=13,numNonXlnxBlks=1,numHierBlks=4,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_board_cnt=1,da_clkrst_cnt=8,synth_mode=OOC_per_IP}";
+  attribute CORE_GENERATION_INFO of design_1 : entity is "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=16,numReposBlks=12,numNonXlnxBlks=1,numHierBlks=4,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_board_cnt=1,da_clkrst_cnt=11,synth_mode=OOC_per_IP}";
   attribute HW_HANDOFF : string;
   attribute HW_HANDOFF of design_1 : entity is "design_1.hwdef";
 end design_1;
@@ -1719,7 +1719,7 @@ end design_1;
 architecture STRUCTURE of design_1 is
   component design_1_clk_wiz_0_0 is
   port (
-    reset : in STD_LOGIC;
+    resetn : in STD_LOGIC;
     clk_in1 : in STD_LOGIC;
     clk_out1 : out STD_LOGIC;
     locked : out STD_LOGIC
@@ -1829,26 +1829,6 @@ architecture STRUCTURE of design_1 is
     peripheral_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
   end component design_1_rst_clk_wiz_0_100M_0;
-  component design_1_rst_mig_7series_0_83M_0 is
-  port (
-    slowest_sync_clk : in STD_LOGIC;
-    ext_reset_in : in STD_LOGIC;
-    aux_reset_in : in STD_LOGIC;
-    mb_debug_sys_rst : in STD_LOGIC;
-    dcm_locked : in STD_LOGIC;
-    mb_reset : out STD_LOGIC;
-    bus_struct_reset : out STD_LOGIC_VECTOR ( 0 to 0 );
-    peripheral_reset : out STD_LOGIC_VECTOR ( 0 to 0 );
-    interconnect_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 );
-    peripheral_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 )
-  );
-  end component design_1_rst_mig_7series_0_83M_0;
-  component design_1_util_vector_logic_0_0 is
-  port (
-    Op1 : in STD_LOGIC_VECTOR ( 0 to 0 );
-    Res : out STD_LOGIC_VECTOR ( 0 to 0 )
-  );
-  end component design_1_util_vector_logic_0_0;
   component design_1_Smallpond_axi4_master_interface_0_0 is
   port (
     sp_read : in STD_LOGIC;
@@ -1883,6 +1863,20 @@ architecture STRUCTURE of design_1 is
     m00_axi_aresetn : in STD_LOGIC
   );
   end component design_1_Smallpond_axi4_master_interface_0_0;
+  component design_1_proc_sys_reset_0_0 is
+  port (
+    slowest_sync_clk : in STD_LOGIC;
+    ext_reset_in : in STD_LOGIC;
+    aux_reset_in : in STD_LOGIC;
+    mb_debug_sys_rst : in STD_LOGIC;
+    dcm_locked : in STD_LOGIC;
+    mb_reset : out STD_LOGIC;
+    bus_struct_reset : out STD_LOGIC_VECTOR ( 0 to 0 );
+    peripheral_reset : out STD_LOGIC_VECTOR ( 0 to 0 );
+    interconnect_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 );
+    peripheral_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 )
+  );
+  end component design_1_proc_sys_reset_0_0;
   signal Smallpond_axi4_master_interface_0_M00_AXI_ARADDR : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal Smallpond_axi4_master_interface_0_M00_AXI_ARPROT : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal Smallpond_axi4_master_interface_0_M00_AXI_ARREADY : STD_LOGIC;
@@ -1976,11 +1970,11 @@ architecture STRUCTURE of design_1 is
   signal mig_7series_0_DDR3_WE_N : STD_LOGIC;
   signal mig_7series_0_mmcm_locked : STD_LOGIC;
   signal mig_7series_0_ui_clk : STD_LOGIC;
-  signal mig_7series_0_ui_clk_sync_rst : STD_LOGIC;
+  signal proc_sys_reset_0_interconnect_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal proc_sys_reset_0_peripheral_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal reset_1 : STD_LOGIC;
   signal rst_clk_wiz_0_100M_interconnect_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal rst_clk_wiz_0_100M_peripheral_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal rst_mig_7series_0_83M_peripheral_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal sp_addr_0_1 : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal sp_data_in_0_1 : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal sp_op_len_0_1 : STD_LOGIC_VECTOR ( 1 downto 0 );
@@ -1988,18 +1982,17 @@ architecture STRUCTURE of design_1 is
   signal sp_sign_extend_0_1 : STD_LOGIC;
   signal sp_write_0_1 : STD_LOGIC;
   signal sys_clock_1 : STD_LOGIC;
-  signal util_vector_logic_0_Res : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_axi_uartlite_0_interrupt_UNCONNECTED : STD_LOGIC;
   signal NLW_mig_7series_0_init_calib_complete_UNCONNECTED : STD_LOGIC;
+  signal NLW_mig_7series_0_ui_clk_sync_rst_UNCONNECTED : STD_LOGIC;
   signal NLW_mig_7series_0_s_axi_bid_UNCONNECTED : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal NLW_mig_7series_0_s_axi_rid_UNCONNECTED : STD_LOGIC_VECTOR ( 3 downto 0 );
+  signal NLW_proc_sys_reset_0_mb_reset_UNCONNECTED : STD_LOGIC;
+  signal NLW_proc_sys_reset_0_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal NLW_proc_sys_reset_0_peripheral_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_rst_clk_wiz_0_100M_mb_reset_UNCONNECTED : STD_LOGIC;
   signal NLW_rst_clk_wiz_0_100M_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_rst_clk_wiz_0_100M_peripheral_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_rst_mig_7series_0_83M_mb_reset_UNCONNECTED : STD_LOGIC;
-  signal NLW_rst_mig_7series_0_83M_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_rst_mig_7series_0_83M_interconnect_aresetn_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_rst_mig_7series_0_83M_peripheral_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   attribute X_INTERFACE_INFO : string;
   attribute X_INTERFACE_INFO of ddr3_sdram_cas_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CAS_N";
   attribute X_INTERFACE_INFO of ddr3_sdram_ras_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram RAS_N";
@@ -2088,7 +2081,7 @@ axi_interconnect_0: entity work.design_1_axi_interconnect_0_0
       ACLK => clk_wiz_0_clk_out1,
       ARESETN => rst_clk_wiz_0_100M_interconnect_aresetn(0),
       M00_ACLK => mig_7series_0_ui_clk,
-      M00_ARESETN => rst_mig_7series_0_83M_peripheral_aresetn(0),
+      M00_ARESETN => proc_sys_reset_0_interconnect_aresetn(0),
       M00_AXI_araddr(27 downto 0) => axi_interconnect_0_M00_AXI_ARADDR(27 downto 0),
       M00_AXI_arburst(1 downto 0) => axi_interconnect_0_M00_AXI_ARBURST(1 downto 0),
       M00_AXI_arcache(3 downto 0) => axi_interconnect_0_M00_AXI_ARCACHE(3 downto 0),
@@ -2193,12 +2186,12 @@ clk_wiz_0: component design_1_clk_wiz_0_0
       clk_in1 => sys_clock_1,
       clk_out1 => clk_wiz_0_clk_out1,
       locked => clk_wiz_0_locked,
-      reset => util_vector_logic_0_Res(0)
+      resetn => reset_1
     );
 mig_7series_0: component design_1_mig_7series_0_0
      port map (
-      aresetn => rst_mig_7series_0_83M_peripheral_aresetn(0),
-      clk_ref_i => mig_7series_0_ui_clk,
+      aresetn => proc_sys_reset_0_peripheral_aresetn(0),
+      clk_ref_i => clk_wiz_0_clk_out1,
       ddr3_addr(13 downto 0) => mig_7series_0_DDR3_ADDR(13 downto 0),
       ddr3_ba(2 downto 0) => mig_7series_0_DDR3_BA(2 downto 0),
       ddr3_cas_n => mig_7series_0_DDR3_CAS_N,
@@ -2253,10 +2246,23 @@ mig_7series_0: component design_1_mig_7series_0_0
       s_axi_wready => axi_interconnect_0_M00_AXI_WREADY,
       s_axi_wstrb(15 downto 0) => axi_interconnect_0_M00_AXI_WSTRB(15 downto 0),
       s_axi_wvalid => axi_interconnect_0_M00_AXI_WVALID,
-      sys_clk_i => clk_wiz_0_clk_out1,
+      sys_clk_i => mig_7series_0_ui_clk,
       sys_rst => reset_1,
       ui_clk => mig_7series_0_ui_clk,
-      ui_clk_sync_rst => mig_7series_0_ui_clk_sync_rst
+      ui_clk_sync_rst => NLW_mig_7series_0_ui_clk_sync_rst_UNCONNECTED
+    );
+proc_sys_reset_0: component design_1_proc_sys_reset_0_0
+     port map (
+      aux_reset_in => '1',
+      bus_struct_reset(0) => NLW_proc_sys_reset_0_bus_struct_reset_UNCONNECTED(0),
+      dcm_locked => mig_7series_0_mmcm_locked,
+      ext_reset_in => reset_1,
+      interconnect_aresetn(0) => proc_sys_reset_0_interconnect_aresetn(0),
+      mb_debug_sys_rst => '0',
+      mb_reset => NLW_proc_sys_reset_0_mb_reset_UNCONNECTED,
+      peripheral_aresetn(0) => proc_sys_reset_0_peripheral_aresetn(0),
+      peripheral_reset(0) => NLW_proc_sys_reset_0_peripheral_reset_UNCONNECTED(0),
+      slowest_sync_clk => mig_7series_0_ui_clk
     );
 rst_clk_wiz_0_100M: component design_1_rst_clk_wiz_0_100M_0
      port map (
@@ -2270,23 +2276,5 @@ rst_clk_wiz_0_100M: component design_1_rst_clk_wiz_0_100M_0
       peripheral_aresetn(0) => rst_clk_wiz_0_100M_peripheral_aresetn(0),
       peripheral_reset(0) => NLW_rst_clk_wiz_0_100M_peripheral_reset_UNCONNECTED(0),
       slowest_sync_clk => clk_wiz_0_clk_out1
-    );
-rst_mig_7series_0_83M: component design_1_rst_mig_7series_0_83M_0
-     port map (
-      aux_reset_in => '1',
-      bus_struct_reset(0) => NLW_rst_mig_7series_0_83M_bus_struct_reset_UNCONNECTED(0),
-      dcm_locked => mig_7series_0_mmcm_locked,
-      ext_reset_in => mig_7series_0_ui_clk_sync_rst,
-      interconnect_aresetn(0) => NLW_rst_mig_7series_0_83M_interconnect_aresetn_UNCONNECTED(0),
-      mb_debug_sys_rst => '0',
-      mb_reset => NLW_rst_mig_7series_0_83M_mb_reset_UNCONNECTED,
-      peripheral_aresetn(0) => rst_mig_7series_0_83M_peripheral_aresetn(0),
-      peripheral_reset(0) => NLW_rst_mig_7series_0_83M_peripheral_reset_UNCONNECTED(0),
-      slowest_sync_clk => mig_7series_0_ui_clk
-    );
-util_vector_logic_0: component design_1_util_vector_logic_0_0
-     port map (
-      Op1(0) => reset_1,
-      Res(0) => util_vector_logic_0_Res(0)
     );
 end STRUCTURE;

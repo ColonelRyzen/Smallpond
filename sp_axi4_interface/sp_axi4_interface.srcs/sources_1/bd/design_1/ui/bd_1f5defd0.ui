@@ -4,8 +4,8 @@
 #  -string -flagsOSRD
 preplace port ddr3_sdram -pg 1 -y 290 -defaultsOSRD
 preplace port sp_write_0 -pg 1 -y 170 -defaultsOSRD
-preplace port sp_error_0 -pg 1 -y 220 -defaultsOSRD
 preplace port sp_read_0 -pg 1 -y 130 -defaultsOSRD
+preplace port sp_error_0 -pg 1 -y 220 -defaultsOSRD
 preplace port sp_sign_extend_0 -pg 1 -y 150 -defaultsOSRD
 preplace port sys_clock -pg 1 -y -50 -defaultsOSRD
 preplace port sp_over_0 -pg 1 -y 200 -defaultsOSRD
@@ -15,43 +15,41 @@ preplace portBus sp_op_len_0 -pg 1 -y 190 -defaultsOSRD
 preplace portBus sp_addr_0 -pg 1 -y 210 -defaultsOSRD
 preplace portBus sp_data_out_0 -pg 1 -y 180 -defaultsOSRD
 preplace portBus sp_data_in_0 -pg 1 -y 230 -defaultsOSRD
-preplace inst rst_mig_7series_0_83M -pg 1 -lvl 6 -y -20 -defaultsOSRD
-preplace inst rst_clk_wiz_0_100M -pg 1 -lvl 4 -y -20 -defaultsOSRD
-preplace inst mig_7series_0 -pg 1 -lvl 5 -y 330 -defaultsOSRD
-preplace inst util_vector_logic_0 -pg 1 -lvl 1 -y -100 -defaultsOSRD
-preplace inst Smallpond_axi4_master_interface_0 -pg 1 -lvl 2 -y 400 -defaultsOSRD
-preplace inst axi_interconnect_0 -pg 1 -lvl 4 -y 450 -defaultsOSRD
-preplace inst axi_uartlite_0 -pg 1 -lvl 5 -y 550 -defaultsOSRD
-preplace inst clk_wiz_0 -pg 1 -lvl 3 -y -60 -defaultsOSRD
-preplace netloc Smallpond_axi4_master_interface_0_sp_data_out 1 2 5 450J 180 NJ 180 NJ 180 NJ 180 NJ
-preplace netloc mig_7series_0_mmcm_locked 1 5 1 1630
-preplace netloc sp_sign_extend_0_1 1 0 2 NJ 150 100J
-preplace netloc clk_wiz_0_locked 1 3 1 700
-preplace netloc mig_7series_0_DDR3 1 5 2 N 290 N
-preplace netloc Smallpond_axi4_master_interface_0_M00_AXI 1 2 2 NJ 370 N
-preplace netloc sp_read_0_1 1 0 2 NJ 130 110
-preplace netloc util_vector_logic_0_Res 1 1 2 N -100 450
-preplace netloc rst_mig_7series_0_83M_peripheral_aresetn 1 3 4 720 310 1330 220 NJ 220 2000
-preplace netloc sys_clock_1 1 0 3 -260J -40 110 -50 N
-preplace netloc mig_7series_0_ui_clk 1 3 3 710 300 1350 240 1610
-preplace netloc Smallpond_axi4_master_interface_0_sp_error 1 2 5 470J 210 NJ 210 NJ 210 NJ 210 2010J
-preplace netloc clk_wiz_0_clk_out1 1 1 4 70 520 460 510 690 290 1300
-preplace netloc axi_uartlite_0_UART 1 5 2 NJ 540 N
-preplace netloc axi_interconnect_0_M00_AXI 1 4 1 1320
-preplace netloc mig_7series_0_ui_clk_sync_rst 1 5 1 1620
-preplace netloc axi_interconnect_0_M01_AXI 1 4 1 1290
-preplace netloc Smallpond_axi4_master_interface_0_sp_over 1 2 5 460J 200 NJ 200 NJ 200 NJ 200 NJ
-preplace netloc sp_write_0_1 1 0 2 NJ 170 90J
-preplace netloc rst_clk_wiz_0_100M_interconnect_aresetn 1 3 2 700 80 1300
-preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 1 4 100 530 N 530 700 590 1310
-preplace netloc reset_1 1 0 5 -260 -160 N -160 N -160 720 70 1340
-preplace netloc sp_data_in_0_1 1 0 2 NJ 230 60J
-preplace netloc sp_addr_0_1 1 0 2 NJ 210 70J
-preplace netloc sp_op_len_0_1 1 0 2 NJ 190 80J
-levelinfo -pg 1 -280 -90 290 590 1110 1480 1820 2030 -top -540 -bot 1360
+preplace inst rst_clk_wiz_0_100M -pg 1 -lvl 3 -y -20 -defaultsOSRD
+preplace inst mig_7series_0 -pg 1 -lvl 4 -y 330 -defaultsOSRD
+preplace inst proc_sys_reset_0 -pg 1 -lvl 4 -y 60 -defaultsOSRD
+preplace inst Smallpond_axi4_master_interface_0 -pg 1 -lvl 1 -y 400 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 3 -y 450 -defaultsOSRD
+preplace inst axi_uartlite_0 -pg 1 -lvl 4 -y 550 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 2 -y -60 -defaultsOSRD
+preplace netloc mig_7series_0_mmcm_locked 1 3 2 1320 150 1700
+preplace netloc Smallpond_axi4_master_interface_0_sp_data_out 1 1 4 450J 170 NJ 170 NJ 170 1710J
+preplace netloc sp_sign_extend_0_1 1 0 1 -220J
+preplace netloc clk_wiz_0_locked 1 2 1 720
+preplace netloc mig_7series_0_DDR3 1 4 1 N
+preplace netloc Smallpond_axi4_master_interface_0_M00_AXI 1 1 2 NJ 370 N
+preplace netloc sp_read_0_1 1 0 1 -210J
+preplace netloc sys_clock_1 1 0 2 NJ -50 N
+preplace netloc proc_sys_reset_0_interconnect_aresetn 1 2 3 710 180 NJ 180 1690
+preplace netloc mig_7series_0_ui_clk 1 2 3 730 310 1300 240 1680
+preplace netloc Smallpond_axi4_master_interface_0_sp_error 1 1 4 470J 210 NJ 210 NJ 210 1710J
+preplace netloc clk_wiz_0_clk_out1 1 0 4 -250 520 460 510 690 300 1270
+preplace netloc axi_uartlite_0_UART 1 4 1 NJ
+preplace netloc axi_interconnect_0_M00_AXI 1 3 1 1290
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 3 2 1320 230 1680
+preplace netloc axi_interconnect_0_M01_AXI 1 3 1 1260
+preplace netloc Smallpond_axi4_master_interface_0_sp_over 1 1 4 460J 200 NJ 200 NJ 200 NJ
+preplace netloc sp_write_0_1 1 0 1 -230J
+preplace netloc rst_clk_wiz_0_100M_interconnect_aresetn 1 2 2 720 80 1270
+preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 0 4 -220 530 N 530 700 590 1280
+preplace netloc reset_1 1 0 4 N -100 450 -120 730 70 1310
+preplace netloc sp_data_in_0_1 1 0 1 -260J
+preplace netloc sp_addr_0_1 1 0 1 -250J
+preplace netloc sp_op_len_0_1 1 0 1 -240J
+levelinfo -pg 1 -280 290 590 1080 1500 2030 -top -540 -bot 1360
 ",
 }
 {
    da_board_cnt: "1",
-   da_clkrst_cnt: "8",
+   da_clkrst_cnt: "11",
 }

@@ -50,10 +50,10 @@
 // IP VLNV: xilinx.com:ip:axi_dwidth_converter:2.1
 // IP Revision: 14
 
-(* X_CORE_INFO = "axi_dwidth_converter_v2_1_14_top,Vivado 2017.3" *)
+(* X_CORE_INFO = "axi_dwidth_converter_v2_1_14_top,Vivado 2017.3.1" *)
 (* CHECK_LICENSE_TYPE = "design_1_auto_us_1,axi_dwidth_converter_v2_1_14_top,{}" *)
-(* CORE_GENERATION_INFO = "design_1_auto_us_1,axi_dwidth_converter_v2_1_14_top,{x_ipProduct=Vivado 2017.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_dwidth_converter,x_ipVersion=2.1,x_ipCoreRevision=14,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,C_FAMILY=artix7,C_AXI_PROTOCOL=2,C_S_AXI_ID_WIDTH=1,C_SUPPORTS_ID=0,C_AXI_ADDR_WIDTH=32,C_S_AXI_DATA_WIDTH=32,C_M_AXI_DATA_WIDTH=64,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_FIFO_MODE=0,C_S_AXI_ACLK_RATIO=1,C_M_AXI_ACLK_RATIO=2,C_AXI_IS_ACLK_ASYNC=0,C_MAX_SPLIT_BEATS=16,C_P\
-ACKING_LEVEL=1,C_SYNCHRONIZER_STAGE=3}" *)
+(* CORE_GENERATION_INFO = "design_1_auto_us_1,axi_dwidth_converter_v2_1_14_top,{x_ipProduct=Vivado 2017.3.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_dwidth_converter,x_ipVersion=2.1,x_ipCoreRevision=14,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,C_FAMILY=artix7,C_AXI_PROTOCOL=2,C_S_AXI_ID_WIDTH=1,C_SUPPORTS_ID=0,C_AXI_ADDR_WIDTH=32,C_S_AXI_DATA_WIDTH=32,C_M_AXI_DATA_WIDTH=64,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_FIFO_MODE=0,C_S_AXI_ACLK_RATIO=1,C_M_AXI_ACLK_RATIO=2,C_AXI_IS_ACLK_ASYNC=0,C_MAX_SPLIT_BEATS=16,C\
+_PACKING_LEVEL=1,C_SYNCHRONIZER_STAGE=3}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_auto_us_1 (
   s_axi_aclk,
