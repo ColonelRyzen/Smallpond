@@ -21,6 +21,8 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.numeric_std.all;
+use IEEE.std_logic_signed.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -91,6 +93,14 @@ signal r31_output : STD_LOGIC_VECTOR(31 downto 0);
 
 signal clk_counter: integer :=0;
 
+-- counter register input signals
+signal pos_counter: STD_LOGIC_VECTOR(31 downto 0);
+signal neg_counter: STD_LOGIC_VECTOR(31 downto 0);
+
+-- 2's complement pair registers input signals
+signal r19_input: STD_LOGIC_VECTOR(31 downto 0);
+signal r20_input: STD_LOGIC_VECTOR(31 downto 0);
+
 begin
     -- Instantiating the 32 general purpose registers
     R0 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r0_output);
@@ -112,10 +122,22 @@ begin
     R16 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r16_output);
     R17 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r17_output);
     R18 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r18_output);
-    R19 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r19_output);
-    R20 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r20_output);
-    R21 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r21_output);
-    R22 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r22_output);
+    R19 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => r19_input,load_in => reg_write_in,q_out => r19_output);
+    R20 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => r20_input,load_in => reg_write_in,q_out => r20_output);
+    R21 : entity work.counter_register port map(clk_in => clk_in,
+                                                reset_in => reset_in,
+                                                counter_data_in => pos_counter,
+                                                d_in => write_data_in,
+                                                counter_in => counter_bit_in,
+                                                load_in => reg_write_in,
+                                                q_out => r21_output);
+    R22 : entity work.counter_register port map(clk_in => clk_in,
+                                                reset_in => reset_in,
+                                                counter_data_in => neg_counter,
+                                                d_in => write_data_in,
+                                                counter_in => counter_bit_in,
+                                                load_in => reg_write_in,
+                                                q_out => r22_output);
     R23 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r23_output);
     R24 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r24_output);
     R25 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => reg_write_in,q_out => r25_output);
@@ -158,6 +180,7 @@ begin
     operand_fetch: process(clk_in,reset_in)
     begin
         if rising_edge(clk_in) then
+            cpsr_cond_bits_control_out <= r31_output(3 downto 0);
             if clk_counter = 1 and reset_in = '0' then
                 -- Case statement to set register_1_out to the read_register_1
                 case read_register_1_in is
@@ -296,6 +319,26 @@ begin
                     when "11111" =>
                         register_2_out <= r31_output;
                 end case;
+            end if;
+            -- Increment/Decrement counter if bit is set
+            if clk_counter = 3 and reset_in = '0' then
+                if counter_bit_in = '1' then
+                    pos_counter <= r21_output + x"00000001";
+                    neg_counter <= r22_output - x"00000001";
+                end if;
+            end if;
+            
+            -- Driving 2's complement pair
+            if clk_counter = 4 and reset_in = '0' then
+                if reg_write_in = '1' then
+                    if write_register_in = "10011" then
+                        r19_input <= write_data_in;
+                        r20_input <= (not write_data_in) + x"00000001";
+                    elsif write_register_in = "10100" then
+                        r20_input <= write_data_in;
+                        r19_input <= (not write_data_in) + x"00000001";
+                    end if;
+                end if;
             end if;
         end if;
     end process;

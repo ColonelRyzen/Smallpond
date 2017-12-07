@@ -45,16 +45,16 @@ architecture Behavioral of pc_register is
 
 begin
 process(clk_in,reset_in)
-    begin
-        if reset_in = '1' then
-            q_out <= x"00000000";
-        elsif rising_edge(clk_in) then
-            if load_in = '1' then
-                q_out <= d_in;
-            elsif pc_in = '1' then
-                q_out <= pc_data_in;
-            end if;
+begin
+    if reset_in = '1' then
+        q_out <= x"00000000";
+    elsif rising_edge(clk_in) then
+        if load_in = '1' and pc_in = '0' then
+            q_out <= d_in;
+        elsif pc_in = '1' and load_in = '0'then
+            q_out <= pc_data_in;
         end if;
-    end process;
+    end if;
+end process;
 
 end Behavioral;
