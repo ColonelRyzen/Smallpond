@@ -97,9 +97,9 @@ begin
             -- Increment PC if statement. This will enable the pc_write_out signal in first stage
             if clk_counter = 0 and reset_in = '0' then
                 reg_write_out <= '0';
-                    pc_write_out <= '1';
-                elsif reset_in = '1' then
-                    pc_write_out <= '0';
+                pc_write_out <= '1';
+            elsif reset_in = '1' then
+                pc_write_out <= '0';
             end if;
 
 
@@ -4516,7 +4516,7 @@ begin
                 mem_to_reg_out <= '0';
             end if;
 
-            -- This is for a potentail update of teh cpsr or counter registers
+            -- This is for a potential update of teh cpsr or counter registers
             if clk_counter = 3 and reset_in = '0' and instruction_runs = '1' then
                 reg_write_out <= '0';
                 cpsr_set_bit_out <= cpsr_set_bit_in;
@@ -4526,7 +4526,9 @@ begin
                 cpsr_set_bit_out <= '0';
                 counter_bit_out <= '0';
             end if;
-
+            
+            -- This is for the write back stage
+            -- reg_write_out is enabled and all other write signals are disbaled
             if clk_counter = 4 and reset_in = '0' and instruction_runs = '1' then
                 reg_write_out <= reg_write_old;
                 cpsr_set_bit_out <= '0';
