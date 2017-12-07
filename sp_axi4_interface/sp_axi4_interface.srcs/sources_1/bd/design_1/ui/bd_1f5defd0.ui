@@ -46,7 +46,7 @@ preplace netloc reset_1 1 0 4 N -100 450 -120 730 70 1310
 preplace netloc sp_data_in_0_1 1 0 1 -260J
 preplace netloc sp_addr_0_1 1 0 1 -250J
 preplace netloc sp_op_len_0_1 1 0 1 -240J
-levelinfo -pg 1 -280 290 590 1080 1500 2030 -top -540 -bot 1360
+levelinfo -pg 1 -280 290 590 1080 1500 1730 -top -540 -bot 1360
 ",
 }
 {

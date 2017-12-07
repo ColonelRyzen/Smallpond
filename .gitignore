@@ -1,5 +1,5 @@
 #########################################################################################################
-##	This is an example .gitignore file for Vivado, please treat it as an example as 
+##	This is an example .gitignore file for Vivado, please treat it as an example as
 ##	it might not be complete. In addition, XAPP 1165 should be followed.
 #########################################################################################################
 #########
@@ -12,9 +12,17 @@
 ##	VIVADO
 ###########################################################################
 #########
-#Cache Directory
+#Vivado Ignore Directory
 #########
 /**/*.cache
+/**/*.runs
+/**/*.sim
+/**/*.ip_user_files
+#########
+#NOT ignoring Python
+#########
+!*.py
+!*.bak
 #########
 #Source files:
 #########

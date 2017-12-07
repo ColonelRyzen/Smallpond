@@ -44,7 +44,7 @@ Controller Options :
    ORDERING                      : Normal
 
 AXI Parameters :
-   Data Width                    : 128
+   Data Width                    : 32
    Arbitration Scheme            : RD_PRI_REG
    Narrow Burst Support          : 0
    ID Width                      : 4

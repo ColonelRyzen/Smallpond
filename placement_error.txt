@@ -1,0 +1,85 @@
+[Place 30-58] IO placement is infeasible. Number of unplaced terminals (103) is greater than number of available sites (100).
+The following are banks with available pins: 
+
+[Place 30-374] IO placer failed to find a solution
+Below is the partial placement that can be analyzed to see if any constraint modifications will make the IO placement problem easier to solve.
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                     IO Placement : Bank Stats                                                                           |
++----+-------+-------+------------------------------------------------------------------------+------------------------------------------+--------+--------+--------+-----+
+| Id | Pins  | Terms |                               Standards                                |                IDelayCtrls               |  VREF  |  VCCO  |   VR   | DCI |
++----+-------+-------+------------------------------------------------------------------------+------------------------------------------+--------+--------+--------+-----+
+|  0 |     0 |     0 |                                                                        |                                          |        |        |        |     |
+| 14 |    50 |     0 |                                                                        |                                          |        |        |        |     |
+| 15 |    50 |     0 |                                                                        |                                          |        |        |        |     |
+| 16 |    10 |     2 | LVCMOS33(2)                                                            |                                          |        |  +3.30 |    YES |     |
+| 34 |    50 |    48 | DIFF_SSTL135(6)  SSTL135(42)                                           |                                          |  +0.68 |  +1.35 |    YES |     |
+| 35 |    50 |     2 | LVCMOS33(2)                                                            |                                          |        |  +3.30 |    YES |     |
++----+-------+-------+------------------------------------------------------------------------+------------------------------------------+--------+--------+--------+-----+
+|    |   210 |    52 |                                                                        |                                          |        |        |        |     |
++----+-------+-------+------------------------------------------------------------------------+------------------------------------------+--------+--------+--------+-----+
+
+IO Placement:
++--------+----------------------+-----------------+----------------------+----------------------+----------------------+
+| BankId |             Terminal | Standard        | Site                 | Pin                  | Attributes           |
++--------+----------------------+-----------------+----------------------+----------------------+----------------------+
+| 16     | usb_uart_rxd         | LVCMOS33        | IOB_X0Y121           | A9                   |                      |
+|        | usb_uart_txd         | LVCMOS33        | IOB_X0Y111           | D10                  | *                    |
++--------+----------------------+-----------------+----------------------+----------------------+----------------------+
+| 34     | ddr3_sdram_ck_p[0]   | DIFF_SSTL135    | IOB_X1Y8             | U9                   |                      |
+|        | ddr3_sdram_ck_n[0]   | DIFF_SSTL135    | IOB_X1Y7             | V9                   |                      |
+|        | ddr3_sdram_dqs_p[0]  | DIFF_SSTL135    | IOB_X1Y44            | N2                   |                      |
+|        | ddr3_sdram_dqs_n[0]  | DIFF_SSTL135    | IOB_X1Y43            | N1                   |                      |
+|        | ddr3_sdram_dqs_p[1]  | DIFF_SSTL135    | IOB_X1Y32            | U2                   |                      |
+|        | ddr3_sdram_dqs_n[1]  | DIFF_SSTL135    | IOB_X1Y31            | V2                   |                      |
+|        | ddr3_sdram_addr[0]   | SSTL135         | IOB_X1Y19            | R2                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[10]  | SSTL135         | IOB_X1Y12            | R6                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[11]  | SSTL135         | IOB_X1Y5             | U6                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[12]  | SSTL135         | IOB_X1Y3             | T6                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[13]  | SSTL135         | IOB_X1Y1             | T8                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[1]   | SSTL135         | IOB_X1Y14            | M6                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[2]   | SSTL135         | IOB_X1Y17            | N4                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[3]   | SSTL135         | IOB_X1Y15            | T1                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[4]   | SSTL135         | IOB_X1Y13            | N6                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[5]   | SSTL135         | IOB_X1Y4             | R7                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[6]   | SSTL135         | IOB_X1Y9             | V6                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[7]   | SSTL135         | IOB_X1Y6             | U7                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[8]   | SSTL135         | IOB_X1Y2             | R8                   | VRef=+0.68           |
+|        | ddr3_sdram_addr[9]   | SSTL135         | IOB_X1Y10            | V7                   | VRef=+0.68           |
+|        | ddr3_sdram_ba[0]     | SSTL135         | IOB_X1Y16            | R1                   | VRef=+0.68           |
+|        | ddr3_sdram_ba[1]     | SSTL135         | IOB_X1Y22            | P4                   | VRef=+0.68           |
+|        | ddr3_sdram_ba[2]     | SSTL135         | IOB_X1Y20            | P2                   | VRef=+0.68           |
+|        | ddr3_sdram_cas_n     | SSTL135         | IOB_X1Y18            | M4                   | VRef=+0.68           |
+|        | ddr3_sdram_cke[0]    | SSTL135         | IOB_X1Y24            | N5                   | VRef=+0.68           |
+|        | ddr3_sdram_cs_n[0]   | SSTL135         | IOB_X1Y0             | U8                   | VRef=+0.68           |
+|        | ddr3_sdram_dm[0]     | SSTL135         | IOB_X1Y48            | L1                   | VRef=+0.68           |
+|        | ddr3_sdram_dm[1]     | SSTL135         | IOB_X1Y36            | U1                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[0]     | SSTL135         | IOB_X1Y40            | K5                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[10]    | SSTL135         | IOB_X1Y34            | U4                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[11]    | SSTL135         | IOB_X1Y30            | V5                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[12]    | SSTL135         | IOB_X1Y35            | V1                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[13]    | SSTL135         | IOB_X1Y27            | T3                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[14]    | SSTL135         | IOB_X1Y33            | U3                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[15]    | SSTL135         | IOB_X1Y28            | R3                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[1]     | SSTL135         | IOB_X1Y45            | L3                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[2]     | SSTL135         | IOB_X1Y46            | K3                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[3]     | SSTL135         | IOB_X1Y38            | L6                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[4]     | SSTL135         | IOB_X1Y42            | M3                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[5]     | SSTL135         | IOB_X1Y47            | M1                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[6]     | SSTL135         | IOB_X1Y39            | L4                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[7]     | SSTL135         | IOB_X1Y41            | M2                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[8]     | SSTL135         | IOB_X1Y29            | V4                   | VRef=+0.68           |
+|        | ddr3_sdram_dq[9]     | SSTL135         | IOB_X1Y26            | T5                   | VRef=+0.68           |
+|        | ddr3_sdram_odt[0]    | SSTL135         | IOB_X1Y11            | R5                   | VRef=+0.68*          |
+|        | ddr3_sdram_ras_n     | SSTL135         | IOB_X1Y21            | P3                   | VRef=+0.68           |
+|        | ddr3_sdram_reset_n   | SSTL135         | IOB_X1Y49            | K6                   | VRef=+0.68           |
+|        | ddr3_sdram_we_n      | SSTL135         | IOB_X1Y23            | P5                   | VRef=+0.68           |
++--------+----------------------+-----------------+----------------------+----------------------+----------------------+
+| 35     | reset                | LVCMOS33        | IOB_X1Y68            | C2                   |                      |
+|        | sys_clock            | LVCMOS33        | IOB_X1Y76            | E3                   |                      |
++--------+----------------------+-----------------+----------------------+----------------------+----------------------+
+
+[Place 30-99] Placer failed with error: 'IO Clock Placer failed'
+Please review all ERROR, CRITICAL WARNING, and WARNING messages during placement to understand the cause for failure.
+
+[Common 17-69] Command failed: Placer could not place all instances
