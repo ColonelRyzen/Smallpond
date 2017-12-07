@@ -50,10 +50,10 @@
 // IP VLNV: xilinx.com:ip:axi_clock_converter:2.1
 // IP Revision: 13
 
-(* X_CORE_INFO = "axi_clock_converter_v2_1_13_axi_clock_converter,Vivado 2017.3.1" *)
+(* X_CORE_INFO = "axi_clock_converter_v2_1_13_axi_clock_converter,Vivado 2017.3" *)
 (* CHECK_LICENSE_TYPE = "design_1_auto_cc_0,axi_clock_converter_v2_1_13_axi_clock_converter,{}" *)
-(* CORE_GENERATION_INFO = "design_1_auto_cc_0,axi_clock_converter_v2_1_13_axi_clock_converter,{x_ipProduct=Vivado 2017.3.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_clock_converter,x_ipVersion=2.1,x_ipCoreRevision=13,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,C_FAMILY=artix7,C_AXI_ID_WIDTH=1,C_AXI_ADDR_WIDTH=28,C_AXI_DATA_WIDTH=32,C_S_AXI_ACLK_RATIO=1,C_M_AXI_ACLK_RATIO=2,C_AXI_IS_ACLK_ASYNC=1,C_AXI_PROTOCOL=2,C_AXI_SUPPORTS_USER_SIGNALS=0,C_AXI_AWUSER_WIDTH=1,C_AXI_ARUSER_WIDTH=1,C_AXI_WUSER_WIDTH=1,C_AXI_RUSER_WIDTH\
-=1,C_AXI_BUSER_WIDTH=1,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_SYNCHRONIZER_STAGE=3}" *)
+(* CORE_GENERATION_INFO = "design_1_auto_cc_0,axi_clock_converter_v2_1_13_axi_clock_converter,{x_ipProduct=Vivado 2017.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_clock_converter,x_ipVersion=2.1,x_ipCoreRevision=13,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,C_FAMILY=artix7,C_AXI_ID_WIDTH=1,C_AXI_ADDR_WIDTH=28,C_AXI_DATA_WIDTH=32,C_S_AXI_ACLK_RATIO=1,C_M_AXI_ACLK_RATIO=2,C_AXI_IS_ACLK_ASYNC=1,C_AXI_PROTOCOL=2,C_AXI_SUPPORTS_USER_SIGNALS=0,C_AXI_AWUSER_WIDTH=1,C_AXI_ARUSER_WIDTH=1,C_AXI_WUSER_WIDTH=1,C_AXI_RUSER_WIDTH=1\
+,C_AXI_BUSER_WIDTH=1,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_SYNCHRONIZER_STAGE=3}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_auto_cc_0 (
   s_axi_aclk,

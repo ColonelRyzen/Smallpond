@@ -1,8 +1,8 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
---Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
---Date        : Wed Dec  6 23:51:31 2017
---Host        : octopus-tetricus running 64-bit unknown
+--Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
+--Date        : Thu Dec  7 17:14:44 2017
+--Host        : bonner running 64-bit Ubuntu 17.10
 --Command     : generate_target design_1_wrapper.bd
 --Design      : design_1_wrapper
 --Purpose     : IP block netlist
@@ -29,15 +29,15 @@ entity design_1_wrapper is
     ddr3_sdram_reset_n : out STD_LOGIC;
     ddr3_sdram_we_n : out STD_LOGIC;
     reset : in STD_LOGIC;
-    sp_addr_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_data_in_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_data_out_0 : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_error_0 : out STD_LOGIC;
-    sp_op_len_0 : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    sp_over_0 : out STD_LOGIC;
-    sp_read_0 : in STD_LOGIC;
-    sp_sign_extend_0 : in STD_LOGIC;
-    sp_write_0 : in STD_LOGIC;
+--    sp_addr_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
+--    sp_data_in_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
+--    sp_data_out_0 : out STD_LOGIC_VECTOR ( 31 downto 0 );
+--    sp_error_0 : out STD_LOGIC;
+--    sp_op_len_0 : in STD_LOGIC_VECTOR ( 1 downto 0 );
+--    sp_over_0 : out STD_LOGIC;
+--    sp_read_0 : in STD_LOGIC;
+--    sp_sign_extend_0 : in STD_LOGIC;
+--    sp_write_0 : in STD_LOGIC;
     sys_clock : in STD_LOGIC;
     usb_uart_rxd : in STD_LOGIC;
     usb_uart_txd : out STD_LOGIC
@@ -66,17 +66,31 @@ architecture STRUCTURE of design_1_wrapper is
     ddr3_sdram_odt : out STD_LOGIC_VECTOR ( 0 to 0 );
     sys_clock : in STD_LOGIC;
     reset : in STD_LOGIC;
-    sp_sign_extend_0 : in STD_LOGIC;
-    sp_write_0 : in STD_LOGIC;
-    sp_op_len_0 : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    sp_addr_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_data_in_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_data_out_0 : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_over_0 : out STD_LOGIC;
     sp_error_0 : out STD_LOGIC;
-    sp_read_0 : in STD_LOGIC
+    sp_op_len_0 : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    sp_write_0 : in STD_LOGIC;
+    sp_sign_extend_0 : in STD_LOGIC;
+    sp_read_0 : in STD_LOGIC;
+    sp_data_in_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    sp_over_0 : out STD_LOGIC;
+    sp_addr_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    sp_data_out_0 : out STD_LOGIC_VECTOR ( 31 downto 0 )
   );
   end component design_1;
+
+    signal sp_addr : std_logic_vector(31 downto 0);
+    signal sp_data_in : std_logic_vector(31 downto 0);
+    signal sp_data_out : std_logic_vector(31 downto 0);
+    signal sp_error : std_logic;
+    signal sp_op_len : std_logic_vector(1 downto  0);
+    signal sp_over : std_logic;
+    signal sp_read : std_logic;
+    signal sp_write : std_logic;
+    signal sp_sign_extend : std_logic;
+    
+    constant clk_period : time := 10ns;
+    signal clk : std_logic;
+
 begin
 design_1_i: component design_1
      port map (
@@ -96,17 +110,47 @@ design_1_i: component design_1
       ddr3_sdram_reset_n => ddr3_sdram_reset_n,
       ddr3_sdram_we_n => ddr3_sdram_we_n,
       reset => reset,
-      sp_addr_0(31 downto 0) => sp_addr_0(31 downto 0),
-      sp_data_in_0(31 downto 0) => sp_data_in_0(31 downto 0),
-      sp_data_out_0(31 downto 0) => sp_data_out_0(31 downto 0),
-      sp_error_0 => sp_error_0,
-      sp_op_len_0(1 downto 0) => sp_op_len_0(1 downto 0),
-      sp_over_0 => sp_over_0,
-      sp_read_0 => sp_read_0,
-      sp_sign_extend_0 => sp_sign_extend_0,
-      sp_write_0 => sp_write_0,
+      sp_addr_0(31 downto 0) => sp_addr(31 downto 0),
+      sp_data_in_0(31 downto 0) => sp_data_in(31 downto 0),
+      sp_data_out_0(31 downto 0) => sp_data_out(31 downto 0),
+      sp_error_0 => sp_error,
+      sp_op_len_0(1 downto 0) => sp_op_len(1 downto 0),
+      sp_over_0 => sp_over,
+      sp_read_0 => sp_read,
+      sp_sign_extend_0 => sp_sign_extend,
+      sp_write_0 => sp_write,
       sys_clock => sys_clock,
       usb_uart_rxd => usb_uart_rxd,
       usb_uart_txd => usb_uart_txd
     );
+    
+    clk_process : process begin
+        clk <= '0';
+        wait for clk_period/2;
+        clk <= '1';
+        wait for clk_period/2;
+    end process;
+    
+    stimulus : process begin
+    
+        sp_read <= '0';
+        sp_op_len <= "01";
+        sp_sign_extend <= '0';
+        sp_addr <= x"80000000";
+        sp_write <= '1';
+        sp_data_in <= x"00003765";
+        
+        wait for 100ns;
+        
+        sp_write <= '0';
+        
+        wait for 100ns;
+        
+        sp_read <= '1';
+        
+        wait for 100ns;
+    
+    end process;
+    
+    
 end STRUCTURE;

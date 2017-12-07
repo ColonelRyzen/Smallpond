@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0x2BE3C4E15E7EE2CA" bd:device="xc7a35ticsg324-1L" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2017.3.1" bd:top="design_1" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0x2BE3C4E15E7EE2CA" bd:device="xc7a35ticsg324-1L" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2017.3" bd:top="design_1" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -234,15 +234,9 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>sp_sign_extend_0</spirit:name>
+          <spirit:name>sp_error_0</spirit:name>
           <spirit:wire>
-            <spirit:direction>in</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>sp_write_0</spirit:name>
-          <spirit:wire>
-            <spirit:direction>in</spirit:direction>
+            <spirit:direction>out</spirit:direction>
           </spirit:wire>
         </spirit:port>
         <spirit:port>
@@ -256,7 +250,25 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>sp_addr_0</spirit:name>
+          <spirit:name>sp_write_0</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>sp_sign_extend_0</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>sp_read_0</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>sp_data_in_0</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
             <spirit:vector>
@@ -266,7 +278,13 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>sp_data_in_0</spirit:name>
+          <spirit:name>sp_over_0</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>sp_addr_0</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
             <spirit:vector>
@@ -283,24 +301,6 @@
               <spirit:left>31</spirit:left>
               <spirit:right>0</spirit:right>
             </spirit:vector>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>sp_over_0</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>sp_error_0</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>sp_read_0</spirit:name>
-          <spirit:wire>
-            <spirit:direction>in</spirit:direction>
           </spirit:wire>
         </spirit:port>
       </spirit:ports>
@@ -444,51 +444,6 @@
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="ARESETN"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>sp_sign_extend_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="sp_sign_extend_0"/>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_sign_extend"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>sp_write_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="sp_write_0"/>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_write"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>sp_op_len_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="sp_op_len_0"/>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_op_len"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>sp_addr_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="sp_addr_0"/>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_addr"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>sp_data_in_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="sp_data_in_0"/>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_data_in"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>Smallpond_axi4_master_interface_0_sp_data_out</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_data_out"/>
-        <spirit:externalPortReference spirit:portRef="sp_data_out_0"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>Smallpond_axi4_master_interface_0_sp_over</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_over"/>
-        <spirit:externalPortReference spirit:portRef="sp_over_0"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>Smallpond_axi4_master_interface_0_sp_error</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_error"/>
-        <spirit:externalPortReference spirit:portRef="sp_error_0"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>sp_read_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="sp_read_0"/>
-        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_read"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>mig_7series_0_ui_clk</spirit:name>
         <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="ui_clk"/>
         <spirit:internalPortReference spirit:componentRef="proc_sys_reset_0" spirit:portRef="slowest_sync_clk"/>
@@ -509,6 +464,51 @@
         <spirit:name>mig_7series_0_mmcm_locked</spirit:name>
         <spirit:internalPortReference spirit:componentRef="mig_7series_0" spirit:portRef="mmcm_locked"/>
         <spirit:internalPortReference spirit:componentRef="proc_sys_reset_0" spirit:portRef="dcm_locked"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>Smallpond_axi4_master_interface_0_sp_error</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_error"/>
+        <spirit:externalPortReference spirit:portRef="sp_error_0"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>sp_op_len_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="sp_op_len_0"/>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_op_len"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>sp_write_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="sp_write_0"/>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_write"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>sp_sign_extend_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="sp_sign_extend_0"/>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_sign_extend"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>sp_read_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="sp_read_0"/>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_read"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>sp_data_in_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="sp_data_in_0"/>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_data_in"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>Smallpond_axi4_master_interface_0_sp_over</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_over"/>
+        <spirit:externalPortReference spirit:portRef="sp_over_0"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>sp_addr_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="sp_addr_0"/>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_addr"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>Smallpond_axi4_master_interface_0_sp_data_out</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="Smallpond_axi4_master_interface_0" spirit:portRef="sp_data_out"/>
+        <spirit:externalPortReference spirit:portRef="sp_data_out_0"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>

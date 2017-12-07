@@ -1,8 +1,8 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
-// Date        : Thu Dec  7 10:04:59 2017
-// Host        : octopus-tetricus running 64-bit unknown
+// Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
+// Date        : Thu Dec  7 15:29:06 2017
+// Host        : bonner running 64-bit Ubuntu 17.10
 // Command     : write_verilog -force -mode synth_stub -rename_top design_1_mig_7series_0_0 -prefix
 //               design_1_mig_7series_0_0_ design_1_mig_7series_0_0_stub.v
 // Design      : design_1_mig_7series_0_0
