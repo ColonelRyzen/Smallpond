@@ -719,54 +719,103 @@ begin
         write_issued <= '0';
         write_over <= '0';
       else
-        if(sp_write = '1' and write_issued = '0') then
-          if(sp_op_len = "00") then --store byte
-            axi_awaddr <= sp_addr;
-            axi_wdata <= x"000000" & sp_data_in(7 downto 0);
-            write_strobes <= "0001";
-            start_single_write <= '1';
-            write_issued <= '1';
-            wstep <= '0';
-          elsif(sp_op_len = "01") then --store halfword (2 bytes)
-            axi_awaddr <= sp_addr;
-            axi_wdata <= x"0000" & sp_data_in(15 downto 0);
-            write_strobes <= "0011";
-            start_single_write <= '1';
-            write_issued <= '1';
-            wstep <= '0';
-          elsif(sp_op_len = "10") then --store word (4 bytes)
-            axi_awaddr <= sp_addr;
-            axi_wdata <= x"0000" & sp_data_in(31 downto 16);
-            write_strobes <= "0011";
-            start_single_write <= '1';
-            write_issued <= '1';
-            wstep <= '0';
-          else
-            write_error <= '1';
-          end if;
-        elsif(start_single_write = '1' and write_issued = '1') then --generate pulse to initiate write
-          start_single_write <= '0';
-        elsif(start_single_write = '0' and write_issued = '1' and M_AXI_BVALID = '1' and axi_bready = '1') then --check if write has finished
-            --check if sp op is finished
-          write_issued <= '0';
-          if(sp_op_len = "00") then --done
-            write_issued <= '0';
-            write_over <= '1';
-          elsif(sp_op_len = "01") then --done
-            write_issued <= '0';
-            write_over <= '1';
-          elsif(sp_op_len = "10") then --write next 2 bytes (not done)
-            if(wstep = '0') then
-              axi_awaddr <= std_logic_vector(unsigned(sp_addr) + 2);
-              axi_wdata <= x"0000" & sp_data_in(15 downto 0);
+        if(sp_addr(31 downto 28) = x"8") then --this is dependent upon where the 16-bit wide DDR3 is addressed
+          if(sp_write = '1' and write_issued = '0') then
+            if(sp_op_len = "00") then --store byte
+              axi_awaddr <= sp_addr;
+              axi_wdata <= x"000000" & sp_data_in(7 downto 0);
+              write_strobes <= "0001";
               start_single_write <= '1';
-              wstep <= '1';
+              write_issued <= '1';
+              wstep <= '0';
+              write_over <= '0';
+            elsif(sp_op_len = "01") then --store halfword (2 bytes)
+              axi_awaddr <= sp_addr;
+              axi_wdata <= x"0000" & sp_data_in(15 downto 0);
+              write_strobes <= "0011";
+              start_single_write <= '1';
+              write_issued <= '1';
+              wstep <= '0';
+              write_over <= '0';
+            elsif(sp_op_len = "10") then --store word (4 bytes)
+              axi_awaddr <= sp_addr;
+              axi_wdata <= x"0000" & sp_data_in(31 downto 16);
+              write_strobes <= "0011";
+              start_single_write <= '1';
+              write_issued <= '1';
+              wstep <= '0';
+              write_over <= '0';
             else
+              write_error <= '1';
+            end if;
+          elsif(start_single_write = '1' and write_issued = '1') then --generate pulse to initiate write
+            start_single_write <= '0';
+          elsif(start_single_write = '0' and write_issued = '1' and M_AXI_BVALID = '1' and axi_bready = '1') then --check if write has finished
+              --check if sp op is finished
+            if(sp_op_len = "00") then --done
               write_issued <= '0';
               write_over <= '1';
+            elsif(sp_op_len = "01") then --done
+              write_issued <= '0';
+              write_over <= '1';
+            elsif(sp_op_len = "10") then --write next 2 bytes (not done)
+              if(wstep = '0') then
+                axi_awaddr <= std_logic_vector(unsigned(sp_addr) + 2);
+                axi_wdata <= x"0000" & sp_data_in(15 downto 0);
+                start_single_write <= '1';
+                wstep <= '1';
+              else
+                write_issued <= '0';
+                write_over <= '1';
+              end if;
+            else
+              write_error <= '1';
             end if;
-          else
-            write_error <= '1';
+          end if;
+        else --if address is not DDR3
+          if(sp_write = '1' and write_issued = '0') then
+            if(sp_op_len = "00") then --store byte
+              axi_awaddr <= sp_addr;
+              axi_wdata <= x"000000" & sp_data_in(7 downto 0);
+              write_strobes <= "0001";
+              start_single_write <= '1';
+              write_issued <= '1';
+              wstep <= '0';
+              write_over <= '0';
+            elsif(sp_op_len = "01") then --store halfword (2 bytes)
+              axi_awaddr <= sp_addr;
+              axi_wdata <= x"0000" & sp_data_in(15 downto 0);
+              write_strobes <= "0011";
+              start_single_write <= '1';
+              write_issued <= '1';
+              wstep <= '0';
+              write_over <= '0';
+            elsif(sp_op_len = "10") then --store word (4 bytes)
+              axi_awaddr <= sp_addr;
+              axi_wdata <= sp_data_in(31 downto 0);
+              write_strobes <= "1111";
+              start_single_write <= '1';
+              write_issued <= '1';
+              write_over <= '0';
+            else
+              write_error <= '1';
+            end if;
+          elsif(start_single_write = '1' and write_issued = '1') then --generate pulse to initiate write
+            start_single_write <= '0';
+          elsif(start_single_write = '0' and write_issued = '1' and M_AXI_BVALID = '1' and axi_bready = '1') then --check if write has finished
+            --check if sp op is finished
+            if(sp_op_len = "00") then --done
+              write_issued <= '0';
+              write_over <= '1';
+            elsif(sp_op_len = "01") then --done
+              write_issued <= '0';
+              write_over <= '1';
+            elsif(sp_op_len = "10") then --write next 2 bytes (not done)
+              write_issued <= '0';
+              write_over <= '1';
+            else
+              write_error <= '1';
+            end if;
           end if;
         end if;
       end if;
@@ -783,46 +832,82 @@ begin
 	      read_issued <= '0';
 	      read_over <= '0';
       else
-        if(sp_read = '1' and read_issued = '0') then
-	      axi_araddr <= sp_addr;
-          start_single_read <= '1';
-	      read_issued <= '1';
-	      rstep <= '0';
-        elsif (start_single_read = '1' and read_issued = '1') then --generate pulse to initiate read
-          start_single_read <= '0';
-        elsif (start_single_read = '0' and read_issued = '1' and M_AXI_RVALID = '1' and axi_rready = '1') then --check if read has finished
-          if(sp_op_len = "00") then
-            if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
-              data_out <= x"FFFFFF" & M_AXI_RDATA(15 downto 8);
-            else
-              data_out <= x"000000" & M_AXI_RDATA(15 downto 8);
-            end if;
-            read_issued <= '0';
-            read_over <= '0';
-          elsif(sp_op_len = "01") then
-            if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
-              data_out <= x"FFFF" & M_AXI_RDATA(15 downto 0);
-            else
-              data_out <= x"0000" & M_AXI_RDATA(15 downto 0);
-            end if;
-            read_issued <= '0';
-            read_over <= '0';
-          elsif(sp_op_len = "10" and rstep = '0') then
-            data_out(31 downto 16) <= M_AXI_RDATA(15 downto 0);
-            
-            axi_araddr <= std_logic_vector(unsigned(sp_addr) + 2);
+        if(sp_addr(31 downto 28) = x"8") then --this is dependent upon where the 16-bit wide DDR3 is addressed
+          if(sp_read = '1' and read_issued = '0') then
+            axi_araddr <= sp_addr;
             start_single_read <= '1';
-            rstep <= '1';
-            --go to next step etc...
-          elsif(sp_op_len = "10" and rstep = '1') then
-            data_out(15 downto 0) <= M_AXI_RDATA(15 downto 0);
-            
-            read_issued <= '0';
+            read_issued <= '1';
             rstep <= '0';
-            read_issued <= '0';
             read_over <= '0';
-          else
-            read_error <= '1';
+          elsif (start_single_read = '1' and read_issued = '1') then --generate pulse to initiate read
+            start_single_read <= '0';
+          elsif (start_single_read = '0' and read_issued = '1' and M_AXI_RVALID = '1' and axi_rready = '1') then --check if read has finished
+            if(sp_op_len = "00") then
+              if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
+                data_out <= x"FFFFFF" & M_AXI_RDATA(15 downto 8);
+              else
+                data_out <= x"000000" & M_AXI_RDATA(15 downto 8);
+              end if;
+              read_issued <= '0';
+              read_over <= '1';
+            elsif(sp_op_len = "01") then
+              if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
+                data_out <= x"FFFF" & M_AXI_RDATA(15 downto 0);
+              else
+                data_out <= x"0000" & M_AXI_RDATA(15 downto 0);
+              end if;
+              read_issued <= '0';
+              read_over <= '1';
+            elsif(sp_op_len = "10" and rstep = '0') then
+              data_out(31 downto 16) <= M_AXI_RDATA(15 downto 0);
+              
+              axi_araddr <= std_logic_vector(unsigned(sp_addr) + 2);
+              start_single_read <= '1';
+              rstep <= '1';  --go to next step etc...
+            elsif(sp_op_len = "10" and rstep = '1') then
+              data_out(15 downto 0) <= M_AXI_RDATA(15 downto 0);
+              
+              read_issued <= '0';
+              rstep <= '0';
+              read_issued <= '0';
+              read_over <= '1';
+            else
+              read_error <= '1';
+            end if;
+          end if;
+        else --not reading DDR3 RAM
+          if(sp_read = '1' and read_issued = '0') then
+            axi_araddr <= sp_addr;
+            start_single_read <= '1';
+            read_issued <= '1';
+            rstep <= '0';  
+            read_over <= '0';
+          elsif (start_single_read = '1' and read_issued = '1') then --generate pulse to initiate read
+            start_single_read <= '0';
+          elsif (start_single_read = '0' and read_issued = '1' and M_AXI_RVALID = '1' and axi_rready = '1') then --check if read has finished
+            if(sp_op_len = "00") then
+              if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
+                data_out <= x"FFFFFF" & M_AXI_RDATA(15 downto 8);
+              else
+                data_out <= x"000000" & M_AXI_RDATA(15 downto 8);
+              end if;
+              read_issued <= '0';
+              read_over <= '1';
+            elsif(sp_op_len = "01") then
+              if(sp_sign_extend = '1' and M_AXI_RDATA(15) = '1') then
+                data_out <= x"FFFF" & M_AXI_RDATA(15 downto 0);
+              else
+                data_out <= x"0000" & M_AXI_RDATA(15 downto 0);
+              end if;
+              read_issued <= '0';
+              read_over <= '1';
+            elsif(sp_op_len = "10") then
+              data_out(31 downto 0) <= M_AXI_RDATA(31 downto 0);
+              read_issued <= '0';
+              read_over <= '1';
+            else
+              read_error <= '1';
+            end if;
           end if;
         end if;
       end if;
