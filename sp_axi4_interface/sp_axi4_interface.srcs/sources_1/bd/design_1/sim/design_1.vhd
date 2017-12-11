@@ -1,8 +1,8 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
---Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
---Date        : Sat Dec  9 15:57:54 2017
---Host        : octopus-tetricus running 64-bit unknown
+--Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
+--Date        : Mon Dec 11 11:29:26 2017
+--Host        : bonner running 64-bit Ubuntu 17.10
 --Command     : generate_target design_1.bd
 --Design      : design_1
 --Purpose     : IP block netlist
@@ -1213,20 +1213,8 @@ entity design_1 is
     sp_sign_extend_0 : in STD_LOGIC;
     sp_write_0 : in STD_LOGIC;
     sys_clock : in STD_LOGIC;
-    usb_uart_baudoutn : out STD_LOGIC;
-    usb_uart_ctsn : in STD_LOGIC;
-    usb_uart_dcdn : in STD_LOGIC;
-    usb_uart_ddis : out STD_LOGIC;
-    usb_uart_dsrn : in STD_LOGIC;
-    usb_uart_dtrn : out STD_LOGIC;
-    usb_uart_out1n : out STD_LOGIC;
-    usb_uart_out2n : out STD_LOGIC;
-    usb_uart_ri : in STD_LOGIC;
-    usb_uart_rtsn : out STD_LOGIC;
     usb_uart_rxd : in STD_LOGIC;
-    usb_uart_rxrdyn : out STD_LOGIC;
-    usb_uart_txd : out STD_LOGIC;
-    usb_uart_txrdyn : out STD_LOGIC
+    usb_uart_txd : out STD_LOGIC
   );
   attribute CORE_GENERATION_INFO : string;
   attribute CORE_GENERATION_INFO of design_1 : entity is "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=13,numReposBlks=9,numNonXlnxBlks=1,numHierBlks=4,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_board_cnt=1,da_clkrst_cnt=11,synth_mode=OOC_per_IP}";
@@ -1369,13 +1357,12 @@ architecture STRUCTURE of design_1 is
     m00_axi_aresetn : in STD_LOGIC
   );
   end component design_1_Smallpond_axi4_master_interface_0_0;
-  component design_1_axi_uart16550_0_0 is
+  component design_1_axi_uartlite_0_0 is
   port (
     s_axi_aclk : in STD_LOGIC;
     s_axi_aresetn : in STD_LOGIC;
-    ip2intc_irpt : out STD_LOGIC;
-    freeze : in STD_LOGIC;
-    s_axi_awaddr : in STD_LOGIC_VECTOR ( 12 downto 0 );
+    interrupt : out STD_LOGIC;
+    s_axi_awaddr : in STD_LOGIC_VECTOR ( 3 downto 0 );
     s_axi_awvalid : in STD_LOGIC;
     s_axi_awready : out STD_LOGIC;
     s_axi_wdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -1385,29 +1372,17 @@ architecture STRUCTURE of design_1 is
     s_axi_bresp : out STD_LOGIC_VECTOR ( 1 downto 0 );
     s_axi_bvalid : out STD_LOGIC;
     s_axi_bready : in STD_LOGIC;
-    s_axi_araddr : in STD_LOGIC_VECTOR ( 12 downto 0 );
+    s_axi_araddr : in STD_LOGIC_VECTOR ( 3 downto 0 );
     s_axi_arvalid : in STD_LOGIC;
     s_axi_arready : out STD_LOGIC;
     s_axi_rdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
     s_axi_rresp : out STD_LOGIC_VECTOR ( 1 downto 0 );
     s_axi_rvalid : out STD_LOGIC;
     s_axi_rready : in STD_LOGIC;
-    baudoutn : out STD_LOGIC;
-    ctsn : in STD_LOGIC;
-    dcdn : in STD_LOGIC;
-    ddis : out STD_LOGIC;
-    dsrn : in STD_LOGIC;
-    dtrn : out STD_LOGIC;
-    out1n : out STD_LOGIC;
-    out2n : out STD_LOGIC;
-    rin : in STD_LOGIC;
-    rtsn : out STD_LOGIC;
-    rxrdyn : out STD_LOGIC;
-    sin : in STD_LOGIC;
-    sout : out STD_LOGIC;
-    txrdyn : out STD_LOGIC
+    rx : in STD_LOGIC;
+    tx : out STD_LOGIC
   );
-  end component design_1_axi_uart16550_0_0;
+  end component design_1_axi_uartlite_0_0;
   signal Smallpond_axi4_master_interface_0_M00_AXI_ARADDR : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal Smallpond_axi4_master_interface_0_M00_AXI_ARPROT : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal Smallpond_axi4_master_interface_0_M00_AXI_ARREADY : STD_LOGIC;
@@ -1480,20 +1455,8 @@ architecture STRUCTURE of design_1 is
   signal axi_interconnect_0_M01_AXI_WREADY : STD_LOGIC;
   signal axi_interconnect_0_M01_AXI_WSTRB : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal axi_interconnect_0_M01_AXI_WVALID : STD_LOGIC;
-  signal axi_uart16550_0_UART_BAUDOUTn : STD_LOGIC;
-  signal axi_uart16550_0_UART_CTSn : STD_LOGIC;
-  signal axi_uart16550_0_UART_DCDn : STD_LOGIC;
-  signal axi_uart16550_0_UART_DDIS : STD_LOGIC;
-  signal axi_uart16550_0_UART_DSRn : STD_LOGIC;
-  signal axi_uart16550_0_UART_DTRn : STD_LOGIC;
-  signal axi_uart16550_0_UART_OUT1n : STD_LOGIC;
-  signal axi_uart16550_0_UART_OUT2n : STD_LOGIC;
-  signal axi_uart16550_0_UART_RI : STD_LOGIC;
-  signal axi_uart16550_0_UART_RTSn : STD_LOGIC;
-  signal axi_uart16550_0_UART_RXRDYn : STD_LOGIC;
-  signal axi_uart16550_0_UART_RxD : STD_LOGIC;
-  signal axi_uart16550_0_UART_TXRDYn : STD_LOGIC;
-  signal axi_uart16550_0_UART_TxD : STD_LOGIC;
+  signal axi_uartlite_0_UART_RxD : STD_LOGIC;
+  signal axi_uartlite_0_UART_TxD : STD_LOGIC;
   signal clk_wiz_0_clk_out1 : STD_LOGIC;
   signal clk_wiz_0_locked : STD_LOGIC;
   signal mig_7series_0_DDR3_ADDR : STD_LOGIC_VECTOR ( 13 downto 0 );
@@ -1525,7 +1488,7 @@ architecture STRUCTURE of design_1 is
   signal sp_sign_extend_0_1 : STD_LOGIC;
   signal sp_write_0_1 : STD_LOGIC;
   signal sys_clock_1 : STD_LOGIC;
-  signal NLW_axi_uart16550_0_ip2intc_irpt_UNCONNECTED : STD_LOGIC;
+  signal NLW_axi_uartlite_0_interrupt_UNCONNECTED : STD_LOGIC;
   signal NLW_mig_7series_0_init_calib_complete_UNCONNECTED : STD_LOGIC;
   signal NLW_mig_7series_0_ui_clk_sync_rst_UNCONNECTED : STD_LOGIC;
   signal NLW_mig_7series_0_s_axi_bid_UNCONNECTED : STD_LOGIC_VECTOR ( 3 downto 0 );
@@ -1546,20 +1509,8 @@ architecture STRUCTURE of design_1 is
   attribute X_INTERFACE_PARAMETER of reset : signal is "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_LOW";
   attribute X_INTERFACE_INFO of sys_clock : signal is "xilinx.com:signal:clock:1.0 CLK.SYS_CLOCK CLK";
   attribute X_INTERFACE_PARAMETER of sys_clock : signal is "XIL_INTERFACENAME CLK.SYS_CLOCK, CLK_DOMAIN design_1_sys_clock, FREQ_HZ 100000000, PHASE 0.000";
-  attribute X_INTERFACE_INFO of usb_uart_baudoutn : signal is "xilinx.com:interface:uart:1.0 usb_uart BAUDOUTn";
-  attribute X_INTERFACE_INFO of usb_uart_ctsn : signal is "xilinx.com:interface:uart:1.0 usb_uart CTSn";
-  attribute X_INTERFACE_INFO of usb_uart_dcdn : signal is "xilinx.com:interface:uart:1.0 usb_uart DCDn";
-  attribute X_INTERFACE_INFO of usb_uart_ddis : signal is "xilinx.com:interface:uart:1.0 usb_uart DDIS";
-  attribute X_INTERFACE_INFO of usb_uart_dsrn : signal is "xilinx.com:interface:uart:1.0 usb_uart DSRn";
-  attribute X_INTERFACE_INFO of usb_uart_dtrn : signal is "xilinx.com:interface:uart:1.0 usb_uart DTRn";
-  attribute X_INTERFACE_INFO of usb_uart_out1n : signal is "xilinx.com:interface:uart:1.0 usb_uart OUT1n";
-  attribute X_INTERFACE_INFO of usb_uart_out2n : signal is "xilinx.com:interface:uart:1.0 usb_uart OUT2n";
-  attribute X_INTERFACE_INFO of usb_uart_ri : signal is "xilinx.com:interface:uart:1.0 usb_uart RI";
-  attribute X_INTERFACE_INFO of usb_uart_rtsn : signal is "xilinx.com:interface:uart:1.0 usb_uart RTSn";
   attribute X_INTERFACE_INFO of usb_uart_rxd : signal is "xilinx.com:interface:uart:1.0 usb_uart RxD";
-  attribute X_INTERFACE_INFO of usb_uart_rxrdyn : signal is "xilinx.com:interface:uart:1.0 usb_uart RXRDYn";
   attribute X_INTERFACE_INFO of usb_uart_txd : signal is "xilinx.com:interface:uart:1.0 usb_uart TxD";
-  attribute X_INTERFACE_INFO of usb_uart_txrdyn : signal is "xilinx.com:interface:uart:1.0 usb_uart TXRDYn";
   attribute X_INTERFACE_INFO of ddr3_sdram_addr : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ADDR";
   attribute X_INTERFACE_PARAMETER of ddr3_sdram_addr : signal is "XIL_INTERFACENAME ddr3_sdram, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250";
   attribute X_INTERFACE_INFO of ddr3_sdram_ba : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram BA";
@@ -1573,11 +1524,7 @@ architecture STRUCTURE of design_1 is
   attribute X_INTERFACE_INFO of ddr3_sdram_dqs_p : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQS_P";
   attribute X_INTERFACE_INFO of ddr3_sdram_odt : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ODT";
 begin
-  axi_uart16550_0_UART_CTSn <= usb_uart_ctsn;
-  axi_uart16550_0_UART_DCDn <= usb_uart_dcdn;
-  axi_uart16550_0_UART_DSRn <= usb_uart_dsrn;
-  axi_uart16550_0_UART_RI <= usb_uart_ri;
-  axi_uart16550_0_UART_RxD <= usb_uart_rxd;
+  axi_uartlite_0_UART_RxD <= usb_uart_rxd;
   ddr3_sdram_addr(13 downto 0) <= mig_7series_0_DDR3_ADDR(13 downto 0);
   ddr3_sdram_ba(2 downto 0) <= mig_7series_0_DDR3_BA(2 downto 0);
   ddr3_sdram_cas_n <= mig_7series_0_DDR3_CAS_N;
@@ -1601,15 +1548,7 @@ begin
   sp_sign_extend_0_1 <= sp_sign_extend_0;
   sp_write_0_1 <= sp_write_0;
   sys_clock_1 <= sys_clock;
-  usb_uart_baudoutn <= axi_uart16550_0_UART_BAUDOUTn;
-  usb_uart_ddis <= axi_uart16550_0_UART_DDIS;
-  usb_uart_dtrn <= axi_uart16550_0_UART_DTRn;
-  usb_uart_out1n <= axi_uart16550_0_UART_OUT1n;
-  usb_uart_out2n <= axi_uart16550_0_UART_OUT2n;
-  usb_uart_rtsn <= axi_uart16550_0_UART_RTSn;
-  usb_uart_rxrdyn <= axi_uart16550_0_UART_RXRDYn;
-  usb_uart_txd <= axi_uart16550_0_UART_TxD;
-  usb_uart_txrdyn <= axi_uart16550_0_UART_TXRDYn;
+  usb_uart_txd <= axi_uartlite_0_UART_TxD;
 Smallpond_axi4_master_interface_0: component design_1_Smallpond_axi4_master_interface_0_0
      port map (
       m00_axi_aclk => clk_wiz_0_clk_out1,
@@ -1723,27 +1662,16 @@ axi_interconnect_0: entity work.design_1_axi_interconnect_0_0
       S00_AXI_wstrb(3 downto 0) => Smallpond_axi4_master_interface_0_M00_AXI_WSTRB(3 downto 0),
       S00_AXI_wvalid => Smallpond_axi4_master_interface_0_M00_AXI_WVALID
     );
-axi_uart16550_0: component design_1_axi_uart16550_0_0
+axi_uartlite_0: component design_1_axi_uartlite_0_0
      port map (
-      baudoutn => axi_uart16550_0_UART_BAUDOUTn,
-      ctsn => axi_uart16550_0_UART_CTSn,
-      dcdn => axi_uart16550_0_UART_DCDn,
-      ddis => axi_uart16550_0_UART_DDIS,
-      dsrn => axi_uart16550_0_UART_DSRn,
-      dtrn => axi_uart16550_0_UART_DTRn,
-      freeze => '0',
-      ip2intc_irpt => NLW_axi_uart16550_0_ip2intc_irpt_UNCONNECTED,
-      out1n => axi_uart16550_0_UART_OUT1n,
-      out2n => axi_uart16550_0_UART_OUT2n,
-      rin => axi_uart16550_0_UART_RI,
-      rtsn => axi_uart16550_0_UART_RTSn,
-      rxrdyn => axi_uart16550_0_UART_RXRDYn,
+      interrupt => NLW_axi_uartlite_0_interrupt_UNCONNECTED,
+      rx => axi_uartlite_0_UART_RxD,
       s_axi_aclk => clk_wiz_0_clk_out1,
-      s_axi_araddr(12 downto 0) => axi_interconnect_0_M01_AXI_ARADDR(12 downto 0),
+      s_axi_araddr(3 downto 0) => axi_interconnect_0_M01_AXI_ARADDR(3 downto 0),
       s_axi_aresetn => rst_clk_wiz_0_100M_peripheral_aresetn(0),
       s_axi_arready => axi_interconnect_0_M01_AXI_ARREADY,
       s_axi_arvalid => axi_interconnect_0_M01_AXI_ARVALID,
-      s_axi_awaddr(12 downto 0) => axi_interconnect_0_M01_AXI_AWADDR(12 downto 0),
+      s_axi_awaddr(3 downto 0) => axi_interconnect_0_M01_AXI_AWADDR(3 downto 0),
       s_axi_awready => axi_interconnect_0_M01_AXI_AWREADY,
       s_axi_awvalid => axi_interconnect_0_M01_AXI_AWVALID,
       s_axi_bready => axi_interconnect_0_M01_AXI_BREADY,
@@ -1757,9 +1685,7 @@ axi_uart16550_0: component design_1_axi_uart16550_0_0
       s_axi_wready => axi_interconnect_0_M01_AXI_WREADY,
       s_axi_wstrb(3 downto 0) => axi_interconnect_0_M01_AXI_WSTRB(3 downto 0),
       s_axi_wvalid => axi_interconnect_0_M01_AXI_WVALID,
-      sin => axi_uart16550_0_UART_RxD,
-      sout => axi_uart16550_0_UART_TxD,
-      txrdyn => axi_uart16550_0_UART_TXRDYn
+      tx => axi_uartlite_0_UART_TxD
     );
 clk_wiz_0: component design_1_clk_wiz_0_0
      port map (

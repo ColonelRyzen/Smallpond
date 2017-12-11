@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
-// Date        : Sat Dec  9 16:22:57 2017
-// Host        : octopus-tetricus running 64-bit unknown
-// Command     : write_verilog -force -mode funcsim
-//               /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/design_1_Smallpond_axi4_master_interface_0_0_sim_netlist.v
+// Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
+// Date        : Mon Dec 11 10:36:33 2017
+// Host        : bonner running 64-bit Ubuntu 17.10
+// Command     : write_verilog -force -mode funcsim -rename_top design_1_Smallpond_axi4_master_interface_0_0 -prefix
+//               design_1_Smallpond_axi4_master_interface_0_0_ design_1_Smallpond_axi4_master_interface_0_0_sim_netlist.v
 // Design      : design_1_Smallpond_axi4_master_interface_0_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -145,7 +145,6 @@ module design_1_Smallpond_axi4_master_interface_0_0
        (.P(\<const1> ));
 endmodule
 
-(* ORIG_REF_NAME = "sp_axi4_master_v1_0" *) 
 module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0
    (sp_data_out,
     m00_axi_bready,
@@ -252,7 +251,6 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0
         .sp_write(sp_write));
 endmodule
 
-(* ORIG_REF_NAME = "sp_axi4_master_v1_0_M00_AXI" *) 
 module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
    (sp_data_out,
     m00_axi_bready,

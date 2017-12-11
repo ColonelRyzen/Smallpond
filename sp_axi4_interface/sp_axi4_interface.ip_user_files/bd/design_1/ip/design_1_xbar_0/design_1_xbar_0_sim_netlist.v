@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
-// Date        : Sat Dec  9 15:59:29 2017
-// Host        : octopus-tetricus running 64-bit unknown
+// Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
+// Date        : Mon Dec 11 11:32:40 2017
+// Host        : bonner running 64-bit Ubuntu 17.10
 // Command     : write_verilog -force -mode funcsim
-//               /home/jrcharlo/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_xbar_0/design_1_xbar_0_sim_netlist.v
+//               /home/lab/Documents/justin/Smallpond/sp_axi4_interface/sp_axi4_interface.srcs/sources_1/bd/design_1/ip/design_1_xbar_0/design_1_xbar_0_sim_netlist.v
 // Design      : design_1_xbar_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CHECK_LICENSE_TYPE = "design_1_xbar_0,axi_crossbar_v2_1_15_axi_crossbar,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "axi_crossbar_v2_1_15_axi_crossbar,Vivado 2017.3.1" *) 
+(* CHECK_LICENSE_TYPE = "design_1_xbar_0,axi_crossbar_v2_1_15_axi_crossbar,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "axi_crossbar_v2_1_15_axi_crossbar,Vivado 2017.3" *) 
 (* NotValidForBitStream *)
 module design_1_xbar_0
    (aclk,
@@ -177,7 +177,7 @@ module design_1_xbar_0
   (* C_DEBUG = "1" *) 
   (* C_FAMILY = "artix7" *) 
   (* C_M_AXI_ADDR_WIDTH = "64'b0000000000000000000000000001000000000000000000000000000000011100" *) 
-  (* C_M_AXI_BASE_ADDR = "128'b00000000000000000000000000000000010001001010000000000000000000000000000000000000000000000000000010000000000000000000000000000000" *) 
+  (* C_M_AXI_BASE_ADDR = "128'b00000000000000000000000000000000010000000110000000000000000000000000000000000000000000000000000010000000000000000000000000000000" *) 
   (* C_M_AXI_READ_CONNECTIVITY = "64'b1111111111111111111111111111111111111111111111111111111111111111" *) 
   (* C_M_AXI_READ_ISSUING = "64'b0000000000000000000000000000000100000000000000000000000000000001" *) 
   (* C_M_AXI_SECURE = "64'b0000000000000000000000000000000000000000000000000000000000000000" *) 
@@ -1198,7 +1198,7 @@ module design_1_xbar_0_axi_crossbar_v2_1_15_addr_arbiter_sasd
         .I4(\m_atarget_hot[2]_i_5_n_0 ),
         .O(\m_atarget_hot[2]_i_3_n_0 ));
   LUT4 #(
-    .INIT(16'h0004)) 
+    .INIT(16'h0001)) 
     \m_atarget_hot[2]_i_4 
        (.I0(Q[27]),
         .I1(Q[26]),
@@ -1208,8 +1208,8 @@ module design_1_xbar_0_axi_crossbar_v2_1_15_addr_arbiter_sasd
   LUT4 #(
     .INIT(16'h0400)) 
     \m_atarget_hot[2]_i_5 
-       (.I0(Q[22]),
-        .I1(Q[23]),
+       (.I0(Q[23]),
+        .I1(Q[22]),
         .I2(Q[20]),
         .I3(Q[21]),
         .O(\m_atarget_hot[2]_i_5_n_0 ));
@@ -1478,7 +1478,7 @@ endmodule
 (* C_AXI_BUSER_WIDTH = "1" *) (* C_AXI_DATA_WIDTH = "32" *) (* C_AXI_ID_WIDTH = "1" *) 
 (* C_AXI_PROTOCOL = "2" *) (* C_AXI_RUSER_WIDTH = "1" *) (* C_AXI_SUPPORTS_USER_SIGNALS = "0" *) 
 (* C_AXI_WUSER_WIDTH = "1" *) (* C_CONNECTIVITY_MODE = "0" *) (* C_DEBUG = "1" *) 
-(* C_FAMILY = "artix7" *) (* C_M_AXI_ADDR_WIDTH = "64'b0000000000000000000000000001000000000000000000000000000000011100" *) (* C_M_AXI_BASE_ADDR = "128'b00000000000000000000000000000000010001001010000000000000000000000000000000000000000000000000000010000000000000000000000000000000" *) 
+(* C_FAMILY = "artix7" *) (* C_M_AXI_ADDR_WIDTH = "64'b0000000000000000000000000001000000000000000000000000000000011100" *) (* C_M_AXI_BASE_ADDR = "128'b00000000000000000000000000000000010000000110000000000000000000000000000000000000000000000000000010000000000000000000000000000000" *) 
 (* C_M_AXI_READ_CONNECTIVITY = "64'b1111111111111111111111111111111111111111111111111111111111111111" *) (* C_M_AXI_READ_ISSUING = "64'b0000000000000000000000000000000100000000000000000000000000000001" *) (* C_M_AXI_SECURE = "64'b0000000000000000000000000000000000000000000000000000000000000000" *) 
 (* C_M_AXI_WRITE_CONNECTIVITY = "64'b1111111111111111111111111111111111111111111111111111111111111111" *) (* C_M_AXI_WRITE_ISSUING = "64'b0000000000000000000000000000000100000000000000000000000000000001" *) (* C_NUM_ADDR_RANGES = "1" *) 
 (* C_NUM_MASTER_SLOTS = "2" *) (* C_NUM_SLAVE_SLOTS = "1" *) (* C_R_REGISTER = "1" *) 

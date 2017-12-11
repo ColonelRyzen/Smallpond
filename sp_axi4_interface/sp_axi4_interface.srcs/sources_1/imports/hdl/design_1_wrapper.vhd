@@ -1,8 +1,8 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
---Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
---Date        : Sat Dec  9 15:57:54 2017
---Host        : octopus-tetricus running 64-bit unknown
+--Tool Version: Vivado v.2017.3 (lin64) Build 2018833 Wed Oct  4 19:58:07 MDT 2017
+--Date        : Mon Dec 11 11:29:26 2017
+--Host        : bonner running 64-bit Ubuntu 17.10
 --Command     : generate_target design_1_wrapper.bd
 --Design      : design_1_wrapper
 --Purpose     : IP block netlist
@@ -39,20 +39,8 @@ entity design_1_wrapper is
 --    sp_sign_extend_0 : in STD_LOGIC;
 --    sp_write_0 : in STD_LOGIC;
     sys_clock : in STD_LOGIC;
-    usb_uart_baudoutn : out STD_LOGIC;
-    usb_uart_ctsn : in STD_LOGIC;
-    usb_uart_dcdn : in STD_LOGIC;
-    usb_uart_ddis : out STD_LOGIC;
-    usb_uart_dsrn : in STD_LOGIC;
-    usb_uart_dtrn : out STD_LOGIC;
-    usb_uart_out1n : out STD_LOGIC;
-    usb_uart_out2n : out STD_LOGIC;
-    usb_uart_ri : in STD_LOGIC;
-    usb_uart_rtsn : out STD_LOGIC;
     usb_uart_rxd : in STD_LOGIC;
-    usb_uart_rxrdyn : out STD_LOGIC;
-    usb_uart_txd : out STD_LOGIC;
-    usb_uart_txrdyn : out STD_LOGIC
+    usb_uart_txd : out STD_LOGIC
   );
 end design_1_wrapper;
 
@@ -86,19 +74,7 @@ architecture STRUCTURE of design_1_wrapper is
     sp_data_in_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
     sp_over_0 : out STD_LOGIC;
     sp_addr_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_data_out_0 : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    usb_uart_baudoutn : out STD_LOGIC;
-    usb_uart_ctsn : in STD_LOGIC;
-    usb_uart_dcdn : in STD_LOGIC;
-    usb_uart_ddis : out STD_LOGIC;
-    usb_uart_dsrn : in STD_LOGIC;
-    usb_uart_dtrn : out STD_LOGIC;
-    usb_uart_out1n : out STD_LOGIC;
-    usb_uart_out2n : out STD_LOGIC;
-    usb_uart_ri : in STD_LOGIC;
-    usb_uart_rtsn : out STD_LOGIC;
-    usb_uart_rxrdyn : out STD_LOGIC;
-    usb_uart_txrdyn : out STD_LOGIC
+    sp_data_out_0 : out STD_LOGIC_VECTOR ( 31 downto 0 )
   );
   end component design_1;
   
@@ -111,10 +87,10 @@ architecture STRUCTURE of design_1_wrapper is
   signal sp_read : std_logic;
   signal sp_write : std_logic;
   signal sp_sign_extend : std_logic;
-      
+  
   constant clk_period : time := 10ns;
   signal clk : std_logic;
-
+  
 begin
 design_1_i: component design_1
      port map (
@@ -144,20 +120,8 @@ design_1_i: component design_1
       sp_sign_extend_0 => sp_sign_extend,
       sp_write_0 => sp_write,
       sys_clock => sys_clock,
-      usb_uart_baudoutn => usb_uart_baudoutn,
-      usb_uart_ctsn => usb_uart_ctsn,
-      usb_uart_dcdn => usb_uart_dcdn,
-      usb_uart_ddis => usb_uart_ddis,
-      usb_uart_dsrn => usb_uart_dsrn,
-      usb_uart_dtrn => usb_uart_dtrn,
-      usb_uart_out1n => usb_uart_out1n,
-      usb_uart_out2n => usb_uart_out2n,
-      usb_uart_ri => usb_uart_ri,
-      usb_uart_rtsn => usb_uart_rtsn,
       usb_uart_rxd => usb_uart_rxd,
-      usb_uart_rxrdyn => usb_uart_rxrdyn,
-      usb_uart_txd => usb_uart_txd,
-      usb_uart_txrdyn => usb_uart_txrdyn
+      usb_uart_txd => usb_uart_txd
     );
     
     clk_process : process begin
