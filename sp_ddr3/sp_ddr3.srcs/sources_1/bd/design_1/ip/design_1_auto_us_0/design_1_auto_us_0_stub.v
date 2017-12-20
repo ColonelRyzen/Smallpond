@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
-// Date        : Wed Dec 20 14:46:16 2017
+// Date        : Wed Dec 20 15:00:21 2017
 // Host        : octopus-tetricus running 64-bit unknown
-// Command     : write_verilog -force -mode synth_stub
-//               /home/jrcharlo/Smallpond/sp_ddr3/sp_ddr3.srcs/sources_1/bd/design_1/ip/design_1_auto_us_0/design_1_auto_us_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top design_1_auto_us_0 -prefix
+//               design_1_auto_us_0_ design_1_auto_us_0_stub.v
 // Design      : design_1_auto_us_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a35ticsg324-1L

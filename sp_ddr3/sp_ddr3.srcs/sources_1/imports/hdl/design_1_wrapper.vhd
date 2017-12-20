@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
---Date        : Tue Dec 12 12:34:02 2017
+--Date        : Wed Dec 20 15:03:48 2017
 --Host        : octopus-tetricus running 64-bit unknown
 --Command     : generate_target design_1_wrapper.bd
 --Design      : design_1_wrapper
@@ -38,6 +38,8 @@ entity design_1_wrapper is
 --    sp_read_0 : in STD_LOGIC;
 --    sp_sign_extend_0 : in STD_LOGIC;
 --    sp_write_0 : in STD_LOGIC;
+    led : out STD_LOGIC_VECTOR(3 downto 0);
+    sw : in STD_LOGIC_VECTOR(3 downto 0);
     sys_clock : in STD_LOGIC
   );
 end design_1_wrapper;
@@ -74,16 +76,16 @@ architecture STRUCTURE of design_1_wrapper is
   );
   end component design_1;
   
-      signal sp_addr : std_logic_vector(31 downto 0);
-      signal sp_data_in : std_logic_vector(31 downto 0);
-      signal sp_data_out : std_logic_vector(31 downto 0);
-      signal sp_error : std_logic;
-      signal sp_op_len : std_logic_vector(1 downto  0);
-      signal sp_over : std_logic;
-      signal sp_read : std_logic;
-      signal sp_write : std_logic;
-      signal sp_sign_extend : std_logic;
-      
+  signal sp_addr : std_logic_vector(31 downto 0);
+  signal sp_data_in : std_logic_vector(31 downto 0);
+  signal sp_data_out : std_logic_vector(31 downto 0);
+  signal sp_error : std_logic;
+  signal sp_op_len : std_logic_vector(1 downto  0);
+  signal sp_over : std_logic;
+  signal sp_read : std_logic;
+  signal sp_write : std_logic;
+  signal sp_sign_extend : std_logic;
+  
 begin
 design_1_i: component design_1
      port map (
@@ -115,25 +117,26 @@ design_1_i: component design_1
       sys_clock => sys_clock
     );
     
-    stimulus : process begin
-    
-        sp_read <= '0';
-        sp_op_len <= "01";
-        sp_sign_extend <= '0';
-        sp_addr <= x"80000000";
-        sp_write <= '1';
-        sp_data_in <= x"00003765";
-        
-        wait for 100ns;
-        
-        sp_write <= '0';
-        
-        wait for 100ns;
-        
-        sp_read <= '1';
-        
-        wait for 100ns;
-    
-    end process;
+      led <= sw;
+--    stimulus : process begin
+  
+--        sp_read <= '0';
+--        sp_op_len <= "01";
+--        sp_sign_extend <= '0';
+--        sp_addr <= x"80000000";
+--        sp_write <= '1';
+--        sp_data_in <= x"00003765";
+      
+--        wait for 100ns;
+      
+--        sp_write <= '0';
+      
+--        wait for 100ns;
+      
+--        sp_read <= '1';
+      
+--        wait for 100ns;
+  
+--    end process;
     
 end STRUCTURE;
