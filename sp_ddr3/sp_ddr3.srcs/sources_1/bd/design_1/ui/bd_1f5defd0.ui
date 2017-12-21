@@ -14,35 +14,36 @@ preplace portBus sp_op_len_0 -pg 1 -y 10 -defaultsOSRD
 preplace portBus sp_addr_0 -pg 1 -y 30 -defaultsOSRD
 preplace portBus sp_data_out_0 -pg 1 -y 10 -defaultsOSRD
 preplace portBus sp_data_in_0 -pg 1 -y 50 -defaultsOSRD
-preplace inst mig_7series_0 -pg 1 -lvl 3 -y 90 -defaultsOSRD
+preplace inst rst_mig_7series_0_83M -pg 1 -lvl 3 -y -170 -defaultsOSRD
+preplace inst mig_7series_0 -pg 1 -lvl 3 -y 240 -defaultsOSRD
 preplace inst proc_sys_reset_0 -pg 1 -lvl 2 -y -160 -defaultsOSRD
-preplace inst proc_sys_reset_1 -pg 1 -lvl 3 -y -80 -defaultsOSRD
 preplace inst Smallpond_axi4_master_interface_0 -pg 1 -lvl 1 -y 20 -defaultsOSRD
 preplace inst axi_interconnect_0 -pg 1 -lvl 2 -y 50 -defaultsOSRD
 preplace inst clk_wiz_0 -pg 1 -lvl 1 -y -250 -defaultsOSRD
-preplace netloc Smallpond_axi4_master_interface_0_sp_data_out 1 1 3 -250J 210 NJ 210 640J
-preplace netloc mig_7series_0_mmcm_locked 1 2 2 210 -170 600
+preplace netloc mig_7series_0_mmcm_locked 1 2 2 570 -80 940
+preplace netloc Smallpond_axi4_master_interface_0_sp_data_out 1 1 3 100J 220 510J 520 990J
 preplace netloc sp_sign_extend_0_1 1 0 1 N
-preplace netloc clk_wiz_0_locked 1 1 1 -260
-preplace netloc mig_7series_0_DDR3 1 3 1 630J
+preplace netloc clk_wiz_0_locked 1 1 1 80
+preplace netloc mig_7series_0_DDR3 1 3 1 970J
 preplace netloc sp_read_0_1 1 0 1 N
-preplace netloc proc_sys_reset_1_peripheral_aresetn 1 2 2 200 -190 610
+preplace netloc proc_sys_reset_1_peripheral_aresetn 1 2 2 570 -70 930J
 preplace netloc sys_clock_1 1 0 1 NJ
-preplace netloc mig_7series_0_ui_clk 1 1 3 -220 180 180 180 590
-preplace netloc proc_sys_reset_0_interconnect_aresetn 1 1 2 -210 -70 160
-preplace netloc Smallpond_axi4_master_interface_0_sp_error 1 1 3 -270J 220 NJ 220 660J
+preplace netloc mig_7series_0_ui_clk 1 1 3 130 200 540 -10 930
+preplace netloc proc_sys_reset_0_interconnect_aresetn 1 1 2 140 -70 510
+preplace netloc Smallpond_axi4_master_interface_0_sp_error 1 1 3 90J 180 510J 0 980J
 preplace netloc S00_AXI_1 1 1 1 N
-preplace netloc clk_wiz_0_clk_out1 1 0 3 -600 140 -240 170 190
-preplace netloc axi_interconnect_0_M00_AXI 1 2 1 N
-preplace netloc proc_sys_reset_0_peripheral_aresetn 1 0 3 -590 150 -230 190 150
-preplace netloc Smallpond_axi4_master_interface_0_sp_over 1 1 3 -260J 230 NJ 230 650J
+preplace netloc clk_wiz_0_clk_out1 1 0 3 -250 140 110 170 530
+preplace netloc axi_interconnect_0_M00_AXI 1 2 1 550
+preplace netloc mig_7series_0_ui_clk_sync_rst 1 2 2 570 -260 950
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 0 3 -240 150 120 190 500
+preplace netloc M00_ARESETN_1 1 1 3 140 210 520J 510 960J
+preplace netloc Smallpond_axi4_master_interface_0_sp_over 1 1 3 80J 230 500J 530 1000J
 preplace netloc sp_write_0_1 1 0 1 N
-preplace netloc M00_ARESETN_1 1 1 3 -210 200 NJ 200 620
-preplace netloc reset_1 1 0 3 -600J -190 -210J -250 170
+preplace netloc reset_1 1 0 3 -250J -190 140J -250 560
 preplace netloc sp_addr_0_1 1 0 1 NJ
 preplace netloc sp_data_in_0_1 1 0 1 NJ
 preplace netloc sp_op_len_0_1 1 0 1 N
-levelinfo -pg 1 -620 -430 -30 410 690 -top -330 -bot 920
+levelinfo -pg 1 -270 -80 320 750 1020 -top -330 -bot 920
 ",
 }
 {

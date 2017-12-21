@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
---Date        : Wed Dec 20 15:03:48 2017
+--Date        : Wed Dec 20 21:31:15 2017
 --Host        : octopus-tetricus running 64-bit unknown
 --Command     : generate_target design_1.bd
 --Design      : design_1
@@ -958,10 +958,10 @@ entity design_1 is
     sp_write_0 : in STD_LOGIC;
     sys_clock : in STD_LOGIC
   );
-  attribute CORE_GENERATION_INFO : string;
-  attribute CORE_GENERATION_INFO of design_1 : entity is "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=10,numReposBlks=8,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_board_cnt=2,da_clkrst_cnt=3,synth_mode=OOC_per_IP}";
-  attribute HW_HANDOFF : string;
-  attribute HW_HANDOFF of design_1 : entity is "design_1.hwdef";
+  attribute core_generation_info : string;
+  attribute core_generation_info of design_1 : entity is "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=10,numReposBlks=8,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_board_cnt=2,da_clkrst_cnt=3,synth_mode=OOC_per_IP}";
+  attribute hw_handoff : string;
+  attribute hw_handoff of design_1 : entity is "design_1.hwdef";
 end design_1;
 
 architecture STRUCTURE of design_1 is
@@ -1174,6 +1174,7 @@ architecture STRUCTURE of design_1 is
   signal mig_7series_0_DDR3_WE_N : STD_LOGIC;
   signal mig_7series_0_mmcm_locked : STD_LOGIC;
   signal mig_7series_0_ui_clk : STD_LOGIC;
+  signal mig_7series_0_ui_clk_sync_rst : STD_LOGIC;
   signal proc_sys_reset_0_interconnect_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal proc_sys_reset_0_peripheral_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal proc_sys_reset_1_peripheral_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -1186,37 +1187,36 @@ architecture STRUCTURE of design_1 is
   signal sp_write_0_1 : STD_LOGIC;
   signal sys_clock_1 : STD_LOGIC;
   signal NLW_mig_7series_0_init_calib_complete_UNCONNECTED : STD_LOGIC;
-  signal NLW_mig_7series_0_ui_clk_sync_rst_UNCONNECTED : STD_LOGIC;
   signal NLW_mig_7series_0_s_axi_bid_UNCONNECTED : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal NLW_mig_7series_0_s_axi_rid_UNCONNECTED : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal NLW_proc_sys_reset_0_mb_reset_UNCONNECTED : STD_LOGIC;
   signal NLW_proc_sys_reset_0_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_proc_sys_reset_0_peripheral_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_proc_sys_reset_1_mb_reset_UNCONNECTED : STD_LOGIC;
-  signal NLW_proc_sys_reset_1_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_proc_sys_reset_1_peripheral_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  attribute X_INTERFACE_INFO : string;
-  attribute X_INTERFACE_INFO of ddr3_sdram_cas_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CAS_N";
-  attribute X_INTERFACE_INFO of ddr3_sdram_ras_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram RAS_N";
-  attribute X_INTERFACE_INFO of ddr3_sdram_reset_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram RESET_N";
-  attribute X_INTERFACE_INFO of ddr3_sdram_we_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram WE_N";
-  attribute X_INTERFACE_INFO of reset : signal is "xilinx.com:signal:reset:1.0 RST.RESET RST";
-  attribute X_INTERFACE_PARAMETER : string;
-  attribute X_INTERFACE_PARAMETER of reset : signal is "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_LOW";
-  attribute X_INTERFACE_INFO of sys_clock : signal is "xilinx.com:signal:clock:1.0 CLK.SYS_CLOCK CLK";
-  attribute X_INTERFACE_PARAMETER of sys_clock : signal is "XIL_INTERFACENAME CLK.SYS_CLOCK, CLK_DOMAIN design_1_sys_clock, FREQ_HZ 100000000, PHASE 0.000";
-  attribute X_INTERFACE_INFO of ddr3_sdram_addr : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ADDR";
-  attribute X_INTERFACE_PARAMETER of ddr3_sdram_addr : signal is "XIL_INTERFACENAME ddr3_sdram, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250";
-  attribute X_INTERFACE_INFO of ddr3_sdram_ba : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram BA";
-  attribute X_INTERFACE_INFO of ddr3_sdram_ck_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CK_N";
-  attribute X_INTERFACE_INFO of ddr3_sdram_ck_p : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CK_P";
-  attribute X_INTERFACE_INFO of ddr3_sdram_cke : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CKE";
-  attribute X_INTERFACE_INFO of ddr3_sdram_cs_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CS_N";
-  attribute X_INTERFACE_INFO of ddr3_sdram_dm : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DM";
-  attribute X_INTERFACE_INFO of ddr3_sdram_dq : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQ";
-  attribute X_INTERFACE_INFO of ddr3_sdram_dqs_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQS_N";
-  attribute X_INTERFACE_INFO of ddr3_sdram_dqs_p : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQS_P";
-  attribute X_INTERFACE_INFO of ddr3_sdram_odt : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ODT";
+  signal NLW_rst_mig_7series_0_83M_mb_reset_UNCONNECTED : STD_LOGIC;
+  signal NLW_rst_mig_7series_0_83M_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal NLW_rst_mig_7series_0_83M_peripheral_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
+  attribute x_interface_info : string;
+  attribute x_interface_info of ddr3_sdram_cas_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CAS_N";
+  attribute x_interface_info of ddr3_sdram_ras_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram RAS_N";
+  attribute x_interface_info of ddr3_sdram_reset_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram RESET_N";
+  attribute x_interface_info of ddr3_sdram_we_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram WE_N";
+  attribute x_interface_info of reset : signal is "xilinx.com:signal:reset:1.0 RST.RESET RST";
+  attribute x_interface_parameter : string;
+  attribute x_interface_parameter of reset : signal is "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_LOW";
+  attribute x_interface_info of sys_clock : signal is "xilinx.com:signal:clock:1.0 CLK.SYS_CLOCK CLK";
+  attribute x_interface_parameter of sys_clock : signal is "XIL_INTERFACENAME CLK.SYS_CLOCK, CLK_DOMAIN design_1_sys_clock, FREQ_HZ 100000000, PHASE 0.000";
+  attribute x_interface_info of ddr3_sdram_addr : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ADDR";
+  attribute x_interface_parameter of ddr3_sdram_addr : signal is "XIL_INTERFACENAME ddr3_sdram, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250";
+  attribute x_interface_info of ddr3_sdram_ba : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram BA";
+  attribute x_interface_info of ddr3_sdram_ck_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CK_N";
+  attribute x_interface_info of ddr3_sdram_ck_p : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CK_P";
+  attribute x_interface_info of ddr3_sdram_cke : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CKE";
+  attribute x_interface_info of ddr3_sdram_cs_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CS_N";
+  attribute x_interface_info of ddr3_sdram_dm : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DM";
+  attribute x_interface_info of ddr3_sdram_dq : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQ";
+  attribute x_interface_info of ddr3_sdram_dqs_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQS_N";
+  attribute x_interface_info of ddr3_sdram_dqs_p : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQS_P";
+  attribute x_interface_info of ddr3_sdram_odt : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ODT";
 begin
   ddr3_sdram_addr(13 downto 0) <= mig_7series_0_DDR3_ADDR(13 downto 0);
   ddr3_sdram_ba(2 downto 0) <= mig_7series_0_DDR3_BA(2 downto 0);
@@ -1403,7 +1403,7 @@ mig_7series_0: component design_1_mig_7series_0_0
       sys_clk_i => mig_7series_0_ui_clk,
       sys_rst => reset_1,
       ui_clk => mig_7series_0_ui_clk,
-      ui_clk_sync_rst => NLW_mig_7series_0_ui_clk_sync_rst_UNCONNECTED
+      ui_clk_sync_rst => mig_7series_0_ui_clk_sync_rst
     );
 proc_sys_reset_0: component design_1_proc_sys_reset_0_0
      port map (
@@ -1418,17 +1418,17 @@ proc_sys_reset_0: component design_1_proc_sys_reset_0_0
       peripheral_reset(0) => NLW_proc_sys_reset_0_peripheral_reset_UNCONNECTED(0),
       slowest_sync_clk => clk_wiz_0_clk_out1
     );
-proc_sys_reset_1: component design_1_proc_sys_reset_1_0
+rst_mig_7series_0_83M: component design_1_proc_sys_reset_1_0
      port map (
       aux_reset_in => '1',
-      bus_struct_reset(0) => NLW_proc_sys_reset_1_bus_struct_reset_UNCONNECTED(0),
+      bus_struct_reset(0) => NLW_rst_mig_7series_0_83M_bus_struct_reset_UNCONNECTED(0),
       dcm_locked => mig_7series_0_mmcm_locked,
-      ext_reset_in => reset_1,
+      ext_reset_in => mig_7series_0_ui_clk_sync_rst,
       interconnect_aresetn(0) => M00_ARESETN_1(0),
       mb_debug_sys_rst => '0',
-      mb_reset => NLW_proc_sys_reset_1_mb_reset_UNCONNECTED,
+      mb_reset => NLW_rst_mig_7series_0_83M_mb_reset_UNCONNECTED,
       peripheral_aresetn(0) => proc_sys_reset_1_peripheral_aresetn(0),
-      peripheral_reset(0) => NLW_proc_sys_reset_1_peripheral_reset_UNCONNECTED(0),
+      peripheral_reset(0) => NLW_rst_mig_7series_0_83M_peripheral_reset_UNCONNECTED(0),
       slowest_sync_clk => mig_7series_0_ui_clk
     );
 end STRUCTURE;
