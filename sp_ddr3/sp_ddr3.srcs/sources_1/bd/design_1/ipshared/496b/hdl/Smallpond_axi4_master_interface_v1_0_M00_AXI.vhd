@@ -35,6 +35,19 @@ entity sp_axi4_master_v1_0_M00_AXI is
 		sp_data_out : out std_logic_vector(31 downto 0);
 		sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
 		sp_error : out std_logic; --(1 for error)
+		
+		--testing ports!!!
+		
+		sp_read_test : out std_logic;
+		start_read_test : out std_logic;
+        read_issued_test : out std_logic;
+		sp_write_test : out std_logic;
+		start_write_test : out std_logic;
+        write_issued_test : out std_logic;
+        ddr3_clock_test : out std_logic;
+        
+		--/testing ports!!!
+		
 		-- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -702,6 +715,18 @@ begin
 --	  end process;
 
 	-- Add user logic here
+	
+	--testing ports!!!
+    
+    sp_read_test <= sp_read;
+    start_read_test <= start_single_read;
+    read_issued_test <= read_issued;
+    sp_write_test <= sp_write;
+    start_write_test <= start_single_write;
+    write_issued_test <= write_issued;
+    ddr3_clock_test <= M_AXI_ACLK;
+    
+    --/testing ports!!!
 
 	sp_data_out <= data_out;
 	sp_error <= (write_resp_error or read_resp_error or write_error or read_error);

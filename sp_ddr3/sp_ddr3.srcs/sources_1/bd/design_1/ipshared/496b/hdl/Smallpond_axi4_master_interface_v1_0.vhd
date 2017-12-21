@@ -17,15 +17,23 @@ entity sp_axi4_master_v1_0 is
 	);
 	port (
 		-- Users to add ports here
-  	sp_read : in std_logic; --(1 for read, 0 otherwise)
-  	sp_sign_extend : in std_logic; --sign extended=1
-  	sp_write : in std_logic; --(1 for write, 0 otherwise)
-  	sp_op_len : in std_logic_vector(1 downto 0); --(00:byte,01:halfword,10:word,11:invalid)
-  	sp_addr : in std_logic_vector(31 downto 0);
-  	sp_data_in : in std_logic_vector(31 downto 0);
-  	sp_data_out : out std_logic_vector(31 downto 0);
-  	sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
-  	sp_error : out std_logic; --(1 for error)
+        sp_read : in std_logic; --(1 for read, 0 otherwise)
+        sp_sign_extend : in std_logic; --sign extended=1
+        sp_write : in std_logic; --(1 for write, 0 otherwise)
+        sp_op_len : in std_logic_vector(1 downto 0); --(00:byte,01:halfword,10:word,11:invalid)
+        sp_addr : in std_logic_vector(31 downto 0);
+        sp_data_in : in std_logic_vector(31 downto 0);
+        sp_data_out : out std_logic_vector(31 downto 0);
+        sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
+        sp_error : out std_logic; --(1 for error)
+        
+        sp_read_test : out std_logic;
+        start_read_test : out std_logic;
+        read_issued_test : out std_logic;
+        sp_write_test : out std_logic;
+        start_write_test : out std_logic;
+        write_issued_test : out std_logic;
+        ddr3_clock_test : out std_logic;
 		-- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -68,15 +76,24 @@ architecture arch_imp of sp_axi4_master_v1_0 is
 		C_M_TRANSACTIONS_NUM	: integer	:= 1
 		);
 		port (
-    sp_read : in std_logic; --(1 for read, 0 otherwise)
-    sp_sign_extend : in std_logic; --sign extended=1
-  	sp_write : in std_logic; --(1 for write, 0 otherwise)
-  	sp_op_len : in std_logic_vector(1 downto 0); --(00:byte,01:halfword,10:word,11:invalid)
-  	sp_addr : in std_logic_vector(31 downto 0);
-  	sp_data_in : in std_logic_vector(31 downto 0);
-  	sp_data_out : out std_logic_vector(31 downto 0);
-  	sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
-  	sp_error : out std_logic; --(1 for error)
+        sp_read : in std_logic; --(1 for read, 0 otherwise)
+        sp_sign_extend : in std_logic; --sign extended=1
+        sp_write : in std_logic; --(1 for write, 0 otherwise)
+        sp_op_len : in std_logic_vector(1 downto 0); --(00:byte,01:halfword,10:word,11:invalid)
+        sp_addr : in std_logic_vector(31 downto 0);
+        sp_data_in : in std_logic_vector(31 downto 0);
+        sp_data_out : out std_logic_vector(31 downto 0);
+        sp_over : out std_logic; --(1 when data/operation complete, 0 otherwise)
+        sp_error : out std_logic; --(1 for error)
+        
+        sp_read_test : out std_logic;
+        start_read_test : out std_logic;
+        read_issued_test : out std_logic;
+        sp_write_test : out std_logic;
+        start_write_test : out std_logic;
+        write_issued_test : out std_logic;
+        ddr3_clock_test : out std_logic;
+  	
 --		INIT_AXI_TXN	: in std_logic;
 --		ERROR	: out std_logic;
 --		TXN_DONE	: out std_logic;
@@ -114,15 +131,22 @@ sp_axi4_master_v1_0_M00_AXI_inst : sp_axi4_master_v1_0_M00_AXI
 		C_M_TRANSACTIONS_NUM	=> C_M00_AXI_TRANSACTIONS_NUM
 	)
 	port map (
-  	sp_read => sp_read,
-  	sp_sign_extend => sp_sign_extend,
-  	sp_write => sp_write,
-  	sp_op_len => sp_op_len,
-  	sp_addr => sp_addr,
-  	sp_data_in => sp_data_in,
-  	sp_data_out => sp_data_out,
-  	sp_over => sp_over,
-  	sp_error => sp_error,
+        sp_read => sp_read,
+        sp_sign_extend => sp_sign_extend,
+        sp_write => sp_write,
+        sp_op_len => sp_op_len,
+        sp_addr => sp_addr,
+        sp_data_in => sp_data_in,
+        sp_data_out => sp_data_out,
+        sp_over => sp_over,
+        sp_error => sp_error,
+        sp_read_test => sp_read_test,
+        start_read_test => start_read_test,
+        read_issued_test => read_issued_test,
+        sp_write_test => sp_write_test,
+        start_write_test => start_write_test,
+        write_issued_test => write_issued_test,
+        ddr3_clock_test => ddr3_clock_test,
 --		INIT_AXI_TXN	=> m00_axi_init_axi_txn,
 --		ERROR	=> m00_axi_error,
 --		TXN_DONE	=> m00_axi_txn_done,

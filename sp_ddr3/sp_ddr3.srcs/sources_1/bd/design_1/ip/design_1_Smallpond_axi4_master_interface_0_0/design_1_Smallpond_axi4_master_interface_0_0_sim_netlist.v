@@ -1,7 +1,7 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
-// Date        : Wed Dec 20 14:57:47 2017
+// Date        : Thu Dec 21 10:37:50 2017
 // Host        : octopus-tetricus running 64-bit unknown
 // Command     : write_verilog -force -mode funcsim
 //               /home/jrcharlo/Smallpond/sp_ddr3/sp_ddr3.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/design_1_Smallpond_axi4_master_interface_0_0_sim_netlist.v
@@ -24,6 +24,13 @@ module design_1_Smallpond_axi4_master_interface_0_0
     sp_data_out,
     sp_over,
     sp_error,
+    sp_read_test,
+    start_read_test,
+    read_issued_test,
+    sp_write_test,
+    start_write_test,
+    write_issued_test,
+    ddr3_clock_test,
     m00_axi_awaddr,
     m00_axi_awprot,
     m00_axi_awvalid,
@@ -54,6 +61,13 @@ module design_1_Smallpond_axi4_master_interface_0_0
   output [31:0]sp_data_out;
   output sp_over;
   output sp_error;
+  output sp_read_test;
+  output start_read_test;
+  output read_issued_test;
+  output sp_write_test;
+  output start_write_test;
+  output write_issued_test;
+  output ddr3_clock_test;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 M00_AXI AWADDR" *) (* x_interface_parameter = "XIL_INTERFACENAME M00_AXI, WIZ_DATA_WIDTH 32, SUPPORTS_NARROW_BURST 0, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, NUM_READ_OUTSTANDING 8, NUM_WRITE_OUTSTANDING 8, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *) output [31:0]m00_axi_awaddr;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 M00_AXI AWPROT" *) output [2:0]m00_axi_awprot;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 M00_AXI AWVALID" *) output m00_axi_awvalid;
@@ -95,6 +109,7 @@ module design_1_Smallpond_axi4_master_interface_0_0
   wire m00_axi_wready;
   wire [2:0]\^m00_axi_wstrb ;
   wire m00_axi_wvalid;
+  wire read_issued_test;
   wire [31:0]sp_addr;
   wire [31:0]sp_data_in;
   wire [31:0]sp_data_out;
@@ -103,7 +118,11 @@ module design_1_Smallpond_axi4_master_interface_0_0
   wire sp_read;
   wire sp_sign_extend;
   wire sp_write;
+  wire start_read_test;
+  wire start_write_test;
+  wire write_issued_test;
 
+  assign ddr3_clock_test = m00_axi_aclk;
   assign m00_axi_arprot[2] = \<const0> ;
   assign m00_axi_arprot[1] = \<const0> ;
   assign m00_axi_arprot[0] = \<const1> ;
@@ -113,6 +132,8 @@ module design_1_Smallpond_axi4_master_interface_0_0
   assign m00_axi_wstrb[3] = \^m00_axi_wstrb [2];
   assign m00_axi_wstrb[2:0] = \^m00_axi_wstrb [2:0];
   assign sp_error = \<const1> ;
+  assign sp_read_test = sp_read;
+  assign sp_write_test = sp_write;
   GND GND
        (.G(\<const0> ));
   design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0 U0
@@ -133,6 +154,7 @@ module design_1_Smallpond_axi4_master_interface_0_0
         .m00_axi_wready(m00_axi_wready),
         .m00_axi_wstrb(\^m00_axi_wstrb ),
         .m00_axi_wvalid(m00_axi_wvalid),
+        .read_issued_test(read_issued_test),
         .sp_addr(sp_addr),
         .sp_data_in(sp_data_in),
         .sp_data_out(sp_data_out),
@@ -140,7 +162,10 @@ module design_1_Smallpond_axi4_master_interface_0_0
         .sp_over(sp_over),
         .sp_read(sp_read),
         .sp_sign_extend(sp_sign_extend),
-        .sp_write(sp_write));
+        .sp_write(sp_write),
+        .start_read_test(start_read_test),
+        .start_write_test(start_write_test),
+        .write_issued_test(write_issued_test));
   VCC VCC
        (.P(\<const1> ));
 endmodule
@@ -152,8 +177,12 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0
     m00_axi_awaddr,
     m00_axi_wdata,
     m00_axi_wstrb,
+    write_issued_test,
     m00_axi_araddr,
+    start_write_test,
+    read_issued_test,
     m00_axi_rready,
+    start_read_test,
     sp_over,
     m00_axi_awvalid,
     m00_axi_wvalid,
@@ -177,8 +206,12 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0
   output [31:0]m00_axi_awaddr;
   output [31:0]m00_axi_wdata;
   output [2:0]m00_axi_wstrb;
+  output write_issued_test;
   output [31:0]m00_axi_araddr;
+  output start_write_test;
+  output read_issued_test;
   output m00_axi_rready;
+  output start_read_test;
   output sp_over;
   output m00_axi_awvalid;
   output m00_axi_wvalid;
@@ -215,6 +248,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0
   wire m00_axi_wready;
   wire [2:0]m00_axi_wstrb;
   wire m00_axi_wvalid;
+  wire read_issued_test;
   wire [31:0]sp_addr;
   wire [31:0]sp_data_in;
   wire [31:0]sp_data_out;
@@ -223,6 +257,9 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0
   wire sp_read;
   wire sp_sign_extend;
   wire sp_write;
+  wire start_read_test;
+  wire start_write_test;
+  wire write_issued_test;
 
   design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI sp_axi4_master_v1_0_M00_AXI_inst
        (.m00_axi_aclk(m00_axi_aclk),
@@ -242,6 +279,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0
         .m00_axi_wready(m00_axi_wready),
         .m00_axi_wstrb(m00_axi_wstrb),
         .m00_axi_wvalid(m00_axi_wvalid),
+        .read_issued_test(read_issued_test),
         .sp_addr(sp_addr),
         .sp_data_in(sp_data_in),
         .sp_data_out(sp_data_out),
@@ -249,7 +287,10 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0
         .sp_over(sp_over),
         .sp_read(sp_read),
         .sp_sign_extend(sp_sign_extend),
-        .sp_write(sp_write));
+        .sp_write(sp_write),
+        .start_read_test(start_read_test),
+        .start_write_test(start_write_test),
+        .write_issued_test(write_issued_test));
 endmodule
 
 (* ORIG_REF_NAME = "sp_axi4_master_v1_0_M00_AXI" *) 
@@ -259,8 +300,12 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
     m00_axi_awaddr,
     m00_axi_wdata,
     m00_axi_wstrb,
+    write_issued_test,
     m00_axi_araddr,
+    start_write_test,
+    read_issued_test,
     m00_axi_rready,
+    start_read_test,
     sp_over,
     m00_axi_awvalid,
     m00_axi_wvalid,
@@ -284,8 +329,12 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
   output [31:0]m00_axi_awaddr;
   output [31:0]m00_axi_wdata;
   output [2:0]m00_axi_wstrb;
+  output write_issued_test;
   output [31:0]m00_axi_araddr;
+  output start_write_test;
+  output read_issued_test;
   output m00_axi_rready;
+  output start_read_test;
   output sp_over;
   output m00_axi_awvalid;
   output m00_axi_wvalid;
@@ -335,8 +384,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
   wire \axi_awaddr[29]_i_1_n_0 ;
   wire \axi_awaddr[2]_i_1_n_0 ;
   wire \axi_awaddr[30]_i_1_n_0 ;
-  wire \axi_awaddr[31]_i_3_n_0 ;
-  wire \axi_awaddr[31]_i_5_n_0 ;
+  wire \axi_awaddr[31]_i_2_n_0 ;
   wire \axi_awaddr[3]_i_1_n_0 ;
   wire \axi_awaddr[3]_i_3_n_0 ;
   wire \axi_awaddr[4]_i_1_n_0 ;
@@ -365,9 +413,9 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
   wire \axi_awaddr_reg[27]_i_2_n_1 ;
   wire \axi_awaddr_reg[27]_i_2_n_2 ;
   wire \axi_awaddr_reg[27]_i_2_n_3 ;
-  wire \axi_awaddr_reg[31]_i_6_n_1 ;
-  wire \axi_awaddr_reg[31]_i_6_n_2 ;
-  wire \axi_awaddr_reg[31]_i_6_n_3 ;
+  wire \axi_awaddr_reg[31]_i_3_n_1 ;
+  wire \axi_awaddr_reg[31]_i_3_n_2 ;
+  wire \axi_awaddr_reg[31]_i_3_n_3 ;
   wire \axi_awaddr_reg[3]_i_2_n_0 ;
   wire \axi_awaddr_reg[3]_i_2_n_1 ;
   wire \axi_awaddr_reg[3]_i_2_n_2 ;
@@ -449,9 +497,9 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
   wire [31:0]p_1_in;
   wire [31:0]p_2_in;
   wire [31:0]plusOp;
-  wire read_issued;
   wire read_issued_i_1_n_0;
   wire read_issued_i_2_n_0;
+  wire read_issued_test;
   wire read_over_i_1_n_0;
   wire read_over_i_2_n_0;
   wire read_over_i_3_n_0;
@@ -467,15 +515,16 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
   wire sp_read;
   wire sp_sign_extend;
   wire sp_write;
-  wire start_single_read_i_1_n_0;
+  wire start_read_test;
   wire start_single_read_i_2_n_0;
-  wire start_single_read_reg_n_0;
-  wire start_single_write;
+  wire start_single_read_i_3_n_0;
   wire start_single_write_i_1_n_0;
   wire start_single_write_i_2_n_0;
-  wire start_single_write_i_3_n_0;
+  wire start_single_write_i_4_n_0;
+  wire start_single_write_i_5_n_0;
+  wire start_write_test;
   wire write_issued_i_1_n_0;
-  wire write_issued_reg_n_0;
+  wire write_issued_test;
   wire write_over;
   wire write_over_i_1_n_0;
   wire write_over_reg_n_0;
@@ -485,7 +534,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
   wire wstep;
   wire wstep_i_1_n_0;
   wire wstep_i_2_n_0;
-  wire [3:3]\NLW_axi_awaddr_reg[31]_i_6_CO_UNCONNECTED ;
+  wire [3:3]\NLW_axi_awaddr_reg[31]_i_3_CO_UNCONNECTED ;
 
   (* SOFT_HLUTNM = "soft_lutpair8" *) 
   LUT3 #(
@@ -655,7 +704,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I2(sp_addr[28]),
         .I3(sp_addr[29]),
         .I4(sp_read),
-        .I5(read_issued),
+        .I5(read_issued_test),
         .O(\axi_araddr[27]_i_2_n_0 ));
   LUT6 #(
     .INIT(64'hFFFFFFFF00002000)) 
@@ -703,7 +752,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I2(\data_out[31]_i_6_n_0 ),
         .I3(rstep),
         .I4(sp_read),
-        .I5(read_issued),
+        .I5(read_issued_test),
         .O(\axi_araddr[31]_i_1_n_0 ));
   LUT6 #(
     .INIT(64'hFFFEFFFF00000000)) 
@@ -718,7 +767,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
   LUT2 #(
     .INIT(4'hB)) 
     \axi_araddr[31]_i_3 
-       (.I0(read_issued),
+       (.I0(read_issued_test),
         .I1(sp_read),
         .O(\axi_araddr[31]_i_3_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair11" *) 
@@ -974,7 +1023,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
     axi_arvalid_i_1
        (.I0(m00_axi_arvalid),
         .I1(m00_axi_arready),
-        .I2(start_single_read_reg_n_0),
+        .I2(start_read_test),
         .O(axi_arvalid_i_1_n_0));
   FDRE axi_arvalid_reg
        (.C(m00_axi_aclk),
@@ -1150,7 +1199,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I2(sp_addr[28]),
         .I3(sp_addr[29]),
         .I4(sp_write),
-        .I5(write_issued_reg_n_0),
+        .I5(write_issued_test),
         .O(\axi_awaddr[27]_i_3_n_0 ));
   LUT6 #(
     .INIT(64'hFFFFFFFF04000000)) 
@@ -1159,7 +1208,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(sp_addr[31]),
         .I2(sp_addr[29]),
         .I3(plusOp[28]),
-        .I4(\axi_awaddr[31]_i_5_n_0 ),
+        .I4(start_single_write_i_2_n_0),
         .I5(sp_addr[28]),
         .O(\axi_awaddr[28]_i_1_n_0 ));
   LUT6 #(
@@ -1169,7 +1218,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(sp_addr[31]),
         .I2(sp_addr[28]),
         .I3(plusOp[29]),
-        .I4(\axi_awaddr[31]_i_5_n_0 ),
+        .I4(start_single_write_i_2_n_0),
         .I5(sp_addr[29]),
         .O(\axi_awaddr[29]_i_1_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair21" *) 
@@ -1187,50 +1236,29 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(sp_addr[29]),
         .I2(sp_addr[31]),
         .I3(plusOp[30]),
-        .I4(\axi_awaddr[31]_i_5_n_0 ),
+        .I4(start_single_write_i_2_n_0),
         .I5(sp_addr[30]),
         .O(\axi_awaddr[30]_i_1_n_0 ));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \axi_awaddr[31]_i_1 
-       (.I0(m00_axi_aresetn),
-        .O(p_0_in));
   LUT6 #(
     .INIT(64'h0004000400FFFFFF)) 
-    \axi_awaddr[31]_i_2 
+    \axi_awaddr[31]_i_1 
        (.I0(\data_out[31]_i_6_n_0 ),
         .I1(axi_awaddr1),
         .I2(wstep),
         .I3(sp_op_len[0]),
         .I4(sp_op_len[1]),
-        .I5(\axi_awaddr[31]_i_5_n_0 ),
+        .I5(start_single_write_i_2_n_0),
         .O(axi_wdata));
   LUT6 #(
     .INIT(64'hFFFEFFFF00000000)) 
-    \axi_awaddr[31]_i_3 
+    \axi_awaddr[31]_i_2 
        (.I0(sp_addr[30]),
         .I1(plusOp[31]),
         .I2(sp_addr[29]),
         .I3(sp_addr[28]),
-        .I4(\axi_awaddr[31]_i_5_n_0 ),
+        .I4(start_single_write_i_2_n_0),
         .I5(sp_addr[31]),
-        .O(\axi_awaddr[31]_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair3" *) 
-  LUT4 #(
-    .INIT(16'h0080)) 
-    \axi_awaddr[31]_i_4 
-       (.I0(m00_axi_bready),
-        .I1(write_issued_reg_n_0),
-        .I2(m00_axi_bvalid),
-        .I3(start_single_write),
-        .O(axi_awaddr1));
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
-  LUT2 #(
-    .INIT(4'hB)) 
-    \axi_awaddr[31]_i_5 
-       (.I0(write_issued_reg_n_0),
-        .I1(sp_write),
-        .O(\axi_awaddr[31]_i_5_n_0 ));
+        .O(\axi_awaddr[31]_i_2_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair22" *) 
   LUT3 #(
     .INIT(8'hCA)) 
@@ -1474,12 +1502,12 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
   FDRE \axi_awaddr_reg[31] 
        (.C(m00_axi_aclk),
         .CE(axi_wdata),
-        .D(\axi_awaddr[31]_i_3_n_0 ),
+        .D(\axi_awaddr[31]_i_2_n_0 ),
         .Q(m00_axi_awaddr[31]),
         .R(p_0_in));
-  CARRY4 \axi_awaddr_reg[31]_i_6 
+  CARRY4 \axi_awaddr_reg[31]_i_3 
        (.CI(\axi_awaddr_reg[27]_i_2_n_0 ),
-        .CO({\NLW_axi_awaddr_reg[31]_i_6_CO_UNCONNECTED [3],\axi_awaddr_reg[31]_i_6_n_1 ,\axi_awaddr_reg[31]_i_6_n_2 ,\axi_awaddr_reg[31]_i_6_n_3 }),
+        .CO({\NLW_axi_awaddr_reg[31]_i_3_CO_UNCONNECTED [3],\axi_awaddr_reg[31]_i_3_n_1 ,\axi_awaddr_reg[31]_i_3_n_2 ,\axi_awaddr_reg[31]_i_3_n_3 }),
         .CYINIT(1'b0),
         .DI({1'b0,1'b0,1'b0,1'b0}),
         .O(plusOp[31:28]),
@@ -1546,7 +1574,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
     axi_awvalid_i_1
        (.I0(m00_axi_awvalid),
         .I1(m00_axi_awready),
-        .I2(start_single_write),
+        .I2(start_write_test),
         .O(axi_awvalid_i_1_n_0));
   FDRE axi_awvalid_reg
        (.C(m00_axi_aclk),
@@ -1586,7 +1614,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(sp_data_in[0]),
         .I1(\data_out[31]_i_6_n_0 ),
         .I2(sp_write),
-        .I3(write_issued_reg_n_0),
+        .I3(write_issued_test),
         .I4(sp_data_in[16]),
         .O(\axi_wdata[0]_i_1_n_0 ));
   LUT6 #(
@@ -1596,7 +1624,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(\axi_wdata[15]_i_2_n_0 ),
         .I2(\data_out[31]_i_6_n_0 ),
         .I3(sp_write),
-        .I4(write_issued_reg_n_0),
+        .I4(write_issued_test),
         .I5(sp_data_in[26]),
         .O(\axi_wdata[10]_i_1_n_0 ));
   LUT6 #(
@@ -1606,7 +1634,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(\axi_wdata[15]_i_2_n_0 ),
         .I2(\data_out[31]_i_6_n_0 ),
         .I3(sp_write),
-        .I4(write_issued_reg_n_0),
+        .I4(write_issued_test),
         .I5(sp_data_in[27]),
         .O(\axi_wdata[11]_i_1_n_0 ));
   LUT6 #(
@@ -1616,7 +1644,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(\axi_wdata[15]_i_2_n_0 ),
         .I2(\data_out[31]_i_6_n_0 ),
         .I3(sp_write),
-        .I4(write_issued_reg_n_0),
+        .I4(write_issued_test),
         .I5(sp_data_in[28]),
         .O(\axi_wdata[12]_i_1_n_0 ));
   LUT6 #(
@@ -1626,7 +1654,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(\axi_wdata[15]_i_2_n_0 ),
         .I2(\data_out[31]_i_6_n_0 ),
         .I3(sp_write),
-        .I4(write_issued_reg_n_0),
+        .I4(write_issued_test),
         .I5(sp_data_in[29]),
         .O(\axi_wdata[13]_i_1_n_0 ));
   LUT6 #(
@@ -1636,7 +1664,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(\axi_wdata[15]_i_2_n_0 ),
         .I2(\data_out[31]_i_6_n_0 ),
         .I3(sp_write),
-        .I4(write_issued_reg_n_0),
+        .I4(write_issued_test),
         .I5(sp_data_in[30]),
         .O(\axi_wdata[14]_i_1_n_0 ));
   LUT6 #(
@@ -1646,7 +1674,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(\axi_wdata[15]_i_2_n_0 ),
         .I2(\data_out[31]_i_6_n_0 ),
         .I3(sp_write),
-        .I4(write_issued_reg_n_0),
+        .I4(write_issued_test),
         .I5(sp_data_in[31]),
         .O(\axi_wdata[15]_i_1_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair4" *) 
@@ -1704,7 +1732,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(sp_data_in[1]),
         .I1(\data_out[31]_i_6_n_0 ),
         .I2(sp_write),
-        .I3(write_issued_reg_n_0),
+        .I3(write_issued_test),
         .I4(sp_data_in[17]),
         .O(\axi_wdata[1]_i_1_n_0 ));
   LUT6 #(
@@ -1813,7 +1841,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(sp_data_in[2]),
         .I1(\data_out[31]_i_6_n_0 ),
         .I2(sp_write),
-        .I3(write_issued_reg_n_0),
+        .I3(write_issued_test),
         .I4(sp_data_in[18]),
         .O(\axi_wdata[2]_i_1_n_0 ));
   LUT6 #(
@@ -1843,7 +1871,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(sp_data_in[3]),
         .I1(\data_out[31]_i_6_n_0 ),
         .I2(sp_write),
-        .I3(write_issued_reg_n_0),
+        .I3(write_issued_test),
         .I4(sp_data_in[19]),
         .O(\axi_wdata[3]_i_1_n_0 ));
   LUT5 #(
@@ -1852,7 +1880,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(sp_data_in[4]),
         .I1(\data_out[31]_i_6_n_0 ),
         .I2(sp_write),
-        .I3(write_issued_reg_n_0),
+        .I3(write_issued_test),
         .I4(sp_data_in[20]),
         .O(\axi_wdata[4]_i_1_n_0 ));
   LUT5 #(
@@ -1861,7 +1889,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(sp_data_in[5]),
         .I1(\data_out[31]_i_6_n_0 ),
         .I2(sp_write),
-        .I3(write_issued_reg_n_0),
+        .I3(write_issued_test),
         .I4(sp_data_in[21]),
         .O(\axi_wdata[5]_i_1_n_0 ));
   LUT5 #(
@@ -1870,7 +1898,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(sp_data_in[6]),
         .I1(\data_out[31]_i_6_n_0 ),
         .I2(sp_write),
-        .I3(write_issued_reg_n_0),
+        .I3(write_issued_test),
         .I4(sp_data_in[22]),
         .O(\axi_wdata[6]_i_1_n_0 ));
   LUT5 #(
@@ -1879,7 +1907,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(sp_data_in[7]),
         .I1(\data_out[31]_i_6_n_0 ),
         .I2(sp_write),
-        .I3(write_issued_reg_n_0),
+        .I3(write_issued_test),
         .I4(sp_data_in[23]),
         .O(\axi_wdata[7]_i_1_n_0 ));
   LUT6 #(
@@ -1889,7 +1917,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(\axi_wdata[15]_i_2_n_0 ),
         .I2(\data_out[31]_i_6_n_0 ),
         .I3(sp_write),
-        .I4(write_issued_reg_n_0),
+        .I4(write_issued_test),
         .I5(sp_data_in[24]),
         .O(\axi_wdata[8]_i_1_n_0 ));
   LUT6 #(
@@ -1899,7 +1927,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I1(\axi_wdata[15]_i_2_n_0 ),
         .I2(\data_out[31]_i_6_n_0 ),
         .I3(sp_write),
-        .I4(write_issued_reg_n_0),
+        .I4(write_issued_test),
         .I5(sp_data_in[25]),
         .O(\axi_wdata[9]_i_1_n_0 ));
   FDRE \axi_wdata_reg[0] 
@@ -2100,7 +2128,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
     axi_wvalid_i_1
        (.I0(m00_axi_wvalid),
         .I1(m00_axi_wready),
-        .I2(start_single_write),
+        .I2(start_write_test),
         .O(axi_wvalid_i_1_n_0));
   FDRE axi_wvalid_reg
        (.C(m00_axi_aclk),
@@ -2374,9 +2402,9 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
     .INIT(16'h0080)) 
     \data_out[31]_i_3 
        (.I0(m00_axi_rready),
-        .I1(read_issued),
+        .I1(read_issued_test),
         .I2(m00_axi_rvalid),
-        .I3(start_single_read_reg_n_0),
+        .I3(start_read_test),
         .O(\data_out[31]_i_3_n_0 ));
   LUT4 #(
     .INIT(16'hFFEF)) 
@@ -2663,7 +2691,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .I2(read_issued_i_2_n_0),
         .I3(\data_out[31]_i_3_n_0 ),
         .I4(sp_read),
-        .I5(read_issued),
+        .I5(read_issued_test),
         .O(read_issued_i_1_n_0));
   LUT6 #(
     .INIT(64'h55555455FFFFFFFF)) 
@@ -2679,7 +2707,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.C(m00_axi_aclk),
         .CE(1'b1),
         .D(read_issued_i_1_n_0),
-        .Q(read_issued),
+        .Q(read_issued_test),
         .R(p_0_in));
   LUT6 #(
     .INIT(64'hE200F000E2000000)) 
@@ -2703,13 +2731,13 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .O(read_over_i_2_n_0));
   (* SOFT_HLUTNM = "soft_lutpair2" *) 
   LUT5 #(
-    .INIT(32'hAAAA30FF)) 
+    .INIT(32'hFF750075)) 
     read_over_i_3
-       (.I0(\data_out[31]_i_3_n_0 ),
+       (.I0(sp_op_len[1]),
         .I1(sp_op_len[0]),
         .I2(rstep),
-        .I3(sp_op_len[1]),
-        .I4(\data_out[31]_i_4_n_0 ),
+        .I3(\data_out[31]_i_4_n_0 ),
+        .I4(\data_out[31]_i_3_n_0 ),
         .O(read_over_i_3_n_0));
   FDRE read_over_reg
        (.C(m00_axi_aclk),
@@ -2750,63 +2778,84 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(write_over_reg_n_0),
         .I1(read_over_reg_n_0),
         .O(sp_over));
+  LUT1 #(
+    .INIT(2'h1)) 
+    start_single_read_i_1
+       (.I0(m00_axi_aresetn),
+        .O(p_0_in));
   LUT6 #(
     .INIT(64'h30EE00EE00EE00EE)) 
-    start_single_read_i_1
+    start_single_read_i_2
        (.I0(sp_read),
-        .I1(start_single_read_reg_n_0),
+        .I1(start_read_test),
         .I2(m00_axi_rvalid),
-        .I3(read_issued),
+        .I3(read_issued_test),
         .I4(m00_axi_rready),
-        .I5(start_single_read_i_2_n_0),
-        .O(start_single_read_i_1_n_0));
+        .I5(start_single_read_i_3_n_0),
+        .O(start_single_read_i_2_n_0));
   (* SOFT_HLUTNM = "soft_lutpair36" *) 
   LUT3 #(
     .INIT(8'h01)) 
-    start_single_read_i_2
+    start_single_read_i_3
        (.I0(sp_op_len[0]),
         .I1(\data_out[31]_i_6_n_0 ),
         .I2(rstep),
-        .O(start_single_read_i_2_n_0));
+        .O(start_single_read_i_3_n_0));
   FDRE start_single_read_reg
        (.C(m00_axi_aclk),
         .CE(1'b1),
-        .D(start_single_read_i_1_n_0),
-        .Q(start_single_read_reg_n_0),
+        .D(start_single_read_i_2_n_0),
+        .Q(start_read_test),
         .R(p_0_in));
   LUT6 #(
     .INIT(64'h50D0FFFF50D00000)) 
     start_single_write_i_1
-       (.I0(\axi_awaddr[31]_i_5_n_0 ),
+       (.I0(start_single_write_i_2_n_0),
         .I1(axi_awaddr1),
         .I2(m00_axi_aresetn),
         .I3(\data_out[31]_i_4_n_0 ),
-        .I4(start_single_write_i_2_n_0),
-        .I5(start_single_write),
+        .I4(start_single_write_i_4_n_0),
+        .I5(start_write_test),
         .O(start_single_write_i_1_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+  LUT2 #(
+    .INIT(4'hB)) 
+    start_single_write_i_2
+       (.I0(write_issued_test),
+        .I1(sp_write),
+        .O(start_single_write_i_2_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair3" *) 
+  LUT4 #(
+    .INIT(16'h0080)) 
+    start_single_write_i_3
+       (.I0(m00_axi_bready),
+        .I1(write_issued_test),
+        .I2(m00_axi_bvalid),
+        .I3(start_write_test),
+        .O(axi_awaddr1));
   LUT6 #(
     .INIT(64'hEAEAEAEAFFEAEAEA)) 
-    start_single_write_i_2
+    start_single_write_i_4
        (.I0(wstep_i_2_n_0),
-        .I1(start_single_write),
-        .I2(write_issued_reg_n_0),
+        .I1(start_write_test),
+        .I2(write_issued_test),
         .I3(rstep_i_2_n_0),
-        .I4(start_single_write_i_3_n_0),
+        .I4(start_single_write_i_5_n_0),
         .I5(wstep),
-        .O(start_single_write_i_2_n_0));
+        .O(start_single_write_i_4_n_0));
   (* SOFT_HLUTNM = "soft_lutpair3" *) 
   LUT3 #(
     .INIT(8'h80)) 
-    start_single_write_i_3
+    start_single_write_i_5
        (.I0(m00_axi_bvalid),
-        .I1(write_issued_reg_n_0),
+        .I1(write_issued_test),
         .I2(m00_axi_bready),
-        .O(start_single_write_i_3_n_0));
+        .O(start_single_write_i_5_n_0));
   FDRE start_single_write_reg
        (.C(m00_axi_aclk),
         .CE(1'b1),
         .D(start_single_write_i_1_n_0),
-        .Q(start_single_write),
+        .Q(start_write_test),
         .R(1'b0));
   LUT4 #(
     .INIT(16'h0F80)) 
@@ -2814,7 +2863,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(m00_axi_aresetn),
         .I1(sp_write),
         .I2(write_over),
-        .I3(write_issued_reg_n_0),
+        .I3(write_issued_test),
         .O(write_issued_i_1_n_0));
   LUT6 #(
     .INIT(64'hAFAEFFFFAAAAAAAA)) 
@@ -2830,7 +2879,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.C(m00_axi_aclk),
         .CE(1'b1),
         .D(write_issued_i_1_n_0),
-        .Q(write_issued_reg_n_0),
+        .Q(write_issued_test),
         .R(1'b0));
   (* SOFT_HLUTNM = "soft_lutpair6" *) 
   LUT4 #(
@@ -2852,7 +2901,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
     \write_strobes[0]_i_1 
        (.I0(sp_op_len[0]),
         .I1(sp_op_len[1]),
-        .I2(write_issued_reg_n_0),
+        .I2(write_issued_test),
         .I3(sp_write),
         .I4(m00_axi_aresetn),
         .I5(m00_axi_wstrb[0]),
@@ -2862,7 +2911,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
     \write_strobes[1]_i_1 
        (.I0(sp_op_len[0]),
         .I1(sp_op_len[1]),
-        .I2(write_issued_reg_n_0),
+        .I2(write_issued_test),
         .I3(sp_write),
         .I4(m00_axi_aresetn),
         .I5(m00_axi_wstrb[1]),
@@ -2873,7 +2922,7 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
        (.I0(\data_out[31]_i_5_n_0 ),
         .I1(sp_op_len[0]),
         .I2(sp_op_len[1]),
-        .I3(\axi_awaddr[31]_i_5_n_0 ),
+        .I3(start_single_write_i_2_n_0),
         .I4(m00_axi_aresetn),
         .I5(m00_axi_wstrb[2]),
         .O(\write_strobes[3]_i_1_n_0 ));
@@ -2896,21 +2945,21 @@ module design_1_Smallpond_axi4_master_interface_0_0_sp_axi4_master_v1_0_M00_AXI
         .Q(m00_axi_wstrb[2]),
         .R(1'b0));
   LUT6 #(
-    .INIT(64'h8F8F8F008F008F00)) 
+    .INIT(64'hDDDDD00055555000)) 
     wstep_i_1
-       (.I0(\data_out[31]_i_5_n_0 ),
-        .I1(m00_axi_aresetn),
-        .I2(wstep_i_2_n_0),
-        .I3(wstep),
-        .I4(axi_awaddr1),
-        .I5(rstep_i_2_n_0),
+       (.I0(wstep_i_2_n_0),
+        .I1(\data_out[31]_i_5_n_0 ),
+        .I2(rstep_i_2_n_0),
+        .I3(axi_awaddr1),
+        .I4(wstep),
+        .I5(m00_axi_aresetn),
         .O(wstep_i_1_n_0));
   LUT5 #(
     .INIT(32'h0700FFFF)) 
     wstep_i_2
        (.I0(sp_op_len[0]),
         .I1(sp_op_len[1]),
-        .I2(write_issued_reg_n_0),
+        .I2(write_issued_test),
         .I3(sp_write),
         .I4(m00_axi_aresetn),
         .O(wstep_i_2_n_0));

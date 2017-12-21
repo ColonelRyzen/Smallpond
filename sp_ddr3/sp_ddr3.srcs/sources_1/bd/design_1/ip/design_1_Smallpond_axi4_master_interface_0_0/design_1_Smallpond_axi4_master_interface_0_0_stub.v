@@ -1,7 +1,7 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
-// Date        : Wed Dec 20 14:57:47 2017
+// Date        : Thu Dec 21 10:37:50 2017
 // Host        : octopus-tetricus running 64-bit unknown
 // Command     : write_verilog -force -mode synth_stub
 //               /home/jrcharlo/Smallpond/sp_ddr3/sp_ddr3.srcs/sources_1/bd/design_1/ip/design_1_Smallpond_axi4_master_interface_0_0/design_1_Smallpond_axi4_master_interface_0_0_stub.v
@@ -15,12 +15,14 @@
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
 (* x_core_info = "sp_axi4_master_v1_0,Vivado 2017.3.1" *)
 module design_1_Smallpond_axi4_master_interface_0_0(sp_read, sp_sign_extend, sp_write, sp_op_len, 
-  sp_addr, sp_data_in, sp_data_out, sp_over, sp_error, m00_axi_awaddr, m00_axi_awprot, 
-  m00_axi_awvalid, m00_axi_awready, m00_axi_wdata, m00_axi_wstrb, m00_axi_wvalid, 
-  m00_axi_wready, m00_axi_bresp, m00_axi_bvalid, m00_axi_bready, m00_axi_araddr, 
-  m00_axi_arprot, m00_axi_arvalid, m00_axi_arready, m00_axi_rdata, m00_axi_rresp, 
-  m00_axi_rvalid, m00_axi_rready, m00_axi_aclk, m00_axi_aresetn)
-/* synthesis syn_black_box black_box_pad_pin="sp_read,sp_sign_extend,sp_write,sp_op_len[1:0],sp_addr[31:0],sp_data_in[31:0],sp_data_out[31:0],sp_over,sp_error,m00_axi_awaddr[31:0],m00_axi_awprot[2:0],m00_axi_awvalid,m00_axi_awready,m00_axi_wdata[31:0],m00_axi_wstrb[3:0],m00_axi_wvalid,m00_axi_wready,m00_axi_bresp[1:0],m00_axi_bvalid,m00_axi_bready,m00_axi_araddr[31:0],m00_axi_arprot[2:0],m00_axi_arvalid,m00_axi_arready,m00_axi_rdata[31:0],m00_axi_rresp[1:0],m00_axi_rvalid,m00_axi_rready,m00_axi_aclk,m00_axi_aresetn" */;
+  sp_addr, sp_data_in, sp_data_out, sp_over, sp_error, sp_read_test, start_read_test, 
+  read_issued_test, sp_write_test, start_write_test, write_issued_test, ddr3_clock_test, 
+  m00_axi_awaddr, m00_axi_awprot, m00_axi_awvalid, m00_axi_awready, m00_axi_wdata, 
+  m00_axi_wstrb, m00_axi_wvalid, m00_axi_wready, m00_axi_bresp, m00_axi_bvalid, 
+  m00_axi_bready, m00_axi_araddr, m00_axi_arprot, m00_axi_arvalid, m00_axi_arready, 
+  m00_axi_rdata, m00_axi_rresp, m00_axi_rvalid, m00_axi_rready, m00_axi_aclk, 
+  m00_axi_aresetn)
+/* synthesis syn_black_box black_box_pad_pin="sp_read,sp_sign_extend,sp_write,sp_op_len[1:0],sp_addr[31:0],sp_data_in[31:0],sp_data_out[31:0],sp_over,sp_error,sp_read_test,start_read_test,read_issued_test,sp_write_test,start_write_test,write_issued_test,ddr3_clock_test,m00_axi_awaddr[31:0],m00_axi_awprot[2:0],m00_axi_awvalid,m00_axi_awready,m00_axi_wdata[31:0],m00_axi_wstrb[3:0],m00_axi_wvalid,m00_axi_wready,m00_axi_bresp[1:0],m00_axi_bvalid,m00_axi_bready,m00_axi_araddr[31:0],m00_axi_arprot[2:0],m00_axi_arvalid,m00_axi_arready,m00_axi_rdata[31:0],m00_axi_rresp[1:0],m00_axi_rvalid,m00_axi_rready,m00_axi_aclk,m00_axi_aresetn" */;
   input sp_read;
   input sp_sign_extend;
   input sp_write;
@@ -30,6 +32,13 @@ module design_1_Smallpond_axi4_master_interface_0_0(sp_read, sp_sign_extend, sp_
   output [31:0]sp_data_out;
   output sp_over;
   output sp_error;
+  output sp_read_test;
+  output start_read_test;
+  output read_issued_test;
+  output sp_write_test;
+  output start_write_test;
+  output write_issued_test;
+  output ddr3_clock_test;
   output [31:0]m00_axi_awaddr;
   output [2:0]m00_axi_awprot;
   output m00_axi_awvalid;

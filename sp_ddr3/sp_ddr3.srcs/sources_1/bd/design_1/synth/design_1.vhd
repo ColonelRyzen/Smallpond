@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.3.1 (lin64) Build 2035080 Fri Oct 20 14:20:00 MDT 2017
---Date        : Wed Dec 20 21:31:15 2017
+--Date        : Thu Dec 21 10:36:36 2017
 --Host        : octopus-tetricus running 64-bit unknown
 --Command     : generate_target design_1.bd
 --Design      : design_1
@@ -931,6 +931,7 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_1 is
   port (
+    ddr3_clock_test_0 : out STD_LOGIC;
     ddr3_sdram_addr : out STD_LOGIC_VECTOR ( 13 downto 0 );
     ddr3_sdram_ba : out STD_LOGIC_VECTOR ( 2 downto 0 );
     ddr3_sdram_cas_n : out STD_LOGIC;
@@ -946,6 +947,7 @@ entity design_1 is
     ddr3_sdram_ras_n : out STD_LOGIC;
     ddr3_sdram_reset_n : out STD_LOGIC;
     ddr3_sdram_we_n : out STD_LOGIC;
+    read_issued_test_0 : out STD_LOGIC;
     reset : in STD_LOGIC;
     sp_addr_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
     sp_data_in_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -954,14 +956,19 @@ entity design_1 is
     sp_op_len_0 : in STD_LOGIC_VECTOR ( 1 downto 0 );
     sp_over_0 : out STD_LOGIC;
     sp_read_0 : in STD_LOGIC;
+    sp_read_test_0 : out STD_LOGIC;
     sp_sign_extend_0 : in STD_LOGIC;
     sp_write_0 : in STD_LOGIC;
-    sys_clock : in STD_LOGIC
+    sp_write_test_0 : out STD_LOGIC;
+    start_read_test_0 : out STD_LOGIC;
+    start_write_test_0 : out STD_LOGIC;
+    sys_clock : in STD_LOGIC;
+    write_issued_test_0 : out STD_LOGIC
   );
-  attribute core_generation_info : string;
-  attribute core_generation_info of design_1 : entity is "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=10,numReposBlks=8,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_board_cnt=2,da_clkrst_cnt=3,synth_mode=OOC_per_IP}";
-  attribute hw_handoff : string;
-  attribute hw_handoff of design_1 : entity is "design_1.hwdef";
+  attribute CORE_GENERATION_INFO : string;
+  attribute CORE_GENERATION_INFO of design_1 : entity is "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=10,numReposBlks=8,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_board_cnt=2,da_clkrst_cnt=3,synth_mode=OOC_per_IP}";
+  attribute HW_HANDOFF : string;
+  attribute HW_HANDOFF of design_1 : entity is "design_1.hwdef";
 end design_1;
 
 architecture STRUCTURE of design_1 is
@@ -1029,40 +1036,6 @@ architecture STRUCTURE of design_1 is
     aresetn : in STD_LOGIC
   );
   end component design_1_mig_7series_0_0;
-  component design_1_Smallpond_axi4_master_interface_0_0 is
-  port (
-    sp_read : in STD_LOGIC;
-    sp_sign_extend : in STD_LOGIC;
-    sp_write : in STD_LOGIC;
-    sp_op_len : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    sp_addr : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_data_in : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_data_out : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    sp_over : out STD_LOGIC;
-    sp_error : out STD_LOGIC;
-    m00_axi_awaddr : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    m00_axi_awprot : out STD_LOGIC_VECTOR ( 2 downto 0 );
-    m00_axi_awvalid : out STD_LOGIC;
-    m00_axi_awready : in STD_LOGIC;
-    m00_axi_wdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    m00_axi_wstrb : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    m00_axi_wvalid : out STD_LOGIC;
-    m00_axi_wready : in STD_LOGIC;
-    m00_axi_bresp : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    m00_axi_bvalid : in STD_LOGIC;
-    m00_axi_bready : out STD_LOGIC;
-    m00_axi_araddr : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    m00_axi_arprot : out STD_LOGIC_VECTOR ( 2 downto 0 );
-    m00_axi_arvalid : out STD_LOGIC;
-    m00_axi_arready : in STD_LOGIC;
-    m00_axi_rdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    m00_axi_rresp : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    m00_axi_rvalid : in STD_LOGIC;
-    m00_axi_rready : out STD_LOGIC;
-    m00_axi_aclk : in STD_LOGIC;
-    m00_axi_aresetn : in STD_LOGIC
-  );
-  end component design_1_Smallpond_axi4_master_interface_0_0;
   component design_1_proc_sys_reset_0_0 is
   port (
     slowest_sync_clk : in STD_LOGIC;
@@ -1099,6 +1072,47 @@ architecture STRUCTURE of design_1 is
     peripheral_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
   end component design_1_proc_sys_reset_1_0;
+  component design_1_Smallpond_axi4_master_interface_0_0 is
+  port (
+    sp_read : in STD_LOGIC;
+    sp_sign_extend : in STD_LOGIC;
+    sp_write : in STD_LOGIC;
+    sp_op_len : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    sp_addr : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    sp_data_in : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    sp_data_out : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    sp_over : out STD_LOGIC;
+    sp_error : out STD_LOGIC;
+    sp_read_test : out STD_LOGIC;
+    start_read_test : out STD_LOGIC;
+    read_issued_test : out STD_LOGIC;
+    sp_write_test : out STD_LOGIC;
+    start_write_test : out STD_LOGIC;
+    write_issued_test : out STD_LOGIC;
+    ddr3_clock_test : out STD_LOGIC;
+    m00_axi_awaddr : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m00_axi_awprot : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    m00_axi_awvalid : out STD_LOGIC;
+    m00_axi_awready : in STD_LOGIC;
+    m00_axi_wdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m00_axi_wstrb : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    m00_axi_wvalid : out STD_LOGIC;
+    m00_axi_wready : in STD_LOGIC;
+    m00_axi_bresp : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    m00_axi_bvalid : in STD_LOGIC;
+    m00_axi_bready : out STD_LOGIC;
+    m00_axi_araddr : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m00_axi_arprot : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    m00_axi_arvalid : out STD_LOGIC;
+    m00_axi_arready : in STD_LOGIC;
+    m00_axi_rdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    m00_axi_rresp : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    m00_axi_rvalid : in STD_LOGIC;
+    m00_axi_rready : out STD_LOGIC;
+    m00_axi_aclk : in STD_LOGIC;
+    m00_axi_aresetn : in STD_LOGIC
+  );
+  end component design_1_Smallpond_axi4_master_interface_0_0;
   signal M00_ARESETN_1 : STD_LOGIC_VECTOR ( 0 to 0 );
   signal S00_AXI_1_ARADDR : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal S00_AXI_1_ARPROT : STD_LOGIC_VECTOR ( 2 downto 0 );
@@ -1119,9 +1133,16 @@ architecture STRUCTURE of design_1 is
   signal S00_AXI_1_WREADY : STD_LOGIC;
   signal S00_AXI_1_WSTRB : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal S00_AXI_1_WVALID : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_ddr3_clock_test : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_read_issued_test : STD_LOGIC;
   signal Smallpond_axi4_master_interface_0_sp_data_out : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal Smallpond_axi4_master_interface_0_sp_error : STD_LOGIC;
   signal Smallpond_axi4_master_interface_0_sp_over : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_sp_read_test : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_sp_write_test : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_start_read_test : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_start_write_test : STD_LOGIC;
+  signal Smallpond_axi4_master_interface_0_write_issued_test : STD_LOGIC;
   signal axi_interconnect_0_M00_AXI_ARADDR : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal axi_interconnect_0_M00_AXI_ARBURST : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal axi_interconnect_0_M00_AXI_ARCACHE : STD_LOGIC_VECTOR ( 3 downto 0 );
@@ -1195,29 +1216,30 @@ architecture STRUCTURE of design_1 is
   signal NLW_rst_mig_7series_0_83M_mb_reset_UNCONNECTED : STD_LOGIC;
   signal NLW_rst_mig_7series_0_83M_bus_struct_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_rst_mig_7series_0_83M_peripheral_reset_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  attribute x_interface_info : string;
-  attribute x_interface_info of ddr3_sdram_cas_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CAS_N";
-  attribute x_interface_info of ddr3_sdram_ras_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram RAS_N";
-  attribute x_interface_info of ddr3_sdram_reset_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram RESET_N";
-  attribute x_interface_info of ddr3_sdram_we_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram WE_N";
-  attribute x_interface_info of reset : signal is "xilinx.com:signal:reset:1.0 RST.RESET RST";
-  attribute x_interface_parameter : string;
-  attribute x_interface_parameter of reset : signal is "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_LOW";
-  attribute x_interface_info of sys_clock : signal is "xilinx.com:signal:clock:1.0 CLK.SYS_CLOCK CLK";
-  attribute x_interface_parameter of sys_clock : signal is "XIL_INTERFACENAME CLK.SYS_CLOCK, CLK_DOMAIN design_1_sys_clock, FREQ_HZ 100000000, PHASE 0.000";
-  attribute x_interface_info of ddr3_sdram_addr : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ADDR";
-  attribute x_interface_parameter of ddr3_sdram_addr : signal is "XIL_INTERFACENAME ddr3_sdram, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250";
-  attribute x_interface_info of ddr3_sdram_ba : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram BA";
-  attribute x_interface_info of ddr3_sdram_ck_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CK_N";
-  attribute x_interface_info of ddr3_sdram_ck_p : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CK_P";
-  attribute x_interface_info of ddr3_sdram_cke : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CKE";
-  attribute x_interface_info of ddr3_sdram_cs_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CS_N";
-  attribute x_interface_info of ddr3_sdram_dm : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DM";
-  attribute x_interface_info of ddr3_sdram_dq : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQ";
-  attribute x_interface_info of ddr3_sdram_dqs_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQS_N";
-  attribute x_interface_info of ddr3_sdram_dqs_p : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQS_P";
-  attribute x_interface_info of ddr3_sdram_odt : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ODT";
+  attribute X_INTERFACE_INFO : string;
+  attribute X_INTERFACE_INFO of ddr3_sdram_cas_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CAS_N";
+  attribute X_INTERFACE_INFO of ddr3_sdram_ras_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram RAS_N";
+  attribute X_INTERFACE_INFO of ddr3_sdram_reset_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram RESET_N";
+  attribute X_INTERFACE_INFO of ddr3_sdram_we_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram WE_N";
+  attribute X_INTERFACE_INFO of reset : signal is "xilinx.com:signal:reset:1.0 RST.RESET RST";
+  attribute X_INTERFACE_PARAMETER : string;
+  attribute X_INTERFACE_PARAMETER of reset : signal is "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_LOW";
+  attribute X_INTERFACE_INFO of sys_clock : signal is "xilinx.com:signal:clock:1.0 CLK.SYS_CLOCK CLK";
+  attribute X_INTERFACE_PARAMETER of sys_clock : signal is "XIL_INTERFACENAME CLK.SYS_CLOCK, CLK_DOMAIN design_1_sys_clock, FREQ_HZ 100000000, PHASE 0.000";
+  attribute X_INTERFACE_INFO of ddr3_sdram_addr : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ADDR";
+  attribute X_INTERFACE_PARAMETER of ddr3_sdram_addr : signal is "XIL_INTERFACENAME ddr3_sdram, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250";
+  attribute X_INTERFACE_INFO of ddr3_sdram_ba : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram BA";
+  attribute X_INTERFACE_INFO of ddr3_sdram_ck_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CK_N";
+  attribute X_INTERFACE_INFO of ddr3_sdram_ck_p : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CK_P";
+  attribute X_INTERFACE_INFO of ddr3_sdram_cke : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CKE";
+  attribute X_INTERFACE_INFO of ddr3_sdram_cs_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram CS_N";
+  attribute X_INTERFACE_INFO of ddr3_sdram_dm : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DM";
+  attribute X_INTERFACE_INFO of ddr3_sdram_dq : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQ";
+  attribute X_INTERFACE_INFO of ddr3_sdram_dqs_n : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQS_N";
+  attribute X_INTERFACE_INFO of ddr3_sdram_dqs_p : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram DQS_P";
+  attribute X_INTERFACE_INFO of ddr3_sdram_odt : signal is "xilinx.com:interface:ddrx:1.0 ddr3_sdram ODT";
 begin
+  ddr3_clock_test_0 <= Smallpond_axi4_master_interface_0_ddr3_clock_test;
   ddr3_sdram_addr(13 downto 0) <= mig_7series_0_DDR3_ADDR(13 downto 0);
   ddr3_sdram_ba(2 downto 0) <= mig_7series_0_DDR3_BA(2 downto 0);
   ddr3_sdram_cas_n <= mig_7series_0_DDR3_CAS_N;
@@ -1230,6 +1252,7 @@ begin
   ddr3_sdram_ras_n <= mig_7series_0_DDR3_RAS_N;
   ddr3_sdram_reset_n <= mig_7series_0_DDR3_RESET_N;
   ddr3_sdram_we_n <= mig_7series_0_DDR3_WE_N;
+  read_issued_test_0 <= Smallpond_axi4_master_interface_0_read_issued_test;
   reset_1 <= reset;
   sp_addr_0_1(31 downto 0) <= sp_addr_0(31 downto 0);
   sp_data_in_0_1(31 downto 0) <= sp_data_in_0(31 downto 0);
@@ -1238,11 +1261,17 @@ begin
   sp_op_len_0_1(1 downto 0) <= sp_op_len_0(1 downto 0);
   sp_over_0 <= Smallpond_axi4_master_interface_0_sp_over;
   sp_read_0_1 <= sp_read_0;
+  sp_read_test_0 <= Smallpond_axi4_master_interface_0_sp_read_test;
   sp_sign_extend_0_1 <= sp_sign_extend_0;
   sp_write_0_1 <= sp_write_0;
+  sp_write_test_0 <= Smallpond_axi4_master_interface_0_sp_write_test;
+  start_read_test_0 <= Smallpond_axi4_master_interface_0_start_read_test;
+  start_write_test_0 <= Smallpond_axi4_master_interface_0_start_write_test;
   sys_clock_1 <= sys_clock;
+  write_issued_test_0 <= Smallpond_axi4_master_interface_0_write_issued_test;
 Smallpond_axi4_master_interface_0: component design_1_Smallpond_axi4_master_interface_0_0
      port map (
+      ddr3_clock_test => Smallpond_axi4_master_interface_0_ddr3_clock_test,
       m00_axi_aclk => clk_wiz_0_clk_out1,
       m00_axi_araddr(31 downto 0) => S00_AXI_1_ARADDR(31 downto 0),
       m00_axi_aresetn => proc_sys_reset_0_peripheral_aresetn(0),
@@ -1264,6 +1293,7 @@ Smallpond_axi4_master_interface_0: component design_1_Smallpond_axi4_master_inte
       m00_axi_wready => S00_AXI_1_WREADY,
       m00_axi_wstrb(3 downto 0) => S00_AXI_1_WSTRB(3 downto 0),
       m00_axi_wvalid => S00_AXI_1_WVALID,
+      read_issued_test => Smallpond_axi4_master_interface_0_read_issued_test,
       sp_addr(31 downto 0) => sp_addr_0_1(31 downto 0),
       sp_data_in(31 downto 0) => sp_data_in_0_1(31 downto 0),
       sp_data_out(31 downto 0) => Smallpond_axi4_master_interface_0_sp_data_out(31 downto 0),
@@ -1271,8 +1301,13 @@ Smallpond_axi4_master_interface_0: component design_1_Smallpond_axi4_master_inte
       sp_op_len(1 downto 0) => sp_op_len_0_1(1 downto 0),
       sp_over => Smallpond_axi4_master_interface_0_sp_over,
       sp_read => sp_read_0_1,
+      sp_read_test => Smallpond_axi4_master_interface_0_sp_read_test,
       sp_sign_extend => sp_sign_extend_0_1,
-      sp_write => sp_write_0_1
+      sp_write => sp_write_0_1,
+      sp_write_test => Smallpond_axi4_master_interface_0_sp_write_test,
+      start_read_test => Smallpond_axi4_master_interface_0_start_read_test,
+      start_write_test => Smallpond_axi4_master_interface_0_start_write_test,
+      write_issued_test => Smallpond_axi4_master_interface_0_write_issued_test
     );
 axi_interconnect_0: entity work.design_1_axi_interconnect_0_0
      port map (

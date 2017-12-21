@@ -310,6 +310,8 @@ proc create_root_design { parentCell } {
   set ddr3_sdram [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:ddrx_rtl:1.0 ddr3_sdram ]
 
   # Create ports
+  set ddr3_clock_test_0 [ create_bd_port -dir O ddr3_clock_test_0 ]
+  set read_issued_test_0 [ create_bd_port -dir O read_issued_test_0 ]
   set reset [ create_bd_port -dir I -type rst reset ]
   set_property -dict [ list \
    CONFIG.POLARITY {ACTIVE_LOW} \
@@ -321,13 +323,18 @@ proc create_root_design { parentCell } {
   set sp_op_len_0 [ create_bd_port -dir I -from 1 -to 0 sp_op_len_0 ]
   set sp_over_0 [ create_bd_port -dir O sp_over_0 ]
   set sp_read_0 [ create_bd_port -dir I sp_read_0 ]
+  set sp_read_test_0 [ create_bd_port -dir O sp_read_test_0 ]
   set sp_sign_extend_0 [ create_bd_port -dir I sp_sign_extend_0 ]
   set sp_write_0 [ create_bd_port -dir I sp_write_0 ]
+  set sp_write_test_0 [ create_bd_port -dir O sp_write_test_0 ]
+  set start_read_test_0 [ create_bd_port -dir O start_read_test_0 ]
+  set start_write_test_0 [ create_bd_port -dir O start_write_test_0 ]
   set sys_clock [ create_bd_port -dir I -type clk sys_clock ]
   set_property -dict [ list \
    CONFIG.FREQ_HZ {100000000} \
    CONFIG.PHASE {0.000} \
  ] $sys_clock
+  set write_issued_test_0 [ create_bd_port -dir O write_issued_test_0 ]
 
   # Create instance: Smallpond_axi4_master_interface_0, and set properties
   set Smallpond_axi4_master_interface_0 [ create_bd_cell -type ip -vlnv user.org:user:Smallpond_axi4_master_interface:1.0 Smallpond_axi4_master_interface_0 ]
@@ -385,9 +392,16 @@ proc create_root_design { parentCell } {
 
   # Create port connections
   connect_bd_net -net M00_ARESETN_1 [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins rst_mig_7series_0_83M/interconnect_aresetn]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_ddr3_clock_test [get_bd_ports ddr3_clock_test_0] [get_bd_pins Smallpond_axi4_master_interface_0/ddr3_clock_test]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_read_issued_test [get_bd_ports read_issued_test_0] [get_bd_pins Smallpond_axi4_master_interface_0/read_issued_test]
   connect_bd_net -net Smallpond_axi4_master_interface_0_sp_data_out [get_bd_ports sp_data_out_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_data_out]
   connect_bd_net -net Smallpond_axi4_master_interface_0_sp_error [get_bd_ports sp_error_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_error]
   connect_bd_net -net Smallpond_axi4_master_interface_0_sp_over [get_bd_ports sp_over_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_over]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_sp_read_test [get_bd_ports sp_read_test_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_read_test]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_sp_write_test [get_bd_ports sp_write_test_0] [get_bd_pins Smallpond_axi4_master_interface_0/sp_write_test]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_start_read_test [get_bd_ports start_read_test_0] [get_bd_pins Smallpond_axi4_master_interface_0/start_read_test]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_start_write_test [get_bd_ports start_write_test_0] [get_bd_pins Smallpond_axi4_master_interface_0/start_write_test]
+  connect_bd_net -net Smallpond_axi4_master_interface_0_write_issued_test [get_bd_ports write_issued_test_0] [get_bd_pins Smallpond_axi4_master_interface_0/write_issued_test]
   connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins Smallpond_axi4_master_interface_0/m00_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins mig_7series_0/clk_ref_i] [get_bd_pins proc_sys_reset_0/slowest_sync_clk]
   connect_bd_net -net clk_wiz_0_locked [get_bd_pins clk_wiz_0/locked] [get_bd_pins proc_sys_reset_0/dcm_locked]
   connect_bd_net -net mig_7series_0_mmcm_locked [get_bd_pins mig_7series_0/mmcm_locked] [get_bd_pins rst_mig_7series_0_83M/dcm_locked]

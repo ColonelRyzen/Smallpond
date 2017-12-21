@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: user.org:user:Smallpond_axi4_master_interface:1.0
--- IP Revision: 11
+-- IP Revision: 13
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
@@ -64,6 +64,13 @@ ENTITY design_1_Smallpond_axi4_master_interface_0_0 IS
     sp_data_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     sp_over : OUT STD_LOGIC;
     sp_error : OUT STD_LOGIC;
+    sp_read_test : OUT STD_LOGIC;
+    start_read_test : OUT STD_LOGIC;
+    read_issued_test : OUT STD_LOGIC;
+    sp_write_test : OUT STD_LOGIC;
+    start_write_test : OUT STD_LOGIC;
+    write_issued_test : OUT STD_LOGIC;
+    ddr3_clock_test : OUT STD_LOGIC;
     m00_axi_awaddr : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     m00_axi_awprot : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
     m00_axi_awvalid : OUT STD_LOGIC;
@@ -110,6 +117,13 @@ ARCHITECTURE design_1_Smallpond_axi4_master_interface_0_0_arch OF design_1_Small
       sp_data_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
       sp_over : OUT STD_LOGIC;
       sp_error : OUT STD_LOGIC;
+      sp_read_test : OUT STD_LOGIC;
+      start_read_test : OUT STD_LOGIC;
+      read_issued_test : OUT STD_LOGIC;
+      sp_write_test : OUT STD_LOGIC;
+      start_write_test : OUT STD_LOGIC;
+      write_issued_test : OUT STD_LOGIC;
+      ddr3_clock_test : OUT STD_LOGIC;
       m00_axi_awaddr : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
       m00_axi_awprot : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
       m00_axi_awvalid : OUT STD_LOGIC;
@@ -176,6 +190,13 @@ BEGIN
       sp_data_out => sp_data_out,
       sp_over => sp_over,
       sp_error => sp_error,
+      sp_read_test => sp_read_test,
+      start_read_test => start_read_test,
+      read_issued_test => read_issued_test,
+      sp_write_test => sp_write_test,
+      start_write_test => start_write_test,
+      write_issued_test => write_issued_test,
+      ddr3_clock_test => ddr3_clock_test,
       m00_axi_awaddr => m00_axi_awaddr,
       m00_axi_awprot => m00_axi_awprot,
       m00_axi_awvalid => m00_axi_awvalid,
