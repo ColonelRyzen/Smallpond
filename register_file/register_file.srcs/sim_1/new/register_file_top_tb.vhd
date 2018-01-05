@@ -88,6 +88,8 @@ component register_file_top port(clk_in : in STD_LOGIC;
                                  r29_out : out STD_LOGIC_VECTOR (31 downto 0);
                                  r30_out : out STD_LOGIC_VECTOR (31 downto 0);
                                  r31_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                 r30_enable_out : out STD_LOGIC;
+                                 r31_enable_out : out STD_LOGIC;
                                  counter : out integer
                                  );
 end component;
@@ -143,6 +145,8 @@ signal r28_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 signal r29_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 signal r30_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 signal r31_tb_out : STD_LOGIC_VECTOR (31 downto 0);
+signal r30_enable_tb_out : STD_LOGIC;
+signal r31_enable_tb_out : STD_LOGIC;
 
 signal counter_tb : integer;
 
@@ -196,6 +200,8 @@ begin
                                      r29_out => r29_tb_out,
                                      r30_out => r30_tb_out,
                                      r31_out => r31_tb_out,
+                                     r30_enable_out => r30_enable_tb_out,
+                                     r31_enable_out => r31_enable_tb_out,
                                      counter => counter_tb
                                      );
 
@@ -641,8 +647,8 @@ begin
         read_register_1_tb_in <= "10000";
         read_register_2_tb_in <= "00100";
         write_register_tb_in <= "11111";
-        write_data_tb_in <= x"00000000";
-        reg_write_tb_in <= '0';
+        write_data_tb_in <= x"FFFFFFFF";
+        reg_write_tb_in <= '1';
         pc_write_tb_in <= '0';
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
@@ -652,7 +658,7 @@ begin
         reset_tb_in <= '0';
         read_register_1_tb_in <= "01101";
         read_register_2_tb_in <= "11101";
-        write_register_tb_in <= "11111";
+        write_register_tb_in <= "11011";
         write_data_tb_in <= x"00000000";
         reg_write_tb_in <= '0';
         pc_write_tb_in <= '0';
@@ -664,7 +670,7 @@ begin
         reset_tb_in <= '0';
         read_register_1_tb_in <= "00100";
         read_register_2_tb_in <= "11001";
-        write_register_tb_in <= "11111";
+        write_register_tb_in <= "10111";
         write_data_tb_in <= x"00000000";
         reg_write_tb_in <= '0';
         pc_write_tb_in <= '0';
@@ -1020,7 +1026,7 @@ begin
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
 
-        
+        -- 
     end process;
 
 end Behavioral;

@@ -85,6 +85,8 @@ entity register_file_top is
            r29_out : out STD_LOGIC_VECTOR (31 downto 0);
            r30_out : out STD_LOGIC_VECTOR (31 downto 0);
            r31_out : out STD_LOGIC_VECTOR (31 downto 0);
+           r30_enable_out : out STD_LOGIC;
+           r31_enable_out : out STD_LOGIC;
            counter : out integer range 0 to 4);
 end register_file_top;
 
@@ -315,6 +317,8 @@ begin
                  r29_input <= '0';
                  r30_input <= '0';
                  r31_input <= '0';
+                 r30_enable_out <= r30_input;
+                 r31_enable_out <= r31_input;
             end if;
             if clk_counter = 1 and reset_in = '0' then
                 -- Case statement to set register_1_out to the read_register_1
@@ -470,7 +474,7 @@ begin
             -- Writing data to proper register
             -- Driving 2's complement pair
             if clk_counter = 4 and reset_in = '0' then
-                if reg_write_in = '1' then
+                --if reg_write_in = '1' then
                     case write_register_in is
                         when "00000" =>
                             r0_input <= reg_write_in;
@@ -543,7 +547,7 @@ begin
                         when others =>
                             null;
                     end case;
-                end if;
+               -- end if;
             end if;
         end if;
     end process;
