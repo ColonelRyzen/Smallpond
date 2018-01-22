@@ -55,9 +55,10 @@ component control_unit port(clk_in : in STD_LOGIC;
                            cpsr_bits_in : in STD_LOGIC_VECTOR (3 downto 0);
                            counter_bit_in : in STD_LOGIC;
                            cpsr_set_bit_in : in STD_LOGIC;
-                           condition_code_in : in STD_LOGIC_VECTOR (3 downto 0);
+                           condition_code_in : in STD_LOGIC_VECTOR (3 downto 0)
                            --branch_counter_in : in STD_LOGIC;
-                           counter : out integer);
+                           --counter : out integer
+                           );
 
 end component;
 
@@ -81,7 +82,7 @@ signal counter_bit_tb_in : STD_LOGIC;
 signal cpsr_set_bit_tb_in : STD_LOGIC;
 signal condition_code_tb_in : STD_LOGIC_VECTOR (3 downto 0);
 --signal branch_counter_tb_in : STD_LOGIC;
-signal counter_tb : integer;
+--signal counter_tb : integer;
 
 constant clk_period : time := 10ns;
 
@@ -104,9 +105,9 @@ begin
                                 cpsr_bits_in => cpsr_bits_tb_in,
                                 counter_bit_in => counter_bit_tb_in,
                                 cpsr_set_bit_in => cpsr_set_bit_tb_in,
-                                condition_code_in => condition_code_tb_in,
+                                condition_code_in => condition_code_tb_in
                                 --branch_counter_in => branch_counter_tb_in,
-                                counter => counter_tb
+                                --counter => counter_tb
                                 );
 
     clk_proc: process
