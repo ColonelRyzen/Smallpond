@@ -85,6 +85,7 @@ entity register_file_top is
            r29_out : out STD_LOGIC_VECTOR (31 downto 0);
            r30_out : out STD_LOGIC_VECTOR (31 downto 0);
            r31_out : out STD_LOGIC_VECTOR (31 downto 0);
+           r1_enable_out : out STD_LOGIC;
            r30_enable_out : out STD_LOGIC;
            r31_enable_out : out STD_LOGIC;
            counter : out integer range 0 to 4);
@@ -171,60 +172,60 @@ signal r20_comp_input: STD_LOGIC_VECTOR(31 downto 0);
 
 begin
     -- Instantiating the 32 general purpose registers
-    R0 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r0_input,q_out => r0_output);
-    R1 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r1_input,q_out => r1_output);
-    R2 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r2_input,q_out => r2_output);
-    R3 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r3_input,q_out => r3_output);
-    R4 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r4_input,q_out => r4_output);
-    R5 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r5_input,q_out => r5_output);
-    R6 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r6_input,q_out => r6_output);
-    R7 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r7_input,q_out => r7_output);
-    R8 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r8_input,q_out => r8_output);
-    R9 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r9_input,q_out => r9_output);
-    R10 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r10_input,q_out => r10_output);
-    R11 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r11_input,q_out => r11_output);
-    R12 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r12_input,q_out => r12_output);
-    R13 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r13_input,q_out => r13_output);
-    R14 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r14_input,q_out => r14_output);
-    R15 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r15_input,q_out => r15_output);
-    R16 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r16_input,q_out => r16_output);
-    R17 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r17_input,q_out => r17_output);
-    R18 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r18_input,q_out => r18_output);
-    R19 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => r19_comp_input,load_in => r19_input,q_out => r19_output);
-    R20 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => r20_comp_input,load_in => r20_input,q_out => r20_output);
+    R0 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r0_input,q_out => r0_output);
+    R1 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r1_input,q_out => r1_output);
+    R2 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r2_input,q_out => r2_output);
+    R3 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r3_input,q_out => r3_output);
+    R4 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r4_input,q_out => r4_output);
+    R5 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r5_input,q_out => r5_output);
+    R6 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r6_input,q_out => r6_output);
+    R7 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r7_input,q_out => r7_output);
+    R8 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r8_input,q_out => r8_output);
+    R9 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r9_input,q_out => r9_output);
+    R10 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r10_input,q_out => r10_output);
+    R11 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r11_input,q_out => r11_output);
+    R12 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r12_input,q_out => r12_output);
+    R13 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r13_input,q_out => r13_output);
+    R14 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r14_input,q_out => r14_output);
+    R15 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r15_input,q_out => r15_output);
+    R16 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r16_input,q_out => r16_output);
+    R17 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r17_input,q_out => r17_output);
+    R18 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r18_input,q_out => r18_output);
+    R19 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => r19_comp_input,enable_in => r19_input,q_out => r19_output);
+    R20 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => r20_comp_input,enable_in => r20_input,q_out => r20_output);
     R21 : entity work.counter_register port map(clk_in => clk_in,
                                                 reset_in => reset_in,
                                                 counter_data_in => pos_counter,
                                                 d_in => write_data_in,
                                                 counter_in => counter_bit_in,
-                                                load_in => r21_input,
+                                                enable_in => r21_input,
                                                 q_out => r21_output);
     R22 : entity work.counter_register port map(clk_in => clk_in,
                                                 reset_in => reset_in,
                                                 counter_data_in => neg_counter,
                                                 d_in => write_data_in,
                                                 counter_in => counter_bit_in,
-                                                load_in => r22_input,
+                                                enable_in => r22_input,
                                                 q_out => r22_output);
-    R23 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r23_input,q_out => r23_output);
-    R24 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r24_input,q_out => r24_output);
-    R25 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r25_input,q_out => r25_output);
-    R26 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r26_input,q_out => r26_output);
-    R27 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r27_input,q_out => r27_output);
-    R28 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r28_input,q_out => r28_output);
-    R29 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,load_in => r29_input,q_out => r29_output);
+    R23 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r23_input,q_out => r23_output);
+    R24 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r24_input,q_out => r24_output);
+    R25 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r25_input,q_out => r25_output);
+    R26 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r26_input,q_out => r26_output);
+    R27 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r27_input,q_out => r27_output);
+    R28 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r28_input,q_out => r28_output);
+    R29 : entity work.register_32_bit port map(clk_in => clk_in,reset_in => reset_in,d_in => write_data_in,enable_in => r29_input,q_out => r29_output);
     R30 : entity work.pc_register port map(clk_in => clk_in,
                                            reset_in => reset_in,
                                            d_in => write_data_in,
                                            pc_data_in => pc_write_data_in,
-                                           load_in => r30_input,
+                                           enable_in => r30_input,
                                            pc_in => pc_write_in,
                                            q_out => r30_output);
     R31 : entity work.cpsr_register port map(clk_in => clk_in,
                                              reset_in => reset_in,
                                              d_in => write_data_in,
                                              cpsr_data_in => cpsr_cond_bits_alu_in,
-                                             load_in => r31_input,
+                                             enable_in => r31_input,
                                              cpsr_in => cpsr_set_bit_in,
                                              q_out => r31_output);
 
@@ -284,42 +285,11 @@ begin
             r31_out <= r31_output;
             
             cpsr_cond_bits_control_out <= r31_output(3 downto 0);
-            if clk_counter = 0 and reset_in = '0' then
-                 r0_input <= '0';
-                 r1_input <= '0';
-                 r2_input <= '0';
-                 r3_input <= '0';
-                 r4_input <= '0';
-                 r5_input <= '0';
-                 r6_input <= '0';
-                 r7_input <= '0';
-                 r8_input <= '0';
-                 r9_input <= '0';
-                 r10_input <= '0';
-                 r11_input <= '0';
-                 r12_input <= '0';
-                 r13_input <= '0';
-                 r14_input <= '0';
-                 r15_input <= '0';
-                 r16_input <= '0';
-                 r17_input <= '0';
-                 r18_input <= '0';
-                 r19_input <= '0';
-                 r20_input <= '0';
-                 r21_input <= '0';
-                 r22_input <= '0';
-                 r23_input <= '0';
-                 r24_input <= '0';
-                 r25_input <= '0';
-                 r26_input <= '0';
-                 r27_input <= '0';
-                 r28_input <= '0';
-                 r29_input <= '0';
-                 r30_input <= '0';
-                 r31_input <= '0';
-                 r30_enable_out <= r30_input;
-                 r31_enable_out <= r31_input;
-            end if;
+--            if clk_counter = 0 and reset_in = '0' then
+--                 r1_enable_out <= r1_input;
+--                 r30_enable_out <= r30_input;
+--                 r31_enable_out <= r31_input;
+--            end if;
             if clk_counter = 1 and reset_in = '0' then
                 -- Case statement to set register_1_out to the read_register_1
                 case read_register_1_in is
@@ -473,81 +443,120 @@ begin
             
             -- Writing data to proper register
             -- Driving 2's complement pair
+        end if;
+        
+        if falling_edge(clk_in) then
             if clk_counter = 4 and reset_in = '0' then
-                --if reg_write_in = '1' then
-                    case write_register_in is
-                        when "00000" =>
-                            r0_input <= reg_write_in;
-                        when "00001" =>
-                            r1_input <= reg_write_in;
-                        when "00010" =>
-                            r2_input <= reg_write_in;
-                        when "00011" =>
-                            r3_input <= reg_write_in;
-                        when "00100" =>
-                            r4_input <= reg_write_in;
-                        when "00101" =>
-                            r5_input <= reg_write_in;
-                        when "00110" =>
-                            r6_input <= reg_write_in;
-                        when "00111" =>
-                            r7_input <= reg_write_in;
-                        when "01000" =>
-                            r8_input <= reg_write_in;
-                        when "01001" =>
-                            r9_input <= reg_write_in;
-                        when "01010" =>
-                            r10_input <= reg_write_in;
-                        when "01011" =>
-                            r11_input <= reg_write_in;
-                        when "01100" =>
-                            r12_input <= reg_write_in;
-                        when "01101" =>
-                            r13_input <= reg_write_in;
-                        when "01110" =>
-                            r14_input <= reg_write_in;
-                        when "01111" =>
-                            r15_input <= reg_write_in;
-                        when "10000" =>
-                            r16_input <= reg_write_in;
-                        when "10001" =>
-                            r17_input <= reg_write_in;
-                        when "10010" =>
-                            r18_input <= reg_write_in;
-                        when "10011" =>
-                            r19_input <= reg_write_in;
-                            r19_comp_input <= write_data_in;
-                            r20_comp_input <= (not write_data_in) + x"00000001";
-                        when "10100" =>
-                            r20_input <= reg_write_in;
-                            r20_comp_input <= write_data_in;
-                            r19_comp_input <= (not write_data_in) + x"00000001";
-                        when "10101" =>
-                            r21_input <= reg_write_in;
-                        when "10110" =>
-                            r22_input <= reg_write_in;
-                        when "10111" =>
-                            r23_input <= reg_write_in;
-                        when "11000" =>
-                            r24_input <= reg_write_in;
-                        when "11001" =>
-                            r25_input <= reg_write_in;
-                        when "11010" =>
-                            r26_input <= reg_write_in;
-                        when "11011" =>
-                            r27_input <= reg_write_in;
-                        when "11100" =>
-                            r28_input <= reg_write_in;
-                        when "11101" =>
-                            r29_input <= reg_write_in;
-                        when "11110" =>
-                            r30_input <= reg_write_in;
-                        when "11111" =>
-                            r31_input <= reg_write_in;
-                        when others =>
-                            null;
-                    end case;
-               -- end if;
+                 r0_input <= '0';
+                 r1_input <= '0';
+                 r2_input <= '0';
+                 r3_input <= '0';
+                 r4_input <= '0';
+                 r5_input <= '0';
+                 r6_input <= '0';
+                 r7_input <= '0';
+                 r8_input <= '0';
+                 r9_input <= '0';
+                 r10_input <= '0';
+                 r11_input <= '0';
+                 r12_input <= '0';
+                 r13_input <= '0';
+                 r14_input <= '0';
+                 r15_input <= '0';
+                 r16_input <= '0';
+                 r17_input <= '0';
+                 r18_input <= '0';
+                 r19_input <= '0';
+                 r20_input <= '0';
+                 r21_input <= '0';
+                 r22_input <= '0';
+                 r23_input <= '0';
+                 r24_input <= '0';
+                 r25_input <= '0';
+                 r26_input <= '0';
+                 r27_input <= '0';
+                 r28_input <= '0';
+                 r29_input <= '0';
+                 r30_input <= '0';
+                 r31_input <= '0';
+                 r1_enable_out <= r1_input;
+                 r30_enable_out <= r30_input;
+                 r31_enable_out <= r31_input;
+            end if;
+            
+            if clk_counter = 3 and reset_in = '0' then
+                case write_register_in is
+                    when "00000" =>
+                        r0_input <= reg_write_in;
+                    when "00001" =>
+                        r1_input <= reg_write_in;
+                    when "00010" =>
+                        r2_input <= reg_write_in;
+                    when "00011" =>
+                        r3_input <= reg_write_in;
+                    when "00100" =>
+                        r4_input <= reg_write_in;
+                    when "00101" =>
+                        r5_input <= reg_write_in;
+                    when "00110" =>
+                        r6_input <= reg_write_in;
+                    when "00111" =>
+                        r7_input <= reg_write_in;
+                    when "01000" =>
+                        r8_input <= reg_write_in;
+                    when "01001" =>
+                        r9_input <= reg_write_in;
+                    when "01010" =>
+                        r10_input <= reg_write_in;
+                    when "01011" =>
+                        r11_input <= reg_write_in;
+                    when "01100" =>
+                        r12_input <= reg_write_in;
+                    when "01101" =>
+                        r13_input <= reg_write_in;
+                    when "01110" =>
+                        r14_input <= reg_write_in;
+                    when "01111" =>
+                        r15_input <= reg_write_in;
+                    when "10000" =>
+                        r16_input <= reg_write_in;
+                    when "10001" =>
+                        r17_input <= reg_write_in;
+                    when "10010" =>
+                        r18_input <= reg_write_in;
+                    when "10011" =>
+                        r19_input <= reg_write_in;
+                        r19_comp_input <= write_data_in;
+                        r20_comp_input <= (not write_data_in) + x"00000001";
+                    when "10100" =>
+                        r20_input <= reg_write_in;
+                        r20_comp_input <= write_data_in;
+                        r19_comp_input <= (not write_data_in) + x"00000001";
+                    when "10101" =>
+                        r21_input <= reg_write_in;
+                    when "10110" =>
+                        r22_input <= reg_write_in;
+                    when "10111" =>
+                        r23_input <= reg_write_in;
+                    when "11000" =>
+                        r24_input <= reg_write_in;
+                    when "11001" =>
+                        r25_input <= reg_write_in;
+                    when "11010" =>
+                        r26_input <= reg_write_in;
+                    when "11011" =>
+                        r27_input <= reg_write_in;
+                    when "11100" =>
+                        r28_input <= reg_write_in;
+                    when "11101" =>
+                        r29_input <= reg_write_in;
+                    when "11110" =>
+                        r30_input <= reg_write_in;
+                    when "11111" =>
+                        r31_input <= reg_write_in;
+                    when others =>
+                        null;
+                end case;
             end if;
         end if;
     end process;

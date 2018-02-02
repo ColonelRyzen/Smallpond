@@ -36,7 +36,7 @@ entity pc_register is
                reset_in : in STD_LOGIC;
                d_in : in STD_LOGIC_VECTOR (31 downto 0);
                pc_data_in : in STD_LOGIC_VECTOR (31 downto 0);
-               load_in : in STD_LOGIC;
+               enable_in : in STD_LOGIC;
                pc_in : in STD_LOGIC;
                q_out : out STD_LOGIC_VECTOR (31 downto 0));
 end pc_register;
@@ -49,9 +49,9 @@ begin
     if reset_in = '1' then
         q_out <= x"00000000";
     elsif rising_edge(clk_in) then
-        if load_in = '1' and pc_in = '0' then
+        if enable_in = '1' and pc_in = '0' then
             q_out <= d_in;
-        elsif pc_in = '1' and load_in = '0'then
+        elsif pc_in = '1' and enable_in = '0'then
             q_out <= pc_data_in;
         end if;
     end if;

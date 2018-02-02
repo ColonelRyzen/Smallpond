@@ -36,7 +36,7 @@ entity cpsr_register is
                reset_in : in STD_LOGIC;
                d_in : in STD_LOGIC_VECTOR (31 downto 0);
                cpsr_data_in : in STD_LOGIC_VECTOR (3 downto 0);
-               load_in : in STD_LOGIC;
+               enable_in : in STD_LOGIC;
                cpsr_in : in STD_LOGIC;
                q_out : out STD_LOGIC_VECTOR (31 downto 0));
 end cpsr_register;
@@ -49,9 +49,9 @@ process(clk_in,reset_in)
         if reset_in = '1' then
             q_out <= x"00000000";
         elsif rising_edge(clk_in) then
-            if load_in = '1' and cpsr_in = '0' then
+            if enable_in = '1' and cpsr_in = '0' then
                 q_out <= d_in;
-            elsif cpsr_in = '1' and load_in = '0' then
+            elsif cpsr_in = '1' and enable_in = '0' then
                 q_out(3 downto 0) <= cpsr_data_in;
             end if;
         end if;

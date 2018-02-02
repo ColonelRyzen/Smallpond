@@ -37,7 +37,7 @@ entity counter_register is
            counter_data_in : in STD_LOGIC_VECTOR(31 downto 0);
            d_in : in STD_LOGIC_VECTOR (31 downto 0);
            counter_in : in STD_LOGIC;
-           load_in : in STD_LOGIC;
+           enable_in : in STD_LOGIC;
            --counter_data_out : out STD_LOGIC_VECTOR(31 downto 0);
            q_out : out STD_LOGIC_VECTOR (31 downto 0));
 end counter_register;
@@ -50,9 +50,9 @@ begin
     if reset_in = '1' then
         q_out <= x"00000000";
     elsif rising_edge(clk_in) then
-        if load_in = '1' and counter_in = '0' then
+        if enable_in = '1' and counter_in = '0' then
             q_out <= d_in;
-        elsif counter_in = '1' and load_in = '0' then
+        elsif counter_in = '1' and enable_in = '0' then
             q_out <= counter_data_in;
         end if;
     end if;

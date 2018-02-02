@@ -35,7 +35,7 @@ entity register_32_bit is
     Port ( clk_in : in STD_LOGIC;
            reset_in : in STD_LOGIC;
            d_in : in STD_LOGIC_VECTOR (31 downto 0);
-           load_in : in STD_LOGIC;
+           enable_in : in STD_LOGIC;
            q_out : out STD_LOGIC_VECTOR (31 downto 0));
 end register_32_bit;
 
@@ -47,7 +47,7 @@ process(clk_in,reset_in)
         if reset_in = '1' then
             q_out <= x"00000000";
         elsif rising_edge(clk_in) then
-            if load_in = '1' then
+            if enable_in = '1' then
                 q_out <= d_in;
             end if;
         end if;

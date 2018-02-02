@@ -40,7 +40,7 @@ architecture Behavioral of register_32_bit_tb is
 component register_32_bit port( clk_in : in STD_LOGIC;
                                 reset_in : in STD_LOGIC;
                                 d_in : in STD_LOGIC_VECTOR (31 downto 0);
-                                load_in : in STD_LOGIC;
+                                enable_in : in STD_LOGIC;
                                 q_out : out STD_LOGIC_VECTOR (31 downto 0));
                                 
 end component;
@@ -57,7 +57,7 @@ begin
     UUT: register_32_bit port map (clk_in => clk_tb_in,
                                    reset_in =>  reset_tb_in,
                                    d_in => d_tb_in,
-                                   load_in => load_tb_in,
+                                   enable_in => load_tb_in,
                                    q_out => q_tb_out);
                                    
                                    
