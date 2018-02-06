@@ -285,11 +285,43 @@ begin
             r31_out <= r31_output;
             
             cpsr_cond_bits_control_out <= r31_output(3 downto 0);
---            if clk_counter = 0 and reset_in = '0' then
---                 r1_enable_out <= r1_input;
---                 r30_enable_out <= r30_input;
---                 r31_enable_out <= r31_input;
---            end if;
+            if clk_counter = 0 and reset_in = '0' then
+                 r0_input <= '0';
+                 r1_input <= '0';
+                 r2_input <= '0';
+                 r3_input <= '0';
+                 r4_input <= '0';
+                 r5_input <= '0';
+                 r6_input <= '0';
+                 r7_input <= '0';
+                 r8_input <= '0';
+                 r9_input <= '0';
+                 r10_input <= '0';
+                 r11_input <= '0';
+                 r12_input <= '0';
+                 r13_input <= '0';
+                 r14_input <= '0';
+                 r15_input <= '0';
+                 r16_input <= '0';
+                 r17_input <= '0';
+                 r18_input <= '0';
+                 r19_input <= '0';
+                 r20_input <= '0';
+                 r21_input <= '0';
+                 r22_input <= '0';
+                 r23_input <= '0';
+                 r24_input <= '0';
+                 r25_input <= '0';
+                 r26_input <= '0';
+                 r27_input <= '0';
+                 r28_input <= '0';
+                 r29_input <= '0';
+                 r30_input <= '0';
+                 r31_input <= '0';
+                 r1_enable_out <= r1_input;
+                 r30_enable_out <= r30_input;
+                 r31_enable_out <= r31_input;
+            end if;
             if clk_counter = 1 and reset_in = '0' then
                 -- Case statement to set register_1_out to the read_register_1
                 case read_register_1_in is
