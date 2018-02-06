@@ -473,11 +473,6 @@ begin
                 end if;
             end if;
             
-            -- Writing data to proper register
-            -- Driving 2's complement pair
-        end if;
-        
-        if falling_edge(clk_in) then
             if clk_counter = 4 and reset_in = '0' then
                  r0_input <= '0';
                  r1_input <= '0';
@@ -515,7 +510,11 @@ begin
                  r30_enable_out <= r30_input;
                  r31_enable_out <= r31_input;
             end if;
-            
+            -- Writing data to proper register
+            -- Driving 2's complement pair
+        end if;
+        
+        if falling_edge(clk_in) then
             if clk_counter = 3 and reset_in = '0' then
                 case write_register_in is
                     when "00000" =>
