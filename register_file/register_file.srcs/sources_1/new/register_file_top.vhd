@@ -86,6 +86,7 @@ entity register_file_top is
            r30_out : out STD_LOGIC_VECTOR (31 downto 0);
            r31_out : out STD_LOGIC_VECTOR (31 downto 0);
            r1_enable_out : out STD_LOGIC;
+           r2_enable_out : out STD_LOGIC;
            r30_enable_out : out STD_LOGIC;
            r31_enable_out : out STD_LOGIC;
            counter : out integer range 0 to 4);
@@ -319,6 +320,7 @@ begin
                  r30_input <= '0';
                  r31_input <= '0';
                  r1_enable_out <= r1_input;
+                 r2_enable_out <= r2_input;
                  r30_enable_out <= r30_input;
                  r31_enable_out <= r31_input;
             end if;
@@ -507,6 +509,7 @@ begin
                  r30_input <= '0';
                  r31_input <= '0';
                  r1_enable_out <= r1_input;
+                 r2_enable_out <= r2_input;
                  r30_enable_out <= r30_input;
                  r31_enable_out <= r31_input;
             end if;

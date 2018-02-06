@@ -58,7 +58,7 @@ component register_file_top port(clk_in : in STD_LOGIC;
                                  -- Register Outputs
 --                                 r0_out : out STD_LOGIC_VECTOR (31 downto 0);
                                  r1_out : out STD_LOGIC_VECTOR (31 downto 0);
---                                 r2_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                 r2_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r3_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r4_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r5_out : out STD_LOGIC_VECTOR (31 downto 0);
@@ -89,6 +89,7 @@ component register_file_top port(clk_in : in STD_LOGIC;
 --                                 r30_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r31_out : out STD_LOGIC_VECTOR (31 downto 0);
                                    r1_enable_out : out STD_LOGIC;
+                                   r2_enable_out : out STD_LOGIC;
 --                                 r30_enable_out : out STD_LOGIC;
 --                                 r31_enable_out : out STD_LOGIC;
                                  counter : out integer
@@ -116,7 +117,7 @@ signal register_2_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 -- Register outputs
 --signal r0_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 signal r1_tb_out : STD_LOGIC_VECTOR (31 downto 0);
---signal r2_tb_out : STD_LOGIC_VECTOR (31 downto 0);
+signal r2_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r3_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r4_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r5_tb_out : STD_LOGIC_VECTOR (31 downto 0);
@@ -147,6 +148,7 @@ signal r1_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r30_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r31_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 signal r1_enable_tb_out : STD_LOGIC;
+signal r2_enable_tb_out : STD_LOGIC;
 --signal r30_enable_tb_out : STD_LOGIC;
 --signal r31_enable_tb_out : STD_LOGIC;
 
@@ -172,7 +174,7 @@ begin
                                      register_2_out => register_2_tb_out,
 --                                     r0_out => r0_tb_out,
                                      r1_out => r1_tb_out,
---                                     r2_out => r2_tb_out,
+                                     r2_out => r2_tb_out,
 --                                     r3_out => r3_tb_out,
 --                                     r4_out => r4_tb_out,
 --                                     r5_out => r5_tb_out,
@@ -203,6 +205,7 @@ begin
 --                                     r30_out => r30_tb_out,
 --                                     r31_out => r31_tb_out,
                                        r1_enable_out => r1_enable_tb_out,
+                                       r2_enable_out => r2_enable_tb_out,
 --                                     r30_enable_out => r30_enable_tb_out,
 --                                     r31_enable_out => r31_enable_tb_out,
                                      counter => counter_tb
@@ -228,16 +231,16 @@ begin
         
         -- Write Register: 00001, Write Data: 850CADB5
         -- Read Register 1: 01011, Read Register 2: 11111
-        reset_tb_in <= '0';
-        read_register_1_tb_in <= "01011";
-        read_register_2_tb_in <= "11111";
-        write_register_tb_in <= "00001";
-        write_data_tb_in <= x"850CADB5";
-        reg_write_tb_in <= '1';
-        pc_write_tb_in <= '0';
-        counter_bit_tb_in <= '0';
-        cpsr_set_bit_tb_in <= '0';
-        wait for 50 ns;
+--        reset_tb_in <= '0';
+--        read_register_1_tb_in <= "01011";
+--        read_register_2_tb_in <= "11111";
+--        write_register_tb_in <= "00001";
+--        write_data_tb_in <= x"850CADB5";
+--        reg_write_tb_in <= '1';
+--        pc_write_tb_in <= '0';
+--        counter_bit_tb_in <= '0';
+--        cpsr_set_bit_tb_in <= '0';
+--        wait for 50 ns;
         
         -- Write Register: 00010, Write Data: 777568F3
         -- Read Register 1: 10101, Read Register 2: 01110
@@ -252,7 +255,18 @@ begin
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
         
-        
+       -- Write Register: 00010, Write Data: 777568F3
+       -- Read Register 1: 10101, Read Register 2: 01110
+       reset_tb_in <= '0';
+       read_register_1_tb_in <= "10101";
+       read_register_2_tb_in <= "01110";
+       write_register_tb_in <= "00010";
+       write_data_tb_in <= x"57A5E8B2";
+       reg_write_tb_in <= '1';
+       pc_write_tb_in <= '0';
+       counter_bit_tb_in <= '0';
+       cpsr_set_bit_tb_in <= '0';
+       wait for 50 ns;
         -- 
     end process;
 
