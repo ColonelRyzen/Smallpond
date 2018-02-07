@@ -77,8 +77,8 @@ component register_file_top port(clk_in : in STD_LOGIC;
 --                                 r18_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r19_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r20_out : out STD_LOGIC_VECTOR (31 downto 0);
---                                 r21_out : out STD_LOGIC_VECTOR (31 downto 0);
---                                 r22_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                 r21_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                 r22_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r23_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r24_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r25_out : out STD_LOGIC_VECTOR (31 downto 0);
@@ -86,12 +86,14 @@ component register_file_top port(clk_in : in STD_LOGIC;
 --                                 r27_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r28_out : out STD_LOGIC_VECTOR (31 downto 0);
 --                                 r29_out : out STD_LOGIC_VECTOR (31 downto 0);
---                                 r30_out : out STD_LOGIC_VECTOR (31 downto 0);
---                                 r31_out : out STD_LOGIC_VECTOR (31 downto 0);
-                                   r1_enable_out : out STD_LOGIC;
-                                   r2_enable_out : out STD_LOGIC;
---                                 r30_enable_out : out STD_LOGIC;
---                                 r31_enable_out : out STD_LOGIC;
+                                 r30_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                 r31_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                 r1_enable_out : out STD_LOGIC;
+                                 r2_enable_out : out STD_LOGIC;
+                                 r21_enable_out : out STD_LOGIC;
+                                 r22_enable_out : out STD_LOGIC;
+                                 r30_enable_out : out STD_LOGIC;
+                                 r31_enable_out : out STD_LOGIC;
                                  counter : out integer
                                  );
 end component;
@@ -136,8 +138,8 @@ signal r2_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r18_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r19_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r20_tb_out : STD_LOGIC_VECTOR (31 downto 0);
---signal r21_tb_out : STD_LOGIC_VECTOR (31 downto 0);
---signal r22_tb_out : STD_LOGIC_VECTOR (31 downto 0);
+signal r21_tb_out : STD_LOGIC_VECTOR (31 downto 0);
+signal r22_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r23_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r24_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r25_tb_out : STD_LOGIC_VECTOR (31 downto 0);
@@ -145,12 +147,14 @@ signal r2_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r27_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r28_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal r29_tb_out : STD_LOGIC_VECTOR (31 downto 0);
---signal r30_tb_out : STD_LOGIC_VECTOR (31 downto 0);
---signal r31_tb_out : STD_LOGIC_VECTOR (31 downto 0);
+signal r30_tb_out : STD_LOGIC_VECTOR (31 downto 0);
+signal r31_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 signal r1_enable_tb_out : STD_LOGIC;
 signal r2_enable_tb_out : STD_LOGIC;
---signal r30_enable_tb_out : STD_LOGIC;
---signal r31_enable_tb_out : STD_LOGIC;
+signal r21_enable_tb_out : STD_LOGIC;
+signal r22_enable_tb_out : STD_LOGIC;
+signal r30_enable_tb_out : STD_LOGIC;
+signal r31_enable_tb_out : STD_LOGIC;
 
 signal counter_tb : integer;
 
@@ -193,8 +197,8 @@ begin
 --                                     r18_out => r18_tb_out,
 --                                     r19_out => r19_tb_out,
 --                                     r20_out => r20_tb_out,
---                                     r21_out => r21_tb_out,
---                                     r22_out => r22_tb_out,
+                                     r21_out => r21_tb_out,
+                                     r22_out => r22_tb_out,
 --                                     r23_out => r23_tb_out,
 --                                     r24_out => r24_tb_out,
 --                                     r25_out => r25_tb_out,
@@ -202,12 +206,14 @@ begin
 --                                     r27_out => r27_tb_out,
 --                                     r28_out => r28_tb_out,
 --                                     r29_out => r29_tb_out,
---                                     r30_out => r30_tb_out,
---                                     r31_out => r31_tb_out,
-                                       r1_enable_out => r1_enable_tb_out,
-                                       r2_enable_out => r2_enable_tb_out,
---                                     r30_enable_out => r30_enable_tb_out,
---                                     r31_enable_out => r31_enable_tb_out,
+                                     r30_out => r30_tb_out,
+                                     r31_out => r31_tb_out,
+                                     r1_enable_out => r1_enable_tb_out,
+                                     r2_enable_out => r2_enable_tb_out,
+                                     r21_enable_out => r21_enable_tb_out,
+                                     r22_enable_out => r22_enable_tb_out,
+                                     r30_enable_out => r30_enable_tb_out,
+                                     r31_enable_out => r31_enable_tb_out,
                                      counter => counter_tb
                                      );
 
@@ -246,8 +252,8 @@ begin
         -- Read Register 1: 10101, Read Register 2: 01110
         reset_tb_in <= '0';
         read_register_1_tb_in <= "10101";
-        read_register_2_tb_in <= "01110";
-        write_register_tb_in <= "00010";
+        read_register_2_tb_in <= "11111";
+        write_register_tb_in <= "11111";
         write_data_tb_in <= x"777568F3";
         reg_write_tb_in <= '1';
         pc_write_tb_in <= '0';
@@ -259,8 +265,8 @@ begin
        -- Read Register 1: 10101, Read Register 2: 01110
        reset_tb_in <= '0';
        read_register_1_tb_in <= "10101";
-       read_register_2_tb_in <= "01110";
-       write_register_tb_in <= "00010";
+       read_register_2_tb_in <= "11111";
+       write_register_tb_in <= "11111";
        write_data_tb_in <= x"57A5E8B2";
        reg_write_tb_in <= '1';
        pc_write_tb_in <= '0';
