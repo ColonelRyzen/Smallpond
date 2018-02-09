@@ -248,32 +248,97 @@ begin
 --        cpsr_set_bit_tb_in <= '0';
 --        wait for 50 ns;
         
+-------------------Normal Write Test-------------------       
+        
+--        -- Write Register: 00010, Write Data: 777568F3
+--        -- Read Register 1: 10101, Read Register 2: 01110
+--        reset_tb_in <= '0';
+--        read_register_1_tb_in <= "10101";
+--        read_register_2_tb_in <= "11111";
+--        write_register_tb_in <= "11111";
+--        write_data_tb_in <= x"777568F3";
+--        reg_write_tb_in <= '1';
+--        pc_write_tb_in <= '0';
+--        counter_bit_tb_in <= '0';
+--        cpsr_set_bit_tb_in <= '0';
+--        wait for 50 ns;
+        
+--        -- Write Register: 00010, Write Data: 777568F3
+--        -- Read Register 1: 10101, Read Register 2: 01110
+--        reset_tb_in <= '0';
+--        read_register_1_tb_in <= "10101";
+--        read_register_2_tb_in <= "11111";
+--        write_register_tb_in <= "11111";
+--        write_data_tb_in <= x"57A5E8B2";
+--        reg_write_tb_in <= '1';
+--        pc_write_tb_in <= '0';
+--        counter_bit_tb_in <= '0';
+--        cpsr_set_bit_tb_in <= '0';
+--        wait for 50 ns;
+
+------------------End Normal Write-------------------
+
+-------------------PC Write Test---------------------
+
+--        -- Write Register: 00010, Write Data: 777568F3
+--        -- Read Register 1: 10101, Read Register 2: 01110
+--        reset_tb_in <= '0';
+--        read_register_1_tb_in <= "10101";
+--        read_register_2_tb_in <= "11111";
+--        write_register_tb_in <= "11110";
+--        write_data_tb_in <= x"57A5E8B2";
+--        reg_write_tb_in <= '0';
+--        pc_write_tb_in <= '1';
+--        pc_write_data_tb_in <= x"7486AF3D";
+--        counter_bit_tb_in <= '0';
+--        cpsr_set_bit_tb_in <= '0';
+--        wait for 50 ns;
+        
+--        -- Write Register: 00010, Write Data: 777568F3
+--        -- Read Register 1: 10101, Read Register 2: 01110
+--        reset_tb_in <= '0';
+--        read_register_1_tb_in <= "10101";
+--        read_register_2_tb_in <= "11111";
+--        write_register_tb_in <= "11111";
+--        write_data_tb_in <= x"57A5E8B2";
+--        reg_write_tb_in <= '1';
+--        pc_write_tb_in <= '0';
+--        counter_bit_tb_in <= '0';
+--        cpsr_set_bit_tb_in <= '0';
+--        wait for 50 ns;
+
+-------------------End PC Write---------------------       
+ 
+------------------CPSR Write Test-------------------- 
+       
+        -- Write Register: 00010, Write Data: 777568F3
+        -- Read Register 1: 10101, Read Register 2: 01110
+        reset_tb_in <= '0';
+        read_register_1_tb_in <= "10101";
+        read_register_2_tb_in <= "11111";
+        write_register_tb_in <= "11110";
+        write_data_tb_in <= x"57A5E8B2";
+        reg_write_tb_in <= '0';
+        pc_write_tb_in <= '0';
+        pc_write_data_tb_in <= x"7486AF3D";
+        counter_bit_tb_in <= '0';
+        cpsr_set_bit_tb_in <= '1';
+        cpsr_cond_bits_alu_tb_in <= "1001";
+        wait for 50 ns;
+        
         -- Write Register: 00010, Write Data: 777568F3
         -- Read Register 1: 10101, Read Register 2: 01110
         reset_tb_in <= '0';
         read_register_1_tb_in <= "10101";
         read_register_2_tb_in <= "11111";
         write_register_tb_in <= "11111";
-        write_data_tb_in <= x"777568F3";
+        write_data_tb_in <= x"57A5E8B2";
         reg_write_tb_in <= '1';
         pc_write_tb_in <= '0';
         counter_bit_tb_in <= '0';
         cpsr_set_bit_tb_in <= '0';
         wait for 50 ns;
-        
-       -- Write Register: 00010, Write Data: 777568F3
-       -- Read Register 1: 10101, Read Register 2: 01110
-       reset_tb_in <= '0';
-       read_register_1_tb_in <= "10101";
-       read_register_2_tb_in <= "11111";
-       write_register_tb_in <= "11111";
-       write_data_tb_in <= x"57A5E8B2";
-       reg_write_tb_in <= '1';
-       pc_write_tb_in <= '0';
-       counter_bit_tb_in <= '0';
-       cpsr_set_bit_tb_in <= '0';
-       wait for 50 ns;
-        -- 
+       
     end process;
 
 end Behavioral;
