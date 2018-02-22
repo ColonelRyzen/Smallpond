@@ -51,14 +51,17 @@ component register_file_array port(clk_in : in STD_LOGIC;
                                    cpsr_cond_bits_alu_in : in STD_LOGIC_VECTOR (4 downto 0);
                                    cpsr_cond_bits_control_out : out STD_LOGIC;
                                    register_0_out : out STD_LOGIC_VECTOR (31 downto 0);
-                                   register_1_out : out STD_LOGIC_VECTOR (31 downto 0);
-                                   counter : out integer range 0 to 4);
+                                   register_1_out : out STD_LOGIC_VECTOR (31 downto 0)
+--                                   reg_31 : out STD_LOGIC_VECTOR (31 downto 0);
+--                                   counter : out integer range 0 to 4
+                                   );
 end component;
 
 signal clk_tb_in : STD_LOGIC;
 signal reset_tb_in : STD_LOGIC;
 signal reg_write_tb_in : STD_LOGIC;
 signal counter_bit_tb_in : STD_LOGIC;
+signal write_register_tb_in : STD_LOGIC_VECTOR (4 downto 0);
 signal read_register_0_tb_in : STD_LOGIC_VECTOR (4 downto 0);
 signal read_register_1_tb_in : STD_LOGIC_VECTOR (4 downto 0);
 signal write_data_tb_in : STD_LOGIC_VECTOR (31 downto 0);
@@ -69,6 +72,7 @@ signal cpsr_cond_bits_alu_tb_in : STD_LOGIC_VECTOR (4 downto 0);
 signal cpsr_cond_bits_control_tb_out : STD_LOGIC;
 signal register_0_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 signal register_1_tb_out : STD_LOGIC_VECTOR (31 downto 0);
+--signal reg_31_tb : STD_LOGIC_VECTOR (31 downto 0);
 signal counter_tb : integer;
 
 constant clk_period : time := 10ns;
@@ -76,8 +80,9 @@ constant clk_period : time := 10ns;
 begin
     UUT: register_file_array port map ( clk_in => clk_tb_in,
                                         reset_in => reset_tb_in,
-                                        reg_write_tb_in => reg_write_in,
+                                        reg_write_in => reg_write_tb_in,
                                         counter_bit_in => counter_bit_tb_in,
+                                        write_register_in => write_register_tb_in,
                                         read_register_0_in => read_register_0_tb_in,
                                         read_register_1_in => read_register_1_tb_in,
                                         write_data_in => write_data_tb_in,
@@ -87,8 +92,9 @@ begin
                                         cpsr_cond_bits_alu_in => cpsr_cond_bits_alu_tb_in,
                                         cpsr_cond_bits_control_out => cpsr_cond_bits_control_tb_out,
                                         register_0_out => register_0_tb_out,
-                                        register_1_out => register_1_tb_out,
-                                        counter => counter_tb
+                                        register_1_out => register_1_tb_out
+--                                        reg_31 => reg_31_tb,
+--                                        counter => counter_tb
                                         );
 
     clk_proc: process
@@ -101,6 +107,8 @@ begin
 
     stimulus : process
     begin
+        reset_tb_in <= '1';
+        wait for 25 ns;
         -----------------------------------------------
         --------------Random Reads/Writes--------------
         -----------------------------------------------
@@ -109,8 +117,8 @@ begin
         -- Write Register: 00001, Write Data: 850CADB5
         -- Read Register 1: 01011, Read Register 2: 11111
 --        reset_tb_in <= '0';
---        read_register_1_tb_in <= "01011";
---        read_register_2_tb_in <= "11111";
+--        read_register_0_tb_in <= "01011";
+--        read_register_1_tb_in <= "11111";
 --        write_register_tb_in <= "00001";
 --        write_data_tb_in <= x"850CADB5";
 --        reg_write_tb_in <= '1';
@@ -124,8 +132,8 @@ begin
        -- Write Register: 00010, Write Data: 777568F3
        -- Read Register 1: 10101, Read Register 2: 01110
        reset_tb_in <= '0';
-       read_register_1_tb_in <= "10101";
-       read_register_2_tb_in <= "11111";
+       read_register_0_tb_in <= "10101";
+       read_register_1_tb_in <= "11111";
        write_register_tb_in <= "11111";
        write_data_tb_in <= x"777568F3";
        reg_write_tb_in <= '1';
@@ -137,8 +145,8 @@ begin
        -- Write Register: 00010, Write Data: 777568F3
        -- Read Register 1: 10101, Read Register 2: 01110
        reset_tb_in <= '0';
-       read_register_1_tb_in <= "10101";
-       read_register_2_tb_in <= "11111";
+       read_register_0_tb_in <= "10101";
+       read_register_1_tb_in <= "11111";
        write_register_tb_in <= "11111";
        write_data_tb_in <= x"57A5E8B2";
        reg_write_tb_in <= '1';
@@ -154,8 +162,8 @@ begin
 --        -- Write Register: 00010, Write Data: 777568F3
 --        -- Read Register 1: 10101, Read Register 2: 01110
 --        reset_tb_in <= '0';
---        read_register_1_tb_in <= "10101";
---        read_register_2_tb_in <= "11111";
+--        read_register_0_tb_in <= "10101";
+--        read_register_1_tb_in <= "11111";
 --        write_register_tb_in <= "11110";
 --        write_data_tb_in <= x"57A5E8B2";
 --        reg_write_tb_in <= '0';
@@ -168,8 +176,8 @@ begin
 --        -- Write Register: 00010, Write Data: 777568F3
 --        -- Read Register 1: 10101, Read Register 2: 01110
 --        reset_tb_in <= '0';
---        read_register_1_tb_in <= "10101";
---        read_register_2_tb_in <= "11111";
+--        read_register_0_tb_in <= "10101";
+--        read_register_1_tb_in <= "11111";
 --        write_register_tb_in <= "11111";
 --        write_data_tb_in <= x"57A5E8B2";
 --        reg_write_tb_in <= '1';
@@ -185,8 +193,8 @@ begin
         -- -- Write Register: 00010, Write Data: 777568F3
         -- -- Read Register 1: 10101, Read Register 2: 01110
         -- reset_tb_in <= '0';
-        -- read_register_1_tb_in <= "10101";
-        -- read_register_2_tb_in <= "11111";
+        -- read_register_0_tb_in <= "10101";
+        -- read_register_1_tb_in <= "11111";
         -- write_register_tb_in <= "11110";
         -- write_data_tb_in <= x"57A5E8B2";
         -- reg_write_tb_in <= '0';
@@ -200,8 +208,8 @@ begin
         -- -- Write Register: 00010, Write Data: 777568F3
         -- -- Read Register 1: 10101, Read Register 2: 01110
         -- reset_tb_in <= '0';
-        -- read_register_1_tb_in <= "10101";
-        -- read_register_2_tb_in <= "11111";
+        -- read_register_0_tb_in <= "10101";
+        -- read_register_1_tb_in <= "11111";
         -- write_register_tb_in <= "11111";
         -- write_data_tb_in <= x"57A5E8B2";
         -- reg_write_tb_in <= '1';
