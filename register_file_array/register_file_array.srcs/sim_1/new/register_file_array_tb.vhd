@@ -48,8 +48,8 @@ component register_file_array port(clk_in : in STD_LOGIC;
                                    pc_write_in : in STD_LOGIC;
                                    pc_write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
                                    cpsr_set_bit_in : in STD_LOGIC;
-                                   cpsr_cond_bits_alu_in : in STD_LOGIC_VECTOR (4 downto 0);
-                                   cpsr_cond_bits_control_out : out STD_LOGIC;
+                                   cpsr_cond_bits_alu_in : in STD_LOGIC_VECTOR (3 downto 0);
+                                   cpsr_cond_bits_control_out : out STD_LOGIC_VECTOR (3 downto 0);
                                    register_0_out : out STD_LOGIC_VECTOR (31 downto 0);
                                    register_1_out : out STD_LOGIC_VECTOR (31 downto 0)
 --                                   reg_31 : out STD_LOGIC_VECTOR (31 downto 0);
@@ -68,8 +68,8 @@ signal write_data_tb_in : STD_LOGIC_VECTOR (31 downto 0);
 signal pc_write_tb_in : STD_LOGIC;
 signal pc_write_data_tb_in : STD_LOGIC_VECTOR (31 downto 0);
 signal cpsr_set_bit_tb_in : STD_LOGIC;
-signal cpsr_cond_bits_alu_tb_in : STD_LOGIC_VECTOR (4 downto 0);
-signal cpsr_cond_bits_control_tb_out : STD_LOGIC;
+signal cpsr_cond_bits_alu_tb_in : STD_LOGIC_VECTOR (3 downto 0);
+signal cpsr_cond_bits_control_tb_out : STD_LOGIC_VECTOR (3 downto 0);
 signal register_0_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 signal register_1_tb_out : STD_LOGIC_VECTOR (31 downto 0);
 --signal reg_31_tb : STD_LOGIC_VECTOR (31 downto 0);
@@ -129,62 +129,62 @@ begin
 
 -------------------Normal Write Test-------------------
 
-       -- Write Register: 00010, Write Data: 777568F3
-       -- Read Register 1: 10101, Read Register 2: 01110
-       reset_tb_in <= '0';
-       read_register_0_tb_in <= "10101";
-       read_register_1_tb_in <= "11111";
-       write_register_tb_in <= "11111";
-       write_data_tb_in <= x"777568F3";
-       reg_write_tb_in <= '1';
-       pc_write_tb_in <= '0';
-       counter_bit_tb_in <= '0';
-       cpsr_set_bit_tb_in <= '0';
-       wait for 50 ns;
+--       -- Write Register: 00010, Write Data: 777568F3
+--       -- Read Register 1: 10101, Read Register 2: 01110
+--       reset_tb_in <= '0';
+--       read_register_0_tb_in <= "10101";
+--       read_register_1_tb_in <= "11111";
+--       write_register_tb_in <= "10100";
+--       write_data_tb_in <= x"777568F3";
+--       reg_write_tb_in <= '1';
+--       pc_write_tb_in <= '0';
+--       counter_bit_tb_in <= '0';
+--       cpsr_set_bit_tb_in <= '0';
+--       wait for 50 ns;
 
-       -- Write Register: 00010, Write Data: 777568F3
-       -- Read Register 1: 10101, Read Register 2: 01110
-       reset_tb_in <= '0';
-       read_register_0_tb_in <= "10101";
-       read_register_1_tb_in <= "11111";
-       write_register_tb_in <= "11111";
-       write_data_tb_in <= x"57A5E8B2";
-       reg_write_tb_in <= '1';
-       pc_write_tb_in <= '0';
-       counter_bit_tb_in <= '0';
-       cpsr_set_bit_tb_in <= '0';
-       wait for 50 ns;
+--       -- Write Register: 00010, Write Data: 777568F3
+--       -- Read Register 1: 10101, Read Register 2: 01110
+--       reset_tb_in <= '0';
+--       read_register_0_tb_in <= "10101";
+--       read_register_1_tb_in <= "10100";
+--       write_register_tb_in <= "10100";
+--       write_data_tb_in <= x"57A5E8B2";
+--       reg_write_tb_in <= '1';
+--       pc_write_tb_in <= '0';
+--       counter_bit_tb_in <= '0';
+--       cpsr_set_bit_tb_in <= '0';
+--       wait for 50 ns;
 
 ------------------End Normal Write-------------------
 
 -------------------PC Write Test---------------------
 
---        -- Write Register: 00010, Write Data: 777568F3
---        -- Read Register 1: 10101, Read Register 2: 01110
---        reset_tb_in <= '0';
---        read_register_0_tb_in <= "10101";
---        read_register_1_tb_in <= "11111";
---        write_register_tb_in <= "11110";
---        write_data_tb_in <= x"57A5E8B2";
---        reg_write_tb_in <= '0';
---        pc_write_tb_in <= '1';
---        pc_write_data_tb_in <= x"7486AF3D";
---        counter_bit_tb_in <= '0';
---        cpsr_set_bit_tb_in <= '0';
---        wait for 50 ns;
+        -- Write Register: 00010, Write Data: 777568F3
+        -- Read Register 1: 10101, Read Register 2: 01110
+        reset_tb_in <= '0';
+        read_register_0_tb_in <= "10101";
+        read_register_1_tb_in <= "11111";
+        write_register_tb_in <= "11110";
+        write_data_tb_in <= x"57A5E8B2";
+        reg_write_tb_in <= '0';
+        pc_write_tb_in <= '1';
+        pc_write_data_tb_in <= x"7486AF3D";
+        counter_bit_tb_in <= '0';
+        cpsr_set_bit_tb_in <= '0';
+        wait for 50 ns;
 
---        -- Write Register: 00010, Write Data: 777568F3
---        -- Read Register 1: 10101, Read Register 2: 01110
---        reset_tb_in <= '0';
---        read_register_0_tb_in <= "10101";
---        read_register_1_tb_in <= "11111";
---        write_register_tb_in <= "11111";
---        write_data_tb_in <= x"57A5E8B2";
---        reg_write_tb_in <= '1';
---        pc_write_tb_in <= '0';
---        counter_bit_tb_in <= '0';
---        cpsr_set_bit_tb_in <= '0';
---        wait for 50 ns;
+        -- Write Register: 00010, Write Data: 777568F3
+        -- Read Register 1: 10101, Read Register 2: 01110
+        reset_tb_in <= '0';
+        read_register_0_tb_in <= "10101";
+        read_register_1_tb_in <= "11110";
+        write_register_tb_in <= "11111";
+        write_data_tb_in <= x"57A5E8B2";
+        reg_write_tb_in <= '1';
+        pc_write_tb_in <= '0';
+        counter_bit_tb_in <= '0';
+        cpsr_set_bit_tb_in <= '0';
+        wait for 50 ns;
 
 -------------------End PC Write---------------------
 

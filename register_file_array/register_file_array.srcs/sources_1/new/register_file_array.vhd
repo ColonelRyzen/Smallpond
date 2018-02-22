@@ -45,8 +45,8 @@ entity register_file_array is
            pc_write_in : in STD_LOGIC;
            pc_write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
            cpsr_set_bit_in : in STD_LOGIC;
-           cpsr_cond_bits_alu_in : in STD_LOGIC_VECTOR (4 downto 0);
-           cpsr_cond_bits_control_out : out STD_LOGIC;
+           cpsr_cond_bits_alu_in : in STD_LOGIC_VECTOR (3 downto 0);
+           cpsr_cond_bits_control_out : out STD_LOGIC_VECTOR (3 downto 0);
            register_0_out : out STD_LOGIC_VECTOR (31 downto 0);
            register_1_out : out STD_LOGIC_VECTOR (31 downto 0)
 --           reg_31 : out STD_LOGIC_VECTOR (31 downto 0);
@@ -220,9 +220,25 @@ begin
                        when others =>
                            null;
                     end case;
---                    reg_31 <= reg(31);
+                    -- Write to PC if PC write data enabled. Else increment by 1.
+                    if pc_write_in = '1' then
+                        reg(30) <= pc_write_data_in;
+                    else
+                        reg(30) <= reg(30) + x"00000001";
+                    end if;
+                    cpsr_cond_bits_control_out <= reg(31)(3 downto 0);
                 end if;
                 
+                -- Phase 2: ALU
+                -- Set CPSR from ALU result if cpsr bit set
+                if clk_counter = 2 and reset_in = '0' then
+                    if cpsr_set_bit_in = '1' then
+                        reg(31) <= cpsr_cond_bits_alu_in;
+                    end if;
+                end if;
+                
+                -- Phase 3: Memory
+                -- Increment/Decrement counter if counter bit set
                 if clk_counter = 3 and reset_in = '0' then
                     if counter_bit_in = '1' then
                         reg(21) <= reg(21) + x"00000001";
@@ -273,8 +289,10 @@ begin
                                 reg(18) <= write_data_in;
                             when "10011" =>
                                 reg(19) <= write_data_in;
+                                reg(20) <= (not write_data_in) + x"00000001";
                             when "10100" =>
                                 reg(20) <= write_data_in;
+                                reg(19) <= (not write_data_in) + x"00000001";
                             when "10101" =>
                                 reg(21) <= write_data_in;
                             when "10110" =>
@@ -296,7 +314,7 @@ begin
                             when "11110" =>
                                 reg(30) <= write_data_in;
                             when "11111" =>
-                                reg(31) <= write_data_in;                            
+                                reg(31) <= write_data_in;                      
                             when others =>
                                 null;
                         end case;
