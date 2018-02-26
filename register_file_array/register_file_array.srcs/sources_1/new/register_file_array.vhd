@@ -44,6 +44,7 @@ entity register_file_array is
            write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
            pc_write_in : in STD_LOGIC;
            pc_write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
+           pc_data_out : out STD_LOGIC_VECTOR (31 downto 0);
            cpsr_set_bit_in : in STD_LOGIC;
            cpsr_cond_bits_alu_in : in STD_LOGIC_VECTOR (3 downto 0);
            cpsr_cond_bits_control_out : out STD_LOGIC_VECTOR (3 downto 0);
@@ -80,6 +81,9 @@ begin
     operand_fetch: process(clk_in)
         begin
             if rising_edge(clk_in) then
+                if clk_counter = 0 and reset_in ='0' then
+                    pc_data_out <= reg(30);
+                end if;
                 if clk_counter = 1 and reset_in ='0' then
                     -- Case statement to set register_0_out to read_regesiter_0
                     case read_register_0_in is
