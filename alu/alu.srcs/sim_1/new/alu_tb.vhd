@@ -52,8 +52,8 @@ architecture Behavioral of alu_tb is
 		Result  : out  std_logic_vector(31 downto 0);	-- Result of ALU
 		
 		--input/output
-		CPSR	: out std_logic_vector(3 downto 0);      -- N, Z, C, V
-		counter : out integer range 0 to 4
+		CPSR	: out std_logic_vector(3 downto 0)      -- N, Z, C, V
+		--counter : out integer range 0 to 4
 		);
     END COMPONENT;
 	
@@ -69,7 +69,7 @@ architecture Behavioral of alu_tb is
 	--Outputs
 		signal Result 	: std_logic_vector(31 downto 0);
 		signal CPSR 	: std_logic_vector(3 downto 0);
-		signal counter : integer range 0 to 4 := 0;
+		--signal counter : integer range 0 to 4 := 0;
 		
 		constant clk_period : time := 10ns;
 BEGIN
@@ -83,8 +83,8 @@ BEGIN
           ALU_OP => ALU_OP,
           SUB 	 => SUB,
 		  Result => Result,
-		  CPSR	 => CPSR,
-		  counter => counter
+		  CPSR	 => CPSR
+		  --counter => counter
         );
 
     clk_proc: process
