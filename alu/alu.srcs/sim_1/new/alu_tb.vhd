@@ -106,7 +106,7 @@ BEGIN
 		ALU_OP <= "0000";
 		A <= x"00000043";
 		B <= x"00000002";
-		wait for 250 ns;
+		wait for 2500 ns;
 		
         ALU_OP <= "0001";
         A <= x"00001010";
