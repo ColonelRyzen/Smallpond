@@ -65,8 +65,84 @@ signal cpu_clk : STD_LOGIC := '0';
 --signal alu_op_in : STD_LOGIC_VECTOR(3 downto 0) := x"00000000";
 --signal alu_sub : STD_LOGIC := '0';
 
+component ALU port (clk_in : in STD_LOGIC;
+                    reset_in : in STD_LOGIC;
+                    --Inputs
+                    a, b	: in STD_LOGIC_VECTOR(31 downto 0);		-- 2 inputs 32-bit
+                    ALU_OP	: in STD_LOGIC_VECTOR(3 downto 0);      -- 1 input 4-bit for selecting function
+                    SUB		: in std_logic;							-- determines if subtracting or adding
+                    
+                    --Outputs
+                    Result  : out  STD_LOGIC_VECTOR(31 downto 0);	-- Result of ALU
+                    
+                    --input/output
+                    CPSR	: out STD_LOGIC_VECTOR(3 downto 0)      -- N, Z, C, V
+                    );
+    
+end component;
+
+component control_unit port(   clk_in : in STD_LOGIC;
+                               reset_in : in STD_LOGIC := '0';
+                               op_code_in : in STD_LOGIC_VECTOR (5 downto 0);
+                               -- Datapath Signals
+                               reg_write_out : out STD_LOGIC;
+                               counter_bit_out : out STD_LOGIC;
+                               cpsr_set_bit_out : out STD_LOGIC;
+                               alu_src_out : out STD_LOGIC;
+                               alu_op_out : out STD_LOGIC_VECTOR (3 downto 0);
+                               sub_out : out STD_LOGIC;
+                               pc_write_out : out STD_LOGIC;
+                               pc_src_out : out STD_LOGIC;
+                               jump_out : out STD_LOGIC;
+                               mem_read_out : out STD_LOGIC;
+                               mem_write_out : out STD_LOGIC;
+                               mem_to_reg_out : out STD_LOGIC;
+                               -- End Datapath Signals
+                               cpsr_bits_in : in STD_LOGIC_VECTOR (3 downto 0);
+                               counter_bit_in : in STD_LOGIC;
+                               cpsr_set_bit_in : in STD_LOGIC;
+                               condition_code_in : in STD_LOGIC_VECTOR (3 downto 0)
+                            );
+end component;
+
+component register_file_array port(clk_in : in STD_LOGIC;
+                                   reset_in : in STD_LOGIC;
+                                   reg_write_in : in STD_LOGIC;
+                                   counter_bit_in : in STD_LOGIC;
+                                   write_register_in : in STD_LOGIC_VECTOR (4 downto 0);
+                                   read_register_0_in : in STD_LOGIC_VECTOR (4 downto 0);
+                                   read_register_1_in : in STD_LOGIC_VECTOR (4 downto 0);
+                                   write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
+                                   pc_write_in : in STD_LOGIC;
+                                   pc_write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
+                                   pc_data_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                   cpsr_set_bit_in : in STD_LOGIC;
+                                   cpsr_cond_bits_alu_in : in STD_LOGIC_VECTOR (3 downto 0);
+                                   cpsr_cond_bits_control_out : out STD_LOGIC_VECTOR (3 downto 0);
+                                   register_0_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                   register_1_out : out STD_LOGIC_VECTOR (31 downto 0)
+                                    );
+
+end component;
 
 begin
+
+    alu: ALU port map(  clk_in => cpu_clk,
+                        reset_in => reset_in,
+                        a => , 
+                        b => ,
+                        ALU_OP => ,
+                        SUB => ,
+                        Result => ,
+                        CPSR => );
+    
+    
+    register_file : register_file_array port map (  clk_in => cpu_clk,
+                                                    reset_in => reset_in,
+                                                    );
+    
+    
+
     main_clk : process(clk_in)
     variable clk_counter : integer := 0;
     begin
