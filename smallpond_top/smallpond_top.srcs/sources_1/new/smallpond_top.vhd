@@ -38,92 +38,86 @@ end smallpond_top;
 
 architecture Behavioral of smallpond_top is
 
-signal cpu_clk : STD_LOGIC := '0';
-----CONTROL UNIT SIGNALS
---signal ctrl_reg_write_out : STD_LOGIC := '0';
---signal ctrl_counter_bit_out : STD_LOGIC := '0';
---signal ctrl_cpsr_set_bit_out : STD_LOGIC := '0';
---signal ctrl_alu_src_out : STD_LOGIC := '0';
---signal ctrl_sub_out : STD_LOGIC := '0';
---signal ctrl_pc_write_out : STD_LOGIC := '0';
---signal ctrl_src_out : STD_LOGIC := '0';
---signal ctrl_jum_out : STD_LOGIC := '0';
---signal ctrl_mem_read_out : STD_LOGIC := '0';
---signal ctrl_mem_write_out : STD_LOGIC := '0';
---signal ctrl_mem_to_reg_out : STD_LOGIC := '0';
-
-----REGISTER FILE SIGNALS
---signal reg_pc_data_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
---signal reg_cpsr_cond_bits_control_out : STD_LOGIC_VECTOR (3 downto 0) := "0000";
---signal 
-
-----ALU SIGNALS
---signal alu_result_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
---signal alu_cpsr_out : STD_LOGIC_VECTOR(3 downto 0) := "0000";
---signal alu_a_input : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
---signal alu_b_input : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
---signal alu_op_in : STD_LOGIC_VECTOR(3 downto 0) := x"00000000";
---signal alu_sub : STD_LOGIC := '0';
-
-component ALU port (clk_in : in STD_LOGIC;
-                    reset_in : in STD_LOGIC;
-                    --Inputs
-                    a, b	: in STD_LOGIC_VECTOR(31 downto 0);		-- 2 inputs 32-bit
-                    ALU_OP	: in STD_LOGIC_VECTOR(3 downto 0);      -- 1 input 4-bit for selecting function
-                    SUB		: in std_logic;							-- determines if subtracting or adding
-                    
-                    --Outputs
-                    Result  : out  STD_LOGIC_VECTOR(31 downto 0);	-- Result of ALU
-                    
-                    --input/output
-                    CPSR	: out STD_LOGIC_VECTOR(3 downto 0)      -- N, Z, C, V
-                    );
+    signal cpu_clk : STD_LOGIC := '0';
     
-end component;
-
-component control_unit port(   clk_in : in STD_LOGIC;
-                               reset_in : in STD_LOGIC := '0';
-                               op_code_in : in STD_LOGIC_VECTOR (5 downto 0);
-                               -- Datapath Signals
-                               reg_write_out : out STD_LOGIC;
-                               counter_bit_out : out STD_LOGIC;
-                               cpsr_set_bit_out : out STD_LOGIC;
-                               alu_src_out : out STD_LOGIC;
-                               alu_op_out : out STD_LOGIC_VECTOR (3 downto 0);
-                               sub_out : out STD_LOGIC;
-                               pc_write_out : out STD_LOGIC;
-                               pc_src_out : out STD_LOGIC;
-                               jump_out : out STD_LOGIC;
-                               mem_read_out : out STD_LOGIC;
-                               mem_write_out : out STD_LOGIC;
-                               mem_to_reg_out : out STD_LOGIC;
-                               -- End Datapath Signals
-                               cpsr_bits_in : in STD_LOGIC_VECTOR (3 downto 0);
-                               counter_bit_in : in STD_LOGIC;
-                               cpsr_set_bit_in : in STD_LOGIC;
-                               condition_code_in : in STD_LOGIC_VECTOR (3 downto 0)
-                            );
-end component;
-
-component register_file_array port(clk_in : in STD_LOGIC;
-                                   reset_in : in STD_LOGIC;
-                                   reg_write_in : in STD_LOGIC;
+    --signals between register_file and alu
+    signal reg_alu_a : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    signal reg_alu_b : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    signal alu_reg_cpsr : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+    
+    --signals between control_unit and register_file
+    signal reg_ctrl_cpsr : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+    signal ctrl_reg_reg_write : STD_LOGIC := '0';
+    signal ctrl_reg_counter : STD_LOGIC := '0';
+    signal ctrl_reg_pc_write : STD_LOGIC := '0';
+    signal ctrl_reg_pc_data : STD_LOGIC_VECTOR := x"00000000";
+    signal ctrl_reg_cpsr_set : STD_LOGIC := '0';
+    
+    --signals between control_unit and alu
+    signal ctrl_alu_alu_op : STD_LOGIC_VECTOR(3 downto 0) := x"0000";
+    signal ctrl_alu_sub : STD_LOGIC := '0';
+    
+    
+    component ALU port (clk_in : in STD_LOGIC;
+                        reset_in : in STD_LOGIC;
+                        --Inputs
+                        a	: in STD_LOGIC_VECTOR(31 downto 0);		-- 2 inputs 32-bit
+                        b   : in STD_LOGIC_VECTOR(31 downto 0);
+                        ALU_OP	: in STD_LOGIC_VECTOR(3 downto 0);      -- 1 input 4-bit for selecting function
+                        SUB		: in std_logic;							-- determines if subtracting or adding
+                        
+                        --Outputs
+                        Result  : out  STD_LOGIC_VECTOR(31 downto 0);	-- Result of ALU
+                        
+                        --input/output
+                        CPSR	: out STD_LOGIC_VECTOR(3 downto 0)      -- N, Z, C, V
+                        );
+        
+    end component;
+    
+    component control_unit port(   clk_in : in STD_LOGIC;
+                                   reset_in : in STD_LOGIC := '0';
+                                   op_code_in : in STD_LOGIC_VECTOR (5 downto 0);
+                                   -- Datapath Signals
+                                   reg_write_out : out STD_LOGIC;
+                                   counter_bit_out : out STD_LOGIC;
+                                   cpsr_set_bit_out : out STD_LOGIC;
+                                   alu_src_out : out STD_LOGIC;
+                                   alu_op_out : out STD_LOGIC_VECTOR (3 downto 0);
+                                   sub_out : out STD_LOGIC;
+                                   pc_write_out : out STD_LOGIC;
+                                   pc_src_out : out STD_LOGIC;
+                                   jump_out : out STD_LOGIC;
+                                   mem_read_out : out STD_LOGIC;
+                                   mem_write_out : out STD_LOGIC;
+                                   mem_to_reg_out : out STD_LOGIC;
+                                   -- End Datapath Signals
+                                   cpsr_bits_in : in STD_LOGIC_VECTOR (3 downto 0);
                                    counter_bit_in : in STD_LOGIC;
-                                   write_register_in : in STD_LOGIC_VECTOR (4 downto 0);
-                                   read_register_0_in : in STD_LOGIC_VECTOR (4 downto 0);
-                                   read_register_1_in : in STD_LOGIC_VECTOR (4 downto 0);
-                                   write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
-                                   pc_write_in : in STD_LOGIC;
-                                   pc_write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
-                                   pc_data_out : out STD_LOGIC_VECTOR (31 downto 0);
                                    cpsr_set_bit_in : in STD_LOGIC;
-                                   cpsr_cond_bits_alu_in : in STD_LOGIC_VECTOR (3 downto 0);
-                                   cpsr_cond_bits_control_out : out STD_LOGIC_VECTOR (3 downto 0);
-                                   register_0_out : out STD_LOGIC_VECTOR (31 downto 0);
-                                   register_1_out : out STD_LOGIC_VECTOR (31 downto 0)
-                                    );
-
-end component;
+                                   condition_code_in : in STD_LOGIC_VECTOR (3 downto 0)
+                                );
+    end component;
+    
+    component register_file_array port(clk_in : in STD_LOGIC;
+                                       reset_in : in STD_LOGIC;
+                                       reg_write_in : in STD_LOGIC;
+                                       counter_bit_in : in STD_LOGIC;
+                                       write_register_in : in STD_LOGIC_VECTOR (4 downto 0);
+                                       read_register_0_in : in STD_LOGIC_VECTOR (4 downto 0);
+                                       read_register_1_in : in STD_LOGIC_VECTOR (4 downto 0);
+                                       write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
+                                       pc_write_in : in STD_LOGIC;
+                                       pc_write_data_in : in STD_LOGIC_VECTOR (31 downto 0);
+                                       pc_data_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                       cpsr_set_bit_in : in STD_LOGIC;
+                                       cpsr_cond_bits_alu_in : in STD_LOGIC_VECTOR (3 downto 0);
+                                       cpsr_cond_bits_control_out : out STD_LOGIC_VECTOR (3 downto 0);
+                                       register_0_out : out STD_LOGIC_VECTOR (31 downto 0);
+                                       register_1_out : out STD_LOGIC_VECTOR (31 downto 0)
+                                        );
+    
+    end component;
 
 begin
 
@@ -134,12 +128,48 @@ begin
                         ALU_OP => ,
                         SUB => ,
                         Result => ,
-                        CPSR => );
+                        CPSR => 
+                        );
     
     
     register_file : register_file_array port map (  clk_in => cpu_clk,
                                                     reset_in => reset_in,
+                                                    reg_write_in => ,
+                                                    counter_bit_in => ,
+                                                    write_register_in => ,
+                                                    read_register_0_in => ,
+                                                    read_register_1_in => ,
+                                                    write_data_in => ,
+                                                    pc_write_in => ,
+                                                    pc_write_data_in => ,
+                                                    pc_data_out => ,
+                                                    cpsr_set_bit_in => ,
+                                                    cpsr_cond_bits_alu_in => ,
+                                                    cpsr_cond_bits_control_out => ,
+                                                    register_0_out => ,
+                                                    register_1_out => 
                                                     );
+                                                    
+    control_unit : control_unit port map (  clk_in => cpu_clk,
+                                            reset_in => reset_in,
+                                            op_code_in => ,
+                                            reg_write_out => ,
+                                            counter_bit_out => ,
+                                            cpsr_set_bit_out => ,
+                                            alu_src_out => ,
+                                            alu_op_out => ,
+                                            sub_out => ,
+                                            pc_write_out => ,
+                                            pc_src_out => ,
+                                            jump_out => ,
+                                            mem_read_out => ,
+                                            mem_write_out => ,
+                                            mem_to_reg_out => ,
+                                            cpsr_bits_in => ,
+                                            counter_bit_in => ,
+                                            cpsr_set_bit_in => ,
+                                            condition_code_in => 
+                                            );
     
     
 
