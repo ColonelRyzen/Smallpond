@@ -236,8 +236,8 @@ begin
                     -- Write to PC if PC write data enabled. Else increment by 1.
                     if pc_write_in = '1' then
                         reg(30) <= pc_write_data_in;
-                    else
-                        reg(30) <= reg(30) + x"00000001";
+--                    else
+--                        reg(30) <= reg(30) + x"00000001";
                     end if;
                     cpsr_cond_bits_control_out <= reg(31)(3 downto 0);
                 end if;
