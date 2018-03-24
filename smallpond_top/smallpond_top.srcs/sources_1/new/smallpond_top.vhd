@@ -110,7 +110,8 @@ architecture Behavioral of smallpond_top is
     
     --signals between register_file and alu
     signal reg_alu_a : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
-    signal reg_alu_b : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    --signal reg_alu_b : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    signal reg_alu_src_0 : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal alu_reg_cpsr : STD_LOGIC_VECTOR(3 downto 0) := "0000";
     
     --signals between control_unit and register_file
@@ -118,8 +119,8 @@ architecture Behavioral of smallpond_top is
     signal ctrl_reg_reg_write : STD_LOGIC := '0';
     signal ctrl_reg_counter : STD_LOGIC := '0';
     signal ctrl_reg_pc_write : STD_LOGIC := '0';
-    signal ctrl_reg_pc_data : STD_LOGIC_VECTOR := x"00000000";
     signal ctrl_reg_cpsr_set : STD_LOGIC := '0';
+    
     
     --signals between control_unit and alu
     signal ctrl_alu_alu_op : STD_LOGIC_VECTOR(3 downto 0) := x"0000";
@@ -136,17 +137,34 @@ architecture Behavioral of smallpond_top is
     signal datapath_ctrl_counter_bit : STD_LOGIC := '0'; -- bit 9
     signal datapath_ctrl_cond_bits : STD_LOGIC_VECTOR(3 downto 0) := "0000";
     signal datapath_ctrl_branch_counter : STD_LOGIC := '0'; -- bit b 25
-    signal datapath_immediate : STD_LOGIC_VECTOR(15 downto 0) := x"00000000"; -- datapath immediate
+    signal datapath_immediate : STD_LOGIC_VECTOR(15 downto 0) := x"0000"; -- datapath immediate
     signal datapath_immediate_sign_extend : STD_LOGIC_VECTOR(31 downto 0) := x"00000000"; -- datapath sign extended immediate
-    signal datapath_branch_immediate : STD_LOGIC_VECTOR(17 downto 0) := "00000000000000000";
-    signal datapath_branch_immediate_sign_extend : STD_LOGIC_VECTOR (31 downto 0) := x"00000000";
+    
     signal ctrl_datapath_mem_to_reg : STD_LOGIC := '0';
     signal ctrl_datapath_alu_src : STD_LOGIC := '0';
     signal ctrl_datapath_pc_src : STD_LOGIC := '0';
     signal ctrl_datapath_jump : STD_LOGIC := '0';
+    
+    signal reg_datapath_pc_data : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    signal datapath_reg_pc_data : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    signal datapath_alu_src_result : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    signal datapath_pc_src_result : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    signal datapath_pc_input : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_instruction_address : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal instruction : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
-   
+    
+    -- datapath branch signals
+    signal datapath_branch_immediate : STD_LOGIC_VECTOR(17 downto 0) := "00000000000000000";
+    signal datapath_branch_immediate_sign_extend : STD_LOGIC_VECTOR (31 downto 0) := x"00000000";    
+    signal datapath_branch_immediate_shift : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    signal datapath_branch_plus_pc : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    
+    -- datapath jump signals
+    signal datapath_jump_immediate : STD_LOGIC_VECTOR(25 downto 0) := "00000000000000000000000000";
+    signal datapath_jump_pc : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    
+    
+    
     signal clk_counter : integer range 0 to 4 := 0;
     
     
@@ -156,7 +174,7 @@ begin
     alu: entity work.ALU port map(  clk_in => cpu_clk,
                                     reset_in => reset_in,
                                     a => reg_alu_a, 
-                                    b => reg_alu_b,
+                                    b => datapath_alu_src_result,
                                     ALU_OP => ctrl_alu_alu_op,
                                     SUB => ctrl_alu_sub,
                                     Result => alu_datapath_result,
@@ -173,13 +191,13 @@ begin
                                                     read_register_1_in => datapath_reg_read_register_1,
                                                     write_data_in => datapath_reg_write_data,
                                                     pc_write_in => ctrl_reg_pc_write,
-                                                    pc_write_data_in => ctrl_reg_pc_data,
+                                                    pc_write_data_in => datapath_pc_input,
                                                     pc_data_out => datapath_instruction_address,
                                                     cpsr_set_bit_in => ctrl_reg_cpsr_set,
                                                     cpsr_cond_bits_alu_in => alu_reg_cpsr,
                                                     cpsr_cond_bits_control_out => reg_ctrl_cpsr,
                                                     register_0_out => reg_alu_a,
-                                                    register_1_out => reg_alu_b
+                                                    register_1_out => reg_alu_src_0
                                                     );
                                                     
     control_unit : entity work.control_unit port map (  clk_in => cpu_clk,
@@ -240,7 +258,7 @@ begin
             if clk_counter = 0 then
                 memory_address_out <= datapath_instruction_address;
                 ctrl_reg_pc_write <= '1';
-                ctrl_reg_pc_data <= datapath_instruction_address + x"00000004";
+                reg_datapath_pc_data <= datapath_instruction_address + x"00000004";
                 instruction <= memory_data_in;
                 
             --Fetch instruction and set the decode signals
@@ -263,25 +281,63 @@ begin
                 
                 -- I type instruction decode
                 datapath_immediate <= instruction(15 downto 0);             -- I type immediate
+                if datapath_immediate(15) = '1' then
+                    datapath_immediate_sign_extend <= x"FFFF" & datapath_immediate;
+                else
+                    datapath_immediate_sign_extend <= x"0000" & datapath_immediate;
+                end if;
                 
                 
                 -- B type instruction decode
                 datapath_ctrl_branch_counter <= instruction(25);
                 datapath_branch_immediate <= instruction(21 downto 4);
+                if datapath_branch_immediate(17) = '1' then
+                    datapath_immediate_sign_extend <= "00000000000000" & datapath_branch_immediate;
+                else
+                    datapath_immediate_sign_extend <= "11111111111111" & datapath_branch_immediate;
+                end if;
                 
+                -- J type instruction decode
+                datapath_jump_immediate <= instruction(25 downto 0);
+                datapath_jump_pc <= reg_datapath_pc_data(31 downto 28) & datapath_jump_immediate & "00";
                 
-                
-            -- branch and jump logic
             
             -- EXECUTE
             elsif clk_counter = 2 then
-            -- branch and jump logic
-            -- alu operations
             
+                -- alu operations
+                if ctrl_datapath_alu_src = '0' then
+                    datapath_alu_src_result <= reg_alu_src_0;
+                else
+                    datapath_alu_src_result <= datapath_immediate_sign_extend;
+                end if;
+                
+                --branch logic
+                datapath_branch_immediate_shift <= std_logic_vector(unsigned(datapath_branch_immediate_sign_extend) sll 2);
+                datapath_branch_plus_pc <= datapath_branch_immediate_shift + reg_datapath_pc_data;
+                
+                if ctrl_datapath_pc_src = '1' then
+                    datapath_pc_src_result <= datapath_branch_plus_pc;
+                else
+                    datapath_pc_src_result <= reg_datapath_pc_data;
+                end if;
+                
+                --jump logic
+                if ctrl_datapath_jump = '1' then
+                    datapath_reg_pc_data <= datapath_jump_pc;
+                else
+                    datapath_reg_pc_data <= datapath_pc_src_result;
+                end if;
             -- MEMORY
             elsif clk_counter = 3 then
             -- memory operations
-            -- branch logic
+            
+            -- mem to reg
+            if ctrl_datapath_mem_to_reg = '1' then
+                datapath_reg_write_data <= memory_data_in;
+            else
+                datapath_reg_write_data <= alu_datapath_result;
+            end if;
             
             -- WRITE BACK
             elsif clk_counter = 4 then
