@@ -106,7 +106,7 @@ architecture Behavioral of smallpond_top is
     
 --    end component;
 
-    signal cpu_clk : STD_LOGIC := '0';
+    signal cpu_clk : STD_LOGIC := '1';
     
     --signals between register_file and alu
     signal reg_alu_a : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
@@ -123,7 +123,7 @@ architecture Behavioral of smallpond_top is
     
     
     --signals between control_unit and alu
-    signal ctrl_alu_alu_op : STD_LOGIC_VECTOR(3 downto 0) := x"0000";
+    signal ctrl_alu_alu_op : STD_LOGIC_VECTOR(3 downto 0) := "0000";
     signal ctrl_alu_sub : STD_LOGIC := '0';
     
     --Datapath Signals
@@ -154,7 +154,7 @@ architecture Behavioral of smallpond_top is
     signal instruction : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     
     -- datapath branch signals
-    signal datapath_branch_immediate : STD_LOGIC_VECTOR(17 downto 0) := "00000000000000000";
+    signal datapath_branch_immediate : STD_LOGIC_VECTOR(17 downto 0) := "000000000000000000";
     signal datapath_branch_immediate_sign_extend : STD_LOGIC_VECTOR (31 downto 0) := x"00000000";    
     signal datapath_branch_immediate_shift : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_branch_plus_pc : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
@@ -227,7 +227,7 @@ begin
     variable clk_count : integer := 0;
     begin
         if rising_edge(clk_in) then
-            if clk_count = 500 then
+            if clk_count = 25 then
                 clk_count := 0;
                 cpu_clk <= not cpu_clk;
             else
@@ -236,11 +236,11 @@ begin
         end if;
     end process;
     
-    clock_counter: process (clk_in, reset_in)
+    clock_counter: process (cpu_clk, reset_in)
     begin
         if reset_in = '1' then
             clk_counter <= 0;
-        elsif rising_edge(clk_in) then
+        elsif rising_edge(cpu_clk) then
             if clk_counter = 4 then
                 clk_counter <= 0;
                 --counter <= clk_counter;
@@ -256,15 +256,17 @@ begin
         if rising_edge(cpu_clk) then
             -- INSTRUCTION FETCH
             if clk_counter = 0 then
-                memory_address_out <= datapath_instruction_address;
+                instruction <= memory_data_in;
                 ctrl_reg_pc_write <= '1';
                 reg_datapath_pc_data <= datapath_instruction_address + x"00000004";
-                instruction <= memory_data_in;
+                
                 
             --Fetch instruction and set the decode signals
             --branch and jump logic
+            
+            end if;
             -- INSTRUCTION DECODE AND OPERAND FETCH
-            elsif clk_counter = 1 then
+            if clk_counter = 1 then
                 ctrl_reg_pc_write <= '0';
                 
                 -- A type instruction decode
@@ -302,8 +304,11 @@ begin
                 datapath_jump_pc <= reg_datapath_pc_data(31 downto 28) & datapath_jump_immediate & "00";
                 
             
+            
+            end if;
+            
             -- EXECUTE
-            elsif clk_counter = 2 then
+            if clk_counter = 2 then
             
                 -- alu operations
                 if ctrl_datapath_alu_src = '0' then
@@ -328,20 +333,23 @@ begin
                 else
                     datapath_reg_pc_data <= datapath_pc_src_result;
                 end if;
+            end if;
             -- MEMORY
-            elsif clk_counter = 3 then
+            if clk_counter = 3 then
             -- memory operations
             
             -- mem to reg
-            if ctrl_datapath_mem_to_reg = '1' then
-                datapath_reg_write_data <= memory_data_in;
-            else
-                datapath_reg_write_data <= alu_datapath_result;
+                if ctrl_datapath_mem_to_reg = '1' then
+                    datapath_reg_write_data <= memory_data_in;
+                else
+                    datapath_reg_write_data <= alu_datapath_result;
+                end if;
             end if;
             
             -- WRITE BACK
-            elsif clk_counter = 4 then
-            -- reg_file write back
+            if clk_counter = 4 then
+            --Send next instruction address
+            memory_address_out <= datapath_instruction_address;
             end if;
         end if;        
     
