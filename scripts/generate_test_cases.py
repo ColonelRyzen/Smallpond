@@ -10,10 +10,10 @@ cpsr_bits_tb_in = ""
 counter_bit_tb_in = 0
 cpsr_set_bit_tb_in = 0
 condition_code_tb_in = ""
-wait = "wait for 50 ns;\n\n"
+wait = "wait for 2500 ns;\n\n"
 reset = "reset_tb_in <= '0';\n"
 condition_t_or_f = True
-total_sim_time = 20
+total_sim_time = 0
 number_A_test_cases = 0
 number_I_test_cases = 0
 number_J_test_cases = 0
@@ -112,7 +112,7 @@ for a_instr in range (0,len(instr_a_type)):
                     # write wait line
                     tb_text.write(wait)
                     condition_t_or_f = False
-                    total_sim_time += 50
+                    total_sim_time += 2500
                 else:
                     # Conditon is false
                     # Writing comment line
@@ -167,7 +167,7 @@ for a_instr in range (0,len(instr_a_type)):
                     # write wait line
                     tb_text.write(wait)
                     condition_t_or_f = True
-                    total_sim_time += 50
+                    total_sim_time += 2500
 
 print "Number of A cases: ", number_A_test_cases
 #print "Total Sim Time: ", total_sim_time, " ns"
@@ -183,7 +183,7 @@ for i_instr in range (0,len(instr_i_type)):
     tb_text.write("op_code_tb_in <= \"" + instr_i_type[i_instr] + "\";\n")
     tb_text.write(wait)
     number_I_test_cases += 1
-    total_sim_time += 50
+    total_sim_time += 2500
 
 print "Number of I cases: ", number_I_test_cases
 #print "Total Sim Time: ", total_sim_time, " ns"
@@ -195,7 +195,7 @@ tb_text.write(reset)
 tb_text.write("op_code_tb_in <= \"" + instr_j_type[0] + "\";\n")
 tb_text.write(wait)
 number_J_test_cases += 1
-total_sim_time += 50
+total_sim_time += 2500
 
 print "Number of J cases: ", number_J_test_cases
 #print "Total Sim Time: ", total_sim_time, " ns"
@@ -259,7 +259,7 @@ for b_instr in range (0,len(instr_b_type)):
                 # write wait line
                 tb_text.write(wait)
                 condition_t_or_f = False
-                total_sim_time += 50
+                total_sim_time += 2500
             else:
                 # Conditon is false
                 # Writing comment line
@@ -312,7 +312,7 @@ for b_instr in range (0,len(instr_b_type)):
                 # write wait line
                 tb_text.write(wait)
                 condition_t_or_f = True
-                total_sim_time += 50
+                total_sim_time += 2500
 
 print "Number of B cases: ", number_B_test_cases
 print "Total Sim Time: ", total_sim_time, " ns"
