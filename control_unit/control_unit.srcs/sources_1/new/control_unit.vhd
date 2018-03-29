@@ -63,8 +63,10 @@ end control_unit;
 architecture Behavioral of control_unit is
 
 signal clk_counter: integer range 0 to 4 := 0;
-signal instruction_runs: STD_LOGIC;
-signal reg_write_old: STD_LOGIC;
+signal instruction_runs: STD_LOGIC := '0';
+signal reg_write_old: STD_LOGIC := '0';
+signal mem_read_old : STD_LOGIC := '0';
+signal mem_write_old : STD_LOGIC := '0';
 
 begin
 
@@ -96,9 +98,6 @@ begin
         if rising_edge(clk_in) then
             -- Increment PC if statement. This will enable the pc_write_out signal in first stage
             if clk_counter = 0 and reset_in = '0' then
-                reg_write_out <= '0';
-                pc_write_out <= '1';
-            elsif reset_in = '1' then
                 pc_write_out <= '0';
             end if;
 
@@ -113,7 +112,6 @@ begin
             -- Case comment format is "-- Instruction name - 'instruction alias'"
             if clk_counter = 1 and reset_in = '0' then
                 instruction_runs <= '1';
-                pc_write_out <= '0';
                 case op_code_in is
         --########################################################################################################--
                 -- Begin 'A' type
@@ -128,8 +126,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -146,8 +144,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -163,8 +161,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -180,8 +178,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -197,8 +195,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -214,8 +212,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -231,8 +229,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -248,8 +246,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -265,8 +263,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -281,8 +279,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -298,8 +296,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -315,8 +313,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -332,8 +330,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -349,8 +347,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -366,8 +364,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -380,8 +378,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
 
@@ -397,8 +395,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -415,8 +413,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -432,8 +430,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -449,8 +447,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -466,8 +464,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -483,8 +481,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -500,8 +498,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -517,8 +515,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -534,8 +532,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -550,8 +548,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -567,8 +565,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -584,8 +582,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -601,8 +599,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -618,8 +616,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -635,8 +633,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -649,8 +647,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
             -------------------------------------------------------------
@@ -665,8 +663,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -683,8 +681,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -700,8 +698,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -717,8 +715,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -734,8 +732,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -751,8 +749,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -768,8 +766,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -785,8 +783,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -802,8 +800,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -818,8 +816,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -835,8 +833,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -852,8 +850,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -869,8 +867,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -886,8 +884,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -903,8 +901,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -917,8 +915,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
 
@@ -934,8 +932,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -952,8 +950,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -969,8 +967,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -986,8 +984,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1003,8 +1001,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1020,8 +1018,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1037,8 +1035,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1054,8 +1052,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1071,8 +1069,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1087,8 +1085,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1104,8 +1102,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1121,8 +1119,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1138,8 +1136,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1155,8 +1153,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1172,8 +1170,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1186,8 +1184,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
 
@@ -1203,8 +1201,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -1221,8 +1219,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1238,8 +1236,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1255,8 +1253,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1272,8 +1270,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1289,8 +1287,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1306,8 +1304,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1323,8 +1321,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1340,8 +1338,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1356,8 +1354,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1373,8 +1371,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1390,8 +1388,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1407,8 +1405,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1424,8 +1422,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1441,8 +1439,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1455,8 +1453,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
 
@@ -1472,8 +1470,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -1490,8 +1488,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1507,8 +1505,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1524,8 +1522,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1541,8 +1539,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1558,8 +1556,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1575,8 +1573,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1592,8 +1590,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1609,8 +1607,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1625,8 +1623,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1642,8 +1640,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1659,8 +1657,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1676,8 +1674,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1693,8 +1691,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1710,8 +1708,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1724,8 +1722,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
 
@@ -1741,8 +1739,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -1759,8 +1757,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1776,8 +1774,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1793,8 +1791,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1810,8 +1808,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1827,8 +1825,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1844,8 +1842,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1861,8 +1859,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1878,8 +1876,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1894,8 +1892,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1911,8 +1909,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1928,8 +1926,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1945,8 +1943,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1962,8 +1960,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1979,8 +1977,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -1993,8 +1991,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
 
@@ -2010,8 +2008,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -2028,8 +2026,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2045,8 +2043,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2062,8 +2060,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2079,8 +2077,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2096,8 +2094,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2113,8 +2111,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2130,8 +2128,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2147,8 +2145,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2163,8 +2161,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2180,8 +2178,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2197,8 +2195,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2214,8 +2212,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2231,8 +2229,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2248,8 +2246,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2262,8 +2260,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
             -------------------------------------------------------------
@@ -2278,8 +2276,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -2296,8 +2294,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2313,8 +2311,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2330,8 +2328,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2347,8 +2345,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2364,8 +2362,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2381,8 +2379,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2398,8 +2396,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2415,8 +2413,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2431,8 +2429,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2448,8 +2446,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2465,8 +2463,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2482,8 +2480,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2499,8 +2497,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2516,8 +2514,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2530,8 +2528,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
             -------------------------------------------------------------
@@ -2546,8 +2544,8 @@ begin
                         sub_out <= '1';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -2564,8 +2562,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2581,8 +2579,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2598,8 +2596,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2615,8 +2613,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2632,8 +2630,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2649,8 +2647,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2666,8 +2664,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2683,8 +2681,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2699,8 +2697,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2716,8 +2714,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2733,8 +2731,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2750,8 +2748,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2767,8 +2765,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2784,8 +2782,8 @@ begin
                                 sub_out <= '1';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2798,8 +2796,8 @@ begin
                             sub_out <= '1';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
             -------------------------------------------------------------
@@ -2814,8 +2812,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -2832,8 +2830,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2849,8 +2847,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2866,8 +2864,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2883,8 +2881,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2900,8 +2898,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2917,8 +2915,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2934,8 +2932,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2951,8 +2949,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2967,8 +2965,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -2984,8 +2982,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3001,8 +2999,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3018,8 +3016,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3035,8 +3033,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3052,8 +3050,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3066,8 +3064,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
             -------------------------------------------------------------
@@ -3082,8 +3080,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
                         -- AL (Always) - Unconditional
@@ -3100,8 +3098,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3117,8 +3115,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3134,8 +3132,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3151,8 +3149,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3168,8 +3166,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3185,8 +3183,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3202,8 +3200,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3219,8 +3217,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3235,8 +3233,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3252,8 +3250,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3269,8 +3267,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3286,8 +3284,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3303,8 +3301,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3320,8 +3318,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3334,8 +3332,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
         --########################################################################################################--
@@ -3359,8 +3357,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Logical And Immediate - 'ANDI'
@@ -3374,8 +3372,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Arithmatic Shift Right Immediate - 'ASRI'
@@ -3389,8 +3387,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Load - 'LDR'
@@ -3404,8 +3402,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '1';
-                        mem_write_out <= '0';
+                        mem_read_old <= '1';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
             -------------------------------------------------------------
                     -- Load Byte - 'LDRB'
@@ -3419,8 +3417,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '1';
-                        mem_write_out <= '0';
+                        mem_read_old <= '1';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
             -------------------------------------------------------------
                     -- Load Byte Unsigned - 'LDRBU'
@@ -3434,8 +3432,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '1';
-                        mem_write_out <= '0';
+                        mem_read_old <= '1';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
             -------------------------------------------------------------
                     -- Load Halfword - 'LDRH'
@@ -3449,8 +3447,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '1';
-                        mem_write_out <= '0';
+                        mem_read_old <= '1';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
             -------------------------------------------------------------
                     -- Load Halfword Unsigned - 'LDRHU'
@@ -3464,8 +3462,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '1';
-                        mem_write_out <= '0';
+                        mem_read_old <= '1';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
             -------------------------------------------------------------
                     -- Logical Shift Left Immediate - 'LSLI'
@@ -3479,8 +3477,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Logical Shift Right Immediate - 'LSRI'
@@ -3494,8 +3492,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Load Upper Immediate - 'LUI'
@@ -3509,8 +3507,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Logical Nand Immediate - 'NANDI'
@@ -3524,8 +3522,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Logical Nor Immediate - 'NORI'
@@ -3539,8 +3537,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Logical Or Immediate - 'ORI'
@@ -3554,8 +3552,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Store - 'STR'
@@ -3569,8 +3567,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '1';
+                        mem_read_old <= '0';
+                        mem_write_old <= '1';
                         mem_to_reg_out <= '0';
             -------------------------------------------------------------
                     --Store Byte - 'STRB'
@@ -3584,8 +3582,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '1';
+                        mem_read_old <= '0';
+                        mem_write_old <= '1';
                         mem_to_reg_out <= '0';
             -------------------------------------------------------------
                     -- Store Halfword - 'STRH'
@@ -3599,8 +3597,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '1';
+                        mem_read_old <= '0';
+                        mem_write_old <= '1';
                         mem_to_reg_out <= '0';
             -------------------------------------------------------------
                     -- Subtract Immediate - 'SUBI'
@@ -3614,8 +3612,8 @@ begin
                         sub_out <= '1';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Logical Exclusive Nor Immediate - 'XNORI'
@@ -3629,8 +3627,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
             -------------------------------------------------------------
                     -- Logical Exclusive Or Immediate - 'XORI'
@@ -3644,8 +3642,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '1';
 
         --########################################################################################################--
@@ -3669,8 +3667,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '1';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
 
                         -- AL (Always) - Unconditional
@@ -3687,8 +3685,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3704,8 +3702,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3721,8 +3719,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3738,8 +3736,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3755,8 +3753,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3772,8 +3770,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3789,8 +3787,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3806,8 +3804,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3822,8 +3820,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3839,8 +3837,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3856,8 +3854,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3873,8 +3871,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3890,8 +3888,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3907,8 +3905,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3921,8 +3919,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
             -------------------------------------------------------------
@@ -3937,8 +3935,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '1';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
 
                         -- AL (Always) - Unconditional
@@ -3955,8 +3953,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3972,8 +3970,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -3989,8 +3987,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4006,8 +4004,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4023,8 +4021,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4040,8 +4038,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4057,8 +4055,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4074,8 +4072,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4090,8 +4088,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4107,8 +4105,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4124,8 +4122,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4141,8 +4139,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4158,8 +4156,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4175,8 +4173,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4189,8 +4187,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
             -------------------------------------------------------------
@@ -4205,8 +4203,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '1';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
 
                         -- AL (Always) - Unconditional
@@ -4223,8 +4221,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4240,8 +4238,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4257,8 +4255,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4274,8 +4272,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4291,8 +4289,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4308,8 +4306,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4325,8 +4323,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4342,8 +4340,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4358,8 +4356,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4375,8 +4373,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4392,8 +4390,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4409,8 +4407,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4426,8 +4424,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4443,8 +4441,8 @@ begin
                                 sub_out <= '0';
                                 pc_src_out <= '0';
                                 jump_out <= '0';
-                                mem_read_out <= '0';
-                                mem_write_out <= '0';
+                                mem_read_old <= '0';
+                                mem_write_old <= '0';
                                 mem_to_reg_out <= '1';
                                 instruction_runs <= '0';
                             end if;
@@ -4457,8 +4455,8 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_out <= '0';
-                            mem_write_out <= '0';
+                            mem_read_old <= '0';
+                            mem_write_old <= '0';
                             mem_to_reg_out <= '1';
                         end if;
         --########################################################################################################--
@@ -4482,8 +4480,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '1';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
         --########################################################################################################--
                 -- End 'J' type
@@ -4498,8 +4496,8 @@ begin
                         sub_out <= '0';
                         pc_src_out <= '0';
                         jump_out <= '0';
-                        mem_read_out <= '0';
-                        mem_write_out <= '0';
+                        mem_read_old <= '0';
+                        mem_write_old <= '0';
                         mem_to_reg_out <= '0';
                 end case;
             elsif clk_counter = 1 and reset_in = '1' then
@@ -4515,28 +4513,35 @@ begin
                 mem_write_out <= '0';
                 mem_to_reg_out <= '0';
             end if;
-
-            -- This is for a potential update of teh cpsr or counter registers
-            if clk_counter = 3 and reset_in = '0' and instruction_runs = '1' then
-                reg_write_out <= '0';
+            
+            if clk_counter = 2 and reset_in = '0' and instruction_runs = '1' then
+                sub_out <= '0';
+                mem_read_out <= mem_read_old;
+                mem_write_out <= mem_write_old;
                 cpsr_set_bit_out <= cpsr_set_bit_in;
                 counter_bit_out <= counter_bit_in;
-            elsif clk_counter = 3 and (instruction_runs = '0' or reset_in = '1') then
-                reg_write_out <= '0';
+            elsif clk_counter = 2 and (instruction_runs = '0' or reset_in = '1') then
+                mem_read_out <= '0';
+                mem_write_out <= '0';
                 cpsr_set_bit_out <= '0';
                 counter_bit_out <= '0';
+            end if; 
+            -- This is for a potential update of teh cpsr or counter registers
+            if clk_counter = 3 and reset_in = '0' and instruction_runs = '1' then
+                reg_write_out <= reg_write_old;
+                cpsr_set_bit_out <= '0';
+                counter_bit_out <= '0';
+                mem_read_out <= '0';
+                mem_write_out <= '0';
+            elsif clk_counter = 3 and (instruction_runs = '0' or reset_in = '1') then
+                reg_write_out <= '0';
             end if;
             
             -- This is for the write back stage
             -- reg_write_out is enabled and all other write signals are disbaled
             if clk_counter = 4 and reset_in = '0' and instruction_runs = '1' then
-                reg_write_out <= reg_write_old;
-                cpsr_set_bit_out <= '0';
-                counter_bit_out <= '0';
-            elsif clk_counter = 4 and (instruction_runs = '0' or reset_in = '1') then
-                cpsr_set_bit_out <= '0';
-                counter_bit_out <= '0';
                 reg_write_out <= '0';
+                pc_write_out <= '1';
             end if;
         end if;
     end process;
