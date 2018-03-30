@@ -75,16 +75,18 @@ begin
     stimulus : process
     begin
     
---    reset_tb_in <= '1';
---    wait for 500 ns;
+    reset_tb_in <= '1';
+    wait for 250 ns;
     
     -- ADDI r1, r1, 4
     reset_tb_in <= '0';
-    memory_data_tb_in <= "01100000001000010000000000001000";
+--    memory_data_tb_in <= "01100000001000010000000000000100";
+--    memory_data_tb_in <= "10011000011000110000000000000000";        -- STR
+    memory_data_tb_in <= "10010100001000010000000000000100";          -- ORI
     wait for 2500 ns;
     
     -- ADDI r2, r1, 4
-    memory_data_tb_in <= "01100000010000010000000000001000";
+    memory_data_tb_in <= "01100000010000010000000000000100";
     wait for 2500 ns;
     
     -- ADD r3, r2, r1

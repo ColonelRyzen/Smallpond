@@ -106,7 +106,7 @@ architecture Behavioral of smallpond_top is
     
 --    end component;
 
-    signal cpu_clk : STD_LOGIC := '1';
+    signal cpu_clk : STD_LOGIC := '0';
     
     --signals between register_file and alu
     signal reg_alu_a : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
@@ -137,10 +137,10 @@ architecture Behavioral of smallpond_top is
     signal datapath_ctrl_counter_bit : STD_LOGIC := '0'; -- bit 9
     signal datapath_ctrl_cond_bits : STD_LOGIC_VECTOR(3 downto 0) := "0000";
     signal datapath_ctrl_branch_counter : STD_LOGIC := '0'; -- bit b 25
-    signal datapath_immediate : STD_LOGIC_VECTOR(15 downto 0) := x"0000"; -- datapath immediate
+
     signal datapath_immediate_sign_extend : STD_LOGIC_VECTOR(31 downto 0) := x"00000000"; -- datapath sign extended immediate
     
-    signal ctrl_datapath_mem_to_reg : STD_LOGIC := '0';
+    signal ctrl_datapath_mem_to_reg : STD_LOGIC;
     signal ctrl_datapath_alu_src : STD_LOGIC := '0';
     signal ctrl_datapath_pc_src : STD_LOGIC := '0';
     signal ctrl_datapath_jump : STD_LOGIC := '0';
@@ -151,10 +151,8 @@ architecture Behavioral of smallpond_top is
     signal datapath_pc_src_result : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_pc_input : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_instruction_address : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
-    signal instruction : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     
     -- datapath branch signals
-    signal datapath_branch_immediate : STD_LOGIC_VECTOR(17 downto 0) := "000000000000000000";
     signal datapath_branch_immediate_sign_extend : STD_LOGIC_VECTOR (31 downto 0) := x"00000000";    
     signal datapath_branch_immediate_shift : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_branch_plus_pc : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
@@ -226,14 +224,7 @@ begin
     main_clk : process(clk_in)
     variable clk_count : integer := 0;
     begin
-        if rising_edge(clk_in) then
-            if clk_count = 25 then
-                clk_count := 0;
-                cpu_clk <= not cpu_clk;
-            else
-                clk_count := clk_count + 1;
-            end if;
-        end if;
+        cpu_clk <= not cpu_clk after 250 ns;
     end process;
     
     clock_counter: process (cpu_clk, reset_in)
@@ -256,66 +247,69 @@ begin
         if rising_edge(cpu_clk) then
             -- INSTRUCTION FETCH
             if clk_counter = 0 then
-                instruction <= memory_data_in;
+                --instruction <= memory_data_in;
                 ctrl_reg_pc_write <= '1';
                 reg_datapath_pc_data <= datapath_instruction_address + x"00000004";
                 
                 
             --Fetch instruction and set the decode signals
             --branch and jump logic
+                ctrl_reg_pc_write <= '0';
+                           
+                -- A type instruction decode
+                -- Splitting up the instruction
+                datapath_ctrl_op_code <= memory_data_in(31 downto 26);         -- bits 31 to 26
+                datapath_reg_write_register <= memory_data_in(25 downto 21);   -- bits 25 to 21
+                datapath_reg_read_register_0 <= memory_data_in(20 downto 16);  -- bits 20 to 16
+                datapath_reg_read_register_1 <= memory_data_in(15 downto 11);  -- bits 15 to 11
+                
+                datapath_ctrl_cpsr_set_bit <= memory_data_in(10);              -- bit 10
+                datapath_ctrl_counter_bit <= memory_data_in(9);                -- bit 9
+                                                                           -- bits 8 to 4 UNUSED
+                datapath_ctrl_cond_bits <= memory_data_in(3 downto 0);         -- bits 3 to 0
+                
+                
             
             end if;
             -- INSTRUCTION DECODE AND OPERAND FETCH
             if clk_counter = 1 then
-                ctrl_reg_pc_write <= '0';
-                
-                -- A type instruction decode
-                -- Splitting up the instruction
-                datapath_ctrl_op_code <= instruction(31 downto 26);         -- bits 31 to 26
-                datapath_reg_write_register <= instruction(25 downto 21);   -- bits 25 to 21
-                datapath_reg_read_register_0 <= instruction(20 downto 16);  -- bits 20 to 16
-                datapath_reg_read_register_1 <= instruction(15 downto 11);  -- bits 15 to 11
-                
-                datapath_ctrl_cpsr_set_bit <= instruction(10);              -- bit 10
-                datapath_ctrl_counter_bit <= instruction(9);                -- bit 9
-                                                                            -- bits 8 to 4 UNUSED
-                datapath_ctrl_cond_bits <= instruction(3 downto 0);         -- bits 3 to 0
-                
+                 
                 -- I type instruction decode
-                datapath_immediate <= instruction(15 downto 0);             -- I type immediate
-                if datapath_immediate(15) = '1' then
-                    datapath_immediate_sign_extend <= x"FFFF" & datapath_immediate;
+                --datapath_immediate <= instruction(15 downto 0);             -- I type immediate
+                if memory_data_in(15) = '1' then
+                    datapath_immediate_sign_extend <= x"FFFF" & memory_data_in(15 downto 0);
                 else
-                    datapath_immediate_sign_extend <= x"0000" & datapath_immediate;
+                    datapath_immediate_sign_extend <= x"0000" & memory_data_in(15 downto 0);
                 end if;
                 
                 
                 -- B type instruction decode
-                datapath_ctrl_branch_counter <= instruction(25);
-                datapath_branch_immediate <= instruction(21 downto 4);
-                if datapath_branch_immediate(17) = '1' then
-                    datapath_immediate_sign_extend <= "00000000000000" & datapath_branch_immediate;
+                datapath_ctrl_branch_counter <= memory_data_in(25);
+                --datapath_branch_immediate <= instruction(21 downto 4);
+                if memory_data_in(17) = '1' then
+                    datapath_branch_immediate_sign_extend <= "00000000000000" & memory_data_in(21 downto 4);
                 else
-                    datapath_immediate_sign_extend <= "11111111111111" & datapath_branch_immediate;
+                    datapath_branch_immediate_sign_extend <= "11111111111111" & memory_data_in(21 downto 4);
                 end if;
                 
                 -- J type instruction decode
-                datapath_jump_immediate <= instruction(25 downto 0);
+                datapath_jump_immediate <= memory_data_in(25 downto 0);
                 datapath_jump_pc <= reg_datapath_pc_data(31 downto 28) & datapath_jump_immediate & "00";
                 
-            
-            
-            end if;
-            
-            -- EXECUTE
-            if clk_counter = 2 then
-            
                 -- alu operations
                 if ctrl_datapath_alu_src = '0' then
                     datapath_alu_src_result <= reg_alu_src_0;
                 else
                     datapath_alu_src_result <= datapath_immediate_sign_extend;
                 end if;
+                
+            
+            end if;
+            
+            -- EXECUTE
+            if clk_counter = 2 then
+            
+                
                 
                 --branch logic
                 datapath_branch_immediate_shift <= std_logic_vector(unsigned(datapath_branch_immediate_sign_extend) sll 2);
@@ -339,7 +333,7 @@ begin
             -- memory operations
             
             -- mem to reg
-                if ctrl_datapath_mem_to_reg = '1' then
+                if ctrl_datapath_mem_to_reg = '0' then
                     datapath_reg_write_data <= memory_data_in;
                 else
                     datapath_reg_write_data <= alu_datapath_result;
