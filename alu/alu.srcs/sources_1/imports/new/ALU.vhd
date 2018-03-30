@@ -31,7 +31,7 @@ signal negative	: std_logic	:= '0';
 signal overflow	: std_logic	:= '0';
 
 signal tmp		: std_logic_vector (32 downto 0);
-signal clk_counter : integer range 0 to 4 := 0;
+signal clk_counter : integer range 0 to 5 := 0;
 
 begin
 
@@ -40,7 +40,7 @@ begin
         if reset_in = '1' then
             clk_counter <= 0;
         elsif rising_edge(clk_in) then
-            if clk_counter = 4 then
+            if clk_counter = 5 then
                 clk_counter <= 0;
                 --counter <= clk_counter;
             else
@@ -53,34 +53,43 @@ begin
     alu: process(clk_in)
     begin
         if rising_edge(clk_in) then
-            if clk_counter = 2 then
+            if clk_counter = 3 then
                 case ALU_OP is
                     when "0000" => 			  -- AND
                         tmp <= '0' & (a AND b);
+                        Result <= a AND b;
                     
                     when "0001" => 			  -- OR
                         tmp <= '0' & (a OR b);
-                    
+                        Result <= a OR b;
+                        
                     when "0010" => 			  -- NOT
                         tmp <=  '0' & (NOT a);
-                    
+                        Result <= NOT a;
+                        
                     when "0011" => 			  -- NAND
                         tmp <= '0' & (a NAND b);
+                        Result <= a NAND b;
                     
                     when "0100" => 			  -- NOR
                         tmp <= '0' & (a NOR b);
-                    
+                        Result <= a NOR b;
+                        
                     when "0101" => 			  -- XOR
                         tmp <= '0' & (a XOR b);
-                    
+                        Result <= a XOR b;
+                        
                     when "0110" => 			  -- XNOR
                         tmp <= '0' & (a XNOR b);
-                    
+                        Result <= a XNOR b;
+                        
                     when "0111" => 			  -- ADDITION / SUBTRACTION
                        if (SUB = '0') then
-                          tmp <= ('0' & a) + ('0' & b);
+                           tmp <= ('0' & a) + ('0' & b);
+                           Result <= a + b;
                        else
                            tmp <= ('0' & a) - ('0' & b);
+                           Result <= a - b;
                        end if;
                        
                        -- set Carryout flag
@@ -97,30 +106,34 @@ begin
                     
                     when "1000" =>              -- LSL (logically shift left)
                         tmp <= '0' & (std_logic_vector(unsigned(a) sll to_integer(unsigned(b))));
-                    
+                        Result <= std_logic_vector(unsigned(a) sll to_integer(unsigned(b)));
+                        
                     when "1001" =>              -- LSR (logically shift right)
                         tmp <= '0' & (std_logic_vector(unsigned(a) srl to_integer(unsigned(b))));
-                    
+                        Result <= std_logic_vector(unsigned(a) srl to_integer(unsigned(b)));
+                        
                     when "1010" => 			-- ASR (arithmetically shift right)
                         tmp <= '0' & (to_stdlogicvector(to_bitvector(a) sra to_integer(unsigned(b))));
-                    
+                        Result <= to_stdlogicvector(to_bitvector(a) sra to_integer(unsigned(b)));
+                        
                     when others => -- default case for error checking the op codes being passed in are wanted ones
-                        Result <= x"00000000";
+                        --Result <= x"00000000";
                         tmp <= '0' & (x"00000000");
+                        Result <= x"00000000";
                 end case;
                 
                 
                 -- Set the 32 bit in tmp signal into the output (Result) of ALU
-                Result <= tmp(31 downto 0);
+                --Result <= tmp(31 downto 0);
 
                 -- carryOut flag
                 CPSR(1) <= carryOut;
                 
                 -- Zero flag
                 if (tmp(31 downto 0) = x"00000000") then
-                CPSR(2) <= '1';	-- set zero flag to one if result = 0
+                    CPSR(2) <= '1';	-- set zero flag to one if result = 0
                 else
-                CPSR(2) <= '0';	-- set zero flag to zero if result != 0
+                    CPSR(2) <= '0';	-- set zero flag to zero if result != 0
                 end if;
                 
                 -- negative flag
@@ -131,7 +144,7 @@ begin
                 overflow <= carryOut xor carryIn;
                 CPSR(0) <= overflow;
             end if;
-            Result <= tmp(31 downto 0);
+            --Result <= tmp(31 downto 0);
         end if;
     end process;
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="alu_tb_time_synth.wdb" id="1">
+         <top_modules>
+            <top_module name="alu_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="11050000001fs"></ZoomEndTime>
+      <Cursor1Time time="4400000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="268"></NameColumnWidth>
+      <ValueColumnWidth column_width="126"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="11" />
+   <wvobject type="logic" fp_name="/alu_tb/clk_in">
+      <obj_property name="ElementShortName">clk_in</obj_property>
+      <obj_property name="ObjectShortName">clk_in</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/alu_tb/reset_in">
+      <obj_property name="ElementShortName">reset_in</obj_property>
+      <obj_property name="ObjectShortName">reset_in</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/alu_tb/A">
+      <obj_property name="ElementShortName">A[31:0]</obj_property>
+      <obj_property name="ObjectShortName">A[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/alu_tb/B">
+      <obj_property name="ElementShortName">B[31:0]</obj_property>
+      <obj_property name="ObjectShortName">B[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/alu_tb/ALU_OP">
+      <obj_property name="ElementShortName">ALU_OP[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ALU_OP[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/alu_tb/SUB">
+      <obj_property name="ElementShortName">SUB</obj_property>
+      <obj_property name="ObjectShortName">SUB</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/alu_tb/signBit">
+      <obj_property name="ElementShortName">signBit</obj_property>
+      <obj_property name="ObjectShortName">signBit</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/alu_tb/Result">
+      <obj_property name="ElementShortName">Result[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Result[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/alu_tb/CPSR">
+      <obj_property name="ElementShortName">CPSR[3:0]</obj_property>
+      <obj_property name="ObjectShortName">CPSR[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/alu_tb/uut/clk_counter">
+      <obj_property name="ElementShortName">clk_counter[2:0]</obj_property>
+      <obj_property name="ObjectShortName">clk_counter[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/alu_tb/clk_period">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+</wave_config>

@@ -106,50 +106,50 @@ BEGIN
 		ALU_OP <= "0000";
 		A <= x"00000043";
 		B <= x"00000002";
-		wait for 2500 ns;
+		wait for 3000 ns;
 		
         ALU_OP <= "0001";
         A <= x"00001010";
         B <= x"00098765";
-        wait for 2500 ns;
+        wait for 3000 ns;
         
         ALU_OP <= "0010";
 	    A <= x"00004300";
         B <= x"000ABAC0";
-        wait for 2500 ns;
+        wait for 3000 ns;
         
         ALU_OP <= "0011";
         A <= x"00003456";
         B <= x"10101010";
-        wait for 2500 ns;
+        wait for 3000 ns;
         
         ALU_OP <= "0100";
         A <= x"00000040";
         B <= x"00000023";
-        wait for 2500 ns;
+        wait for 3000 ns;
         
         ALU_OP <= "0101";
         A <= x"88888888";
         B <= x"78787878";
-        wait for 2500 ns;
+        wait for 3000 ns;
         
         ALU_OP <= "0110";
         SUB <= '1';
         A <= x"000000F6";
         B <= x"0000000A";
-        wait for 2500 ns;
+        wait for 3000 ns;
         
         ALU_OP <= "0111";
         SUB <= '1';
         A <= x"000000F6";
         B <= x"0FFFFFFF";
-        wait for 2500 ns;	  
+        wait for 3000 ns;	  
         
         ALU_OP <= "0111";
         SUB <= '0';
         A <= x"000000F6";
         B <= x"0000000A";
-        wait for 2500 ns;
+        wait for 3000 ns;
         
         
         -- shifting left logically
@@ -157,13 +157,13 @@ BEGIN
         ALU_OP <= "1000";
         A <= x"000000F6";
         B <= x"0000000A";
-        wait for 2500 ns;
+        wait for 3000 ns;
         
         -- shifting right logically
         ALU_OP <= "1001";
         A <= x"00F60000";
         B <= x"00000007";
-        wait for 2500 ns;
+        wait for 3000 ns;
         
         
         -- shifting airthmatically right
@@ -171,12 +171,12 @@ BEGIN
         ALU_OP <= "1010";
         A <= x"AB000000";
         B <= x"00000007";
-        wait for 2500 ns;	   
+        wait for 3000 ns;	   
         
         ALU_OP <= "1010";
         A <= x"7B000000";
         B <= x"00000007";
-        wait for 2500 ns;       
+        wait for 3000 ns;       
           
 	
    end process;
