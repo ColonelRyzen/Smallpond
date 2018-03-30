@@ -83,15 +83,15 @@ begin
 --    memory_data_tb_in <= "01100000001000010000000000000100";
 --    memory_data_tb_in <= "10011000011000110000000000000000";        -- STR
     memory_data_tb_in <= "10010100001000010000000000000100";          -- ORI
-    wait for 2500 ns;
+    wait for 3000 ns;
     
     -- ADDI r2, r1, 4
     memory_data_tb_in <= "01100000010000010000000000000100";
-    wait for 2500 ns;
+    wait for 3000 ns;
     
     -- ADD r3, r2, r1
     memory_data_tb_in <= "00000100011000100000100000000000";
-    wait for 2500 ns;
+    wait for 3000 ns;
     
     end process;
 

@@ -163,7 +163,7 @@ architecture Behavioral of smallpond_top is
     
     
     
-    signal clk_counter : integer range 0 to 4 := 0;
+    signal clk_counter : integer range 0 to 5 := 0;
     
     
 
@@ -232,7 +232,7 @@ begin
         if reset_in = '1' then
             clk_counter <= 0;
         elsif rising_edge(cpu_clk) then
-            if clk_counter = 4 then
+            if clk_counter = 5 then
                 clk_counter <= 0;
                 --counter <= clk_counter;
             else
@@ -296,18 +296,21 @@ begin
                 datapath_jump_immediate <= memory_data_in(25 downto 0);
                 datapath_jump_pc <= reg_datapath_pc_data(31 downto 28) & datapath_jump_immediate & "00";
                 
+                
+            
+            end if;
+            
+            if clk_counter = 2 then
                 -- alu operations
                 if ctrl_datapath_alu_src = '0' then
                     datapath_alu_src_result <= reg_alu_src_0;
                 else
                     datapath_alu_src_result <= datapath_immediate_sign_extend;
                 end if;
-                
-            
             end if;
             
             -- EXECUTE
-            if clk_counter = 2 then
+            if clk_counter = 3 then
             
                 
                 
@@ -329,7 +332,7 @@ begin
                 end if;
             end if;
             -- MEMORY
-            if clk_counter = 3 then
+            if clk_counter = 4 then
             -- memory operations
             
             -- mem to reg
@@ -341,7 +344,7 @@ begin
             end if;
             
             -- WRITE BACK
-            if clk_counter = 4 then
+            if clk_counter = 5 then
             --Send next instruction address
             memory_address_out <= datapath_instruction_address;
             end if;

@@ -11,14 +11,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="4880000001fs"></ZoomEndTime>
+      <ZoomEndTime time="9768776981fs"></ZoomEndTime>
       <Cursor1Time time="1020000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="268"></NameColumnWidth>
-      <ValueColumnWidth column_width="122"></ValueColumnWidth>
+      <ValueColumnWidth column_width="118"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="25" />
+   <WVObjectSize size="27" />
    <wvobject type="logic" fp_name="/smallpond_top_tb/clk_tb_in">
       <obj_property name="ElementShortName">clk_tb_in</obj_property>
       <obj_property name="ObjectShortName">clk_tb_in</obj_property>
@@ -118,5 +118,13 @@
    <wvobject type="array" fp_name="/smallpond_top_tb/UUT/datapath_reg_write_data">
       <obj_property name="ElementShortName">datapath_reg_write_data[31:0]</obj_property>
       <obj_property name="ObjectShortName">datapath_reg_write_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/smallpond_top_tb/UUT/alu/a">
+      <obj_property name="ElementShortName">a[31:0]</obj_property>
+      <obj_property name="ObjectShortName">a[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/smallpond_top_tb/UUT/alu/b">
+      <obj_property name="ElementShortName">b[31:0]</obj_property>
+      <obj_property name="ObjectShortName">b[31:0]</obj_property>
    </wvobject>
 </wave_config>

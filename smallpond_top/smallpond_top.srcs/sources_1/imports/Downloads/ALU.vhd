@@ -31,7 +31,7 @@ signal negative	: std_logic	:= '0';
 signal overflow	: std_logic	:= '0';
 
 signal tmp		: std_logic_vector (32 downto 0);
-signal clk_counter : integer range 0 to 4 := 0;
+signal clk_counter : integer range 0 to 5 := 0;
 
 begin
 
@@ -40,7 +40,7 @@ begin
         if reset_in = '1' then
             clk_counter <= 0;
         elsif rising_edge(clk_in) then
-            if clk_counter = 4 then
+            if clk_counter = 5 then
                 clk_counter <= 0;
                 --counter <= clk_counter;
             else
@@ -53,7 +53,7 @@ begin
     alu: process(clk_in)
     begin
         if rising_edge(clk_in) then
-            if clk_counter = 2 then
+            if clk_counter = 3 then
                 case ALU_OP is
                     when "0000" => 			  -- AND
                         tmp <= '0' & (a AND b);
