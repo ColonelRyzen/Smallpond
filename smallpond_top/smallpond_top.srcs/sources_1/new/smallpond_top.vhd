@@ -154,7 +154,6 @@ architecture Behavioral of smallpond_top is
     
     -- datapath branch signals
     signal datapath_branch_immediate_sign_extend : STD_LOGIC_VECTOR (31 downto 0) := x"00000000";    
-    signal datapath_branch_immediate_shift : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_branch_plus_pc : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     
     -- datapath jump signals
@@ -215,6 +214,7 @@ begin
                                             mem_to_reg_out => ctrl_datapath_mem_to_reg,
                                             cpsr_bits_in => reg_ctrl_cpsr,
                                             counter_bit_in => datapath_ctrl_counter_bit,
+                                            branch_counter_bit_in => datapath_ctrl_branch_counter,
                                             cpsr_set_bit_in => ctrl_reg_cpsr_set,
                                             condition_code_in => datapath_ctrl_cond_bits
                                             );
@@ -313,8 +313,7 @@ begin
                 
                 
                 --branch logic
-                datapath_branch_immediate_shift <= std_logic_vector(unsigned(datapath_branch_immediate_sign_extend) sll 2);
-                datapath_branch_plus_pc <= datapath_branch_immediate_shift + reg_datapath_pc_data;
+                datapath_branch_plus_pc <= std_logic_vector(unsigned(datapath_branch_immediate_sign_extend) sll 2) + reg_datapath_pc_data;
                 
                 if ctrl_datapath_pc_src = '1' then
                     datapath_pc_src_result <= datapath_branch_plus_pc;
@@ -324,9 +323,11 @@ begin
                 
                 --jump logic
                 if ctrl_datapath_jump = '1' then
-                    datapath_reg_pc_data <= datapath_jump_pc;
+                    --datapath_reg_pc_data <= datapath_jump_pc;
+                    datapath_pc_input <= datapath_jump_pc;
                 else
-                    datapath_reg_pc_data <= datapath_pc_src_result;
+                    --datapath_reg_pc_data <= datapath_pc_src_result;
+                    datapath_pc_input <= datapath_pc_src_result;
                 end if;
             end if;
             -- MEMORY

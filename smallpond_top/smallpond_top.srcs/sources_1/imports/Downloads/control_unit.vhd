@@ -53,6 +53,7 @@ entity control_unit is
            -- End Datapath Signals
            cpsr_bits_in : in STD_LOGIC_VECTOR (3 downto 0);
            counter_bit_in : in STD_LOGIC;
+           branch_counter_bit_in : in STD_LOGIC;
            cpsr_set_bit_in : in STD_LOGIC;
            condition_code_in : in STD_LOGIC_VECTOR (3 downto 0)
            );
@@ -4193,7 +4194,7 @@ begin
             -------------------------------------------------------------
                     when "111110" =>
                         reg_write_old <= '0';
-
+                        
                         cpsr_set_bit_out <= '0';
                         alu_src_out <= '0';
                         alu_op_out <= "0000";
@@ -4516,7 +4517,12 @@ begin
                 mem_read_out <= mem_read_old;
                 mem_write_out <= mem_write_old;
                 cpsr_set_bit_out <= cpsr_set_bit_in;
-                counter_bit_out <= counter_bit_in;
+                if (op_code_in /= "111100" or op_code_in /= "111101" or op_code_in /= "111110") then
+                    counter_bit_out <= counter_bit_in;
+                else
+                    counter_bit_out <= branch_counter_bit_in;
+                end if;
+                pc_write_out <= '1';
             elsif clk_counter = 3 and (instruction_runs = '0' or reset_in = '1') then
                 mem_read_out <= '0';
                 mem_write_out <= '0';
@@ -4530,6 +4536,7 @@ begin
                 counter_bit_out <= '0';
                 mem_read_out <= '0';
                 mem_write_out <= '0';
+                pc_write_out <= '0';
             elsif clk_counter = 4 and (instruction_runs = '0' or reset_in = '1') then
                 reg_write_out <= '0';
             end if;
@@ -4538,7 +4545,7 @@ begin
             -- reg_write_out is enabled and all other write signals are disbaled
             if clk_counter = 5 and reset_in = '0' and instruction_runs = '1' then
                 reg_write_out <= '0';
-                pc_write_out <= '1';
+                --pc_write_out <= '1';
             end if;
         end if;
     end process;
