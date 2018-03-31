@@ -54,15 +54,14 @@ entity control_unit is
            cpsr_bits_in : in STD_LOGIC_VECTOR (3 downto 0);
            counter_bit_in : in STD_LOGIC;
            cpsr_set_bit_in : in STD_LOGIC;
-           condition_code_in : in STD_LOGIC_VECTOR (3 downto 0);
-           --branch_counter_in : in STD_LOGIC;
-           counter : out integer range 0 to 5);
+           condition_code_in : in STD_LOGIC_VECTOR (3 downto 0)
+           );
 
 end control_unit;
 
 architecture Behavioral of control_unit is
 
-signal clk_counter: integer range 0 to 4 := 0;
+signal clk_counter: integer range 0 to 5 := 0;
 signal instruction_runs: STD_LOGIC := '0';
 signal reg_write_old: STD_LOGIC := '0';
 signal mem_read_old : STD_LOGIC := '0';
@@ -76,11 +75,9 @@ begin
             clk_counter <= 0;
         elsif rising_edge(clk_in) then
             if clk_counter = 5 then
-                counter <= clk_counter;
                 clk_counter <= 0;
             else
                 clk_counter <= clk_counter + 1;
-                counter <= clk_counter;
             end if;
         end if;
     end process;

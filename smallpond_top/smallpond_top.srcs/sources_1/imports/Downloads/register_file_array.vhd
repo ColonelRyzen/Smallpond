@@ -80,7 +80,7 @@ begin
         begin
             if rising_edge(clk_in) then
                 if clk_counter = 0 then
-                    pc_data_out <= reg(30);
+                    
                 end if;
                 if clk_counter = 1 then
                     if read_register_0_in = "00000" then
@@ -133,6 +133,7 @@ begin
                             reg(to_integer(unsigned(write_register_in))) <= write_data_in;
                         end if;
                     end if;
+                    pc_data_out <= reg(30);
                 end if;
             end if;
         end process;

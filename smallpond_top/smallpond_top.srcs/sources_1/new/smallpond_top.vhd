@@ -169,7 +169,7 @@ architecture Behavioral of smallpond_top is
 
 begin
 
-    alu: entity work.ALU port map(  clk_in => cpu_clk,
+    alu: entity work.ALU port map(  clk_in => clk_in,
                                     reset_in => reset_in,
                                     a => reg_alu_a, 
                                     b => datapath_alu_src_result,
@@ -180,7 +180,7 @@ begin
                                     );
     
     
-    register_file : entity work.register_file_array port map (  clk_in => cpu_clk,
+    register_file : entity work.register_file_array port map (  clk_in => clk_in,
                                                     reset_in => reset_in,
                                                     reg_write_in => ctrl_reg_reg_write,
                                                     counter_bit_in => ctrl_reg_counter,
@@ -198,7 +198,7 @@ begin
                                                     register_1_out => reg_alu_src_0
                                                     );
                                                     
-    control_unit : entity work.control_unit port map (  clk_in => cpu_clk,
+    control_unit : entity work.control_unit port map (  clk_in => clk_in,
                                             reset_in => reset_in,
                                             op_code_in => datapath_ctrl_op_code,
                                             reg_write_out => ctrl_reg_reg_write,
@@ -221,17 +221,17 @@ begin
     
     
 
-    main_clk : process(clk_in)
-    variable clk_count : integer := 0;
-    begin
-        cpu_clk <= not cpu_clk after 250 ns;
-    end process;
+--    main_clk : process(clk_in)
+--    variable clk_count : integer := 0;
+--    begin
+--        cpu_clk <= not cpu_clk after 250 ns;
+--    end process;
     
-    clock_counter: process (cpu_clk, reset_in)
+    clock_counter: process (clk_in, reset_in)
     begin
         if reset_in = '1' then
             clk_counter <= 0;
-        elsif rising_edge(cpu_clk) then
+        elsif rising_edge(clk_in) then
             if clk_counter = 5 then
                 clk_counter <= 0;
                 --counter <= clk_counter;
@@ -242,19 +242,17 @@ begin
         end if;
     end process;
     
-    datapath : process(cpu_clk)
+    datapath : process(clk_in)
     begin
-        if rising_edge(cpu_clk) then
+        if rising_edge(clk_in) then
             -- INSTRUCTION FETCH
             if clk_counter = 0 then
-                --instruction <= memory_data_in;
-                ctrl_reg_pc_write <= '1';
+                
                 reg_datapath_pc_data <= datapath_instruction_address + x"00000004";
                 
                 
             --Fetch instruction and set the decode signals
             --branch and jump logic
-                ctrl_reg_pc_write <= '0';
                            
                 -- A type instruction decode
                 -- Splitting up the instruction
