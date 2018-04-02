@@ -1,0 +1,2 @@
+'"C:\Aldec\Active-HDL-Student-Edition\bin\vsimsa"' is not recognized as an internal or external command,
+operable program or batch file.

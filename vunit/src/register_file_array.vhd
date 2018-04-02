@@ -59,8 +59,6 @@ architecture Behavioral of register_file_array is
 
 type register_array is array (0 to 31) of STD_LOGIC_VECTOR(31 downto 0);
 signal reg: register_array := (others => x"00000000");
-attribute dont_touch : string;
-attribute dont_touch of reg : signal is "true";
 signal clk_counter: integer range 0 to 5 :=0;
 
 begin
@@ -81,10 +79,10 @@ begin
     operand_fetch: process(clk_in)
         begin
             if rising_edge(clk_in) then
-                if clk_counter = 0 and reset_in = '0' then
+                if clk_counter = 0 then
                     
                 end if;
-                if clk_counter = 1 and reset_in = '0' then
+                if clk_counter = 1 then
                     if read_register_0_in = "00000" then
                         register_0_out <= x"00000000";
                     else
@@ -114,14 +112,14 @@ begin
                 
                 -- Phase 3: Memory
                 -- Increment/Decrement counter if counter bit set
-                if clk_counter = 4 and reset_in = '0' then
+                if clk_counter = 4 then
                     if counter_bit_in = '1' then
                         reg(21) <= reg(21) + x"00000001";
                         reg(22) <= reg(22) - x"00000001";
                     end if;
                 end if;
 
-                if clk_counter = 5 and reset_in = '0' then
+                if clk_counter = 5 then
                     if reg_write_in = '1' then
                         if write_register_in = "00000" then
                             reg(0) <= x"00000000";
@@ -136,11 +134,6 @@ begin
                         end if;
                     end if;
                     pc_data_out <= reg(30);
-                end if;
-                if reset_in = '1' then
-                    for i in 0 to 31 loop
-                        reg(i) <= x"00000000";
-                    end loop;
                 end if;
             end if;
         end process;
