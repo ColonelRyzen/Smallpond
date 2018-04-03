@@ -17,7 +17,7 @@
 /**/*.cache
 /**/*.runs
 /**/*.sim
-/**/*.ip_user_files
+!/**/*.ip_user_files
 /**/.Xil
 #########
 #NOT ignoring Python
