@@ -48,7 +48,7 @@ entity control_unit is
            pc_src_out : out STD_LOGIC;
            jump_out : out STD_LOGIC;
            mem_read_out : out STD_LOGIC;
-           mem_write_out : out STD_LOGIC;
+           mem_write_out : out STD_LOGIC_VECTOR(3 downto 0);
            mem_to_reg_out : out STD_LOGIC;
            -- End Datapath Signals
            cpsr_bits_in : in STD_LOGIC_VECTOR (3 downto 0);
@@ -4508,14 +4508,14 @@ begin
                 pc_src_out <= '0';
                 jump_out <= '0';
                 mem_read_out <= '0';
-                mem_write_out <= '0';
+                mem_write_out <= "0000";
                 mem_to_reg_out <= '0';
             end if;
             
             if clk_counter = 3 and reset_in = '0' and instruction_runs = '1' then
                 sub_out <= '0';
                 mem_read_out <= mem_read_old;
-                mem_write_out <= mem_write_old;
+                mem_write_out(0) <= mem_write_old;
                 cpsr_set_bit_out <= cpsr_set_bit_in;
                 if (op_code_in /= "111100" or op_code_in /= "111101" or op_code_in /= "111110") then
                     counter_bit_out <= counter_bit_in;
@@ -4525,7 +4525,7 @@ begin
                 pc_write_out <= '1';
             elsif clk_counter = 3 and (instruction_runs = '0' or reset_in = '1') then
                 mem_read_out <= '0';
-                mem_write_out <= '0';
+                mem_write_out <= "0000";
                 cpsr_set_bit_out <= '0';
                 counter_bit_out <= '0';
             end if; 
@@ -4535,7 +4535,7 @@ begin
                 cpsr_set_bit_out <= '0';
                 counter_bit_out <= '0';
                 mem_read_out <= '0';
-                mem_write_out <= '0';
+                mem_write_out <= "0000";
                 pc_write_out <= '0';
             elsif clk_counter = 4 and (instruction_runs = '0' or reset_in = '1') then
                 reg_write_out <= '0';
