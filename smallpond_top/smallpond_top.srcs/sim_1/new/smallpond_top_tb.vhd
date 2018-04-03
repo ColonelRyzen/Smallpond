@@ -38,11 +38,7 @@ end smallpond_top_tb;
 architecture Behavioral of smallpond_top_tb is
 
     component smallpond_top port(   clk_in : in STD_LOGIC;
-                                    reset_in : in STD_LOGIC;
-                                    memory_data_in : in STD_LOGIC_VECTOR(31 downto 0);
-                                    memory_read_out : out STD_LOGIC;
-                                    memory_write_out : out STD_LOGIC;
-                                    memory_address_out : out STD_LOGIC_VECTOR(31 downto 0)
+                                    reset_in : in STD_LOGIC
                                     );
     end component;
 
@@ -53,15 +49,11 @@ architecture Behavioral of smallpond_top_tb is
     signal memory_write_tb_out : STD_LOGIC := '0';
     signal memory_address_tb_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
 
-    constant clk_period : time := 500 ns;
+    constant clk_period : time := 10 ns;
 begin
 
     UUT: smallpond_top port map (   clk_in => clk_tb_in,
-                                    reset_in => reset_tb_in,
-                                    memory_data_in => memory_data_tb_in,
-                                    memory_read_out => memory_read_tb_out,
-                                    memory_write_out => memory_write_tb_out,
-                                    memory_address_out => memory_address_tb_out
+                                    reset_in => reset_tb_in
                                     );
 
     clk_proc: process
@@ -72,26 +64,7 @@ begin
         wait for clk_period/2;
     end process;
 
-    main : process
-    begin
-        reset_tb_in <= '1';
-        wait for 200 ns;
 
-        -- ADDI r1, r1, 4
-        reset_tb_in <= '0';
-        memory_data_tb_in <= "01100000001000010000000000000100";
-    --    memory_data_tb_in <= "10011000011000110000000000000000";        -- STR
-        --memory_data_tb_in <= "10010100001000010000000000000100";          -- ORI
-        wait for 3000 ns;
-
-        -- ADDI r2, r1, 4
-        memory_data_tb_in <= "01100000010000010000000000000100";
-        wait for 3000 ns;
-
-        -- ADD r3, r2, r1
-        memory_data_tb_in <= "00000100011000100000100000000000";
-        wait for 3000 ns;
-    end process;
 
 
 end Behavioral;
