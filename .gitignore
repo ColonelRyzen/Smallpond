@@ -5,7 +5,6 @@
 #########
 #Exclude all
 #########
-*
 !*/
 !.gitignore
 ###########################################################################
@@ -19,6 +18,7 @@
 /**/*.sim
 !/**/*.ip_user_files
 /**/.Xil
+/**/*.hw
 !/**/*.srcs
 #########
 #NOT ignoring Python
@@ -40,6 +40,7 @@
 #.xci + .dcp: implementation possible but not re-synthesis
 #*.xci(www.spiritconsortium.org)
 !*.xci
+!.xcix
 #*.dcp(checkpoint files)
 !*.dcp
 !*.vds
