@@ -226,7 +226,7 @@ begin
     begin
         if reset_in = '1' then
             clk_counter <= 0;
-        elsif rising_edge(clk_in) then
+        elsif rising_edge(cpu_clk) then
             if clk_counter = 5 then
                 clk_counter <= 0;
                 --counter <= clk_counter;
@@ -241,7 +241,7 @@ begin
     begin
         if rising_edge(cpu_clk) then
             -- INSTRUCTION FETCH
-            if clk_counter = 0 then
+            if clk_counter = 0 and reset_in = '0' then
                 
                 reg_datapath_pc_data <= datapath_instruction_address + x"00000004";
                 
@@ -265,7 +265,7 @@ begin
             
             end if;
             -- INSTRUCTION DECODE AND OPERAND FETCH
-            if clk_counter = 1 then
+            if clk_counter = 1  and reset_in = '0' then
                  
                 -- I type instruction decode
                 --datapath_immediate <= instruction(15 downto 0);             -- I type immediate
@@ -293,27 +293,12 @@ begin
             
             end if;
             
-            if clk_counter = 2 then
+            if clk_counter = 2  and reset_in = '0' then
                 -- alu operations
                 if ctrl_datapath_alu_src = '0' then
                     datapath_alu_src_result <= reg_alu_src_0;
                 else
                     datapath_alu_src_result <= datapath_immediate_sign_extend;
-                end if;
-            end if;
-            
-            -- EXECUTE
-            if clk_counter = 3 then
-            
-                
-                
-                --branch logic
-                datapath_branch_plus_pc <= std_logic_vector(unsigned(datapath_branch_immediate_sign_extend) sll 2) + reg_datapath_pc_data;
-                
-                if ctrl_datapath_pc_src = '1' then
-                    datapath_pc_src_result <= datapath_branch_plus_pc;
-                else
-                    datapath_pc_src_result <= reg_datapath_pc_data;
                 end if;
                 
                 --jump logic
@@ -324,11 +309,26 @@ begin
                     --datapath_reg_pc_data <= datapath_pc_src_result;
                     datapath_pc_input <= datapath_pc_src_result;
                 end if;
+            end if;
+            
+            -- EXECUTE
+            if clk_counter = 3  and reset_in = '0' then
+            
+                --branch logic
+                datapath_branch_plus_pc <= std_logic_vector(unsigned(datapath_branch_immediate_sign_extend) sll 2) + reg_datapath_pc_data;
+                
+                if ctrl_datapath_pc_src = '1' then
+                    datapath_pc_src_result <= datapath_branch_plus_pc;
+                else
+                    datapath_pc_src_result <= reg_datapath_pc_data;
+                end if;
+                
+                
                 
                 
             end if;
             -- MEMORY
-            if clk_counter = 4 then
+            if clk_counter = 4  and reset_in = '0' then
             -- memory operations
                 if memory_ready = '1' then
                     if memory_read_out = '1' then
@@ -347,7 +347,7 @@ begin
             end if;
             
             -- WRITE BACK
-            if clk_counter = 5 then
+            if clk_counter = 5 and reset_in = '0' then
             --Send next instruction address
             memory_address_out <= datapath_instruction_address;
             end if;

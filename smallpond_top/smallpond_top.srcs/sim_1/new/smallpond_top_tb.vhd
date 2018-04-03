@@ -44,10 +44,6 @@ architecture Behavioral of smallpond_top_tb is
 
     signal clk_tb_in : STD_LOGIC := '0';
     signal reset_tb_in : STD_LOGIC := '0';
-    signal memory_data_tb_in : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
-    signal memory_read_tb_out : STD_LOGIC := '0';
-    signal memory_write_tb_out : STD_LOGIC := '0';
-    signal memory_address_tb_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
 
     constant clk_period : time := 10 ns;
 begin
@@ -63,6 +59,7 @@ begin
         clk_tb_in <= '1';
         wait for clk_period/2;
     end process;
+
 
 
 

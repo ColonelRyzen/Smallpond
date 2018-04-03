@@ -97,22 +97,26 @@ begin
                         register_1_out <= reg(to_integer(unsigned(read_register_1_in)));
                     end if;
                     
-                    -- Write to PC if PC write data enabled. Else increment by 1.
-                    if pc_write_in = '1' then
-                        reg(30) <= pc_write_data_in;
-                    end if;
+                    
                     cpsr_cond_bits_control_out <= reg(31)(3 downto 0);
                 end if;
                 
-                -- Phase 2: ALU
+                if clk_counter = 2 then
+                    
+                end if;
+                
+                -- Phase 3: ALU
                 -- Set CPSR from ALU result if cpsr bit set
                 if clk_counter = 3 then
                     if cpsr_set_bit_in = '1' then
                         reg(31)(3 downto 0) <= cpsr_cond_bits_alu_in;
                     end if;
+                    if pc_write_in = '1' then
+                        reg(30) <= pc_write_data_in;
+                    end if;
                 end if;
                 
-                -- Phase 3: Memory
+                -- Phase 4: Memory
                 -- Increment/Decrement counter if counter bit set
                 if clk_counter = 4 and reset_in = '0' then
                     if counter_bit_in = '1' then

@@ -4512,6 +4512,10 @@ begin
                 mem_to_reg_out <= '0';
             end if;
             
+            if clk_counter = 2 and reset_in = '0' and instruction_runs = '1' then
+                pc_write_out <= '1';
+            end if;
+            
             if clk_counter = 3 and reset_in = '0' and instruction_runs = '1' then
                 sub_out <= '0';
                 mem_read_out <= mem_read_old;
@@ -4522,7 +4526,7 @@ begin
                 else
                     counter_bit_out <= branch_counter_bit_in;
                 end if;
-                pc_write_out <= '1';
+                pc_write_out <= '0';
             elsif clk_counter = 3 and (instruction_runs = '0' or reset_in = '1') then
                 mem_read_out <= '0';
                 mem_write_out <= "0000";
@@ -4534,17 +4538,19 @@ begin
                 reg_write_out <= reg_write_old;
                 cpsr_set_bit_out <= '0';
                 counter_bit_out <= '0';
-                mem_read_out <= '0';
+                mem_read_out <= '1';
                 mem_write_out <= "0000";
                 pc_write_out <= '0';
             elsif clk_counter = 4 and (instruction_runs = '0' or reset_in = '1') then
                 reg_write_out <= '0';
+                mem_read_out <= '0';
             end if;
             
             -- This is for the write back stage
             -- reg_write_out is enabled and all other write signals are disbaled
             if clk_counter = 5 and reset_in = '0' and instruction_runs = '1' then
                 reg_write_out <= '0';
+                mem_read_out <= '0';
                 --pc_write_out <= '1';
             end if;
         end if;
