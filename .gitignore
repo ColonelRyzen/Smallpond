@@ -14,7 +14,7 @@
 #Vivado Ignore Directory
 #########
 /**/*.cache
-/**/*.runs
+!/**/*.runs
 /**/*.sim
 !/**/*.ip_user_files
 /**/.Xil
