@@ -62,7 +62,7 @@ end control_unit;
 
 architecture Behavioral of control_unit is
 
-signal clk_counter: integer range 0 to 5 := 0;
+signal clk_counter: integer range 0 to 5 := 5;
 signal instruction_runs: STD_LOGIC := '0';
 signal reg_write_old: STD_LOGIC := '0';
 signal mem_read_old : STD_LOGIC := '0';
@@ -4532,6 +4532,7 @@ begin
                 mem_write_out <= "0000";
                 cpsr_set_bit_out <= '0';
                 counter_bit_out <= '0';
+                pc_write_out <= '0';
             end if; 
             -- This is for a potential update of teh cpsr or counter registers
             if clk_counter = 4 and reset_in = '0' and instruction_runs = '1' then

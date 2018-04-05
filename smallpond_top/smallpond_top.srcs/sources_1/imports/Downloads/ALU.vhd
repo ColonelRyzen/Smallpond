@@ -30,7 +30,7 @@ signal negative	: std_logic	:= '0';
 signal overflow	: std_logic	:= '0';
 
 signal tmp		: std_logic_vector (32 downto 0);
-signal clk_counter : integer range 0 to 5 := 0;
+signal clk_counter : integer range 0 to 5 := 5;
 
 begin
 

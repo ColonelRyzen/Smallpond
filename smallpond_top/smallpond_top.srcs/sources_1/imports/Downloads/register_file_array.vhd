@@ -61,7 +61,7 @@ type register_array is array (0 to 31) of STD_LOGIC_VECTOR(31 downto 0);
 signal reg: register_array := (others => x"00000000");
 attribute dont_touch : string;
 attribute dont_touch of reg : signal is "true";
-signal clk_counter: integer range 0 to 5 :=0;
+signal clk_counter: integer range 0 to 5 :=5;
 
 begin
 
@@ -114,6 +114,8 @@ begin
                     if pc_write_in = '1' then
                         reg(30) <= pc_write_data_in;
                     end if;
+                    
+                    
                 end if;
                 
                 -- Phase 4: Memory
@@ -123,6 +125,7 @@ begin
                         reg(21) <= reg(21) + x"00000001";
                         reg(22) <= reg(22) - x"00000001";
                     end if;
+                    
                 end if;
 
                 if clk_counter = 5 and reset_in = '0' then

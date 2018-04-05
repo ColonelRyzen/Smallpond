@@ -102,7 +102,6 @@ architecture Behavioral of smallpond_top is
     signal datapath_branch_plus_pc : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     
     -- datapath jump signals
-    signal datapath_jump_immediate : STD_LOGIC_VECTOR(25 downto 0) := "00000000000000000000000000";
     signal datapath_jump_pc : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     attribute dont_touch of datapath_jump_pc : signal is "true";
     
@@ -112,12 +111,13 @@ architecture Behavioral of smallpond_top is
     signal memory_data_in : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal memory_data_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal memory_address_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    attribute dont_touch of memory_address_out : signal is "true";
     
     signal memory_clk : STD_LOGIC := '0';
     signal cpu_clk_8 : STD_LOGIC := '0';
     signal clk_divider : STD_LOGIC_VECTOR(1 downto 0) := "00";
      
-    signal clk_counter : integer range 0 to 5 := 0;
+    signal clk_counter : integer range 0 to 5 := 5;
     
     component clk_div is
       Port ( 
@@ -249,19 +249,27 @@ begin
             --Fetch instruction and set the decode signals
             --branch and jump logic
                            
-                -- A type instruction decode
-                -- Splitting up the instruction
-                datapath_ctrl_op_code <= memory_data_in(31 downto 26);         -- bits 31 to 26
-                datapath_reg_write_register <= memory_data_in(25 downto 21);   -- bits 25 to 21
-                datapath_reg_read_register_0 <= memory_data_in(20 downto 16);  -- bits 20 to 16
-                datapath_reg_read_register_1 <= memory_data_in(15 downto 11);  -- bits 15 to 11
+               -- A type instruction decode
+               -- Splitting up the instruction
+               datapath_ctrl_op_code <= memory_data_in(31 downto 26);         -- bits 31 to 26
+               datapath_reg_write_register <= memory_data_in(25 downto 21);   -- bits 25 to 21
+               datapath_reg_read_register_0 <= memory_data_in(20 downto 16);  -- bits 20 to 16
+               datapath_reg_read_register_1 <= memory_data_in(15 downto 11);  -- bits 15 to 11
+               
+               datapath_ctrl_cpsr_set_bit <= memory_data_in(10);              -- bit 10
+               datapath_ctrl_counter_bit <= memory_data_in(9);                -- bit 9
+                                                                          -- bits 8 to 4 UNUSED
+               datapath_ctrl_cond_bits <= memory_data_in(3 downto 0);         -- bits 3 to 0
                 
-                datapath_ctrl_cpsr_set_bit <= memory_data_in(10);              -- bit 10
-                datapath_ctrl_counter_bit <= memory_data_in(9);                -- bit 9
-                                                                           -- bits 8 to 4 UNUSED
-                datapath_ctrl_cond_bits <= memory_data_in(3 downto 0);         -- bits 3 to 0
-                
-                
+               --datapath_branch_immediate <= instruction(21 downto 4);
+               if memory_data_in(17) = '1' then
+                   datapath_branch_immediate_sign_extend <= "00000000000000" & memory_data_in(21 downto 4);
+               else
+                   datapath_branch_immediate_sign_extend <= "11111111111111" & memory_data_in(21 downto 4);
+               end if; 
+               
+               -- J type instruction decode
+               
             
             end if;
             -- INSTRUCTION DECODE AND OPERAND FETCH
@@ -278,18 +286,18 @@ begin
                 
                 -- B type instruction decode
                 datapath_ctrl_branch_counter <= memory_data_in(25);
-                --datapath_branch_immediate <= instruction(21 downto 4);
-                if memory_data_in(17) = '1' then
-                    datapath_branch_immediate_sign_extend <= "00000000000000" & memory_data_in(21 downto 4);
+               
+                
+                datapath_jump_pc <= reg_datapath_pc_data(31 downto 28) & memory_data_in(25 downto 0) & "00"; 
+                
+                --datapath_branch_plus_pc <= std_logic_vector(unsigned(datapath_branch_immediate_sign_extend) sll 2) + reg_datapath_pc_data;    
+            
+                --branch logic         
+                if ctrl_datapath_pc_src = '1' then
+                    datapath_pc_src_result <= std_logic_vector(unsigned(datapath_branch_immediate_sign_extend) sll 2) + reg_datapath_pc_data;
                 else
-                    datapath_branch_immediate_sign_extend <= "11111111111111" & memory_data_in(21 downto 4);
+                    datapath_pc_src_result <= reg_datapath_pc_data;
                 end if;
-                
-                -- J type instruction decode
-                datapath_jump_immediate <= memory_data_in(25 downto 0);
-                datapath_jump_pc <= reg_datapath_pc_data(31 downto 28) & datapath_jump_immediate & "00";
-                
-                
             
             end if;
             
@@ -301,28 +309,20 @@ begin
                     datapath_alu_src_result <= datapath_immediate_sign_extend;
                 end if;
                 
-                --jump logic
-                if ctrl_datapath_jump = '1' then
-                    --datapath_reg_pc_data <= datapath_jump_pc;
-                    datapath_pc_input <= datapath_jump_pc;
-                else
-                    --datapath_reg_pc_data <= datapath_pc_src_result;
-                    datapath_pc_input <= datapath_pc_src_result;
-                end if;
+                 --jump logic
+              if ctrl_datapath_jump = '1' then
+                  --datapath_reg_pc_data <= datapath_jump_pc;
+                  datapath_pc_input <= datapath_jump_pc;
+              else
+                  --datapath_reg_pc_data <= datapath_pc_src_result;
+                  datapath_pc_input <= datapath_pc_src_result;
+              end if;
+               
             end if;
             
             -- EXECUTE
             if clk_counter = 3  and reset_in = '0' then
             
-                --branch logic
-                datapath_branch_plus_pc <= std_logic_vector(unsigned(datapath_branch_immediate_sign_extend) sll 2) + reg_datapath_pc_data;
-                
-                if ctrl_datapath_pc_src = '1' then
-                    datapath_pc_src_result <= datapath_branch_plus_pc;
-                else
-                    datapath_pc_src_result <= reg_datapath_pc_data;
-                end if;
-                
                 
                 
                 
@@ -348,8 +348,8 @@ begin
             
             -- WRITE BACK
             if clk_counter = 5 and reset_in = '0' then
-            --Send next instruction address
-            memory_address_out <= datapath_instruction_address;
+                --Send next instruction address
+                memory_address_out <= reg_datapath_pc_data;
             end if;
         end if;        
     

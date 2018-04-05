@@ -14,9 +14,9 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 7807 
+INFO: Helper process launched with PID 31727 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:16 ; elapsed = 00:00:27 . Memory (MB): peak = 1259.324 ; gain = 84.996 ; free physical = 801 ; free virtual = 9914
+Starting RTL Elaboration : Time (s): cpu = 00:00:16 ; elapsed = 00:00:28 . Memory (MB): peak = 1259.324 ; gain = 84.996 ; free physical = 399 ; free virtual = 10026
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'memory' [/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.srcs/sources_1/ip/memory/synth/memory.vhd:72]
 	Parameter C_FAMILY bound to: artix7 - type: string 
@@ -37,8 +37,8 @@ INFO: [Synth 8-638] synthesizing module 'memory' [/media/zack/528CA51E8CA4FE1B/U
 	Parameter C_LOAD_INIT_FILE bound to: 1 - type: integer 
 	Parameter C_INIT_FILE_NAME bound to: memory.mif - type: string 
 	Parameter C_INIT_FILE bound to: memory.mem - type: string 
-	Parameter C_USE_DEFAULT_DATA bound to: 0 - type: integer 
-	Parameter C_DEFAULT_DATA bound to: 0 - type: string 
+	Parameter C_USE_DEFAULT_DATA bound to: 1 - type: integer 
+	Parameter C_DEFAULT_DATA bound to: DEADBEEF - type: string 
 	Parameter C_HAS_RSTA bound to: 1 - type: integer 
 	Parameter C_RST_PRIORITY_A bound to: CE - type: string 
 	Parameter C_RSTRAM_A bound to: 0 - type: integer 
@@ -50,8 +50,8 @@ INFO: [Synth 8-638] synthesizing module 'memory' [/media/zack/528CA51E8CA4FE1B/U
 	Parameter C_WRITE_MODE_A bound to: WRITE_FIRST - type: string 
 	Parameter C_WRITE_WIDTH_A bound to: 32 - type: integer 
 	Parameter C_READ_WIDTH_A bound to: 32 - type: integer 
-	Parameter C_WRITE_DEPTH_A bound to: 8192 - type: integer 
-	Parameter C_READ_DEPTH_A bound to: 8192 - type: integer 
+	Parameter C_WRITE_DEPTH_A bound to: 16384 - type: integer 
+	Parameter C_READ_DEPTH_A bound to: 16384 - type: integer 
 	Parameter C_ADDRA_WIDTH bound to: 32 - type: integer 
 	Parameter C_HAS_RSTB bound to: 0 - type: integer 
 	Parameter C_RST_PRIORITY_B bound to: CE - type: string 
@@ -64,8 +64,8 @@ INFO: [Synth 8-638] synthesizing module 'memory' [/media/zack/528CA51E8CA4FE1B/U
 	Parameter C_WRITE_MODE_B bound to: WRITE_FIRST - type: string 
 	Parameter C_WRITE_WIDTH_B bound to: 32 - type: integer 
 	Parameter C_READ_WIDTH_B bound to: 32 - type: integer 
-	Parameter C_WRITE_DEPTH_B bound to: 8192 - type: integer 
-	Parameter C_READ_DEPTH_B bound to: 8192 - type: integer 
+	Parameter C_WRITE_DEPTH_B bound to: 16384 - type: integer 
+	Parameter C_READ_DEPTH_B bound to: 16384 - type: integer 
 	Parameter C_ADDRB_WIDTH bound to: 32 - type: integer 
 	Parameter C_HAS_MEM_OUTPUT_REGS_A bound to: 0 - type: integer 
 	Parameter C_HAS_MEM_OUTPUT_REGS_B bound to: 0 - type: integer 
@@ -89,7 +89,7 @@ INFO: [Synth 8-638] synthesizing module 'memory' [/media/zack/528CA51E8CA4FE1B/U
 	Parameter C_EN_SHUTDOWN_PIN bound to: 0 - type: integer 
 	Parameter C_EN_SAFETY_CKT bound to: 1 - type: integer 
 	Parameter C_DISABLE_WARN_BHV_RANGE bound to: 0 - type: integer 
-	Parameter C_COUNT_36K_BRAM bound to: 8 - type: string 
+	Parameter C_COUNT_36K_BRAM bound to: 16 - type: string 
 	Parameter C_COUNT_18K_BRAM bound to: 0 - type: string 
 	Parameter C_EST_POWER_SUMMARY bound to: Estimated Power for IP     :     9.6843 mW - type: string 
 INFO: [Synth 8-3491] module 'blk_mem_gen_v8_4_1' declared at '/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.srcs/sources_1/ip/memory/hdl/blk_mem_gen_v8_4_vhsyn_rfs.vhd:195313' bound to instance 'U0' of component 'blk_mem_gen_v8_4_1' [/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.srcs/sources_1/ip/memory/synth/memory.vhd:237]
@@ -100,6 +100,7 @@ WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected p
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port MUX_REGCE[0]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port MEM_REGCE
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port WE
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port ADDR_IN[13]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port ADDR_IN[12]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port ADDR_IN[11]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port ADDR_IN[10]
@@ -113,6 +114,22 @@ WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected p
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port ADDR_IN[2]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port ADDR_IN[1]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port ADDR_IN[0]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[31]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[30]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[29]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[28]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[27]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[26]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[25]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[24]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[23]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[22]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[21]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[20]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[19]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[18]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[17]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[16]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[15]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[14]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[13]
@@ -129,6 +146,22 @@ WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected p
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[2]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[1]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port SBITERRIN[0]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[31]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[30]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[29]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[28]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[27]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[26]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[25]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[24]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[23]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[22]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[21]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[20]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[19]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[18]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[17]
+WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[16]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[15]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[14]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux__parameterized0 has unconnected port DBITERRIN[13]
@@ -152,6 +185,7 @@ WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port MEM_REG_RST
 WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port MUX_REGCE[0]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port MEM_REGCE
 WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port WE
+WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[13]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[12]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[11]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[10]
@@ -160,43 +194,9 @@ WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[8]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[7]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[6]
 WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[5]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[4]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[3]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[2]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[1]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port ADDR_IN[0]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[15]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[14]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[13]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[12]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[11]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[10]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[9]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[8]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[7]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[6]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[5]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[4]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[3]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[2]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[1]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port SBITERRIN[0]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[15]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[14]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[13]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[12]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[11]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[10]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[9]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[8]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[7]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[6]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[5]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[4]
-WARNING: [Synth 8-3331] design blk_mem_gen_mux has unconnected port DBITERRIN[3]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:02:23 ; elapsed = 00:02:45 . Memory (MB): peak = 1469.777 ; gain = 295.449 ; free physical = 763 ; free virtual = 9885
+Finished RTL Elaboration : Time (s): cpu = 00:02:39 ; elapsed = 00:03:01 . Memory (MB): peak = 1501.043 ; gain = 326.715 ; free physical = 340 ; free virtual = 9983
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -206,9 +206,9 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:02:23 ; elapsed = 00:02:45 . Memory (MB): peak = 1469.777 ; gain = 295.449 ; free physical = 764 ; free virtual = 9892
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:02:39 ; elapsed = 00:03:02 . Memory (MB): peak = 1501.043 ; gain = 326.715 ; free physical = 342 ; free virtual = 9991
 ---------------------------------------------------------------------------------
-INFO: [Netlist 29-17] Analyzing 8 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 16 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -224,26 +224,26 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1600.801 ; gain = 0.000 ; free physical = 536 ; free virtual = 9670
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1646.059 ; gain = 0.000 ; free physical = 149 ; free virtual = 9769
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:02:47 ; elapsed = 00:03:25 . Memory (MB): peak = 1600.801 ; gain = 426.473 ; free physical = 604 ; free virtual = 9742
+Finished Constraint Validation : Time (s): cpu = 00:03:03 ; elapsed = 00:03:42 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 214 ; free virtual = 9849
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35ticsg324-1L
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:02:47 ; elapsed = 00:03:25 . Memory (MB): peak = 1600.801 ; gain = 426.473 ; free physical = 604 ; free virtual = 9742
+Finished Loading Part and Timing Information : Time (s): cpu = 00:03:03 ; elapsed = 00:03:42 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 214 ; free virtual = 9849
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for U0. (constraint file  {/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.runs/memory_synth_1/dont_touch.xdc}, line 9).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:02:47 ; elapsed = 00:03:25 . Memory (MB): peak = 1600.801 ; gain = 426.473 ; free physical = 606 ; free virtual = 9744
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:03:03 ; elapsed = 00:03:42 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 214 ; free virtual = 9848
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:02:47 ; elapsed = 00:03:26 . Memory (MB): peak = 1600.801 ; gain = 426.473 ; free physical = 599 ; free virtual = 9737
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:03:04 ; elapsed = 00:03:43 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 207 ; free virtual = 9841
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -256,14 +256,13 @@ Start RTL Component Statistics
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---XORs : 
-	   2 Input      1 Bit         XORs := 8     
+	   2 Input      1 Bit         XORs := 16    
 +---Registers : 
-	                5 Bit    Registers := 8     
-	                2 Bit    Registers := 2     
-	                1 Bit    Registers := 48    
+	                5 Bit    Registers := 16    
+	                3 Bit    Registers := 2     
+	                1 Bit    Registers := 96    
 +---Muxes : 
-	   4 Input     32 Bit        Muxes := 2     
-	   2 Input      1 Bit        Muxes := 8     
+	   2 Input      1 Bit        Muxes := 16    
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -274,7 +273,7 @@ Hierarchical RTL Component report
 Module bindec 
 Detailed RTL Component Info : 
 +---Muxes : 
-	   2 Input      1 Bit        Muxes := 4     
+	   2 Input      1 Bit        Muxes := 8     
 Module blk_mem_gen_prim_width 
 Detailed RTL Component Info : 
 +---XORs : 
@@ -331,18 +330,70 @@ Detailed RTL Component Info :
 +---Registers : 
 	                5 Bit    Registers := 1     
 	                1 Bit    Registers := 6     
+Module blk_mem_gen_prim_width__parameterized7 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Registers : 
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
+Module blk_mem_gen_prim_width__parameterized8 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Registers : 
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
+Module blk_mem_gen_prim_width__parameterized9 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Registers : 
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
+Module blk_mem_gen_prim_width__parameterized10 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Registers : 
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
+Module blk_mem_gen_prim_width__parameterized11 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Registers : 
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
+Module blk_mem_gen_prim_width__parameterized12 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Registers : 
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
+Module blk_mem_gen_prim_width__parameterized13 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Registers : 
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
+Module blk_mem_gen_prim_width__parameterized14 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Registers : 
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
 Module blk_mem_gen_mux 
 Detailed RTL Component Info : 
 +---Registers : 
-	                2 Bit    Registers := 1     
-+---Muxes : 
-	   4 Input     32 Bit        Muxes := 1     
+	                3 Bit    Registers := 1     
 Module blk_mem_gen_mux__parameterized0 
 Detailed RTL Component Info : 
 +---Registers : 
-	                2 Bit    Registers := 1     
-+---Muxes : 
-	   4 Input     32 Bit        Muxes := 1     
+	                3 Bit    Registers := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Hierarchical Component Statistics
 ---------------------------------------------------------------------------------
@@ -358,6 +409,7 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/no_softecc_sel_reg.ce_pri.sel_pipe_reg[0]) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
@@ -366,6 +418,14 @@ INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[9].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[10].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[11].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[14].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
@@ -374,43 +434,91 @@ INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
 INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[9].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[10].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[11].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[14].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
 INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
 INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[11].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[10].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[9].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[14].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[11].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[10].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[9].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[14].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[11].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[10].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[9].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[14].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[11].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[10].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[9].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[14].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[11].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[10].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[9].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[14].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4]'
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:48 ; elapsed = 00:03:27 . Memory (MB): peak = 1600.801 ; gain = 426.473 ; free physical = 589 ; free virtual = 9727
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:03:04 ; elapsed = 00:03:44 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 199 ; free virtual = 9833
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -422,13 +530,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:57 ; elapsed = 00:03:40 . Memory (MB): peak = 1603.801 ; gain = 429.473 ; free physical = 463 ; free virtual = 9604
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:03:14 ; elapsed = 00:03:58 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 131 ; free virtual = 9705
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:02:57 ; elapsed = 00:03:40 . Memory (MB): peak = 1613.816 ; gain = 439.488 ; free physical = 462 ; free virtual = 9602
+Finished Timing Optimization : Time (s): cpu = 00:03:14 ; elapsed = 00:03:58 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 129 ; free virtual = 9703
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -439,37 +547,34 @@ Report RTL Partitions:
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.POR_A_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.POR_A_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.POR_A_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.POR_A_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.POR_A_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.POR_A_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.POR_A_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg'
-INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg'
-INFO: [Synth 8-3332] Sequential element (inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/no_softecc_sel_reg.ce_pri.sel_pipe_reg[0]) is unused and will be removed from module blk_mem_gen_v8_4_1.
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[11].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[10].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[9].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[14].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[13].ram.r/SAFETY_CKT_GEN.POR_A_reg' (FD) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.POR_A_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[7].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[8].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[9].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Synth 8-3886] merging instance 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[5].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg' (FDS) to 'U0/inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[15].ram.r/SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg'
+INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:02:57 ; elapsed = 00:03:40 . Memory (MB): peak = 1623.832 ; gain = 449.504 ; free physical = 462 ; free virtual = 9602
+Finished Technology Mapping : Time (s): cpu = 00:03:14 ; elapsed = 00:03:58 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 141 ; free virtual = 9704
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -493,7 +598,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:02:58 ; elapsed = 00:03:41 . Memory (MB): peak = 1623.832 ; gain = 449.504 ; free physical = 471 ; free virtual = 9611
+Finished IO Insertion : Time (s): cpu = 00:03:15 ; elapsed = 00:03:59 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 141 ; free virtual = 9705
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -506,7 +611,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:02:58 ; elapsed = 00:03:41 . Memory (MB): peak = 1623.832 ; gain = 449.504 ; free physical = 471 ; free virtual = 9611
+Finished Renaming Generated Instances : Time (s): cpu = 00:03:15 ; elapsed = 00:03:59 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 141 ; free virtual = 9705
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -518,36 +623,36 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:58 ; elapsed = 00:03:41 . Memory (MB): peak = 1623.832 ; gain = 449.504 ; free physical = 471 ; free virtual = 9611
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:03:15 ; elapsed = 00:03:59 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 141 ; free virtual = 9705
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:02:58 ; elapsed = 00:03:41 . Memory (MB): peak = 1623.832 ; gain = 449.504 ; free physical = 471 ; free virtual = 9611
+Finished Renaming Generated Ports : Time (s): cpu = 00:03:15 ; elapsed = 00:03:59 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 141 ; free virtual = 9705
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:02:58 ; elapsed = 00:03:41 . Memory (MB): peak = 1623.832 ; gain = 449.504 ; free physical = 471 ; free virtual = 9611
+Finished Handling Custom Attributes : Time (s): cpu = 00:03:15 ; elapsed = 00:03:59 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 141 ; free virtual = 9705
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:02:58 ; elapsed = 00:03:41 . Memory (MB): peak = 1623.832 ; gain = 449.504 ; free physical = 471 ; free virtual = 9611
+Finished Renaming Generated Nets : Time (s): cpu = 00:03:15 ; elapsed = 00:03:59 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 141 ; free virtual = 9705
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
 ---------------------------------------------------------------------------------
 
 Static Shift Register Report:
-+-------------------+----------------------------------------------------------------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
-|Module Name        | RTL Name                                                                                                                               | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
-+-------------------+----------------------------------------------------------------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
-|blk_mem_gen_v8_4_1 | inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[6].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4] | 4      | 1     | NO           | NO                 | YES               | 1      | 0       | 
-+-------------------+----------------------------------------------------------------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
++-------------------+-----------------------------------------------------------------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name        | RTL Name                                                                                                                                | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++-------------------+-----------------------------------------------------------------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|blk_mem_gen_v8_4_1 | inst_blk_mem_gen/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[12].ram.r/SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[4] | 4      | 1     | NO           | NO                 | YES               | 1      | 0       | 
++-------------------+-----------------------------------------------------------------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
 
 ---------------------------------------------------------------------------------
 Finished ROM, RAM, DSP and Shift Register Reporting
@@ -567,53 +672,73 @@ Report Cell Usage:
 |      |Cell       |Count |
 +------+-----------+------+
 |1     |LUT2       |     2|
-|2     |LUT3       |    35|
-|3     |LUT4       |     1|
-|4     |RAMB36E1   |     1|
-|5     |RAMB36E1_1 |     4|
-|6     |RAMB36E1_2 |     1|
-|7     |RAMB36E1_3 |     1|
-|8     |RAMB36E1_4 |     1|
-|9     |SRL16E     |     1|
-|10    |FDRE       |     6|
-|11    |FDSE       |     1|
+|2     |LUT3       |     2|
+|3     |LUT4       |     5|
+|4     |LUT6       |    32|
+|5     |RAMB36E1   |     1|
+|6     |RAMB36E1_1 |     3|
+|7     |RAMB36E1_2 |     1|
+|8     |RAMB36E1_3 |     3|
+|9     |RAMB36E1_4 |     1|
+|10    |RAMB36E1_5 |     3|
+|11    |RAMB36E1_6 |     1|
+|12    |RAMB36E1_7 |     3|
+|13    |SRL16E     |     1|
+|14    |FDRE       |     7|
+|15    |FDSE       |     1|
 +------+-----------+------+
 
 Report Instance Areas: 
-+------+--------------------------------------------------------------+----------------------------------------------+------+
-|      |Instance                                                      |Module                                        |Cells |
-+------+--------------------------------------------------------------+----------------------------------------------+------+
-|1     |top                                                           |                                              |    54|
-|2     |  U0                                                          |blk_mem_gen_v8_4_1                            |    54|
-|3     |    inst_blk_mem_gen                                          |blk_mem_gen_v8_4_1_synth                      |    54|
-|4     |      \gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen  |blk_mem_gen_top                               |    54|
-|5     |        \valid.cstr                                           |blk_mem_gen_generic_cstr                      |    54|
-|6     |          \has_mux_a.A                                        |blk_mem_gen_mux                               |    34|
-|7     |          \ramloop[0].ram.r                                   |blk_mem_gen_prim_width                        |     1|
-|8     |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init                 |     1|
-|9     |          \ramloop[1].ram.r                                   |blk_mem_gen_prim_width__parameterized0        |     1|
-|10    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized0 |     1|
-|11    |          \ramloop[2].ram.r                                   |blk_mem_gen_prim_width__parameterized1        |     1|
-|12    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized1 |     1|
-|13    |          \ramloop[3].ram.r                                   |blk_mem_gen_prim_width__parameterized2        |     1|
-|14    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized2 |     1|
-|15    |          \ramloop[4].ram.r                                   |blk_mem_gen_prim_width__parameterized3        |     1|
-|16    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized3 |     1|
-|17    |          \ramloop[5].ram.r                                   |blk_mem_gen_prim_width__parameterized4        |     3|
-|18    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized4 |     1|
-|19    |          \ramloop[6].ram.r                                   |blk_mem_gen_prim_width__parameterized5        |    11|
-|20    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized5 |     4|
-|21    |          \ramloop[7].ram.r                                   |blk_mem_gen_prim_width__parameterized6        |     1|
-|22    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized6 |     1|
-+------+--------------------------------------------------------------+----------------------------------------------+------+
++------+--------------------------------------------------------------+-----------------------------------------------+------+
+|      |Instance                                                      |Module                                         |Cells |
++------+--------------------------------------------------------------+-----------------------------------------------+------+
+|1     |top                                                           |                                               |    66|
+|2     |  U0                                                          |blk_mem_gen_v8_4_1                             |    66|
+|3     |    inst_blk_mem_gen                                          |blk_mem_gen_v8_4_1_synth                       |    66|
+|4     |      \gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen  |blk_mem_gen_top                                |    66|
+|5     |        \valid.cstr                                           |blk_mem_gen_generic_cstr                       |    66|
+|6     |          \has_mux_a.A                                        |blk_mem_gen_mux                                |    36|
+|7     |          \ramloop[0].ram.r                                   |blk_mem_gen_prim_width                         |     1|
+|8     |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init                  |     1|
+|9     |          \ramloop[10].ram.r                                  |blk_mem_gen_prim_width__parameterized9         |     1|
+|10    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized9  |     1|
+|11    |          \ramloop[11].ram.r                                  |blk_mem_gen_prim_width__parameterized10        |     3|
+|12    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized10 |     1|
+|13    |          \ramloop[12].ram.r                                  |blk_mem_gen_prim_width__parameterized11        |    13|
+|14    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized11 |     6|
+|15    |          \ramloop[13].ram.r                                  |blk_mem_gen_prim_width__parameterized12        |     1|
+|16    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized12 |     1|
+|17    |          \ramloop[14].ram.r                                  |blk_mem_gen_prim_width__parameterized13        |     1|
+|18    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized13 |     1|
+|19    |          \ramloop[15].ram.r                                  |blk_mem_gen_prim_width__parameterized14        |     1|
+|20    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized14 |     1|
+|21    |          \ramloop[1].ram.r                                   |blk_mem_gen_prim_width__parameterized0         |     1|
+|22    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized0  |     1|
+|23    |          \ramloop[2].ram.r                                   |blk_mem_gen_prim_width__parameterized1         |     1|
+|24    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized1  |     1|
+|25    |          \ramloop[3].ram.r                                   |blk_mem_gen_prim_width__parameterized2         |     1|
+|26    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized2  |     1|
+|27    |          \ramloop[4].ram.r                                   |blk_mem_gen_prim_width__parameterized3         |     1|
+|28    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized3  |     1|
+|29    |          \ramloop[5].ram.r                                   |blk_mem_gen_prim_width__parameterized4         |     1|
+|30    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized4  |     1|
+|31    |          \ramloop[6].ram.r                                   |blk_mem_gen_prim_width__parameterized5         |     1|
+|32    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized5  |     1|
+|33    |          \ramloop[7].ram.r                                   |blk_mem_gen_prim_width__parameterized6         |     1|
+|34    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized6  |     1|
+|35    |          \ramloop[8].ram.r                                   |blk_mem_gen_prim_width__parameterized7         |     1|
+|36    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized7  |     1|
+|37    |          \ramloop[9].ram.r                                   |blk_mem_gen_prim_width__parameterized8         |     1|
+|38    |            \prim_init.ram                                    |blk_mem_gen_prim_wrapper_init__parameterized8  |     1|
++------+--------------------------------------------------------------+-----------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:02:58 ; elapsed = 00:03:41 . Memory (MB): peak = 1623.832 ; gain = 449.504 ; free physical = 471 ; free virtual = 9611
+Finished Writing Synthesis Report : Time (s): cpu = 00:03:15 ; elapsed = 00:03:59 . Memory (MB): peak = 1646.059 ; gain = 471.730 ; free physical = 141 ; free virtual = 9705
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 242 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:02:47 ; elapsed = 00:03:14 . Memory (MB): peak = 1623.832 ; gain = 318.480 ; free physical = 521 ; free virtual = 9661
-Synthesis Optimization Complete : Time (s): cpu = 00:02:58 ; elapsed = 00:03:41 . Memory (MB): peak = 1623.840 ; gain = 449.504 ; free physical = 529 ; free virtual = 9669
+Synthesis finished with 0 errors, 0 critical warnings and 241 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:03:03 ; elapsed = 00:03:31 . Memory (MB): peak = 1646.059 ; gain = 326.715 ; free physical = 191 ; free virtual = 9755
+Synthesis Optimization Complete : Time (s): cpu = 00:03:15 ; elapsed = 00:03:59 . Memory (MB): peak = 1646.066 ; gain = 471.730 ; free physical = 198 ; free virtual = 9762
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 8 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 16 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
@@ -621,13 +746,13 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-97 Infos, 100 Warnings, 0 Critical Warnings and 0 Errors encountered.
+151 Infos, 100 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:03:00 ; elapsed = 00:03:43 . Memory (MB): peak = 1623.840 ; gain = 462.887 ; free physical = 515 ; free virtual = 9653
+synth_design: Time (s): cpu = 00:03:17 ; elapsed = 00:04:01 . Memory (MB): peak = 1646.066 ; gain = 485.113 ; free physical = 193 ; free virtual = 9759
 INFO: [Common 17-1381] The checkpoint '/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.runs/memory_synth_1/memory.dcp' has been generated.
 INFO: [Coretcl 2-1482] Added synthesis output to IP cache for IP /media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.srcs/sources_1/ip/memory/memory.xci
-INFO: [Coretcl 2-1174] Renamed 21 cell refs.
+INFO: [Coretcl 2-1174] Renamed 37 cell refs.
 INFO: [Common 17-1381] The checkpoint '/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.runs/memory_synth_1/memory.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file memory_utilization_synth.rpt -pb memory_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.15 . Memory (MB): peak = 1647.844 ; gain = 0.000 ; free physical = 510 ; free virtual = 9654
-INFO: [Common 17-206] Exiting Vivado at Tue Apr  3 14:45:36 2018...
+report_utilization: Time (s): cpu = 00:00:00.11 ; elapsed = 00:00:00.15 . Memory (MB): peak = 1670.070 ; gain = 0.000 ; free physical = 181 ; free virtual = 9759
+INFO: [Common 17-206] Exiting Vivado at Wed Apr  4 13:51:20 2018...

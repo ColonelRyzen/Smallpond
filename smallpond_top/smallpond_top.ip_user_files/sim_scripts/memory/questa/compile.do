@@ -15,7 +15,7 @@ vcom -work xpm -64 -93 \
 "/opt/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_VCOMP.vhd" \
 
 vcom -work xil_defaultlib -64 -93 \
-"/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.srcs/sources_1/ip/memory/memory_sim_netlist.vhdl" \
+"../../../ip/memory/memory_sim_netlist.vhdl" \
 
 vlog -work xil_defaultlib \
 "glbl.v"
