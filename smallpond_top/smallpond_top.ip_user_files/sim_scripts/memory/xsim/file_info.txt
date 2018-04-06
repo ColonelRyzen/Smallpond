@@ -1,2 +1,0 @@
-memory_sim_netlist.vhdl,vhdl,xil_defaultlib,../../../ip/memory/memory_sim_netlist.vhdl,
-glbl.v,Verilog,xil_defaultlib,glbl.v
