@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="impl_1" LaunchPart="xc7a35ticsg324-1L" LaunchTime="1523217725">
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+  <File Type="BG-DRC" Name="basic_uart.drc"/>
+  <File Type="BG-BGN" Name="basic_uart.bgn"/>
+  <File Type="BITSTR-SYSDEF" Name="basic_uart.sysdef"/>
+  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
+  <File Type="BITSTR-LTX" Name="basic_uart.ltx"/>
+  <File Type="BITSTR-MMI" Name="basic_uart.mmi"/>
+  <File Type="BITSTR-BMM" Name="basic_uart_bd.bmm"/>
+  <File Type="BITSTR-NKY" Name="basic_uart.nky"/>
+  <File Type="BITSTR-RBT" Name="basic_uart.rbt"/>
+  <File Type="BITSTR-MSK" Name="basic_uart.msk"/>
+  <File Type="BG-BIN" Name="basic_uart.bin"/>
+  <File Type="BG-BIT" Name="basic_uart.bit"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="basic_uart_timing_summary_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="basic_uart_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="basic_uart_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="basic_uart_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="basic_uart_postroute_physopt.dcp"/>
+  <File Type="ROUTE-CLK" Name="basic_uart_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-SIMILARITY" Name="basic_uart_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-TIMING-RPX" Name="basic_uart_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-TIMING-PB" Name="basic_uart_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="basic_uart_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="basic_uart_route_status.pb"/>
+  <File Type="ROUTE-STATUS" Name="basic_uart_route_status.rpt"/>
+  <File Type="ROUTE-PWR-RPX" Name="basic_uart_power_routed.rpx"/>
+  <File Type="ROUTE-PWR-SUM" Name="basic_uart_power_summary_routed.pb"/>
+  <File Type="ROUTE-PWR" Name="basic_uart_power_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="basic_uart_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="basic_uart_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="basic_uart_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-RPX" Name="basic_uart_drc_routed.rpx"/>
+  <File Type="ROUTE-DRC-PB" Name="basic_uart_drc_routed.pb"/>
+  <File Type="ROUTE-DRC" Name="basic_uart_drc_routed.rpt"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="basic_uart_routed_bb.dcp"/>
+  <File Type="ROUTE-DCP" Name="basic_uart_routed.dcp"/>
+  <File Type="ROUTE-ERROR-DCP" Name="basic_uart_routed_error.dcp"/>
+  <File Type="PHYSOPT-TIMING" Name="basic_uart_timing_summary_physopted.rpt"/>
+  <File Type="PHYSOPT-DRC" Name="basic_uart_drc_physopted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="basic_uart_physopt.dcp"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="basic_uart_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="basic_uart_postplace_pwropt.dcp"/>
+  <File Type="PLACE-TIMING" Name="basic_uart_timing_summary_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="basic_uart_incremental_reuse_pre_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="basic_uart_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-CTRL" Name="basic_uart_control_sets_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="basic_uart_utilization_placed.pb"/>
+  <File Type="PLACE-UTIL" Name="basic_uart_utilization_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="basic_uart_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-IO" Name="basic_uart_io_placed.rpt"/>
+  <File Type="RDI-RDI" Name="basic_uart.vdi"/>
+  <File Type="PWROPT-TIMING" Name="basic_uart_timing_summary_pwropted.rpt"/>
+  <File Type="PWROPT-DRC" Name="basic_uart_drc_pwropted.rpt"/>
+  <File Type="OPT-TIMING" Name="basic_uart_timing_summary_opted.rpt"/>
+  <File Type="OPT-HWDEF" Name="basic_uart.hwdef"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="basic_uart_methodology_drc_opted.rpt"/>
+  <File Type="OPT-DRC" Name="basic_uart_drc_opted.rpt"/>
+  <File Type="OPT-DCP" Name="basic_uart_opt.dcp"/>
+  <File Type="INIT-TIMING" Name="basic_uart_timing_summary_init.rpt"/>
+  <File Type="PWROPT-DCP" Name="basic_uart_pwropt.dcp"/>
+  <File Type="REPORTS-TCL" Name="basic_uart_reports.tcl"/>
+  <File Type="PLACE-DCP" Name="basic_uart_placed.dcp"/>
+  <File Type="PA-TCL" Name="basic_uart.tcl"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/imports/CSE490/uart.vhd">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../../uart.vhd"/>
+        <Attr Name="ImportTime" Val="1522965401"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="basic_uart"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/imports/CSE490/Arty_Master.xdc">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../../Arty_Master.xdc"/>
+        <Attr Name="ImportTime" Val="1522519972"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2017">
+      <Desc>Default settings for Implementation.</Desc>
+    </StratHandle>
+    <Step Id="init_design"/>
+    <Step Id="opt_design"/>
+    <Step Id="power_opt_design"/>
+    <Step Id="place_design"/>
+    <Step Id="post_place_power_opt_design"/>
+    <Step Id="phys_opt_design"/>
+    <Step Id="route_design"/>
+    <Step Id="post_route_phys_opt_design"/>
+    <Step Id="write_bitstream"/>
+  </Strategy>
+  <BlockFileSet Type="BlockSrcs" Name="clk_div"/>
+</GenRun>

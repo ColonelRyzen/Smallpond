@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:54:30 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Sun Apr  8 16:02:07 2018
+# Process ID: 868
+# Current directory: /media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond_temp/Smallpond/uart/uart.runs/synth_1
+# Command line: vivado -log basic_uart.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source basic_uart.tcl
+# Log file: /media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond_temp/Smallpond/uart/uart.runs/synth_1/basic_uart.vds
+# Journal file: /media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall 2017/CSE490/smallpond_temp/Smallpond/uart/uart.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source basic_uart.tcl -notrace
