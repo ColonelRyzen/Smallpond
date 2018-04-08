@@ -35,13 +35,13 @@ use IEEE.std_logic_signed.all;
 
 entity smallpond_top is
   Port (clk_in : in STD_LOGIC;
-        reset_in : in STD_LOGIC
---        memory_data_in : in STD_LOGIC_VECTOR(31 downto 0);
---        memory_data_out : out STD_LOGIC_VECTOR(31 downto 0);
---        memory_ready : in STD_LOGIC;
---        memory_read_out : out STD_LOGIC;
---        memory_write_out : out STD_LOGIC;
---        memory_address_out : out STD_LOGIC_VECTOR(31 downto 0)   
+        reset_in : in STD_LOGIC;
+        memory_data_in : in STD_LOGIC_VECTOR(31 downto 0);
+        memory_data_out : out STD_LOGIC_VECTOR(31 downto 0);
+        memory_ready : in STD_LOGIC;
+        memory_read_out : out STD_LOGIC;
+        memory_write_out : out STD_LOGIC_VECTOR(3 downto 0);
+        memory_address_out : out STD_LOGIC_VECTOR(31 downto 0)   
         );
 end smallpond_top;
 
@@ -105,13 +105,13 @@ architecture Behavioral of smallpond_top is
     signal datapath_jump_pc : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     attribute dont_touch of datapath_jump_pc : signal is "true";
     
-    signal memory_read_out : STD_LOGIC := '0';
-    signal memory_ready : STD_LOGIC := '0';
-    signal memory_write_out : STD_LOGIC_VECTOR(3 downto 0) := "0000";
-    signal memory_data_in : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
-    signal memory_data_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
-    signal memory_address_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
-    attribute dont_touch of memory_address_out : signal is "true";
+    signal memory_read : STD_LOGIC := '0';
+--    signal memory_ready : STD_LOGIC := '0';
+    signal memory_write : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+--    signal memory_data_in : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+--    signal memory_data_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+--    signal memory_address_out : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+--    attribute dont_touch of memory_address_out : signal is "true";
     
     signal memory_clk : STD_LOGIC := '0';
     signal cpu_clk_8 : STD_LOGIC := '0';
@@ -119,31 +119,31 @@ architecture Behavioral of smallpond_top is
      
     signal clk_counter : integer range 0 to 5 := 5;
     
-    component clk_div is
-      Port ( 
-        cpu_clk_8 : out STD_LOGIC;
-        mem_clk : out STD_LOGIC;
-        clk_in : in STD_LOGIC
-      );
-    end component;
+--    component clk_div is
+--      Port ( 
+--        cpu_clk_8 : out STD_LOGIC;
+--        mem_clk : out STD_LOGIC;
+--        clk_in : in STD_LOGIC
+--      );
+--    end component;
     
     
-    component memory is
-        Port ( 
-            clka : in STD_LOGIC;
-            rsta : in STD_LOGIC;
-            ena : in STD_LOGIC;
-            wea : in STD_LOGIC_VECTOR ( 3 downto 0 );
-            addra : in STD_LOGIC_VECTOR ( 31 downto 0 );
-            dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
-            douta : out STD_LOGIC_VECTOR ( 31 downto 0 );
-            rsta_busy : out STD_LOGIC
-        );
-    end component;
+--    component memory is
+--        Port ( 
+--            clka : in STD_LOGIC;
+--            rsta : in STD_LOGIC;
+--            ena : in STD_LOGIC;
+--            wea : in STD_LOGIC_VECTOR ( 3 downto 0 );
+--            addra : in STD_LOGIC_VECTOR ( 31 downto 0 );
+--            dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
+--            douta : out STD_LOGIC_VECTOR ( 31 downto 0 );
+--            rsta_busy : out STD_LOGIC
+--        );
+--    end component;
     
 begin
 
-    alu: entity work.ALU port map(  clk_in => cpu_clk,
+    alu: entity work.ALU port map(  clk_in => clk_in,
                                     reset_in => reset_in,
                                     a => reg_alu_a, 
                                     b => datapath_alu_src_result,
@@ -154,7 +154,7 @@ begin
                                     );
     
     
-    register_file : entity work.register_file_array port map (  clk_in => cpu_clk,
+    register_file : entity work.register_file_array port map (  clk_in => clk_in,
                                                     reset_in => reset_in,
                                                     reg_write_in => ctrl_reg_reg_write,
                                                     counter_bit_in => ctrl_reg_counter,
@@ -172,7 +172,7 @@ begin
                                                     register_1_out => reg_alu_src_0
                                                     );
                                                     
-    control_unit : entity work.control_unit port map (  clk_in => cpu_clk,
+    control_unit : entity work.control_unit port map (  clk_in => clk_in,
                                             reset_in => reset_in,
                                             op_code_in => datapath_ctrl_op_code,
                                             reg_write_out => ctrl_reg_reg_write,
@@ -184,8 +184,8 @@ begin
                                             pc_write_out => ctrl_reg_pc_write,
                                             pc_src_out => ctrl_datapath_pc_src,
                                             jump_out => ctrl_datapath_jump,
-                                            mem_read_out => memory_read_out,
-                                            mem_write_out => memory_write_out,
+                                            mem_read_out => memory_read,
+                                            mem_write_out => memory_write,
                                             mem_to_reg_out => ctrl_datapath_mem_to_reg,
                                             cpsr_bits_in => reg_ctrl_cpsr,
                                             counter_bit_in => datapath_ctrl_counter_bit,
@@ -193,40 +193,42 @@ begin
                                             cpsr_set_bit_in => datapath_ctrl_cpsr_set_bit,
                                             condition_code_in => datapath_ctrl_cond_bits
                                             );
+        memory_write_out <= memory_write;
+        memory_read_out <= memory_read;
  
-    clock_gen :  clk_div port map(  cpu_clk_8 => cpu_clk_8,
-                                    mem_clk => memory_clk,
-                                    clk_in => clk_in);
+--    clock_gen :  clk_div port map(  cpu_clk_8 => cpu_clk_8,
+--                                    mem_clk => memory_clk,
+--                                    clk_in => clk_in);
                                     
-    mem : memory port map(   clka => memory_clk,
-                                rsta => reset_in,
-                                ena => memory_read_out,
-                                wea => memory_write_out,
-                                addra => memory_address_out,
-                                dina => memory_data_out,
-                                douta => memory_data_in,
-                                rsta_busy => memory_ready);
+--    mem : memory port map(   clka => memory_clk,
+--                                rsta => reset_in,
+--                                ena => memory_read_out,
+--                                wea => memory_write_out,
+--                                addra => memory_address_out,
+--                                dina => memory_data_out,
+--                                douta => memory_data_in,
+--                                rsta_busy => memory_ready);
     
     
                                     
-    clock_division : process(cpu_clk_8)  
-    begin
-        if rising_edge(cpu_clk_8) then
-            if clk_divider = "11" then
-                clk_divider <= "00";
-            else
-                clk_divider <= clk_divider + 1;
-            end if;
-        end if;
-    end process;
+--    clock_division : process(cpu_clk_8)  
+--    begin
+--        if rising_edge(cpu_clk_8) then
+--            if clk_divider = "11" then
+--                clk_divider <= "00";
+--            else
+--                clk_divider <= clk_divider + 1;
+--            end if;
+--        end if;
+--    end process;
         
-    cpu_clk <= clk_divider(1);    
+--    cpu_clk <= clk_divider(1);    
         
-    clock_counter: process (cpu_clk, reset_in)
+    clock_counter: process (clk_in, reset_in)
     begin
         if reset_in = '1' then
             clk_counter <= 0;
-        elsif rising_edge(cpu_clk) then
+        elsif rising_edge(clk_in) then
             if clk_counter = 5 then
                 clk_counter <= 0;
                 --counter <= clk_counter;
@@ -237,9 +239,9 @@ begin
         end if;
     end process;
     
-    datapath : process(cpu_clk)
+    datapath : process(clk_in)
     begin
-        if rising_edge(cpu_clk) then
+        if rising_edge(clk_in) then
             -- INSTRUCTION FETCH
             if clk_counter = 0 and reset_in = '0' then
                 
@@ -331,11 +333,12 @@ begin
             if clk_counter = 4  and reset_in = '0' then
             -- memory operations
                 if memory_ready = '1' then
-                    if memory_read_out = '1' then
+                    if memory_read = '1' then
                         memory_address_out <= alu_datapath_result;
                         
-                    elsif memory_write_out(0) = '1' then
+                    elsif memory_write(0) = '1' then
                         memory_address_out <= alu_datapath_result;
+                        memory_data_out <= reg_alu_src_0;
                     end if;
                 end if;
             -- mem to reg

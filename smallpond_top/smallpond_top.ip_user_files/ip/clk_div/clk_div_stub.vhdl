@@ -1,13 +1,13 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
--- Date        : Tue Apr  3 14:16:25 2018
+-- Date        : Fri Apr  6 15:05:29 2018
 -- Host        : enterprise running 64-bit Ubuntu 16.04.4 LTS
--- Command     : write_vhdl -force -mode synth_stub {/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall
---               2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.runs/clk_div_synth_1/clk_div_stub.vhdl}
+-- Command     : write_vhdl -force -mode synth_stub -rename_top clk_div -prefix
+--               clk_div_ clk_div_stub.vhdl
 -- Design      : clk_div
 -- Purpose     : Stub declaration of top-level module interface
--- Device      : xc7a35ticsg324-1L
+-- Device      : xc7a35tcpg236-1
 -- --------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
