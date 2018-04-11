@@ -39,6 +39,7 @@ architecture Behavioral of system_top_tb is
 
     component system_top port(   clk_100 : in STD_LOGIC;
                                     reset_in : in STD_LOGIC;
+                                    halt : in STD_LOGIC;
                                     led : out STD_LOGIC_VECTOR(15 downto 0);
                                     sw : in STD_LOGIC_VECTOR(15 downto 0)
                                     );
@@ -48,12 +49,14 @@ architecture Behavioral of system_top_tb is
     signal reset_tb_in : STD_LOGIC := '0';
     signal led_tb : STD_LOGIC_VECTOR(15 downto 0);
     signal sw_tb : STD_LOGIC_VECTOR(15 downto 0);
+    signal halt_tb : STD_LOGIC;
 
     constant clk_period : time := 10 ns;
 begin
 
     UUT: system_top port map (   clk_100 => clk_tb_in,
                                     reset_in => reset_tb_in,
+                                    halt => halt_tb,
                                     led => led_tb,
                                     sw => sw_tb
                                     );
@@ -64,6 +67,14 @@ begin
         wait for clk_period/2;
         clk_tb_in <= '1';
         wait for clk_period/2;
+    end process;
+    
+    stimulus : process
+    begin
+        halt_tb <= '0';
+        wait for 2000 ns;
+        halt_tb <= '1';    
+        wait;    
     end process;
 
 

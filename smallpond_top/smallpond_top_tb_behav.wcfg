@@ -11,41 +11,61 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="5931366908fs"></ZoomEndTime>
-      <Cursor1Time time="18000000000fs"></Cursor1Time>
+      <ZoomStartTime time="1945199999fs"></ZoomStartTime>
+      <ZoomEndTime time="4877729599fs"></ZoomEndTime>
+      <Cursor1Time time="15000000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="256"></NameColumnWidth>
-      <ValueColumnWidth column_width="76"></ValueColumnWidth>
+      <NameColumnWidth column_width="242"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="7" />
+   <WVObjectSize size="12" />
    <wvobject type="logic" fp_name="/system_top_tb/UUT/clk_100">
       <obj_property name="ElementShortName">clk_100</obj_property>
       <obj_property name="ObjectShortName">clk_100</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/reset_in">
-      <obj_property name="ElementShortName">reset_in</obj_property>
-      <obj_property name="ObjectShortName">reset_in</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk_8">
-      <obj_property name="ElementShortName">cpu_clk_8</obj_property>
-      <obj_property name="ObjectShortName">cpu_clk_8</obj_property>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk">
+      <obj_property name="ElementShortName">cpu_clk</obj_property>
+      <obj_property name="ObjectShortName">cpu_clk</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/clk_counter">
       <obj_property name="ElementShortName">clk_counter[2:0]</obj_property>
       <obj_property name="ObjectShortName">clk_counter[2:0]</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/control_unit/clk_counter">
+      <obj_property name="ElementShortName">clk_counter[2:0]</obj_property>
+      <obj_property name="ObjectShortName">clk_counter[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/douta">
+      <obj_property name="ElementShortName">douta[31:0]</obj_property>
+      <obj_property name="ObjectShortName">douta[31:0]</obj_property>
+   </wvobject>
    <wvobject type="array" fp_name="/system_top_tb/UUT/memory_address_out">
       <obj_property name="ElementShortName">memory_address_out[31:0]</obj_property>
       <obj_property name="ObjectShortName">memory_address_out[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/memory_data_out">
-      <obj_property name="ElementShortName">memory_data_out[31:0]</obj_property>
-      <obj_property name="ObjectShortName">memory_data_out[31:0]</obj_property>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/memory_data_in">
+      <obj_property name="ElementShortName">memory_data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">memory_data_in[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/memory_write_out">
-      <obj_property name="ElementShortName">memory_write_out[3:0]</obj_property>
-      <obj_property name="ObjectShortName">memory_write_out[3:0]</obj_property>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/halt">
+      <obj_property name="ElementShortName">halt</obj_property>
+      <obj_property name="ObjectShortName">halt</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/halt_request">
+      <obj_property name="ElementShortName">halt_request</obj_property>
+      <obj_property name="ObjectShortName">halt_request</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/control_unit/cpu_halted">
+      <obj_property name="ElementShortName">cpu_halted</obj_property>
+      <obj_property name="ObjectShortName">cpu_halted</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/system_top_tb/halt_tb">
+      <obj_property name="ElementShortName">halt_tb</obj_property>
+      <obj_property name="ObjectShortName">halt_tb</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/control_unit/halted">
+      <obj_property name="ElementShortName">halted</obj_property>
+      <obj_property name="ObjectShortName">halted</obj_property>
    </wvobject>
 </wave_config>

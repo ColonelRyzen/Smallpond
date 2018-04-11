@@ -1,21 +1,21 @@
 ----------------------------------------------------------------------------------
--- Company: 
+-- Company:
 -- Engineer: Zachary Salim
--- 
+--
 -- Create Date: 02/21/2018 03:19:19 PM
--- Design Name: 
+-- Design Name:
 -- Module Name: register_file_array - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
+-- Project Name:
+-- Target Devices:
+-- Tool Versions:
+-- Description:
+--
+-- Dependencies:
+--
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+--
 ----------------------------------------------------------------------------------
 
 
@@ -36,6 +36,7 @@ use IEEE.std_logic_signed.all;
 entity register_file_array is
     Port ( clk_in : in STD_LOGIC;
            reset_in : in STD_LOGIC;
+           clk_counter : in integer;
            reg_write_in : in STD_LOGIC;
            counter_bit_in : in STD_LOGIC;
            write_register_in : in STD_LOGIC_VECTOR (4 downto 0);
@@ -50,8 +51,6 @@ entity register_file_array is
            cpsr_cond_bits_control_out : out STD_LOGIC_VECTOR (3 downto 0);
            register_0_out : out STD_LOGIC_VECTOR (31 downto 0);
            register_1_out : out STD_LOGIC_VECTOR (31 downto 0)
---           reg_31 : out STD_LOGIC_VECTOR (31 downto 0);
---           counter : out integer range 0 to 4
             );
 end register_file_array;
 
@@ -61,28 +60,26 @@ type register_array is array (0 to 31) of STD_LOGIC_VECTOR(31 downto 0);
 signal reg: register_array := (others => x"00000000");
 attribute dont_touch : string;
 attribute dont_touch of reg : signal is "true";
-signal clk_counter: integer range 0 to 5 :=5;
+-- signal clk_counter: integer range 0 to 6 :=5;
 
 begin
 
-    clock_counter: process(clk_in)
-        begin
-            if rising_edge(clk_in) then
-                if clk_counter = 5 then
---                    counter <= clk_counter;
-                    clk_counter <= 0;
-                else
-                    clk_counter <= clk_counter + 1;
---                    counter <= clk_counter;
-                end if;
-            end if;
-        end process;
+    -- clock_counter: process(clk_in)
+    --     begin
+    --         if rising_edge(clk_in) then
+    --             if clk_counter = 5 then
+    --                 clk_counter <= 0;
+    --             else
+    --                 clk_counter <= clk_counter + 1;
+    --             end if;
+    --         end if;
+    --     end process;
 
     operand_fetch: process(clk_in)
         begin
             if rising_edge(clk_in) then
                 if clk_counter = 0 and reset_in = '0' then
-                    
+
                 end if;
                 if clk_counter = 1 and reset_in = '0' then
                     if read_register_0_in = "00000" then
@@ -90,21 +87,21 @@ begin
                     else
                         register_0_out <= reg(to_integer(unsigned(read_register_0_in)));
                     end if;
-                    
+
                     if read_register_1_in = "00000" then
                         register_1_out <= x"00000000";
                     else
                         register_1_out <= reg(to_integer(unsigned(read_register_1_in)));
                     end if;
-                    
-                    
+
+
                     cpsr_cond_bits_control_out <= reg(31)(3 downto 0);
                 end if;
-                
+
                 if clk_counter = 2 then
-                    
+
                 end if;
-                
+
                 -- Phase 3: ALU
                 -- Set CPSR from ALU result if cpsr bit set
                 if clk_counter = 3 then
@@ -114,10 +111,10 @@ begin
                     if pc_write_in = '1' then
                         reg(30) <= pc_write_data_in;
                     end if;
-                    
-                    
+
+
                 end if;
-                
+
                 -- Phase 4: Memory
                 -- Increment/Decrement counter if counter bit set
                 if clk_counter = 4 and reset_in = '0' then
@@ -125,7 +122,7 @@ begin
                         reg(21) <= reg(21) + x"00000001";
                         reg(22) <= reg(22) - x"00000001";
                     end if;
-                    
+
                 end if;
 
                 if clk_counter = 5 and reset_in = '0' then
