@@ -1,4 +1,4 @@
-port = "cu.usbserial-210183736776B"
+port = "ttyUSB1"
 
 import serial
 import time
@@ -12,7 +12,7 @@ class smallpond:
     def read_reg(self, reg):
         self.ser.write(b'p')
         self.ser.write(bytes([reg]))
-        return ord(self.ser.read())
+        return ord(self.ser.read()) << 24 | ord(self.ser.read()) << 16 | ord(self.ser.read()) << 8 | ord(self.ser.read())
 
     def write_reg(self, reg, val):
         self.ser.write(b'P')
@@ -79,7 +79,7 @@ class smallpond:
     def get_regs(self):
         self.register_dict = {}
         for i in range(0,32):
-            self.register_dict[i]=read_reg[i]
+            self.register_dict[i]=self.read_reg(i)
         self.pc = self.register_dict[30]
         self.cpsr = self.register_dict[31]
         self.lr0 = self.register_dict[26]
