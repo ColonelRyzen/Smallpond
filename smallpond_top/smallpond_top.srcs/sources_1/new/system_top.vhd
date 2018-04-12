@@ -36,9 +36,10 @@ entity system_top is
        port(
             clk_100 : in STD_LOGIC;
             reset_in : in STD_LOGIC;
-            halt : in STD_LOGIC;
-            led : out STD_LOGIC_VECTOR(15 downto 0);
-            sw : in STD_LOGIC_VECTOR(15 downto 0)
+            uart_rx : in STD_LOGIC;
+            uart_tx : out STD_LOGIC
+--            led : out STD_LOGIC_VECTOR(15 downto 0);
+--            sw : in STD_LOGIC_VECTOR(15 downto 0)
        
        );
 end system_top;
@@ -60,11 +61,14 @@ architecture Behavioral of system_top is
      
     signal cpu_clk : STD_LOGIC := '0';
     attribute dont_touch of cpu_clk : signal is "true";
+    
+    
         
     component smallpond_top is
     Port (clk_in : in STD_LOGIC;
             reset_in : in STD_LOGIC;
-            halt_request : in STD_LOGIC;
+            uart_rx : in STD_LOGIC;
+            uart_tx : out STD_LOGIC;
             memory_data_in : in STD_LOGIC_VECTOR(31 downto 0);
             memory_data_out : out STD_LOGIC_VECTOR(31 downto 0);
             memory_ready : in STD_LOGIC;
@@ -101,7 +105,9 @@ begin
 
     cpu : smallpond_top port map (  clk_in => cpu_clk,
                                     reset_in => reset_in,
-                                    halt_request => halt,
+                                    uart_rx => uart_rx,
+                                    uart_tx => uart_tx,
+--                                    halt_request => halt,
                                     memory_data_in => memory_data_in,
                                     memory_data_out => memory_data_out,
                                     memory_ready => memory_ready,
