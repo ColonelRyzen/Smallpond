@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="system_top_tb_func_synth.wdb" id="1">
+      <db_ref path="system_top_tb_behav.wdb" id="1">
          <top_modules>
             <top_module name="glbl" />
             <top_module name="system_top_tb" />
@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1945199999fs"></ZoomStartTime>
-      <ZoomEndTime time="4877729599fs"></ZoomEndTime>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="3127320295fs"></ZoomEndTime>
       <Cursor1Time time="15000000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="242"></NameColumnWidth>
-      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+      <NameColumnWidth column_width="234"></NameColumnWidth>
+      <ValueColumnWidth column_width="110"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="12" />
+   <WVObjectSize size="10" />
    <wvobject type="logic" fp_name="/system_top_tb/UUT/clk_100">
       <obj_property name="ElementShortName">clk_100</obj_property>
       <obj_property name="ObjectShortName">clk_100</obj_property>
@@ -28,17 +28,9 @@
       <obj_property name="ElementShortName">cpu_clk</obj_property>
       <obj_property name="ObjectShortName">cpu_clk</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/clk_counter">
-      <obj_property name="ElementShortName">clk_counter[2:0]</obj_property>
-      <obj_property name="ObjectShortName">clk_counter[2:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/control_unit/clk_counter">
-      <obj_property name="ElementShortName">clk_counter[2:0]</obj_property>
-      <obj_property name="ObjectShortName">clk_counter[2:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/douta">
-      <obj_property name="ElementShortName">douta[31:0]</obj_property>
-      <obj_property name="ObjectShortName">douta[31:0]</obj_property>
+   <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/clk_counter">
+      <obj_property name="ElementShortName">clk_counter</obj_property>
+      <obj_property name="ObjectShortName">clk_counter</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/system_top_tb/UUT/memory_address_out">
       <obj_property name="ElementShortName">memory_address_out[31:0]</obj_property>
@@ -48,24 +40,24 @@
       <obj_property name="ElementShortName">memory_data_in[31:0]</obj_property>
       <obj_property name="ObjectShortName">memory_data_in[31:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/halt">
-      <obj_property name="ElementShortName">halt</obj_property>
-      <obj_property name="ObjectShortName">halt</obj_property>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/cpu_halted">
+      <obj_property name="ElementShortName">cpu_halted</obj_property>
+      <obj_property name="ObjectShortName">cpu_halted</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/halt_request">
       <obj_property name="ElementShortName">halt_request</obj_property>
       <obj_property name="ObjectShortName">halt_request</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/control_unit/cpu_halted">
-      <obj_property name="ElementShortName">cpu_halted</obj_property>
-      <obj_property name="ObjectShortName">cpu_halted</obj_property>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/reg_datapath_pc_data">
+      <obj_property name="ElementShortName">reg_datapath_pc_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_datapath_pc_data[31:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/halt_tb">
-      <obj_property name="ElementShortName">halt_tb</obj_property>
-      <obj_property name="ObjectShortName">halt_tb</obj_property>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/gdb_debug/bp0_addr">
+      <obj_property name="ElementShortName">bp0_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bp0_addr[31:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/control_unit/halted">
-      <obj_property name="ElementShortName">halted</obj_property>
-      <obj_property name="ObjectShortName">halted</obj_property>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/gdb_debug/bp0_enabled">
+      <obj_property name="ElementShortName">bp0_enabled</obj_property>
+      <obj_property name="ObjectShortName">bp0_enabled</obj_property>
    </wvobject>
 </wave_config>

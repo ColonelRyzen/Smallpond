@@ -82,7 +82,7 @@ architecture behavioral of debug is
     signal register_value : std_logic_vector(31 downto 0);
 
     signal bp0_addr: std_logic_vector(31 downto 0) := x"00000000";
-    signal bp0_enabled: std_logic := '0';
+    signal bp0_enabled: std_logic := '1';
 
     attribute mark_debug : string;
     attribute keep : string;

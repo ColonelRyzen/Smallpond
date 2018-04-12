@@ -59,6 +59,7 @@ architecture Behavioral of smallpond_top is
     --signal reg_alu_b : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal reg_alu_src_0 : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal alu_reg_cpsr : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+    attribute dont_touch of alu_reg_cpsr : signal is "true";
 
     --signals between control_unit and register_file
     signal reg_ctrl_cpsr : STD_LOGIC_VECTOR(3 downto 0) := "0000";
@@ -70,10 +71,13 @@ architecture Behavioral of smallpond_top is
 
     --signals between control_unit and alu
     signal ctrl_alu_alu_op : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+    attribute dont_touch of ctrl_alu_alu_op : signal is "true";
     signal ctrl_alu_sub : STD_LOGIC := '0';
+    attribute dont_touch of ctrl_alu_sub : signal is "true";
 
     --Datapath Signals
     signal alu_datapath_result : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    attribute dont_touch of alu_datapath_result : signal is "true";
     signal datapath_reg_write_data : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_reg_write_register : STD_LOGIC_VECTOR(4 downto 0) := "00000";
     signal datapath_reg_read_register_0 : STD_LOGIC_VECTOR(4 downto 0) := "00000";
@@ -94,6 +98,7 @@ architecture Behavioral of smallpond_top is
     signal reg_datapath_pc_data : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_reg_pc_data : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_alu_src_result : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
+    attribute dont_touch of datapath_alu_src_result : signal is "true";
     signal datapath_pc_src_result : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_pc_input : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     signal datapath_instruction_address : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
@@ -135,8 +140,9 @@ architecture Behavioral of smallpond_top is
     signal clk_counter : integer range 0 to 5 := 5;
 
     signal halt_request : STD_LOGIC := '0';
+    attribute dont_touch of halt_request : signal is "true"; 
     signal cpu_halted : STD_LOGIC := '0';
-
+    attribute dont_touch of cpu_halted : signal is "true";
 
     component debug is
     port (
