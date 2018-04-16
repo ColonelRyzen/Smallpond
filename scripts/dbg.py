@@ -1,6 +1,6 @@
 from sys import platform
 if platform == "linux" or platform == "linux2":
-    port = "ttyUSB1"
+    port = "ttyUSB2"
 elif platform == "darwin":
     port = "ttyUSB1"
 elif platform == "win32":

@@ -70,7 +70,10 @@ architecture behavioral of debug is
         D7,
         D8,
         D9,
-        D10
+        D10,
+        D11,
+        D12,
+        D13
     );
 
     signal state: dbg_state := D1;
@@ -172,28 +175,37 @@ if rising_edge(clk) then
                 tx_enable <= '1';
                 state <= D4;
             end if;
-
-        elsif (state = D4) then  -- Write back register value
+        elsif (state = D4) then
+            if (tx_ready = '0') then
+                state <= D5;
+            end if;
+        elsif (state = D5) then  -- Write back register value
             if (tx_ready = '1') then
                 tx_data <= register_value(23 downto 16);
                 tx_enable <= '1';
-                state <= D5;
+                state <= D6;
             end if;
-
-        elsif (state = D5) then  -- Write back register value
+        elsif (state = D6) then
+            if (tx_ready = '0') then
+                state <= D7;
+            end if;
+        elsif (state = D7) then  -- Write back register value
             if (tx_ready = '1') then
                 tx_data <= register_value(15 downto 8);
                 tx_enable <= '1';
-                state <= D6;
+                state <= D8;
             end if;
-
-        elsif (state = D6) then  -- Write back register value
+        elsif (state = D8) then
+            if (tx_ready = '0') then
+                state <= D9;
+            end if;
+        elsif (state = D9) then  -- Write back register value
             if (tx_ready = '1') then
                 tx_data <= register_value(7 downto 0);
                 tx_enable <= '1';
                 cmd <= x"00";
             end if;
-
+            
         elsif (cmd = x"62") then -- 'b': Read memory BYTE
             if (state = D1) then -- Wait for addr to write
                 if (rx_valid = '1') then -- Get addr
@@ -315,23 +327,39 @@ if rising_edge(clk) then
             state <= D7;
         
         elsif (state = D7) then -- Wait for addr to write
-            if (rx_valid = '1') then -- Get data
+            if (tx_ready = '1') then -- Get data
                 tx_data <= mem_data(31 downto 24);
+                tx_enable <= '1';
                 state <= D8;
             end if;
-        elsif (state = D8) then -- Wait for addr to write
-            if (rx_valid = '1') then -- Get data
-                tx_data <= mem_data(23 downto 16);
+        elsif (state = D8) then
+            if (tx_ready = '0') then
                 state <= D9;
             end if;
         elsif (state = D9) then -- Wait for addr to write
-            if (rx_valid = '1') then -- Get data
-                tx_data <= mem_data(15 downto 8);
+            if (tx_ready = '1') then -- Get data
+                tx_data <= mem_data(23 downto 16);
+                tx_enable <= '1';
                 state <= D10;
             end if;
-        elsif (state = D10) then -- Wait for addr to write
-            if (rx_valid = '1') then -- Get data
+        elsif (state = D10) then
+            if (tx_ready = '0') then
+                state <= D11;
+            end if;
+        elsif (state = D11) then -- Wait for addr to write
+            if (tx_ready = '1') then -- Get data
+                tx_data <= mem_data(15 downto 8);
+                state <= D12;
+                tx_enable <= '1';
+            end if;
+        elsif (state = D12) then
+            if (tx_ready = '0') then
+                state <= D13;
+            end if;
+        elsif (state = D13) then -- Wait for addr to write
+            if (tx_ready = '1') then -- Get data
                 tx_data <= mem_data(7 downto 0);
+                tx_enable <= '1';
                 cmd <= x"00";
             end if;
 
@@ -432,6 +460,10 @@ if rising_edge(clk) then
                 state <= D3;
             end if;
         elsif (state = D3) then
+            if (tx_ready = '0') then
+                state <= D4;
+            end if;
+        elsif (state = D4) then
             if (tx_ready = '1') then
                 tx_data <= x"73";
                 tx_enable <= '1';
@@ -483,6 +515,10 @@ if rising_edge(clk) then
                 state <= D3;
             end if;
         elsif (state = D3) then
+            if (tx_ready = '0') then
+                state <= D4;
+            end if;
+        elsif (state = D4) then
             if (tx_ready = '1') then
                 tx_data <= x"7A";
                 tx_enable <= '1';
