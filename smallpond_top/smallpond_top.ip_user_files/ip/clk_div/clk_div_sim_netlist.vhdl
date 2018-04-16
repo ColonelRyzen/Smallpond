@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
--- Date        : Fri Apr  6 15:05:29 2018
+-- Date        : Sun Apr 15 23:48:08 2018
 -- Host        : enterprise running 64-bit Ubuntu 16.04.4 LTS
--- Command     : write_vhdl -force -mode funcsim -rename_top clk_div -prefix
---               clk_div_ clk_div_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim {/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall
+--               2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.runs/clk_div_synth_1/clk_div_sim_netlist.vhdl}
 -- Design      : clk_div
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -20,6 +20,8 @@ entity clk_div_clk_div_clk_wiz is
     mem_clk : out STD_LOGIC;
     clk_in : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of clk_div_clk_div_clk_wiz : entity is "clk_div_clk_wiz";
 end clk_div_clk_div_clk_wiz;
 
 architecture STRUCTURE of clk_div_clk_div_clk_wiz is

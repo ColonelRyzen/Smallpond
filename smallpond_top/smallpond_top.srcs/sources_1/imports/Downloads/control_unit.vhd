@@ -69,9 +69,13 @@ architecture Behavioral of control_unit is
 attribute dont_touch : string;
 signal clk_counter: integer range 0 to 5 := 5;
 signal instruction_runs: STD_LOGIC := '0';
+attribute dont_touch of instruction_runs : signal is "true";
 signal reg_write_old: STD_LOGIC := '0';
+attribute dont_touch of reg_write_old : signal is "true";
 signal mem_read_old : STD_LOGIC := '0';
+attribute dont_touch of mem_read_old : signal is "true";
 signal mem_write_old : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+attribute dont_touch of mem_write_old : signal is "true";
 signal halted : STD_LOGIC := '0';
 attribute dont_touch of halted : signal is "true";
 

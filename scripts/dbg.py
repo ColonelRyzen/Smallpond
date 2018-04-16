@@ -1,4 +1,11 @@
-port = "ttyUSB1"
+from sys import platform
+if platform == "linux" or platform == "linux2":
+    port = "ttyUSB1"
+elif platform == "darwin":
+    port = "ttyUSB1"
+elif platform == "win32":
+    port = "COM"
+
 
 import serial
 import time
@@ -6,7 +13,7 @@ import time
 
 class smallpond:
     def __init__(self, port):
-        self.ser = serial.Serial('/dev/' + port, 115200)
+        self.ser = serial.Serial('/dev/' + port, 38400)
         self.get_regs()
 
     def read_reg(self, reg):

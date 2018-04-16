@@ -48,14 +48,18 @@ architecture behavioral of debug is
         tx: out std_logic
       );
     end component;
-
+    
+    attribute dont_touch : string;
     signal rx_data: std_logic_vector(7 downto 0);
     signal rx_valid: std_logic;
 
     signal tx_data : std_logic_vector(7 downto 0) := x"00";
+    attribute dont_touch of tx_data : signal is "true";
     signal tx_enable : std_logic := '0';
+    attribute dont_touch of tx_enable : signal is "true";
     signal tx_ready : std_logic;
-
+    attribute dont_touch of tx_ready : signal is "true";
+    
     type dbg_state is (
         D1,
         D2,
@@ -71,6 +75,7 @@ architecture behavioral of debug is
 
     signal state: dbg_state := D1;
     signal cmd: std_logic_vector(7 downto 0) := x"00";
+    attribute dont_touch of cmd : signal is "true";
 
     signal halt: std_logic := '0';
 
@@ -160,6 +165,7 @@ if rising_edge(clk) then
 
         elsif (state = D2) then
             register_value <= reg_file_data_in;
+            state <= D3;
         elsif (state = D3) then  -- Write back register value
             if (tx_ready = '1') then
                 tx_data <= register_value(31 downto 24);
