@@ -44,6 +44,13 @@ architecture Behavioral of system_top_tb is
                                    
                                     );
     end component;
+    
+    component debug_tb 
+        port( clk : in std_logic;
+                uart_rx : in std_logic;
+                uart_tx : out std_logic);
+    end component;
+    
 
     signal clk_tb_in : STD_LOGIC := '0';
     signal reset_tb_in : STD_LOGIC := '0';
@@ -59,6 +66,11 @@ begin
                                     uart_rx => uart_rx_tb,
                                     uart_tx => uart_tx_tb
                                     );
+                                    
+    dbg : debug_tb port map (   clk => clk_tb_in,
+                                uart_rx => uart_tx_tb,
+                                uart_tx => uart_rx_tb
+                                );
 
     clk_proc: process
     begin

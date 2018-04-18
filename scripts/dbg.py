@@ -13,7 +13,7 @@ import time
 
 class smallpond:
     def __init__(self, port):
-        self.ser = serial.Serial('/dev/' + port, 38400)
+        self.ser = serial.Serial('/dev/' + port, 115200)
         self.get_regs()
 
     def read_reg(self, reg):

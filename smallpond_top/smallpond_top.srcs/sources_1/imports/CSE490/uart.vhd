@@ -25,12 +25,12 @@ architecture behavioral of basic_uart is
   type fsm_state_t is (idle, active); -- common to both RX and TX FSM
 
   signal rx_fsm_state: fsm_state_t := idle;                -- FSM state
-  signal rx_counter: integer range 0 to 15 := 0;                 -- tick count
+  signal rx_counter: integer range 0 to 16 := 0;                 -- tick count
   signal rx_bits: std_logic_vector(7 downto 0);            -- last 8 received bits
   signal rx_nbits: integer range 0 to 10 := 0;   -- number of received bits (includes start bit)
 
   signal tx_fsm_state: fsm_state_t := idle; -- FSM state
-  signal tx_counter: integer range 0 to 15 := 0; -- tick count
+  signal tx_counter: integer range 0 to 16 := 0; -- tick count
   signal tx_bits: std_logic_vector(8 downto 0); -- bits to emit, includes start bit
   signal tx_nbits: integer range 0 to 15 := 0; -- number of bits left to send
 
@@ -63,7 +63,11 @@ begin
               rx_nbits <= rx_nbits + 1;
             end if;
           end if;
-          rx_counter <= rx_counter + 1;
+          if rx_counter = 16 then
+                rx_counter <= 0;
+          else
+                rx_counter <= rx_counter + 1;
+          end if;
         end if;
     end if;
   end process;
@@ -87,8 +91,9 @@ begin
               tx_fsm_state <= idle;
             end if;
         elsif (tx_fsm_state = active) then
-          if tx_counter = 15 then
+          if tx_counter = 16 then
             -- send next bit
+            tx_counter <= 0;
             if tx_nbits = 0 then
               -- turn idle
               tx_fsm_state <= idle;
@@ -97,8 +102,9 @@ begin
               tx_bits <= '1' & tx_bits(8 downto 1);
               tx_nbits <= tx_nbits - 1;
             end if;
+          else
+            tx_counter <= tx_counter + 1;
           end if;
-          tx_counter <= tx_counter + 1;
         end if;
     end if;
   end process;
