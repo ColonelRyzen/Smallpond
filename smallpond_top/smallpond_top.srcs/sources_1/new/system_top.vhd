@@ -37,8 +37,8 @@ entity system_top is
             clk_100 : in STD_LOGIC;
             reset_in : in STD_LOGIC;
             uart_rx : in STD_LOGIC;
-            uart_tx : out STD_LOGIC
---            led : out STD_LOGIC_VECTOR(15 downto 0);
+            uart_tx : out STD_LOGIC;
+            led : out STD_LOGIC_VECTOR(15 downto 0)
 --            sw : in STD_LOGIC_VECTOR(15 downto 0)
        
        );
@@ -141,8 +141,24 @@ begin
             end if;
         end if;
     end process;
+    
+    cpu_clk <= clk_divider(1); 
+    
+    mem_map_io : process(cpu_clk,reset_in)
+    begin
+        if rising_edge(cpu_clk) then
+            if memory_address_out = x"FFFFFFFF" then
+                if memory_write_out(1) = '1'then
+                    led(15 downto 8) <= memory_data_out(15 downto 8);
+                end if;
+                if memory_write_out(0) = '1' then
+                    led(7 downto 0) <= memory_data_out(7 downto 0);
+                end if;
+            end if;
+        end if;
+    end process;
         
-    cpu_clk <= clk_divider(1);  
+     
     
 
 

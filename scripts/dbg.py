@@ -1,6 +1,6 @@
 from sys import platform
 if platform == "linux" or platform == "linux2":
-    port = "ttyUSB2"
+    port = "ttyUSB0"
 elif platform == "darwin":
     port = "ttyUSB1"
 elif platform == "win32":
@@ -49,25 +49,26 @@ class smallpond:
     def dump_mem(self, begin, end, width=16):
 
         if (begin % width != 0):
-            print('0x{:04x}:'.format(begin & ~width), end='')
-            for x in range(begin & ~width, begin):
+            print('0x{:08x}:'.format(begin & ~(width-1)), end='')
+            for x in range(begin & ~(width-1), begin,4):
                 print('   ', end='')
 
-        for addr in range(begin, end):
+        for addr in range(begin, end, 4):
             if (addr % width == 0):
-                print('0x{:04x}:'.format(addr), end='')
+                print('\n0x{:08x}:'.format(addr), end='')
             elif (addr % 8 == 0):
                 print(' ', end='')
-            byte = self.read_mem_byte(addr)
-            print(' {:02x}'.format(byte), end='')
+            word = self.read_mem_word(addr)
+            print(' {:08x}'.format(word), end='')
             if (addr % width == width - 1):
                 print()
-
+        print('\n')
         if (end % width != 0):
             print()
 
     def step(self):
         self.ser.write(b's')
+        self.ser.read()
         self.ser.read()
         self.get_regs()
 
@@ -91,14 +92,44 @@ class smallpond:
         self.cpsr = self.register_dict[31]
         self.lr0 = self.register_dict[26]
         self.sp = self.register_dict[25]
-        self.hp = self.register_dict[24]
+        self.hp = self.register_dict[23]
+        self.fp = self.register_dict[24]
 
     def jump(self, addr):
         self.write_reg('P', addr >> 8)
         self.write_reg('Q', addr & 0xFF)
 
     def print_regs(self):
+        print('R0: 0x{:08x}'.format(self.register_dict[0]))
+        print('Arg0: 0x{:08x}'.format(self.register_dict[1]))
+        print('Arg1: 0x{:08x}'.format(self.register_dict[2]))
+        print('Arg2: 0x{:08x}'.format(self.register_dict[3]))
+        print('Arg3: 0x{:08x}'.format(self.register_dict[4]))
+        print('T0: 0x{:08x}'.format(self.register_dict[5]))
+        print('T1: 0x{:08x}'.format(self.register_dict[6]))
+        print('T2: 0x{:08x}'.format(self.register_dict[7]))
+        print('T3: 0x{:08x}'.format(self.register_dict[8]))
+        print('T4: 0x{:08x}'.format(self.register_dict[9]))
+        print('T5: 0x{:08x}'.format(self.register_dict[10]))
+        print('T6: 0x{:08x}'.format(self.register_dict[11]))
+        print('T7: 0x{:08x}'.format(self.register_dict[12]))
+        print('S0: 0x{:08x}'.format(self.register_dict[13]))
+        print('S1: 0x{:08x}'.format(self.register_dict[14]))
+        print('S2: 0x{:08x}'.format(self.register_dict[15]))
+        print('S3: 0x{:08x}'.format(self.register_dict[16]))
+        print('S4: 0x{:08x}'.format(self.register_dict[17]))
+        print('S5: 0x{:08x}'.format(self.register_dict[18]))
+        print('+/-: 0x{:08x}'.format(self.register_dict[19]))
+        print('+/-: 0x{:08x}'.format(self.register_dict[20]))
+        print('C+: 0x{:08x}'.format(self.register_dict[21]))
+        print('C-: 0x{:08x}'.format(self.register_dict[22]))
+        print('HP: 0x{:08x}'.format(self.hp))
+        print('FP: 0x{:08x}'.format(self.fp))
         print('SP: 0x{:08x}'.format(self.sp))
+        print('LR0: 0x{:08x}'.format(self.lr0))
+        print('LR1: 0x{:08x}'.format(self.register_dict[27]))
+        print('LR2: 0x{:08x}'.format(self.register_dict[28]))
+        print('LR3: 0x{:08x}'.format(self.register_dict[29]))
         print('PC: 0x{:08x}'.format(self.pc))
         print('CPSR: 0x{:08x}'.format(self.cpsr))
 

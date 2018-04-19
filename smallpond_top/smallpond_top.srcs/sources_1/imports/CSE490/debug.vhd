@@ -209,6 +209,7 @@ if rising_edge(clk) then
         elsif (cmd = x"62") then -- 'b': Read memory BYTE
             if (state = D1) then -- Wait for addr to write
                 if (rx_valid = '1') then -- Get addr
+                    mem_read <= '1';
                     mem_address(31 downto 24) <= rx_data;
                     state <= D2;
                 end if;
@@ -237,6 +238,7 @@ if rising_edge(clk) then
                 -- Keep reading in case UART not ready
                 mem_addr_out <= mem_address;
                 if (tx_ready = '1') then
+                    reg_file_write_en <= '1';
                     if mem_address(1 downto 0) = "00" then
                         tx_data <= mem_data_in(31 downto 24);    
                     elsif mem_address(1 downto 0) = "01" then
@@ -321,29 +323,35 @@ if rising_edge(clk) then
         
         elsif (state = D5) then
             mem_addr_out <= mem_address;
+             mem_read <= '1';
             state <= D6;
         elsif (state = D6) then
             mem_data <= mem_data_in;
+             mem_read <= '1';
             state <= D7;
         
         elsif (state = D7) then -- Wait for addr to write
             if (tx_ready = '1') then -- Get data
                 tx_data <= mem_data(31 downto 24);
                 tx_enable <= '1';
+                mem_read <= '1';
                 state <= D8;
             end if;
         elsif (state = D8) then
             if (tx_ready = '0') then
+                 mem_read <= '1';
                 state <= D9;
             end if;
         elsif (state = D9) then -- Wait for addr to write
             if (tx_ready = '1') then -- Get data
                 tx_data <= mem_data(23 downto 16);
                 tx_enable <= '1';
+                 mem_read <= '1';
                 state <= D10;
             end if;
         elsif (state = D10) then
             if (tx_ready = '0') then
+                 mem_read <= '1';
                 state <= D11;
             end if;
         elsif (state = D11) then -- Wait for addr to write
@@ -351,15 +359,18 @@ if rising_edge(clk) then
                 tx_data <= mem_data(15 downto 8);
                 state <= D12;
                 tx_enable <= '1';
+                 mem_read <= '1';
             end if;
         elsif (state = D12) then
             if (tx_ready = '0') then
+                 mem_read <= '1';
                 state <= D13;
             end if;
         elsif (state = D13) then -- Wait for addr to write
             if (tx_ready = '1') then -- Get data
                 tx_data <= mem_data(7 downto 0);
                 tx_enable <= '1';
+                 mem_read <= '1';
                 cmd <= x"00";
             end if;
 
@@ -387,30 +398,30 @@ if rising_edge(clk) then
                 state <= D5;
             end if;
 
-        elsif (state = D5) then -- Wait for addr to write
+        elsif (state = D5) then -- Wait for data to write
             if (rx_valid = '1') then -- Get data
                 mem_data(31 downto 24) <= rx_data;
                 state <= D6;
             end if;
-        elsif (state = D6) then -- Wait for addr to write
+        elsif (state = D6) then -- Wait for data to write
             if (rx_valid = '1') then -- Get data
                 mem_data(23 downto 16) <= rx_data;
                 state <= D7;
             end if;
-        elsif (state = D7) then -- Wait for addr to write
+        elsif (state = D7) then -- Wait for data to write
             if (rx_valid = '1') then -- Get data
                 mem_data(15 downto 8) <= rx_data;
                 state <= D8;
             end if;
-        elsif (state = D8) then -- Wait for addr to write
+        elsif (state = D8) then -- Wait for data to write
             if (rx_valid = '1') then -- Get data
                 mem_data(7 downto 0) <= rx_data;
+                mem_write <= "1111";
                 state <= D9;
             end if;
         elsif (state = D9) then
             mem_addr_out <= mem_address;
             mem_data_out <= mem_data;
-            mem_write <= "1111";
             cmd <= x"00";
         end if;
 
@@ -432,17 +443,20 @@ if rising_edge(clk) then
             end if;
         elsif (state = D4) then -- Wait for value to write
             if (rx_valid = '1') then
+                
                 register_value(15 downto 8) <= rx_data;
                 state <= D5;
             end if;
         elsif (state = D5) then -- Wait for value to write
             if (rx_valid = '1') then
                 register_value(7 downto 0) <= rx_data;
+                reg_file_write_en <= '1';
                 state <= D6;
             end if;
         elsif (state = D6) then  -- Set value
             write_register <= reg(4 downto 0);
             reg_file_data_out <= register_value;
+            reg_file_write_en <= '1';
             cmd <= x"00";
         end if;
 

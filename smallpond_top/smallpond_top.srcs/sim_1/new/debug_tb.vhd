@@ -93,21 +93,59 @@ begin
     begin
         if rising_edge(clk_tb) then
             tx_enable_tb <= '0';
+--            if state = 0 then    
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"77";
+--                    tx_enable_tb <= '1';
+--                    state <= 1;
+--                end if;
+--            elsif (state = 1) then
+--                state <= 2;
+--            elsif state = 2 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 3;
+--                end if;
+--            elsif state = 3 then
+--                state <= 4;
+--            elsif state = 4 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 5;
+--                end if;
+--            elsif state = 5 then
+--                state <= 6;
+--            elsif state <= 6 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 7;
+--                end if;
+--            elsif state = 7 then
+--                state <= 8;
+--            elsif state = 8 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 9;
+--                end if;
+--            elsif state = 9 then
+--                state <= 9;
+--            end if;
             if state = 0 then    
                 if (tx_ready_tb = '1') then
-                    tx_data_tb <= x"70";
+                    tx_data_tb <= x"50";
                     tx_enable_tb <= '1';
                     state <= 1;
                 end if;
-            elsif (state = 1) then
+            elsif state = 1 then
                 state <= 2;
             elsif state = 2 then
                 if (tx_ready_tb = '1') then
-                    tx_data_tb <= x"00";
-                    tx_enable_tb <= '1';
-                    state <= 3;
-                end if;
-            elsif state = 3 then
+                    tx_data_tb <= ""
+                end if; 
                 state <= 3;
             end if;
         end if;

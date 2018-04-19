@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="736666666666fs"></ZoomStartTime>
-      <ZoomEndTime time="1052666666667fs"></ZoomEndTime>
-      <Cursor1Time time="1000000000000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="6360000001fs"></ZoomEndTime>
+      <Cursor1Time time="764000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="176"></NameColumnWidth>
-      <ValueColumnWidth column_width="70"></ValueColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="23" />
+   <WVObjectSize size="24" />
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk_8">
       <obj_property name="ElementShortName">cpu_clk_8</obj_property>
       <obj_property name="ObjectShortName">cpu_clk_8</obj_property>
@@ -28,19 +28,11 @@
       <obj_property name="ElementShortName">reset_in</obj_property>
       <obj_property name="ObjectShortName">reset_in</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/clk_divider">
-      <obj_property name="ElementShortName">clk_divider[1:0]</obj_property>
-      <obj_property name="ObjectShortName">clk_divider[1:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/memory_read_out">
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/memory_read_out">
       <obj_property name="ElementShortName">memory_read_out</obj_property>
       <obj_property name="ObjectShortName">memory_read_out</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/memory_ready">
-      <obj_property name="ElementShortName">memory_ready</obj_property>
-      <obj_property name="ObjectShortName">memory_ready</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/memory_write_out">
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/memory_write_out">
       <obj_property name="ElementShortName">memory_write_out[3:0]</obj_property>
       <obj_property name="ObjectShortName">memory_write_out[3:0]</obj_property>
    </wvobject>
@@ -48,9 +40,17 @@
       <obj_property name="ElementShortName">memory_data_in[31:0]</obj_property>
       <obj_property name="ObjectShortName">memory_data_in[31:0]</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/douta">
+      <obj_property name="ElementShortName">douta[31:0]</obj_property>
+      <obj_property name="ObjectShortName">douta[31:0]</obj_property>
+   </wvobject>
    <wvobject type="array" fp_name="/system_top_tb/UUT/memory_data_out">
       <obj_property name="ElementShortName">memory_data_out[31:0]</obj_property>
       <obj_property name="ObjectShortName">memory_data_out[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/addra">
+      <obj_property name="ElementShortName">addra[31:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[31:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/system_top_tb/UUT/memory_address_out">
       <obj_property name="ElementShortName">memory_address_out[31:0]</obj_property>
@@ -59,14 +59,6 @@
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk">
       <obj_property name="ElementShortName">cpu_clk</obj_property>
       <obj_property name="ObjectShortName">cpu_clk</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/halt_request">
-      <obj_property name="ElementShortName">halt_request</obj_property>
-      <obj_property name="ObjectShortName">halt_request</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/cpu_halted">
-      <obj_property name="ElementShortName">cpu_halted</obj_property>
-      <obj_property name="ObjectShortName">cpu_halted</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/gdb_debug/uart/rx">
       <obj_property name="ElementShortName">rx</obj_property>
@@ -111,5 +103,17 @@
    <wvobject type="logic" fp_name="/system_top_tb/dbg/uart/rx_valid">
       <obj_property name="ElementShortName">rx_valid</obj_property>
       <obj_property name="ObjectShortName">rx_valid</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/gdb_debug/state">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/gdb_debug/cmd">
+      <obj_property name="ElementShortName">cmd[7:0]</obj_property>
+      <obj_property name="ObjectShortName">cmd[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/gdb_debug/mem_data">
+      <obj_property name="ElementShortName">mem_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_data[31:0]</obj_property>
    </wvobject>
 </wave_config>
