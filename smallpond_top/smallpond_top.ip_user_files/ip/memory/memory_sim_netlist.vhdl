@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
--- Date        : Fri Apr  6 15:59:34 2018
+-- Date        : Thu Apr 19 15:37:14 2018
 -- Host        : enterprise running 64-bit Ubuntu 16.04.4 LTS
--- Command     : write_vhdl -force -mode funcsim {/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall
---               2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.runs/memory_synth_1/memory_sim_netlist.vhdl}
+-- Command     : write_vhdl -force -mode funcsim -rename_top memory -prefix
+--               memory_ memory_sim_netlist.vhdl
 -- Design      : memory
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -53,8 +53,6 @@ entity memory_blk_mem_gen_mux is
     \DEVICE_7SERIES.WITH_BMM_INFO.SP.SIMPLE_PRIM36.ram_28\ : in STD_LOGIC_VECTOR ( 7 downto 0 );
     \DEVICE_7SERIES.WITH_BMM_INFO.SP.SIMPLE_PRIM36.ram_29\ : in STD_LOGIC_VECTOR ( 7 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of memory_blk_mem_gen_mux : entity is "blk_mem_gen_mux";
 end memory_blk_mem_gen_mux;
 
 architecture STRUCTURE of memory_blk_mem_gen_mux is
@@ -1264,8 +1262,6 @@ entity memory_blk_mem_gen_prim_wrapper_init is
     dina : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of memory_blk_mem_gen_prim_wrapper_init : entity is "blk_mem_gen_prim_wrapper_init";
 end memory_blk_mem_gen_prim_wrapper_init;
 
 architecture STRUCTURE of memory_blk_mem_gen_prim_wrapper_init is
@@ -9586,8 +9582,6 @@ entity memory_blk_mem_gen_prim_width is
     dina : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of memory_blk_mem_gen_prim_width : entity is "blk_mem_gen_prim_width";
 end memory_blk_mem_gen_prim_width;
 
 architecture STRUCTURE of memory_blk_mem_gen_prim_width is
@@ -10717,8 +10711,6 @@ entity memory_blk_mem_gen_generic_cstr is
     ena : in STD_LOGIC;
     rsta : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of memory_blk_mem_gen_generic_cstr : entity is "blk_mem_gen_generic_cstr";
 end memory_blk_mem_gen_generic_cstr;
 
 architecture STRUCTURE of memory_blk_mem_gen_generic_cstr is
@@ -11812,8 +11804,6 @@ entity memory_blk_mem_gen_top is
     ena : in STD_LOGIC;
     rsta : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of memory_blk_mem_gen_top : entity is "blk_mem_gen_top";
 end memory_blk_mem_gen_top;
 
 architecture STRUCTURE of memory_blk_mem_gen_top is
@@ -11845,8 +11835,6 @@ entity memory_blk_mem_gen_v8_4_1_synth is
     ena : in STD_LOGIC;
     rsta : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of memory_blk_mem_gen_v8_4_1_synth : entity is "blk_mem_gen_v8_4_1_synth";
 end memory_blk_mem_gen_v8_4_1_synth;
 
 architecture STRUCTURE of memory_blk_mem_gen_v8_4_1_synth is
@@ -12079,8 +12067,6 @@ entity memory_blk_mem_gen_v8_4_1 is
   attribute C_WRITE_WIDTH_B of memory_blk_mem_gen_v8_4_1 : entity is 32;
   attribute C_XDEVICEFAMILY : string;
   attribute C_XDEVICEFAMILY of memory_blk_mem_gen_v8_4_1 : entity is "artix7";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of memory_blk_mem_gen_v8_4_1 : entity is "blk_mem_gen_v8_4_1";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of memory_blk_mem_gen_v8_4_1 : entity is "yes";
 end memory_blk_mem_gen_v8_4_1;

@@ -1,10 +1,14 @@
 from sys import platform
+import glob
 if platform == "linux" or platform == "linux2":
-    port = "ttyUSB0"
+    #port = "ttyUSB1"
+    port = glob.glob('/dev/ttyUSB[0-9]*')[0]
 elif platform == "darwin":
-    port = "ttyUSB1"
+    #port = "ttyUSB1"
+    port = glob.glob('/dev/tty.*')
 elif platform == "win32":
-    port = "COM"
+    port = ['COM%s' % (i + 1) for i in range(256)]
+    #port = "COM"
 
 
 import serial
@@ -13,7 +17,7 @@ import time
 
 class smallpond:
     def __init__(self, port):
-        self.ser = serial.Serial('/dev/' + port, 115200)
+        self.ser = serial.Serial(port, 115200)
         self.get_regs()
 
     def read_reg(self, reg):

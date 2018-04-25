@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
-// Date        : Fri Apr  6 15:59:34 2018
+// Date        : Thu Apr 19 15:37:14 2018
 // Host        : enterprise running 64-bit Ubuntu 16.04.4 LTS
-// Command     : write_verilog -force -mode funcsim {/media/zack/528CA51E8CA4FE1B/Users/zacks/Documents/UB/Senior/Fall
-//               2017/CSE490/smallpond/Smallpond/smallpond_top/smallpond_top.runs/memory_synth_1/memory_sim_netlist.v}
+// Command     : write_verilog -force -mode funcsim -rename_top memory -prefix
+//               memory_ memory_sim_netlist.v
 // Design      : memory
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -200,7 +200,6 @@ module memory
         .web({1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
 module memory_blk_mem_gen_generic_cstr
    (rsta_busy,
     douta,
@@ -803,7 +802,6 @@ module memory_blk_mem_gen_generic_cstr
         .wea(wea[1]));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_mux" *) 
 module memory_blk_mem_gen_mux
    (douta,
     addra,
@@ -1832,7 +1830,6 @@ module memory_blk_mem_gen_mux
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
 module memory_blk_mem_gen_prim_width
    (\douta[7] ,
     clka,
@@ -3096,7 +3093,6 @@ module memory_blk_mem_gen_prim_width__parameterized9
         .wea(wea));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper_init" *) 
 module memory_blk_mem_gen_prim_wrapper_init
    (\douta[7] ,
     clka,
@@ -11184,7 +11180,6 @@ module memory_blk_mem_gen_prim_wrapper_init__parameterized9
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_top" *) 
 module memory_blk_mem_gen_top
    (rsta_busy,
     douta,
@@ -11247,7 +11242,7 @@ endmodule
 (* C_USE_URAM = "0" *) (* C_WEA_WIDTH = "4" *) (* C_WEB_WIDTH = "4" *) 
 (* C_WRITE_DEPTH_A = "32768" *) (* C_WRITE_DEPTH_B = "32768" *) (* C_WRITE_MODE_A = "WRITE_FIRST" *) 
 (* C_WRITE_MODE_B = "WRITE_FIRST" *) (* C_WRITE_WIDTH_A = "32" *) (* C_WRITE_WIDTH_B = "32" *) 
-(* C_XDEVICEFAMILY = "artix7" *) (* ORIG_REF_NAME = "blk_mem_gen_v8_4_1" *) (* downgradeipidentifiedwarnings = "yes" *) 
+(* C_XDEVICEFAMILY = "artix7" *) (* downgradeipidentifiedwarnings = "yes" *) 
 module memory_blk_mem_gen_v8_4_1
    (clka,
     rsta,
@@ -11550,7 +11545,6 @@ module memory_blk_mem_gen_v8_4_1
         .wea(wea));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_4_1_synth" *) 
 module memory_blk_mem_gen_v8_4_1_synth
    (rsta_busy,
     douta,

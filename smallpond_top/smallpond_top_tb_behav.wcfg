@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="6360000001fs"></ZoomEndTime>
-      <Cursor1Time time="764000000fs"></Cursor1Time>
+      <ZoomStartTime time="449597333334fs"></ZoomStartTime>
+      <ZoomEndTime time="513597333335fs"></ZoomEndTime>
+      <Cursor1Time time="460264000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="176"></NameColumnWidth>
+      <NameColumnWidth column_width="172"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="24" />
+   <WVObjectSize size="21" />
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk_8">
       <obj_property name="ElementShortName">cpu_clk_8</obj_property>
       <obj_property name="ObjectShortName">cpu_clk_8</obj_property>
@@ -40,10 +40,6 @@
       <obj_property name="ElementShortName">memory_data_in[31:0]</obj_property>
       <obj_property name="ObjectShortName">memory_data_in[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/douta">
-      <obj_property name="ElementShortName">douta[31:0]</obj_property>
-      <obj_property name="ObjectShortName">douta[31:0]</obj_property>
-   </wvobject>
    <wvobject type="array" fp_name="/system_top_tb/UUT/memory_data_out">
       <obj_property name="ElementShortName">memory_data_out[31:0]</obj_property>
       <obj_property name="ObjectShortName">memory_data_out[31:0]</obj_property>
@@ -51,10 +47,6 @@
    <wvobject type="array" fp_name="/system_top_tb/UUT/mem/addra">
       <obj_property name="ElementShortName">addra[31:0]</obj_property>
       <obj_property name="ObjectShortName">addra[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/memory_address_out">
-      <obj_property name="ElementShortName">memory_address_out[31:0]</obj_property>
-      <obj_property name="ObjectShortName">memory_address_out[31:0]</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk">
       <obj_property name="ElementShortName">cpu_clk</obj_property>
@@ -96,13 +88,9 @@
       <obj_property name="ElementShortName">rx_counter</obj_property>
       <obj_property name="ObjectShortName">rx_counter</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/dbg/uart/rx_data">
-      <obj_property name="ElementShortName">rx_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">rx_data[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/dbg/uart/rx_valid">
-      <obj_property name="ElementShortName">rx_valid</obj_property>
-      <obj_property name="ObjectShortName">rx_valid</obj_property>
+   <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/gdb_debug/uart/rx_nbits">
+      <obj_property name="ElementShortName">rx_nbits</obj_property>
+      <obj_property name="ObjectShortName">rx_nbits</obj_property>
    </wvobject>
    <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/gdb_debug/state">
       <obj_property name="ElementShortName">state</obj_property>
