@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="449597333334fs"></ZoomStartTime>
-      <ZoomEndTime time="513597333335fs"></ZoomEndTime>
-      <Cursor1Time time="460264000000fs"></Cursor1Time>
+      <ZoomStartTime time="1308530666666fs"></ZoomStartTime>
+      <ZoomEndTime time="1311810666667fs"></ZoomEndTime>
+      <Cursor1Time time="1311264000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="172"></NameColumnWidth>
+      <NameColumnWidth column_width="156"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="21" />
+   <WVObjectSize size="25" />
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk_8">
       <obj_property name="ElementShortName">cpu_clk_8</obj_property>
       <obj_property name="ObjectShortName">cpu_clk_8</obj_property>
@@ -27,10 +27,6 @@
    <wvobject type="logic" fp_name="/system_top_tb/UUT/reset_in">
       <obj_property name="ElementShortName">reset_in</obj_property>
       <obj_property name="ObjectShortName">reset_in</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/memory_read_out">
-      <obj_property name="ElementShortName">memory_read_out</obj_property>
-      <obj_property name="ObjectShortName">memory_read_out</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/memory_write_out">
       <obj_property name="ElementShortName">memory_write_out[3:0]</obj_property>
@@ -84,14 +80,6 @@
       <obj_property name="ElementShortName">tx_counter</obj_property>
       <obj_property name="ObjectShortName">tx_counter</obj_property>
    </wvobject>
-   <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/gdb_debug/uart/rx_counter">
-      <obj_property name="ElementShortName">rx_counter</obj_property>
-      <obj_property name="ObjectShortName">rx_counter</obj_property>
-   </wvobject>
-   <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/gdb_debug/uart/rx_nbits">
-      <obj_property name="ElementShortName">rx_nbits</obj_property>
-      <obj_property name="ObjectShortName">rx_nbits</obj_property>
-   </wvobject>
    <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/gdb_debug/state">
       <obj_property name="ElementShortName">state</obj_property>
       <obj_property name="ObjectShortName">state</obj_property>
@@ -103,5 +91,33 @@
    <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/gdb_debug/mem_data">
       <obj_property name="ElementShortName">mem_data[31:0]</obj_property>
       <obj_property name="ObjectShortName">mem_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/U0/addra">
+      <obj_property name="ElementShortName">addra[31:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/U0/dina">
+      <obj_property name="ElementShortName">dina[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dina[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/U0/douta">
+      <obj_property name="ElementShortName">douta[31:0]</obj_property>
+      <obj_property name="ObjectShortName">douta[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/U0/wea">
+      <obj_property name="ElementShortName">wea[3:0]</obj_property>
+      <obj_property name="ObjectShortName">wea[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/gdb_debug/mem_enable">
+      <obj_property name="ElementShortName">mem_enable</obj_property>
+      <obj_property name="ObjectShortName">mem_enable</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/mem/U0/ena">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/system_top_tb/dbg/state">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
    </wvobject>
 </wave_config>

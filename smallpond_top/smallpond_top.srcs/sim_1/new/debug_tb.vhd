@@ -39,7 +39,7 @@ end debug_tb;
 
 architecture Behavioral of debug_tb is
 
-    signal halt_cpu, cpu_halted, reg_file_write_en, mem_read : std_logic;
+    signal halt_cpu, cpu_halted, reg_file_write_en, mem_enable : std_logic;
     signal reg_file_data_in, reg_file_data_out, mem_data_in, mem_data_out, mem_addr_out, pc_in : std_logic_vector(31 downto 0);
     signal write_register, read_register : std_logic_vector(4 downto 0);
     signal mem_write : std_logic_vector(3 downto 0);
@@ -228,7 +228,7 @@ begin
                 end if;
             elsif state = 8 then
                 if (tx_ready_tb = '1') then
-                    tx_data_tb <= x"0C";
+                    tx_data_tb <= x"08";
                     tx_enable_tb <= '1';
                     state <= 9;
                 end if;
@@ -318,12 +318,76 @@ begin
                 end if;
             elsif state = 27 then
                 if (tx_ready_tb = '1') then
-                    tx_data_tb <= x"0C";
+                    tx_data_tb <= x"08";
                     tx_enable_tb <= '1';
                     state <= 28;
                 end if;
             elsif state = 28 then
                 state <= 28;
+--            elsif state = 29 then
+--                state <= 30;
+--            elsif state = 30 then
+--                state <= 31;
+--            elsif state = 31 then
+--                state <= 32;
+--            elsif state = 32 then
+--                state <= 33;
+--            elsif state = 33 then
+--                state <= 34;
+--            elsif state = 34 then
+--                state <= 35;
+--            elsif state = 35 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 36;
+--                end if;
+--            elsif state = 36 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"77";
+--                    tx_enable_tb <= '1';
+--                    state <= 37;
+--                end if;
+--            elsif state = 37 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 38;
+--                end if;
+--            elsif state = 38 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 39;
+--                end if;
+--            elsif state = 39 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 40;
+--                end if;
+--            elsif state = 40 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 41;
+--                end if;
+--            elsif state = 41 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 42;
+--                end if;
+--            elsif state = 42 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 43;
+--                end if;
+--            elsif state = 43 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 44;
+--                end if;
+--            elsif state = 44 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"08";
+--                    tx_enable_tb <= '1';
+--                    state <= 45;
+--                end if;
+--            elsif state = 45 then
+--                state <= 45;
             end if;
             
             

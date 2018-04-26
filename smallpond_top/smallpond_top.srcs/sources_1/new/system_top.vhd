@@ -38,7 +38,10 @@ entity system_top is
             reset_in : in STD_LOGIC;
             uart_rx : in STD_LOGIC;
             uart_tx : out STD_LOGIC;
-            led : out STD_LOGIC_VECTOR(15 downto 0)
+            led : out STD_LOGIC_VECTOR(15 downto 0);
+            seg : out STD_LOGIC_VECTOR(6 downto 0);
+            dp : out STD_LOGIC;
+            an : out STD_LOGIC_VECTOR(3 downto 0)
 --            sw : in STD_LOGIC_VECTOR(15 downto 0)
        
        );
@@ -51,7 +54,7 @@ architecture Behavioral of system_top is
     signal cpu_clk_8 : STD_LOGIC := '0';
     signal clk_divider : STD_LOGIC_VECTOR(1 downto 0) := "00";
     
-    signal memory_read_out : STD_LOGIC := '0';
+    signal memory_enable_out : STD_LOGIC := '0';
     signal memory_ready : STD_LOGIC := '0';
     signal memory_write_out : STD_LOGIC_VECTOR(3 downto 0) := "0000";
     signal memory_data_in : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
@@ -72,7 +75,7 @@ architecture Behavioral of system_top is
             memory_data_in : in STD_LOGIC_VECTOR(31 downto 0);
             memory_data_out : out STD_LOGIC_VECTOR(31 downto 0);
             memory_ready : in STD_LOGIC;
-            memory_read_out : out STD_LOGIC;
+            memory_enable_out : out STD_LOGIC;
             memory_write_out : out STD_LOGIC_VECTOR(3 downto 0);
             memory_address_out : out STD_LOGIC_VECTOR(31 downto 0)   
             );
@@ -111,7 +114,7 @@ begin
                                     memory_data_in => memory_data_in,
                                     memory_data_out => memory_data_out,
                                     memory_ready => memory_ready,
-                                    memory_read_out => memory_read_out,
+                                    memory_enable_out => memory_enable_out,
                                     memory_write_out => memory_write_out,
                                     memory_address_out => memory_address_out
                                     );    
@@ -122,7 +125,7 @@ begin
                                     
     mem : memory port map(   clka => memory_clk,
                                 rsta => reset_in,
-                                ena => memory_read_out,
+                                ena => memory_enable_out,
                                 wea => memory_write_out,
                                 addra => memory_address_out,
                                 dina => memory_data_out,
@@ -153,6 +156,15 @@ begin
                 end if;
                 if memory_write_out(0) = '1' then
                     led(7 downto 0) <= memory_data_out(7 downto 0);
+                end if;
+            end if;
+            if memory_address_out = x"FFFFFFFC" then
+                if memory_write_out(1) = '1' then
+                    dp <= memory_data_out(7);
+                    seg(6 downto 0) <= memory_data_out(6 downto 0);
+                end if;
+                if memory_write_out(0) = '1' then
+                    an(3 downto 0) <= memory_data_out(3 downto 0);
                 end if;
             end if;
         end if;

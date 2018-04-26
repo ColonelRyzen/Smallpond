@@ -42,7 +42,7 @@ entity smallpond_top is
         memory_data_in : in STD_LOGIC_VECTOR(31 downto 0);
         memory_data_out : out STD_LOGIC_VECTOR(31 downto 0);
         memory_ready : in STD_LOGIC;
-        memory_read_out : out STD_LOGIC;
+        memory_enable_out : out STD_LOGIC;
         memory_write_out : out STD_LOGIC_VECTOR(3 downto 0);
         memory_address_out : out STD_LOGIC_VECTOR(31 downto 0)
         );
@@ -113,7 +113,7 @@ architecture Behavioral of smallpond_top is
     signal datapath_jump_pc : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
     attribute dont_touch of datapath_jump_pc : signal is "true";
 
-    signal memory_read : STD_LOGIC := '0';
+    signal memory_enable : STD_LOGIC := '0';
 --    signal memory_ready : STD_LOGIC := '0';
     signal memory_write : STD_LOGIC_VECTOR(3 downto 0) := "0000";
    -- signal memory_data_in : STD_LOGIC_VECTOR(31 downto 0) := x"00000000";
@@ -126,7 +126,8 @@ architecture Behavioral of smallpond_top is
     signal dbg_write_register, dbg_read_register : STD_LOGIC_VECTOR(4 downto 0);
     signal dbg_mem_data_out, dbg_mem_address_out : STD_LOGIC_VECTOR(31 downto 0);
     signal dbg_mem_write : STD_LOGIC_VECTOR(3 downto 0);
-    signal dbg_mem_read : STD_LOGIC;
+    signal dbg_mem_enable : STD_LOGIC;
+    signal dbg_mem_ready : STD_LOGIC;
 
     --result signals for dbg and datapath driver multiplexing
     signal dbg_datapath_reg_write : STD_LOGIC;
@@ -161,7 +162,7 @@ architecture Behavioral of smallpond_top is
             mem_data_out: out std_logic_vector(31 downto 0);
             mem_addr_out: out std_logic_vector(31 downto 0);
             mem_write: out std_logic_vector(3 downto 0);
-            mem_read: out std_logic;
+            mem_enable: out std_logic;
             
             pc_in : in std_logic_vector(31 downto 0);
 
@@ -221,7 +222,7 @@ begin
                                             pc_write_out => ctrl_reg_pc_write,
                                             pc_src_out => ctrl_datapath_pc_src,
                                             jump_out => ctrl_datapath_jump,
-                                            mem_read_out => memory_read,
+                                            mem_read_out => memory_enable,
                                             mem_write_out => memory_write,
                                             mem_to_reg_out => ctrl_datapath_mem_to_reg,
                                             cpsr_bits_in => reg_ctrl_cpsr,
@@ -243,7 +244,7 @@ begin
                                 mem_data_out => dbg_mem_data_out,
                                 mem_addr_out => dbg_mem_address_out,
                                 mem_write => dbg_mem_write,
-                                mem_read => dbg_mem_read,
+                                mem_enable => dbg_mem_enable,
                                 pc_in => reg_datapath_pc_data,
                                 uart_rx => uart_rx,
                                 uart_tx => uart_tx
@@ -260,7 +261,7 @@ begin
         memory_data_out <= dbg_mem_data_out when cpu_halted = '1' else mem_data_out;
         memory_address_out <= dbg_mem_address_out when cpu_halted = '1' else mem_address_out;
         memory_write_out <= dbg_mem_write when cpu_halted = '1' else memory_write;
-        memory_read_out <= dbg_mem_read when cpu_halted = '1' else memory_read;
+        memory_enable_out <= dbg_mem_enable when cpu_halted = '1' else memory_enable;
         
         
 
@@ -371,11 +372,10 @@ begin
             -- MEMORY
             if clk_counter = 4  and reset_in = '0' then
             -- memory operations
-                if memory_ready = '1' then
-                    if memory_read = '1' then
-                        mem_address_out <= alu_datapath_result;
+                if memory_enable = '1' then
+                    mem_address_out <= alu_datapath_result;
 
-                    elsif (memory_write and "1111") /= "0000" then
+                    if (memory_write and "1111") /= "0000" then
                         mem_address_out <= alu_datapath_result;
                         mem_data_out <= reg_alu_src_0;
                     end if;

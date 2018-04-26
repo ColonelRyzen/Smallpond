@@ -23,7 +23,7 @@ entity debug is
         mem_data_out: out std_logic_vector(31 downto 0);
         mem_addr_out: out std_logic_vector(31 downto 0);
         mem_write: out std_logic_vector(3 downto 0);
-        mem_read: out std_logic;
+        mem_enable: out std_logic;
         
         pc_in : in std_logic_vector(31 downto 0);
 
@@ -142,7 +142,7 @@ if rising_edge(clk) then
 
     reg_file_write_en <= '0';
 
-    mem_read <= '0';
+    mem_enable <= '0';
     mem_write <= "0000";
     mem_data_out <= x"00000000";
     mem_addr_out <= x"dbdbdbdb";
@@ -210,7 +210,6 @@ if rising_edge(clk) then
         elsif (cmd = x"62") then -- 'b': Read memory BYTE
             if (state = D1) then -- Wait for addr to write
                 if (rx_valid = '1') then -- Get addr
-                    mem_read <= '1';
                     mem_address(31 downto 24) <= rx_data;
                     state <= D2;
                 end if;
@@ -233,14 +232,14 @@ if rising_edge(clk) then
             elsif (state = D5) then -- Wait for addr to write
                 if (rx_valid = '1') then -- Get data
                     mem_data(31 downto 24) <= rx_data;
-                    mem_read <= '1';
+                    mem_enable <= '1';
                     state <= D6;
                 end if;
             elsif (state = D6) then  -- Read data
                 -- Keep reading in case UART not ready
                 mem_addr_out <= mem_address;
                 if (tx_ready = '1') then
-                    mem_read <= '1';
+                    mem_enable <= '1';
                     if mem_address(1 downto 0) = "00" then
                         tx_data <= mem_data_in(31 downto 24);    
                     elsif mem_address(1 downto 0) = "01" then
@@ -286,6 +285,7 @@ if rising_edge(clk) then
             elsif (state = D6) then
                 mem_addr_out <= mem_address;
                 mem_data_out <= mem_data;
+                mem_enable <= '1';
                 if mem_address(1 downto 0) = "00" then
                     mem_write <= "0001";
                 elsif mem_address(1 downto 0) = "01" then
@@ -324,12 +324,10 @@ if rising_edge(clk) then
         
         elsif (state = D5) then
             mem_addr_out <= mem_address;
-             mem_read <= '1';
+            mem_data <= mem_data_in;
+            mem_enable <= '1';
             state <= D6;
         elsif (state = D6) then
-            mem_addr_out <= mem_address;
-            mem_data <= mem_data_in;
-            mem_read <= '1';
             state <= D7;
         elsif (state = D7) then -- Wait for addr to write
             if (tx_ready = '1') then -- Get data
@@ -339,19 +337,16 @@ if rising_edge(clk) then
             end if;
         elsif (state = D8) then
             if (tx_ready = '0') then
-                 mem_read <= '1';
                 state <= D9;
             end if;
         elsif (state = D9) then -- Wait for addr to write
             if (tx_ready = '1') then -- Get data
                 tx_data <= mem_data(23 downto 16);
                 tx_enable <= '1';
-                 mem_read <= '1';
                 state <= D10;
             end if;
         elsif (state = D10) then
             if (tx_ready = '0') then
-                 mem_read <= '1';
                 state <= D11;
             end if;
         elsif (state = D11) then -- Wait for addr to write
@@ -359,18 +354,15 @@ if rising_edge(clk) then
                 tx_data <= mem_data(15 downto 8);
                 state <= D12;
                 tx_enable <= '1';
-                 mem_read <= '1';
             end if;
         elsif (state = D12) then
             if (tx_ready = '0') then
-                 mem_read <= '1';
                 state <= D13;
             end if;
         elsif (state = D13) then -- Wait for addr to write
             if (tx_ready = '1') then -- Get data
                 tx_data <= mem_data(7 downto 0);
                 tx_enable <= '1';
-                 mem_read <= '1';
                 cmd <= x"00";
             end if;
 
@@ -416,12 +408,12 @@ if rising_edge(clk) then
         elsif (state = D8) then -- Wait for data to write
             if (rx_valid = '1') then -- Get data
                 mem_data(7 downto 0) <= rx_data;
-                mem_write <= "1111";
                 state <= D9;
             end if;
         elsif (state = D9) then
             mem_addr_out <= mem_address;
             mem_data_out <= mem_data;
+            mem_enable <= '1';
             mem_write <= "1111";
             cmd <= x"00";
         end if;

@@ -3588,7 +3588,7 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_old <= '0';
+                            mem_read_old <= '1';
                             mem_write_old <= "1111";
                             mem_to_reg_out <= '0';
                 -------------------------------------------------------------
@@ -3603,7 +3603,7 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_old <= '0';
+                            mem_read_old <= '1';
                             mem_write_old <= "0001";
                             mem_to_reg_out <= '0';
                 -------------------------------------------------------------
@@ -3618,7 +3618,7 @@ begin
                             sub_out <= '0';
                             pc_src_out <= '0';
                             jump_out <= '0';
-                            mem_read_old <= '0';
+                            mem_read_old <= '1';
                             mem_write_old <= "0011";
                             mem_to_reg_out <= '0';
                 -------------------------------------------------------------
