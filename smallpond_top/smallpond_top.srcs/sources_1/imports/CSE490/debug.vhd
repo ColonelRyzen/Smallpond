@@ -26,6 +26,7 @@ entity debug is
         mem_enable: out std_logic;
         
         pc_in : in std_logic_vector(31 downto 0);
+        clk_counter : in integer;
 
         uart_rx: in std_logic;
         uart_tx: out std_logic
@@ -163,7 +164,6 @@ if rising_edge(clk) then
         if (state = D1) then -- Wait for register to read
             if (rx_valid = '1') then
                 read_register <= rx_data(4 downto 0);
-
                 state <= D2;
             end if;
 
@@ -442,14 +442,15 @@ if rising_edge(clk) then
         elsif (state = D5) then -- Wait for value to write
             if (rx_valid = '1') then
                 register_value(7 downto 0) <= rx_data;
-                reg_file_write_en <= '1';
                 state <= D6;
             end if;
         elsif (state = D6) then  -- Set value
-            write_register <= reg(4 downto 0);
-            reg_file_data_out <= register_value;
-            reg_file_write_en <= '1';
-            cmd <= x"00";
+            if clk_counter = 4 then
+                write_register <= reg(4 downto 0);
+                reg_file_data_out <= register_value;
+                reg_file_write_en <= '1';
+                cmd <= x"00";
+            end if;
         end if;
 
     elsif (cmd = x"73") then -- 's': Single step

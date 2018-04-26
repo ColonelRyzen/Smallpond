@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1308530666666fs"></ZoomStartTime>
-      <ZoomEndTime time="1311810666667fs"></ZoomEndTime>
-      <Cursor1Time time="1311264000000fs"></Cursor1Time>
+      <ZoomStartTime time="550775170918fs"></ZoomStartTime>
+      <ZoomEndTime time="556161765817fs"></ZoomEndTime>
+      <Cursor1Time time="555264000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="156"></NameColumnWidth>
-      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+      <NameColumnWidth column_width="193"></NameColumnWidth>
+      <ValueColumnWidth column_width="76"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="25" />
+   <WVObjectSize size="26" />
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk_8">
       <obj_property name="ElementShortName">cpu_clk_8</obj_property>
       <obj_property name="ObjectShortName">cpu_clk_8</obj_property>
@@ -88,33 +88,37 @@
       <obj_property name="ElementShortName">cmd[7:0]</obj_property>
       <obj_property name="ObjectShortName">cmd[7:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/gdb_debug/mem_data">
-      <obj_property name="ElementShortName">mem_data[31:0]</obj_property>
-      <obj_property name="ObjectShortName">mem_data[31:0]</obj_property>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/register_file/reg_write_in">
+      <obj_property name="ElementShortName">reg_write_in</obj_property>
+      <obj_property name="ObjectShortName">reg_write_in</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/U0/addra">
-      <obj_property name="ElementShortName">addra[31:0]</obj_property>
-      <obj_property name="ObjectShortName">addra[31:0]</obj_property>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/register_file/write_register_in">
+      <obj_property name="ElementShortName">write_register_in[4:0]</obj_property>
+      <obj_property name="ObjectShortName">write_register_in[4:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/U0/dina">
-      <obj_property name="ElementShortName">dina[31:0]</obj_property>
-      <obj_property name="ObjectShortName">dina[31:0]</obj_property>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/register_file/reg[5]">
+      <obj_property name="ElementShortName">[5][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[5][31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/U0/douta">
-      <obj_property name="ElementShortName">douta[31:0]</obj_property>
-      <obj_property name="ObjectShortName">douta[31:0]</obj_property>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/gdb_debug/reg_file_write_en">
+      <obj_property name="ElementShortName">reg_file_write_en</obj_property>
+      <obj_property name="ObjectShortName">reg_file_write_en</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/U0/wea">
-      <obj_property name="ElementShortName">wea[3:0]</obj_property>
-      <obj_property name="ObjectShortName">wea[3:0]</obj_property>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/dbg_reg_write_en">
+      <obj_property name="ElementShortName">dbg_reg_write_en</obj_property>
+      <obj_property name="ObjectShortName">dbg_reg_write_en</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/gdb_debug/mem_enable">
-      <obj_property name="ElementShortName">mem_enable</obj_property>
-      <obj_property name="ObjectShortName">mem_enable</obj_property>
+   <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/register_file/clk_counter">
+      <obj_property name="ElementShortName">clk_counter</obj_property>
+      <obj_property name="ObjectShortName">clk_counter</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/mem/U0/ena">
-      <obj_property name="ElementShortName">ena</obj_property>
-      <obj_property name="ObjectShortName">ena</obj_property>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/register_file/write_data_in">
+      <obj_property name="ElementShortName">write_data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">write_data_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/gdb_debug/register_value">
+      <obj_property name="ElementShortName">register_value[31:0]</obj_property>
+      <obj_property name="ObjectShortName">register_value[31:0]</obj_property>
    </wvobject>
    <wvobject type="other" fp_name="/system_top_tb/dbg/state">
       <obj_property name="ElementShortName">state</obj_property>

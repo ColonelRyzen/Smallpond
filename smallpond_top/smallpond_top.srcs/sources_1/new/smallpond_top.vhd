@@ -165,6 +165,7 @@ architecture Behavioral of smallpond_top is
             mem_enable: out std_logic;
             
             pc_in : in std_logic_vector(31 downto 0);
+            clk_counter : in integer;
 
             uart_rx: in std_logic;
             uart_tx: out std_logic
@@ -246,6 +247,7 @@ begin
                                 mem_write => dbg_mem_write,
                                 mem_enable => dbg_mem_enable,
                                 pc_in => reg_datapath_pc_data,
+                                clk_counter => clk_counter,
                                 uart_rx => uart_rx,
                                 uart_tx => uart_tx
                                 );
