@@ -46,7 +46,6 @@ class smallpond:
 
     def write_mem_word(self, addr, val):
         self.ser.write(b'W')
-        print(type(addr),type(val))
         self.ser.write(bytes([(addr >> 24) & 0xFF, (addr >> 16) & 0xFF ,(addr >> 8) & 0xFF , addr & 0xFF]))
         self.ser.write(bytes([(val >> 24) & 0xFF, (val >> 16) & 0xFF ,(val >> 8) & 0xFF , val & 0xFF]))
 

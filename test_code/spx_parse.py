@@ -43,7 +43,7 @@ elif sys.argv[1] == "-l":
                 else:
                     char_counter = 0
                     print(hex(int("{:08x}".format(address),16)),hex(int(word,16)))
-                    cpu.write_mem_word(hex(int("{:08x}".format(address),16)), hex(int(word,16)))
+                    cpu.write_mem_word(int("{:08x}".format(address),16), int(word,16))
                     address += 4
                     #print word
                     word = ""
