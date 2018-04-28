@@ -100,8 +100,8 @@ class smallpond:
         self.fp = self.register_dict[24]
 
     def jump(self, addr):
-        self.write_reg('P', addr >> 8)
-        self.write_reg('Q', addr & 0xFF)
+        self.write_reg(int("FE",16), int(addr,16))
+
 
     def print_regs(self):
         print('R0: 0x{:08x}'.format(self.register_dict[0]))

@@ -148,7 +148,7 @@ if rising_edge(clk) then
     mem_data_out <= x"00000000";
     mem_addr_out <= x"dbdbdbdb";
 
-    halt <= cpu_halted;
+    --halt <= cpu_halted;
 
     if (bp0_enabled = '1' and pc_in = bp0_addr) then
         halt <= '1';
@@ -454,12 +454,12 @@ if rising_edge(clk) then
         end if;
 
     elsif (cmd = x"73") then -- 's': Single step
-        if (state = D1) then
+        if (state = D1 and clk_counter = 4) then
             halt <= '0';
             if (cpu_halted = '0') then
                 state <= D2;
             end if;
-        elsif (state = D2) then
+        elsif (state = D2 and clk_counter = 5) then
             halt <= '1';
             if (cpu_halted = '1' and tx_ready = '1') then
                 tx_data <= x"54";
@@ -489,17 +489,17 @@ if rising_edge(clk) then
                 register_value(23 downto 16) <= rx_data;
                 state <= D3;
             end if;
-        elsif (state = D2) then  -- Get addr low byte
+        elsif (state = D3) then  -- Get addr low byte
             if (rx_valid = '1') then
                 register_value(15 downto 8) <= rx_data;
-                state <= D3;
+                state <= D4;
             end if;
-        elsif (state = D2) then  -- Get addr low byte
+        elsif (state = D4) then  -- Get addr low byte
         if (rx_valid = '1') then
             register_value(7 downto 0) <= rx_data;
-            state <= D3;
+            state <= D5;
         end if;
-        elsif (state = D3) then
+        elsif (state = D5) then
             bp0_addr <= register_value;
             bp0_enabled <= '1';
             cmd <= x"00";
@@ -510,7 +510,7 @@ if rising_edge(clk) then
         cmd <= x"00";
 
     elsif (cmd = x"63") then -- 'c': Continue
-        if (state = D1) then
+        if (state = D1 and clk_counter = 4) then
             halt <= '0';
             if (cpu_halted = '0') then
                 state <= D2;

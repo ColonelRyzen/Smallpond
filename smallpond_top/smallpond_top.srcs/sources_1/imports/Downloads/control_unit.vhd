@@ -67,7 +67,6 @@ end control_unit;
 architecture Behavioral of control_unit is
 
 attribute dont_touch : string;
-signal clk_counter: integer range 0 to 5 := 5;
 signal instruction_runs: STD_LOGIC := '0';
 attribute dont_touch of instruction_runs : signal is "true";
 signal reg_write_old: STD_LOGIC := '0';
@@ -107,17 +106,20 @@ begin
 
 
         if rising_edge(clk_in) then
-            if halted = '1' then
+            if halted = '1' and halt_request = '1' then
                 --TODO: Debug core stuff.
-            elsif halt_request = '1' and clk_counter = 5 then
+            elsif halt_request = '0' and halted = '1' then
+                halted <= '0';
+                cpu_halted <= '0';
+            elsif halt_request = '1' and halted = '0' then
                 halted <= '1';
                 cpu_halted <= '1';
-            else
+            elsif halted = '0' and halt_request = '0' then
                 halted <= '0';
                 cpu_halted <= '0';
 
                 -- Increment PC if statement. This will enable the pc_write_out signal in first stage
-                if clk_counter = 0 and reset_in = '0' then
+                if clk_counter_in = 0 and reset_in = '0' then
                     pc_write_out <= '0';
 
                 end if;
@@ -131,7 +133,7 @@ begin
                 -- 111100 -> 111110 are the 'B' type
                 -- 111111 is the 'J' type
                 -- Case comment format is "-- Instruction name - 'instruction alias'"
-                if clk_counter = 1 and reset_in = '0' then
+                if clk_counter_in = 1 and reset_in = '0' then
                     instruction_runs <= '1';
                     case op_code_in is
             --########################################################################################################--
@@ -4521,7 +4523,7 @@ begin
                             mem_write_old <= "0000";
                             mem_to_reg_out <= '0';
                     end case;
-                elsif clk_counter = 1 and reset_in = '1' then
+                elsif clk_counter_in = 1 and reset_in = '1' then
                     reg_write_out <= '0';
                     counter_bit_out <= '0';
                     cpsr_set_bit_out <= '0';
@@ -4535,11 +4537,11 @@ begin
                     mem_to_reg_out <= '0';
                 end if;
 
-                if clk_counter = 2 and reset_in = '0' and instruction_runs = '1' then
+                if clk_counter_in = 2 and reset_in = '0' and instruction_runs = '1' then
                     pc_write_out <= '1';
                 end if;
 
-                if clk_counter = 3 and reset_in = '0' and instruction_runs = '1' then
+                if clk_counter_in = 3 and reset_in = '0' and instruction_runs = '1' then
                     sub_out <= '0';
                     mem_read_out <= mem_read_old;
                     if alu_datapath_result(1 downto 0) = "00" then
@@ -4558,7 +4560,7 @@ begin
                         counter_bit_out <= branch_counter_bit_in;
                     end if;
                     pc_write_out <= '0';
-                elsif clk_counter = 3 and (instruction_runs = '0' or reset_in = '1') then
+                elsif clk_counter_in = 3 and (instruction_runs = '0' or reset_in = '1') then
                     mem_read_out <= '0';
                     mem_write_out <= "0000";
                     cpsr_set_bit_out <= '0';
@@ -4566,21 +4568,21 @@ begin
                     pc_write_out <= '0';
                 end if;
                 -- This is for a potential update of teh cpsr or counter registers
-                if clk_counter = 4 and reset_in = '0' and instruction_runs = '1' then
+                if clk_counter_in = 4 and reset_in = '0' and instruction_runs = '1' then
                     reg_write_out <= reg_write_old;
                     cpsr_set_bit_out <= '0';
                     counter_bit_out <= '0';
                     mem_read_out <= '1';
                     mem_write_out <= "0000";
                     pc_write_out <= '0';
-                elsif clk_counter = 4 and (instruction_runs = '0' or reset_in = '1') then
+                elsif clk_counter_in = 4 and (instruction_runs = '0' or reset_in = '1') then
                     reg_write_out <= '0';
                     mem_read_out <= '0';
                 end if;
 
                 -- This is for the write back stage
                 -- reg_write_out is enabled and all other write signals are disbaled
-                if clk_counter = 5 and reset_in = '0' and instruction_runs = '1' then
+                if clk_counter_in = 5 and reset_in = '0' and instruction_runs = '1' then
                     reg_write_out <= '0';
                     mem_read_out <= '0';
                 end if;
