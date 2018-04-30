@@ -17,15 +17,15 @@ if sys.argv[1] == "-coe":
             o.write("memory_initialization_vector=\n")
             for line in f:
                 for char in line:
-                    if char_counter != 8:
+                    if char_counter < 8:
                         word += str(char)
+                        print char," : ",char_counter
                         char_counter += 1
-                        #print char_counter
                     else:
-                        char_counter = 0
+                        char_counter = 1
                         o.write(word + ',' + '\n')
                         #print word
-                        word = ""
+                        word = char
             o.write(";")
         o.close()
     f.close()

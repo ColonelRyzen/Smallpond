@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="69734439866fs"></ZoomStartTime>
-      <ZoomEndTime time="85369912027fs"></ZoomEndTime>
-      <Cursor1Time time="82764000000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="20911209914fs"></ZoomEndTime>
+      <Cursor1Time time="764000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <NameColumnWidth column_width="167"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="24" />
+   <WVObjectSize size="22" />
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk_8">
       <obj_property name="ElementShortName">cpu_clk_8</obj_property>
       <obj_property name="ObjectShortName">cpu_clk_8</obj_property>
@@ -88,10 +88,6 @@
       <obj_property name="ElementShortName">cmd[7:0]</obj_property>
       <obj_property name="ObjectShortName">cmd[7:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/gdb_debug/pc_in">
-      <obj_property name="ElementShortName">pc_in[31:0]</obj_property>
-      <obj_property name="ObjectShortName">pc_in[31:0]</obj_property>
-   </wvobject>
    <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/control_unit/clk_counter_in">
       <obj_property name="ElementShortName">clk_counter_in</obj_property>
       <obj_property name="ObjectShortName">clk_counter_in</obj_property>
@@ -104,13 +100,9 @@
       <obj_property name="ElementShortName">cpu_halted</obj_property>
       <obj_property name="ObjectShortName">cpu_halted</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/gdb_debug/bp0_enabled">
-      <obj_property name="ElementShortName">bp0_enabled</obj_property>
-      <obj_property name="ObjectShortName">bp0_enabled</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/gdb_debug/bp0_addr">
-      <obj_property name="ElementShortName">bp0_addr[31:0]</obj_property>
-      <obj_property name="ObjectShortName">bp0_addr[31:0]</obj_property>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/register_file/reg[5]">
+      <obj_property name="ElementShortName">[5][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[5][31:0]</obj_property>
    </wvobject>
    <wvobject type="other" fp_name="/system_top_tb/dbg/state">
       <obj_property name="ElementShortName">state</obj_property>

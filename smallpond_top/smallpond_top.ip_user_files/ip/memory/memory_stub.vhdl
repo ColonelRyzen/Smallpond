@@ -1,7 +1,7 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
--- Date        : Thu Apr 19 15:37:14 2018
+-- Date        : Sat Apr 28 15:51:53 2018
 -- Host        : enterprise running 64-bit Ubuntu 16.04.4 LTS
 -- Command     : write_vhdl -force -mode synth_stub -rename_top memory -prefix
 --               memory_ memory_stub.vhdl

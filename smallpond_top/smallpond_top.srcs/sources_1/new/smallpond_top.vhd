@@ -138,7 +138,7 @@ architecture Behavioral of smallpond_top is
     signal cpu_clk_8 : STD_LOGIC := '0';
     signal clk_divider : STD_LOGIC_VECTOR(1 downto 0) := "00";
 
-    signal clk_counter : integer range 0 to 5 := 5;
+    signal clk_counter : integer range 0 to 5 := 4;
 
     signal halt_request : STD_LOGIC := '0';
     attribute dont_touch of halt_request : signal is "true"; 
