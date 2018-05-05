@@ -39,7 +39,7 @@ end debug_tb;
 
 architecture Behavioral of debug_tb is
 
-    signal halt_cpu, cpu_halted, reg_file_write_en, mem_read : std_logic;
+    signal halt_cpu, cpu_halted, reg_file_write_en, mem_enable : std_logic;
     signal reg_file_data_in, reg_file_data_out, mem_data_in, mem_data_out, mem_addr_out, pc_in : std_logic_vector(31 downto 0);
     signal write_register, read_register : std_logic_vector(4 downto 0);
     signal mem_write : std_logic_vector(3 downto 0);
@@ -134,19 +134,386 @@ begin
 --            elsif state = 9 then
 --                state <= 9;
 --            end if;
-            if state = 0 then    
-                if (tx_ready_tb = '1') then
-                    tx_data_tb <= x"50";
+
+--          Reg Write testbench
+--            if state = 0 then    
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"50";
+--                    tx_enable_tb <= '1';
+--                    state <= 1;
+--                end if;
+--            elsif state = 1 then
+--                state <= 2;
+--            elsif state = 2 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"05";
+--                    tx_enable_tb <= '1';
+--                    state <= 3;
+--                end if; 
+--            elsif state = 3 then
+--                state <= 4;
+--            elsif state = 4 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 5;
+--                end if; 
+--            elsif state = 5 then
+--                state <= 6;
+--            elsif state = 6 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 7;
+--                end if;
+--            elsif state = 7 then
+--                state <= 8;
+--            elsif state = 8 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 9;
+--                end if;
+--            elsif state = 9 then
+--                state <= 10;
+--            elsif state = 10 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 11;
+--                end if;
+--            elsif state = 11 then
+--                state <= 11;
+--            end if;
+
+--      Memory Write then Read test
+--            if state = 0 then    
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"57";
+--                    tx_enable_tb <= '1';
+--                    state <= 1;
+--                end if;
+--            elsif state = 1 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 2;
+--                end if;
+--            elsif state = 2 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 3;
+--                end if; 
+--            elsif state = 3 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 4;
+--                end if;
+--            elsif state = 4 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 5;
+--                end if; 
+--            elsif state = 5 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 6;
+--                end if;
+--            elsif state = 6 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 7;
+--                end if;
+--            elsif state = 7 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 8;
+--                end if;
+--            elsif state = 8 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"08";
+--                    tx_enable_tb <= '1';
+--                    state <= 9;
+--                end if;
+--            elsif state = 9 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 10;
+--                end if;
+--            elsif state = 10 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 11;
+--                end if;
+--            elsif state = 11 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 12;
+--                end if;
+--            elsif state = 12 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 13;
+--                end if;
+--            elsif state = 13 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 14;
+--                end if;
+--            elsif state = 14 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 15;
+--                end if;
+--            elsif state = 15 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 16;
+--                end if;
+--            elsif state = 16 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 17;
+--                end if;
+--            elsif state = 17 then
+--                state <= 18;
+--            elsif state <= 18 then
+--                state <= 19;
+--            elsif state = 19 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"77";
+--                    tx_enable_tb <= '1';
+--                    state <= 20;
+--                end if;
+--            elsif state = 20 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 21;
+--                end if;
+--            elsif state = 21 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 22;
+--                end if;
+--            elsif state = 22 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 23;
+--                end if;
+--            elsif state = 23 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 24;
+--                end if;
+--            elsif state = 24 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 25;
+--                end if;
+--            elsif state = 25 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 26;
+--                end if;
+--            elsif state = 26 then
+--                if (tx_ready_tb = '0') then
+--                    state <= 27;
+--                end if;
+--            elsif state = 27 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"08";
+--                    tx_enable_tb <= '1';
+--                    state <= 28;
+--                end if;
+--            elsif state = 28 then
+--                state <= 28;
+
+--      Register read and write testing
+--            if (state = 0) then    
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"50";
+--                    tx_enable_tb <= '1';
+--                    state <= 1;
+--                end if;
+--            elsif (state = 1) then
+--                if tx_ready_tb = '0' then
+--                    state <= 2;
+--                end if;
+--            elsif (state = 2) then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"05";
+--                    tx_enable_tb <= '1';
+--                    state <= 3;
+--                end if;
+--            elsif state = 3 then
+--                if tx_ready_tb = '0' then
+--                    state <= 4;
+--                end if;
+--            elsif state = 4 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 5;
+--                end if;
+--            elsif state = 5 then
+--                if tx_ready_tb = '0' then
+--                    state <= 6;
+--                end if;
+--            elsif state = 6 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 7;
+--                end if;
+--            elsif state = 7 then
+--                if tx_ready_tb = '0' then
+--                    state <= 8;
+--                end if;
+--            elsif state = 8 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 9;
+--                end if;
+--            elsif state = 9 then
+--                if tx_ready_tb = '0' then
+--                    state <= 10;
+--                end if;
+--            elsif state = 10 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"FF";
+--                    tx_enable_tb <= '1';
+--                    state <= 11;
+--                end if;
+--            elsif state = 11 then
+--                state <= 12;
+--            elsif state = 12 then
+--                state <= 13;
+--            elsif state = 13 then
+--                if (tx_ready_tb = '1') then
+--                    tx_data_tb <= x"70";
+--                    tx_enable_tb <= '1';
+--                    state <= 14;
+--                end if;
+--            elsif state = 14 then
+--                if tx_ready_tb = '0' then
+--                    state <= 15;
+--                end if;
+--            elsif state = 15 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"05";
+--                    tx_enable_tb <= '1';
+--                    state <= 16;
+--                end if;
+--            elsif state = 16 then
+--                state <= 16;
+
+--      Single Step Test
+--            if state = 0 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"73";
+--                    tx_enable_tb <= '1';
+--                    state <= 1;
+--                end if;
+--            elsif state = 1 then
+--                if tx_ready_tb = '0' then
+--                    state <= 2;
+--                end if;
+--            elsif state = 2 then
+--                state <= 2;
+
+
+--      Continue Test
+            if state = 0 then
+                if tx_ready_tb = '1' then
+                    tx_data_tb <= x"63";
                     tx_enable_tb <= '1';
                     state <= 1;
                 end if;
             elsif state = 1 then
-                state <= 2;
+                if tx_ready_tb = '0' then
+                    state <= 2;
+                end if;
             elsif state = 2 then
-                if (tx_ready_tb = '1') then
-                    tx_data_tb <= ""
-                end if; 
-                state <= 3;
+                state <= 2;
+
+--      Delete HW Breakpoint Test
+--            if state = 0 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"64";
+--                    tx_enable_tb <= '1';
+--                    state <= 1;
+--                end if;
+--            elsif state = 1 then
+--                if tx_ready_tb = '0' then
+--                    state <= 2;
+--                end if;
+--            elsif state = 2 then
+--                state <= 2;
+
+--      Set HW Breakpoint Test
+--            if state = 0 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"7A";
+--                    tx_enable_tb <= '1';
+--                    state <= 1;
+--                end if;
+--            elsif state = 1 then
+--                if tx_ready_tb = '0' then
+--                    state <= 2;
+--                end if;
+--            elsif state = 2 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 3;
+--                end if;
+--            elsif state = 3 then
+--                if tx_ready_tb <= '0' then
+--                    state <= 4;
+--                end if;
+--            elsif state = 4 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 5;
+--                end if;
+--            elsif state = 5 then
+--                if tx_ready_tb <= '0' then
+--                    state <= 6;
+--                end if;
+--            elsif state = 6 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"00";
+--                    tx_enable_tb <= '1';
+--                    state <= 7;
+--                end if;
+--            elsif state = 7 then
+--                if tx_ready_tb <= '0' then
+--                    state <= 8;
+--                end if;
+--            elsif state = 8 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"20";
+--                    tx_enable_tb <= '1';
+--                    state <= 9;
+--                end if;
+--            elsif state = 9 then
+--                if tx_ready_tb <= '0' then
+--                    state <= 10;
+--                end if;
+--            elsif state = 10 then
+--                state <= 11;
+--            elsif state = 11 then
+--                if tx_ready_tb = '1' then
+--                    tx_data_tb <= x"63";
+--                    tx_enable_tb <= '1';
+--                    state <= 12;
+--                end if;
+--            elsif state = 12 then
+--                if tx_ready_tb = '0' then
+--                    state <= 13;
+--                end if;
+--            elsif state = 13 then
+--                state <= 13;
             end if;
         end if;
     end process;

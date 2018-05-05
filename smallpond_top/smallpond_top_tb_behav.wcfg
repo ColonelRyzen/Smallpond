@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="6360000001fs"></ZoomEndTime>
+      <ZoomEndTime time="20911209914fs"></ZoomEndTime>
       <Cursor1Time time="764000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="176"></NameColumnWidth>
+      <NameColumnWidth column_width="167"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="24" />
+   <WVObjectSize size="22" />
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk_8">
       <obj_property name="ElementShortName">cpu_clk_8</obj_property>
       <obj_property name="ObjectShortName">cpu_clk_8</obj_property>
@@ -27,10 +27,6 @@
    <wvobject type="logic" fp_name="/system_top_tb/UUT/reset_in">
       <obj_property name="ElementShortName">reset_in</obj_property>
       <obj_property name="ObjectShortName">reset_in</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/memory_read_out">
-      <obj_property name="ElementShortName">memory_read_out</obj_property>
-      <obj_property name="ObjectShortName">memory_read_out</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/memory_write_out">
       <obj_property name="ElementShortName">memory_write_out[3:0]</obj_property>
@@ -40,10 +36,6 @@
       <obj_property name="ElementShortName">memory_data_in[31:0]</obj_property>
       <obj_property name="ObjectShortName">memory_data_in[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/mem/douta">
-      <obj_property name="ElementShortName">douta[31:0]</obj_property>
-      <obj_property name="ObjectShortName">douta[31:0]</obj_property>
-   </wvobject>
    <wvobject type="array" fp_name="/system_top_tb/UUT/memory_data_out">
       <obj_property name="ElementShortName">memory_data_out[31:0]</obj_property>
       <obj_property name="ObjectShortName">memory_data_out[31:0]</obj_property>
@@ -51,10 +43,6 @@
    <wvobject type="array" fp_name="/system_top_tb/UUT/mem/addra">
       <obj_property name="ElementShortName">addra[31:0]</obj_property>
       <obj_property name="ObjectShortName">addra[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/memory_address_out">
-      <obj_property name="ElementShortName">memory_address_out[31:0]</obj_property>
-      <obj_property name="ObjectShortName">memory_address_out[31:0]</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu_clk">
       <obj_property name="ElementShortName">cpu_clk</obj_property>
@@ -92,18 +80,6 @@
       <obj_property name="ElementShortName">tx_counter</obj_property>
       <obj_property name="ObjectShortName">tx_counter</obj_property>
    </wvobject>
-   <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/gdb_debug/uart/rx_counter">
-      <obj_property name="ElementShortName">rx_counter</obj_property>
-      <obj_property name="ObjectShortName">rx_counter</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/dbg/uart/rx_data">
-      <obj_property name="ElementShortName">rx_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">rx_data[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/system_top_tb/dbg/uart/rx_valid">
-      <obj_property name="ElementShortName">rx_valid</obj_property>
-      <obj_property name="ObjectShortName">rx_valid</obj_property>
-   </wvobject>
    <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/gdb_debug/state">
       <obj_property name="ElementShortName">state</obj_property>
       <obj_property name="ObjectShortName">state</obj_property>
@@ -112,8 +88,24 @@
       <obj_property name="ElementShortName">cmd[7:0]</obj_property>
       <obj_property name="ObjectShortName">cmd[7:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/gdb_debug/mem_data">
-      <obj_property name="ElementShortName">mem_data[31:0]</obj_property>
-      <obj_property name="ObjectShortName">mem_data[31:0]</obj_property>
+   <wvobject type="other" fp_name="/system_top_tb/UUT/cpu/control_unit/clk_counter_in">
+      <obj_property name="ElementShortName">clk_counter_in</obj_property>
+      <obj_property name="ObjectShortName">clk_counter_in</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/control_unit/halt_request">
+      <obj_property name="ElementShortName">halt_request</obj_property>
+      <obj_property name="ObjectShortName">halt_request</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/system_top_tb/UUT/cpu/control_unit/cpu_halted">
+      <obj_property name="ElementShortName">cpu_halted</obj_property>
+      <obj_property name="ObjectShortName">cpu_halted</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/system_top_tb/UUT/cpu/register_file/reg[5]">
+      <obj_property name="ElementShortName">[5][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[5][31:0]</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/system_top_tb/dbg/state">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
    </wvobject>
 </wave_config>
